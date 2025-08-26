@@ -20,15 +20,15 @@
 
 ## Interagíveis
 
-- [ ] Button (label, onClick)
-- [ ] Accordion (label, onClick)
-- [ ] TabBar (onChange, children)
-- [ ] Modal (onClose, children)
-- [ ] Image (src: string, onClick)
-- [ ] Gallery (images: string[])
+- [ ] Button (text, type (danger, success), style(fullfiled, outline), onClick)
+- [ ] Accordion (text, onClick)
+- [ ] TabBar (options (string[]), onSelected)
+- [ ] Modal (title, text, buttonText, onClose)
+- [ ] Image (src: string, alt: string, onClick)
+- [ ] Gallery (images: string[], onClick)
 - [ ] OfferCard (offer: Offer, onClick)
-- [ ] Stepper (label, max, min, value, onChange(value))
-- [ ] StarRating (label, value, onChange(value))
+- [ ] Stepper (text, max, min, value, onChange(value))
+- [ ] StarRating (rating, count, size, onRate(rating))
 
 ## Usuário
 
@@ -36,7 +36,7 @@
 - [ ] UserCardHorizontal (user: User, onClick)
 - [ ] UserCardBio (user: User, onClick)
 - [ ] UserInfo (user: User, onClick)
-- [ ] Alert (message: string, onClick)
+- [ ] Alert (text, icon, type (danger, success, info), onClose)
 
 ## List
 
@@ -47,5 +47,5 @@
 
 ## Chat
 
-- [ ] Message (message: string, onClick)
-- [ ] InputToolBar (onChange, children)
+- [ ] Message (text, onClick)
+- [ ] InputToolBar (value, placeholder, onChange(value), onSend)
