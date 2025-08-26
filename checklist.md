@@ -21,7 +21,7 @@
 ## Interagíveis
 
 - [ ] Button (text, type (danger, success), style(fullfiled, outline), onClick)
-- [ ] Accordion (text, onClick)
+- [ ] Accordion (text, children, onClick)
 - [ ] TabBar (options (string[]), onSelected)
 - [ ] Modal (title, text, buttonText, onClose)
 - [ ] Image (src: string, alt: string, onClick)
@@ -29,14 +29,14 @@
 - [ ] OfferCard (offer: Offer, onClick)
 - [ ] Stepper (text, max, min, value, onChange(value))
 - [ ] StarRating (rating, count, size, onRate(rating))
+- [ ] Alert (text, icon, type (danger, success, info), onClose)
 
 ## Usuário
 
 - [ ] UserCard (user: User, onClick)
 - [ ] UserCardHorizontal (user: User, onClick)
 - [ ] UserCardBio (user: User, onClick)
-- [ ] UserInfo (user: User, onClick)
-- [ ] Alert (text, icon, type (danger, success, info), onClose)
+- [ ] UserInfo (user: User, type, onClick)
 
 ## List
 
