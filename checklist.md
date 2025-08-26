@@ -41,11 +41,12 @@
 ## List
 
 - [ ] TextList (texts: string[])
-- [ ] UserList (users: User[])
-- [ ] OfferList (offers: Offer[])
+- [ ] UserList (users: User[], navigation())
+- [ ] OfferList (offers: Offer[], navigation())
 - [ ] OrderList (orders: Order[])
 
 ## Chat
 
 - [ ] Message (text, onClick)
 - [ ] InputToolBar (value, placeholder, onChange(value), onSend)
+
