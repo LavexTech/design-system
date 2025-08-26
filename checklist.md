@@ -14,13 +14,34 @@
 - [ ] InputPhone (props)
 - [ ] InputName (props)
 - [ ] InputPassword (props)
+- [ ] TextArea (props)
 
 ## Interagíveis
 - [ ] Button (props)
-- [ ] Lista (props)
+- [ ] Accordion (props)
+- [ ] TabBar (props)
+- [ ] Modal ()
+- [ ] Image (props)
+- [ ] Gallery (image[])
+- [ ] OfferCard (offer)
+- [ ] Stepper ()
+- [ ] StarRating ()
 
 ## Usuário
+- [ ] UserCard ()
+- [ ] UserCardHorizontal ()
+- [ ] UserCardBio ()
+- [ ] UserInfo ()
+- [ ] Alert ()
 
-## ...
+## List
+- [ ] TextList (text[])
+- [ ] UserList (user[])
+- [ ] OfferList (offer[])
+- [ ] OrderList (order[])
+
+## Chat
+- [ ] Message ()
+- [ ] InputToolBar ()
 
 
