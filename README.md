@@ -33,11 +33,6 @@ export default function App() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <HelloWorld />
-      <HelloWorld text="Custom text!" />
-      <HelloWorld 
-        text="Styled text" 
-        style={{ color: 'blue', fontSize: 20 }} 
-      />
     </View>
   );
 }
@@ -48,13 +43,6 @@ export default function App() {
 ### HelloWorld
 
 Um componente simples para exibir texto.
-
-#### Props
-
-| Prop  | Tipo   | Padrão        | Descrição                                    |
-|-------|--------|---------------|----------------------------------------------|
-| text  | string | "Hello World" | Texto customizado para exibir                |
-| style | any    | undefined     | Estilo customizado para o componente Text   |
 
 ## Desenvolvimento
 
