@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0,
     marginTop: 0,
-    width: 66.7344,
+    width: "100%",
     textSizeAdjust: "100%",
     fontFamily: "Roboto, sans-serif",
     fontFeatureSettings: "normal",
