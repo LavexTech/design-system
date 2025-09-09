@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: "700",
     lineHeight: 48,
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Roboto",
     color: "#262627",
     textAlign: "left",
     flexWrap: "wrap",
