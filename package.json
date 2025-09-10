@@ -1,17 +1,26 @@
 {
     "name": "lavex-design-system",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Lavex Design System for React Native",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
-    "files": ["src/", "README.md", "index.ts"],
+    "files": [
+        "src/",
+        "README.md",
+        "index.ts"
+    ],
     "scripts": {
         "build": "tsc",
         "dev": "tsc --watch",
         "clean": "rm -rf dist",
         "prepublishOnly": "npm run clean && npm run build"
     },
-    "keywords": ["react-native", "design-system", "ui-components", "lavex"],
+    "keywords": [
+        "react-native",
+        "design-system",
+        "ui-components",
+        "lavex"
+    ],
     "author": "Lavex",
     "license": "MIT",
     "peerDependencies": {
