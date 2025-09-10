@@ -11,9 +11,9 @@ export const Title1: React.FC<Title1Props> = ({ text }) => {
 
 const styles = StyleSheet.create({
   title1: {
-    fontSize: 48,
+    fontSize: 36,
     fontWeight: "700",
-    lineHeight: 48,
+    lineHeight: 40,
     fontFamily: "Roboto",
     color: "#262627",
     textAlign: "left",
