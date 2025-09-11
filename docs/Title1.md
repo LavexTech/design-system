@@ -6,8 +6,6 @@ O componente `Title1` é usado para títulos principais (Heading 1). Ele oferece
 
 ```typescript
 import { Title1 } from "lavex-design-system";
-// ou
-import { Title1, type Title1Props } from "lavex-design-system";
 ```
 
 ## Props
@@ -46,15 +44,6 @@ const MyComponent = () => {
 ```tsx
 <Title1 text="Como configurar sua conta e personalizar suas preferências" />
 ```
-
-## Características
-
-- **Fonte**: Roboto, 48px, peso 700 (bold)
-- **Cor**: #262627 (cinza escuro)
-- **Altura da linha**: 48px
-- **Alinhamento**: Esquerda
-- **Quebra de linha**: Automática quando o texto atinge a borda da tela
-- **Largura**: 100% do container pai
 
 ## Estilização
 
