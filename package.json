@@ -1,43 +1,31 @@
 {
-  "name": "lavex-design-system",
-  "version": "0.1.2",
-  "description": "Lavex Design System for React Native",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "src/",
-    "README.md",
-    "index.ts"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build"
-  },
-  "keywords": [
-    "react-native",
-    "design-system",
-    "ui-components",
-    "lavex"
-  ],
-  "author": "Lavex",
-  "license": "MIT",
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-native": ">=0.60.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.24",
-    "@types/react-native": "^0.72.8",
-    "typescript": "^5.9.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lavex/lavex-design-system.git"
-  },
-  "bugs": {
-    "url": "https://github.com/lavex/lavex-design-system/issues"
-  },
-  "homepage": "https://github.com/lavex/lavex-design-system#readme"
+    "name": "lavex-design-system",
+    "version": "0.1.3",
+    "description": "Lavex Design System for React Native",
+    "files": ["src/", "README.md", "index.ts"],
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": ["react-native", "design-system", "ui-components", "lavex"],
+    "author": "Lavex",
+    "license": "MIT",
+    "peerDependencies": {
+        "react": ">=16.8.0",
+        "react-native": ">=0.60.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.3.24",
+        "@types/react-native": "^0.72.8",
+        "typescript": "^5.9.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lavex/lavex-design-system.git"
+    },
+    "bugs": {
+        "url": "https://github.com/lavex/lavex-design-system/issues"
+    },
+    "homepage": "https://github.com/lavex/lavex-design-system#readme"
 }
