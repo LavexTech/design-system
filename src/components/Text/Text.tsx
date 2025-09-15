@@ -6,7 +6,7 @@ export interface TextProps {
   text: string;
 }
 
-export const Text: React.FC<TextProps> = ({ text }) => {
+export const TextBox: React.FC<TextProps> = ({ text }) => {
   return <Text style={styles.text}>{text}</Text>;
 };
 
