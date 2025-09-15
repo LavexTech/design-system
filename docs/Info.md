@@ -51,15 +51,6 @@ const MyComponent = () => {
 <Info text="Última atualização: há 2 minutos" />
 ```
 
-## Estilização
-
-O componente já vem com estilos pré-definidos que seguem o design system:
-
-- **Tamanho**: Pequeno (12px)
-- **Peso**: Normal (400)
-- **Cor**: Padrão do design system com opacidade reduzida
-- **Altura da linha**: 1.4x o tamanho da fonte para melhor legibilidade
-
 ### Cores de Texto Disponíveis
 
 Se precisar de cores diferentes, você pode usar as constantes do design system:
