@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     lineHeight: Constants.styles.fontSize.TINY * 1.4,
     fontFamily: Constants.styles.fontFamily.MAIN,
     color: Constants.styles.textColor.DEFAULT,
+    fontStyle: "italic",
     textAlign: "left",
     flexWrap: "wrap",
     flexShrink: 1,
