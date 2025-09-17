@@ -12,9 +12,9 @@ export const Title2: React.FC<Title2Props> = ({ text }) => {
 
 const styles = StyleSheet.create({
   title2: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
+    fontSize: Constants.styles.fontSize.LARGER,
     fontWeight: Constants.styles.fontWeight.BOLD,
-    lineHeight: Constants.styles.fontSize.MEDIUM,
+    lineHeight: Constants.styles.fontSize.LARGER,
     fontFamily: Constants.styles.fontFamily.MAIN,
     color: Constants.styles.textColor.DEFAULT,
     textAlign: "left",
