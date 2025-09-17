@@ -3,6 +3,7 @@ const Constants = {
     fontSize: {
       LARGE: 36,
       MEDIUM: 24,
+      NORMAL: 20,
       SMALL: 18,
       TINY: 14,
     },
