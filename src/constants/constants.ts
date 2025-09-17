@@ -18,7 +18,7 @@ const Constants = {
       DEFAULT: "#262627",
       SUCCESS: "#059669",
       DANGER: "#DC2626",
-      INFO: "#2563EB",
+      INFO: "#8F98AD",
     },
   },
 };
