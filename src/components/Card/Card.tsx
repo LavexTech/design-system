@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   content: {
-    flex: 1,
+    // flex: 1,
   },
 });
