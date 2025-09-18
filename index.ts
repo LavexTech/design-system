@@ -5,3 +5,5 @@ export { Title3 } from "./src/components/Title3/Title3";
 export { TextBox as Text } from "./src/components/Text/Text";
 export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
+
+export { useGlobalFonts } from "./src/fontSetup";
