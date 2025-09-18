@@ -36,8 +36,8 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    paddingVertical: Constants.styles.spacing.MEDIUM,
-    paddingHorizontal: Constants.styles.spacing.LARGE,
+    paddingVertical: Constants.styles.spacing.SMALL,
+    paddingHorizontal: Constants.styles.spacing.MEDIUM,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
     alignItems: "center",
     justifyContent: "center",
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: Constants.styles.fontSize.NORMAL,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    fontFamily: Constants.styles.fontFamily.MAIN,
+    fontWeight: Constants.styles.fontWeight.NORMAL,
+    fontFamily: Constants.styles.fontFamily.REGULAR,
     textAlign: "center",
   },
 
