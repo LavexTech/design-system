@@ -4,33 +4,31 @@ import Constants from "../../constants/constants";
 
 export interface ButtonProps {
   text: string;
-  type?: "danger" | "success";
-  style?: "fullfiled" | "outline";
+  variant?:
+    | "default"
+    | "default-outline"
+    | "success"
+    | "danger"
+    | "success-outline"
+    | "danger-outline";
   onClick: () => void;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   text,
-  type = "success",
-  style = "fullfiled",
+  variant = "default",
   onClick,
 }) => {
-  const buttonStyle = [
-    styles.button,
-    styles[`${style}Button`],
-    styles[`${type}Button`],
-    style === "outline" && styles[`${type}ButtonOutline`],
-  ];
+  const buttonStyle = [styles.button, styles[variant]];
 
-  const textStyle = [
-    styles.text,
-    styles[`${style}Text`],
-    style === "outline" &&
-      styles[`outlineText${type.charAt(0).toUpperCase() + type.slice(1)}`],
-  ];
+  const textStyle = [styles.text, styles[`${variant}Text`]];
 
   return (
-    <TouchableOpacity style={buttonStyle} onPress={onClick} activeOpacity={0.7}>
+    <TouchableOpacity
+      style={buttonStyle}
+      onPress={onClick}
+      activeOpacity={Constants.styles.button.activeOpacity}
+    >
       <Text style={textStyle}>{text}</Text>
     </TouchableOpacity>
   );
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: Constants.styles.borderRadius.MEDIUM,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 48,
+    minHeight: Constants.styles.button.minHeight,
   },
   text: {
     fontSize: Constants.styles.fontSize.NORMAL,
@@ -52,38 +50,53 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 
-  fullfiledButton: {},
-  outlineButton: {
-    backgroundColor: "transparent",
-    borderWidth: 2,
+  default: {
+    backgroundColor: Constants.styles.textColor.DEFAULT,
+    borderWidth: Constants.styles.button.borderWidth,
+    borderStyle: Constants.styles.button.borderStyle,
+    borderColor: Constants.styles.textColor.DEFAULT,
   },
-
-  successButton: {
+  success: {
     backgroundColor: Constants.styles.textColor.SUCCESS,
   },
-  dangerButton: {
+  danger: {
     backgroundColor: Constants.styles.textColor.DANGER,
   },
-
-  successButtonOutline: {
+  "default-outline": {
+    backgroundColor: "transparent",
+    borderWidth: Constants.styles.button.borderWidth,
+    borderStyle: Constants.styles.button.borderStyle,
+    borderColor: Constants.styles.textColor.DEFAULT,
+  },
+  "success-outline": {
+    backgroundColor: "transparent",
+    borderWidth: Constants.styles.button.borderWidth,
+    borderStyle: Constants.styles.button.borderStyle,
     borderColor: Constants.styles.textColor.SUCCESS,
   },
-  dangerButtonOutline: {
+  "danger-outline": {
+    backgroundColor: "transparent",
+    borderWidth: Constants.styles.button.borderWidth,
+    borderStyle: Constants.styles.button.borderStyle,
     borderColor: Constants.styles.textColor.DANGER,
   },
 
-  fullfiledText: {
+  defaultText: {
     color: Constants.styles.backgroundColor.WHITE,
   },
-
-  outlineText: {
+  successText: {
+    color: Constants.styles.backgroundColor.WHITE,
+  },
+  dangerText: {
+    color: Constants.styles.backgroundColor.WHITE,
+  },
+  "default-outlineText": {
     color: Constants.styles.textColor.DEFAULT,
   },
-
-  outlineTextSuccess: {
+  "success-outlineText": {
     color: Constants.styles.textColor.SUCCESS,
   },
-  outlineTextDanger: {
+  "danger-outlineText": {
     color: Constants.styles.textColor.DANGER,
   },
 });
