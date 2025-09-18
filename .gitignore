@@ -36,5 +36,3 @@ logs
 coverage/
 
 demo/
-
-demo/app/index.tsx
