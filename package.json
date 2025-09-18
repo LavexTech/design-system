@@ -3,6 +3,7 @@
   "version": "0.1.16",
   "description": "Lavex Design System for React Native",
   "files": [
+    "assets/",
     "src/",
     "README.md",
     "index.ts"
@@ -22,7 +23,8 @@
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-native": ">=0.60.0"
+    "react-native": ">=0.60.0",
+    "expo-font": ">=14.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.24",
