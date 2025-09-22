@@ -87,6 +87,25 @@ export default function Index() {
       <Text style={{ fontFamily: "Roboto-ExtraLightItalic", fontSize: 20 }}>
         Roboto Extra Light Italic
       </Text>
+
+      <Button variant="success" text="Success" onClick={() => {}} />
+      <Button variant="danger" text="Danger" onClick={() => {}} />
+      <Button variant="default" text="Default" onClick={() => {}} />
+      <Button
+        variant="default-outline"
+        text="Default Outline"
+        onClick={() => {}}
+      />
+      <Button
+        variant="success-outline"
+        text="Success Outline"
+        onClick={() => {}}
+      />
+      <Button
+        variant="danger-outline"
+        text="Danger Outline"
+        onClick={() => {}}
+      />
     </ScrollView>
   );
 }
