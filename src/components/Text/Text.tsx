@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     fontSize: Constants.styles.fontSize.SMALL,
     fontWeight: Constants.styles.fontWeight.NORMAL,
     lineHeight: Constants.styles.fontSize.SMALL,
-    fontFamily: Constants.styles.fontFamily.MAIN,
+    fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,
     textAlign: "left",
     flexWrap: "wrap",
