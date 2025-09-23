@@ -3,7 +3,6 @@
   "version": "0.1.16",
   "description": "Lavex Design System for React Native",
   "files": [
-    "assets/",
     "src/",
     "README.md",
     "index.ts"

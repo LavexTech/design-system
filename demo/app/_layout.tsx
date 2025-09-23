@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { useGlobalFonts } from "@/src/fontSetup";
+import { useGlobalFonts } from "@src/fontSetup";
 
 export default function RootLayout() {
   const ready = useGlobalFonts();
