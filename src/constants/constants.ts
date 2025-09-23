@@ -43,6 +43,32 @@ const Constants = {
       DANGER: "#DC2626",
       INFO: "#8F98AD",
     },
+    backgroundColor: {
+      WHITE: "#FFFFFF",
+      LIGHT_GRAY: "#F8F9FA",
+      GRAY: "#E9ECEF",
+    },
+    borderColor: {
+      LIGHT: "#DEE2E6",
+      MEDIUM: "#CED4DA",
+    },
+    spacing: {
+      TINY: 4,
+      SMALL: 8,
+      MEDIUM: 16,
+      LARGE: 24,
+      EXTRA_LARGE: 32,
+    },
+    borderRadius: {
+      SMALL: 4,
+      MEDIUM: 8,
+      LARGE: 12,
+    },
+    borderWidth: {
+      THIN: 0.4,
+      REGULAR: 0.8,
+      THICK: 1.2,
+    },
   },
 };
 
