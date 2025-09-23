@@ -64,6 +64,11 @@ const Constants = {
       MEDIUM: 8,
       LARGE: 12,
     },
+    borderWidth: {
+      THIN: 0.4,
+      REGULAR: 0.8,
+      THICK: 1.2,
+    },
   },
 };
 
