@@ -12,9 +12,9 @@ export const TextBox: React.FC<TextProps> = ({ text }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: Constants.styles.fontSize.SMALL,
+    fontSize: Constants.styles.fontSize.MEDIUM,
     fontWeight: Constants.styles.fontWeight.NORMAL,
-    lineHeight: Constants.styles.fontSize.SMALL,
+    lineHeight: Constants.styles.fontSize.MEDIUM,
     fontFamily: Constants.styles.fontFamily.MAIN,
     color: Constants.styles.textColor.DEFAULT,
     textAlign: "left",
