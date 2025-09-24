@@ -8,9 +8,9 @@ const Constants = {
       TINY: 14,
     },
     fontWeight: {
-      BOLD: "700",
-      NORMAL: "400",
-      THIN: "100",
+      BOLD: "700" as any,
+      NORMAL: "400" as any,
+      THIN: "100" as any,
     },
     fontFamily: {
       MAIN: "Roboto-Medium",
