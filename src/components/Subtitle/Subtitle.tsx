@@ -2,19 +2,19 @@ import React from "react";
 import { Text, StyleSheet } from "react-native";
 import Constants from "../../constants/constants";
 
-export interface Title3Props {
+export interface SubtitleProps {
   text: string;
 }
 
-export const Title3: React.FC<Title3Props> = ({ text }) => {
-  return <Text style={styles.title3}>{text}</Text>;
+export const Subtitle: React.FC<SubtitleProps> = ({ text }) => {
+  return <Text style={styles.Subtitle}>{text}</Text>;
 };
 
 const styles = StyleSheet.create({
-  title3: {
-    fontSize: Constants.styles.fontSize.NORMAL,
+  Subtitle: {
+    fontSize: Constants.styles.fontSize.LARGE,
     fontWeight: Constants.styles.fontWeight.BOLD,
-    lineHeight: Constants.styles.fontSize.NORMAL,
+    lineHeight: Constants.styles.fontSize.LARGE,
     fontFamily: Constants.styles.fontFamily.MAIN,
     color: Constants.styles.textColor.DEFAULT,
     textAlign: "left",

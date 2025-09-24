@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: 0.4,
+    borderWidth: Constants.styles.borderWidth.SMALL,
     borderColor: Constants.styles.borderColor.LIGHT,
     padding: Constants.styles.spacing.MEDIUM,
     marginBottom: Constants.styles.spacing.SMALL,
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    overflow: 'hidden',
   },
 });
