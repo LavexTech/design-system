@@ -1,6 +1,7 @@
 import { Text, View } from "react-native";
-import { Title1 } from "@src/components/Title1/Title1";
-import { Title2 } from "@src/components/Title2/Title2";
+import { MainTitle } from "@src/components/MainTitle/MainTitle";
+import { Title } from "@src/components/Title/Title";
+import { List } from "@src/components/List/List";
 
 export default function Index() {
   return (
@@ -11,8 +12,14 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Title1 text="Hello World" />
-      <Title2 text="Hello World" />
+      <MainTitle text="Hello World" />
+      <Title text="Hello World" />
+
+      <List title="Lista de exemplo">
+        <Text>Item 1</Text>
+        <Text>Item 2</Text>
+        <Text>Item 3</Text>
+      </List>
     </View>
   );
 }
