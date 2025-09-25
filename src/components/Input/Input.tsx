@@ -25,11 +25,9 @@ export const Input: React.FC<InputProps> = ({
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  // Apply mask to the value
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue;
 
-    // Remove all non-numeric characters for mask application
     const cleanValue = inputValue.replace(/\D/g, "");
     let maskedValue = "";
     let valueIndex = 0;
@@ -46,26 +44,21 @@ export const Input: React.FC<InputProps> = ({
     return maskedValue;
   };
 
-  // Handle text change
   const handleTextChange = (text: string) => {
     let processedValue = text;
 
-    // Apply mask if provided
     if (mask) {
       processedValue = applyMask(text, mask);
     }
 
-    // Call the onChange function with the processed value
     onChange(processedValue);
 
-    // Validate if validation function is provided
     if (validation) {
       const valid = validation(processedValue);
       setIsValid(valid);
     }
   };
 
-  // Validate on value change
   useEffect(() => {
     if (validation && value) {
       const valid = validation(value);
@@ -73,7 +66,6 @@ export const Input: React.FC<InputProps> = ({
     }
   }, [value, validation]);
 
-  // Get keyboard type based on mobileKeyboard prop
   const getKeyboardType = ():
     | "default"
     | "email-address"
