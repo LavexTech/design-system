@@ -16,14 +16,12 @@ export const InputEmail: React.FC<InputEmailProps> = ({
   placeholder = "example@email.com",
   errorMessage = "Email deve ter formato válido",
 }) => {
-  // Validação básica de email
   const validateEmail = (email: string): boolean => {
-    if (!email) return true; // Campo vazio é válido (não obrigatório)
+    if (!email) return true;
 
     const atIndex = email.indexOf("@");
     const dotIndex = email.lastIndexOf(".");
 
-    // Verifica se @ existe e está antes do último .
     return atIndex > 0 && dotIndex > atIndex && dotIndex < email.length - 1;
   };
 
