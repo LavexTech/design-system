@@ -12,10 +12,10 @@ export const Info: React.FC<InfoProps> = ({ text }) => {
 
 const styles = StyleSheet.create({
   info: {
-    fontSize: Constants.styles.fontSize.TINY,
+    fontSize: Constants.styles.fontSize.SMALL,
     fontWeight: Constants.styles.fontWeight.NORMAL,
-    lineHeight: Constants.styles.fontSize.TINY * 1.4,
-    fontFamily: Constants.styles.fontFamily.MAIN,
+    lineHeight: Constants.styles.fontSize.SMALL * 1.4,
+    fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.INFO,
     textAlign: "left",
     flexWrap: "wrap",
