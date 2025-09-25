@@ -5,3 +5,5 @@ export { Subtitle } from "./src/components/Subtitle/Subtitle";
 export { TextBox as Text } from "./src/components/Text/Text";
 export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
+
+export { useGlobalFonts } from "./src/fontSetup";
