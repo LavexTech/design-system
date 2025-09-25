@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: 0.4,
+    borderWidth: Constants.styles.borderWidth.SMALL,
     borderColor: Constants.styles.borderColor.LIGHT,
     padding: Constants.styles.spacing.MEDIUM,
     marginBottom: Constants.styles.spacing.SMALL,
@@ -38,13 +38,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Constants.styles.fontSize.NORMAL,
     fontWeight: Constants.styles.fontWeight.BOLD,
-    fontFamily: Constants.styles.fontFamily.MAIN,
+    fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,
     marginBottom: Constants.styles.spacing.SMALL,
     textAlign: "left",
   },
   content: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    overflow: 'hidden',
   },
 });

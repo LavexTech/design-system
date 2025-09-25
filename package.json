@@ -1,6 +1,6 @@
 {
   "name": "lavex-design-system",
-  "version": "0.1.16",
+  "version": "0.1.18",
   "description": "Lavex Design System for React Native",
   "files": [
     "src/",
@@ -21,6 +21,7 @@
   "author": "Lavex",
   "license": "MIT",
   "peerDependencies": {
+    "expo-font": ">=14.0.0",
     "react": "19.1.0",
     "react-native": "0.81.4"
   },
