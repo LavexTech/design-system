@@ -1,11 +1,11 @@
 const Constants = {
   styles: {
     fontSize: {
-      LARGE: 36,
-      MEDIUM: 24,
-      NORMAL: 20,
-      SMALL: 18,
-      TINY: 14,
+      LARGEST: 36,
+      LARGER: 24,
+      LARGE: 20,
+      MEDIUM: 18,
+      SMALL: 14,
     },
     fontWeight: {
       BOLD: "700",
@@ -46,6 +46,11 @@ const Constants = {
       SMALL: 4,
       MEDIUM: 8,
       LARGE: 12,
+    },
+    borderWidth: {
+      THIN: 0.4,
+      REGULAR: 0.8,
+      THICK: 1.2,
     },
   },
 };
