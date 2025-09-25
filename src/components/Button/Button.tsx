@@ -5,12 +5,12 @@ import Constants from "../../constants/constants";
 export interface ButtonProps {
   text: string;
   variant?:
-    | "default"
-    | "default-outline"
-    | "success"
-    | "danger"
-    | "success-outline"
-    | "danger-outline";
+  | "default"
+  | "default-outline"
+  | "success"
+  | "danger"
+  | "success-outline"
+  | "danger-outline";
   onClick: () => void;
 }
 
@@ -27,7 +27,7 @@ export const Button: React.FC<ButtonProps> = ({
     <TouchableOpacity
       style={buttonStyle}
       onPress={onClick}
-      activeOpacity={Constants.styles.button.activeOpacity}
+      activeOpacity={0.7}
     >
       <Text style={textStyle}>{text}</Text>
     </TouchableOpacity>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: Constants.styles.borderRadius.MEDIUM,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: Constants.styles.button.minHeight,
+    minHeight: 48,
   },
   text: {
     fontSize: Constants.styles.fontSize.NORMAL,
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
 
   default: {
     backgroundColor: Constants.styles.textColor.DEFAULT,
-    borderWidth: Constants.styles.button.borderWidth,
-    borderStyle: Constants.styles.button.borderStyle,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderColor: Constants.styles.textColor.DEFAULT,
   },
   success: {
@@ -64,20 +64,20 @@ const styles = StyleSheet.create({
   },
   "default-outline": {
     backgroundColor: "transparent",
-    borderWidth: Constants.styles.button.borderWidth,
-    borderStyle: Constants.styles.button.borderStyle,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderColor: Constants.styles.textColor.DEFAULT,
   },
   "success-outline": {
     backgroundColor: "transparent",
-    borderWidth: Constants.styles.button.borderWidth,
-    borderStyle: Constants.styles.button.borderStyle,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderColor: Constants.styles.textColor.SUCCESS,
   },
   "danger-outline": {
     backgroundColor: "transparent",
-    borderWidth: Constants.styles.button.borderWidth,
-    borderStyle: Constants.styles.button.borderStyle,
+    borderWidth: 1,
+    borderStyle: "solid",
     borderColor: Constants.styles.textColor.DANGER,
   },
 
