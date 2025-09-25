@@ -34,11 +34,7 @@ export const Input: React.FC<InputProps> = ({
     let maskedValue = "";
     let valueIndex = 0;
 
-    for (
-      let i = 0;
-      i < maskPattern.length && valueIndex < cleanValue.length;
-      i++
-    ) {
+    for (let i = 0; i < maskPattern.length && valueIndex < cleanValue.length; i++) {
       if (maskPattern[i] === "0" || maskPattern[i] === "9") {
         maskedValue += cleanValue[valueIndex];
         valueIndex++;
