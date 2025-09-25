@@ -1,16 +1,8 @@
-import { Text, View } from "react-native";
-import { InputEmailDemo } from "../examples/InputEmailDemo";
+import React from "react";
+import { InputDemo } from "../examples";
 
 export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <InputEmailDemo />
-    </View>
-  );
+  return <InputDemo />;
+  // return <CardDemo />;
+  // return <ButtonDemo />;
 }
