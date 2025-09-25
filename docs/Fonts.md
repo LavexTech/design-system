@@ -11,12 +11,11 @@ O design system inclui a família de fontes Roboto completa com todas as variant
 O design system inclui as seguintes variantes da fonte Roboto:
 
 - **Roboto-Regular** - Peso padrão da fonte (400)
+- **Roboto-Italic** - Peso padrão da fonte em itálico (400)
+- **Roboto-ExtraLight** - Peso extra leve da fonte (100)
+- **Roboto-ExtraLightItalic** - Peso extra leve da fonte em itálico (100)
 - **Roboto-Bold** - Peso negrito da fonte (700)
-- **Roboto-ExtraLight** - Peso extra leve da fonte (200)
-- **Roboto-BoldItalic** - Peso negrito da fonte (700)
-- **Roboto-ExtraLightItalic** - Peso extra leve da fonte (200)
-- **Roboto-RegularItalic** - Peso padrão da fonte (400)
-- **Variantes em itálico** de todos os pesos acima
+- **Roboto-BoldItalic** - Peso negrito da fonte em itálico (700)
 
 ## Configuração Rápida
 
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontFamily: Constants.styles.fontFamily.REGULAR, // Roboto-Regular
-    fontSize: Constants.styles.fontSize.NORMAL,
+    fontSize: Constants.styles.fontSize.MEDIUM,
     fontWeight: Constants.styles.fontWeight.NORMAL,
   },
 });
@@ -132,7 +131,7 @@ O design system fornece as seguintes constantes de fonte:
 ```typescript
 Constants.styles.fontFamily = {
   REGULAR: "Roboto-Regular",
-  REGULAR_ITALIC: "Roboto-RegularItalic",
+  REGULAR_ITALIC: "Roboto-Italic",
   EXTRA_LIGHT: "Roboto-ExtraLight",
   EXTRA_LIGHT_ITALIC: "Roboto-ExtraLightItalic",
   BOLD: "Roboto-Bold",
@@ -140,11 +139,11 @@ Constants.styles.fontFamily = {
 };
 
 Constants.styles.fontSize = {
-  LARGE: 36,
-  MEDIUM: 24,
-  NORMAL: 20,
-  SMALL: 18,
-  TINY: 14,
+  LARGEST: 36,
+  LARGER: 24,
+  LARGE: 20,
+  MEDIUM: 18,
+  SMALL: 14,
 };
 
 Constants.styles.fontWeight = {
