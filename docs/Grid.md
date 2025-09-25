@@ -85,14 +85,6 @@ import { Grid, Card, Button } from "lavex-design-system";
 
 ## Valores de Espaçamento Recomendados
 
-O componente utiliza as constantes do design system para espaçamento:
-
-- **TINY (4px)**: Para layouts muito compactos
-- **SMALL (8px)**: Padrão recomendado para a maioria dos casos
-- **MEDIUM (16px)**: Para layouts com mais respiração
-- **LARGE (24px)**: Para layouts espaçosos
-- **EXTRA_LARGE (32px)**: Para layouts muito espaçosos
-
 ## Diretrizes de Uso
 
 1. **Responsividade**: O Grid se adapta automaticamente ao tamanho da tela
