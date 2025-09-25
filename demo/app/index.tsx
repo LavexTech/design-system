@@ -1,8 +1,13 @@
 import React from "react";
-import { InputDemo } from "../examples";
+import { ScrollView } from "react-native";
+import { InputDemo } from "../examples/InputDemo/InputDemo";
+import { InputPhoneDemo } from "../examples/InputPhoneDemo/InputPhoneDemo";
 
 export default function Index() {
-  return <InputDemo />;
-  // return <CardDemo />;
-  // return <ButtonDemo />;
+  return (
+    <ScrollView>
+      <InputDemo />
+      <InputPhoneDemo />
+    </ScrollView>
+  );
 }
