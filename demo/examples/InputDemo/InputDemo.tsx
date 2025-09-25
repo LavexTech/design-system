@@ -3,31 +3,19 @@ import { Text, View, ScrollView, StyleSheet } from "react-native";
 import { Input } from "@src/components/Input/Input";
 
 export const InputDemo: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [name, setName] = useState("");
+  const [textInput, setTextInput] = useState("");
+  const [numericInput, setNumericInput] = useState("");
+  const [maskedInput, setMaskedInput] = useState("");
+  const [validatedInput, setValidatedInput] = useState("");
 
-  // Validation functions
-  const validateEmail = (value: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
-  };
+  const validateMinLength =
+    (minLength: number) =>
+      (value: string): boolean => {
+        return value.length >= minLength;
+      };
 
-  const validatePhone = (value: string): boolean => {
-    // Brazilian phone number validation (with or without mask)
-    const cleanPhone = value.replace(/\D/g, "");
-    return cleanPhone.length >= 10 && cleanPhone.length <= 11;
-  };
-
-  const validateCpf = (value: string): boolean => {
-    // Basic CPF validation (11 digits)
-    const cleanCpf = value.replace(/\D/g, "");
-    return cleanCpf.length === 11;
-  };
-
-  const validateName = (value: string): boolean => {
-    return value.length >= 2;
+  const validateNumeric = (value: string): boolean => {
+    return /^\d+$/.test(value);
   };
 
   return (
@@ -36,51 +24,38 @@ export const InputDemo: React.FC = () => {
         <Text style={styles.title}>Input Component Demo</Text>
 
         <Input
-          label="Nome"
-          value={name}
-          placeholder="Digite seu nome"
-          onChange={setName}
-          validation={validateName}
-          errorMessage="Nome deve ter pelo menos 2 caracteres"
+          label="Texto Simples"
+          value={textInput}
+          placeholder="Digite qualquer texto"
+          onChange={setTextInput}
         />
 
         <Input
-          label="Email"
-          value={email}
-          placeholder="Digite seu email"
-          onChange={setEmail}
-          validation={validateEmail}
-          errorMessage="Digite um email válido"
-          mobileKeyboard="email"
-        />
-
-        <Input
-          label="Telefone"
-          value={phone}
-          placeholder="(11) 99999-9999"
-          onChange={setPhone}
-          validation={validatePhone}
-          errorMessage="Digite um telefone válido (10 ou 11 dígitos)"
-          mask="(00) 00000-0000"
-          mobileKeyboard="phone"
-        />
-
-        <Input
-          label="CPF"
-          value={cpf}
-          placeholder="000.000.000-00"
-          onChange={setCpf}
-          validation={validateCpf}
-          errorMessage="Digite um CPF válido (11 dígitos)"
-          mask="000.000.000-00"
+          label="Entrada Numérica"
+          value={numericInput}
+          placeholder="Digite apenas números"
+          onChange={setNumericInput}
+          validation={validateNumeric}
+          errorMessage="Digite apenas números"
           mobileKeyboard="number"
         />
 
         <Input
-          label="Observações"
-          value=""
-          placeholder="Digite suas observações..."
-          onChange={() => {}}
+          label="Entrada com Máscara"
+          value={maskedInput}
+          placeholder="000-000-000"
+          onChange={setMaskedInput}
+          mask="000-000-000"
+          mobileKeyboard="number"
+        />
+
+        <Input
+          label="Entrada com Validação"
+          value={validatedInput}
+          placeholder="Mínimo 5 caracteres"
+          onChange={setValidatedInput}
+          validation={validateMinLength(5)}
+          errorMessage="Deve ter pelo menos 5 caracteres"
         />
       </View>
     </ScrollView>

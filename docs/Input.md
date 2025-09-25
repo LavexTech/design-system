@@ -1,6 +1,6 @@
 # Como utilizar - Input
 
-O componente `Input` é uma caixa de texto editável que serve como base para outros inputs especializados como CPF, email, telefone, etc. Ele oferece funcionalidades de máscara, validação, teclado específico para mobile e mensagens de erro personalizáveis.
+O componente `Input` é uma caixa de texto editável genérica que oferece funcionalidades de máscara, validação, teclado específico para mobile e mensagens de erro personalizáveis. Ele serve como base para criar inputs especializados conforme necessário.
 
 ## Importação
 
@@ -43,113 +43,47 @@ const MyComponent = () => {
 
 ## Exemplos de Uso
 
-### Input Simples com Validação
+### Input Básico
 
 ```tsx
 import React, { useState } from "react";
 import { Input } from "lavex-design-system";
 
-const NameInput = () => {
-  const [name, setName] = useState("");
-
-  const validateName = (value: string): boolean => {
-    return value.length >= 2;
-  };
+const BasicInput = () => {
+  const [value, setValue] = useState("");
 
   return (
     <Input
-      label="Nome Completo"
-      value={name}
-      placeholder="Digite seu nome completo"
-      onChange={setName}
-      validation={validateName}
-      errorMessage="Nome deve ter pelo menos 2 caracteres"
+      label="Campo de Texto"
+      value={value}
+      placeholder="Digite qualquer texto"
+      onChange={setValue}
     />
   );
 };
 ```
 
-### Input de Email
+### Input com Validação
 
 ```tsx
 import React, { useState } from "react";
 import { Input } from "lavex-design-system";
 
-const EmailInput = () => {
-  const [email, setEmail] = useState("");
+const ValidatedInput = () => {
+  const [value, setValue] = useState("");
 
-  const validateEmail = (value: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
+  const validateMinLength = (value: string): boolean => {
+    return value.length >= 3;
   };
 
   return (
     <Input
-      label="Email"
-      value={email}
-      placeholder="seu@email.com"
-      onChange={setEmail}
-      validation={validateEmail}
-      errorMessage="Digite um email válido"
-      mobileKeyboard="email"
-    />
-  );
-};
-```
-
-### Input de Telefone com Máscara
-
-```tsx
-import React, { useState } from "react";
-import { Input } from "lavex-design-system";
-
-const PhoneInput = () => {
-  const [phone, setPhone] = useState("");
-
-  const validatePhone = (value: string): boolean => {
-    const cleanPhone = value.replace(/\D/g, "");
-    return cleanPhone.length >= 10 && cleanPhone.length <= 11;
-  };
-
-  return (
-    <Input
-      label="Telefone"
-      value={phone}
-      placeholder="(11) 99999-9999"
-      onChange={setPhone}
-      validation={validatePhone}
-      errorMessage="Digite um telefone válido (10 ou 11 dígitos)"
-      mask="(00) 00000-0000"
-      mobileKeyboard="phone"
-    />
-  );
-};
-```
-
-### Input de CPF com Máscara
-
-```tsx
-import React, { useState } from "react";
-import { Input } from "lavex-design-system";
-
-const CpfInput = () => {
-  const [cpf, setCpf] = useState("");
-
-  const validateCpf = (value: string): boolean => {
-    const cleanCpf = value.replace(/\D/g, "");
-    return cleanCpf.length === 11;
-  };
-
-  return (
-    <Input
-      label="CPF"
-      value={cpf}
-      placeholder="000.000.000-00"
-      onChange={setCpf}
-      validation={validateCpf}
-      errorMessage="Digite um CPF válido (11 dígitos)"
-      mask="000.000.000-00"
-      mobileKeyboard="number"
+      label="Campo com Validação"
+      value={value}
+      placeholder="Mínimo 3 caracteres"
+      onChange={setValue}
+      validation={validateMinLength}
+      errorMessage="Deve ter pelo menos 3 caracteres"
     />
   );
 };
@@ -161,23 +95,65 @@ const CpfInput = () => {
 import React, { useState } from "react";
 import { Input } from "lavex-design-system";
 
-const AgeInput = () => {
-  const [age, setAge] = useState("");
+const NumericInput = () => {
+  const [value, setValue] = useState("");
 
-  const validateAge = (value: string): boolean => {
-    const num = parseInt(value);
-    return num >= 18 && num <= 120;
+  const validateNumeric = (value: string): boolean => {
+    return /^\d+$/.test(value);
   };
 
   return (
     <Input
-      label="Idade"
-      value={age}
-      placeholder="Digite sua idade"
-      onChange={setAge}
-      validation={validateAge}
-      errorMessage="Idade deve estar entre 18 e 120 anos"
+      label="Campo Numérico"
+      value={value}
+      placeholder="Digite apenas números"
+      onChange={setValue}
+      validation={validateNumeric}
+      errorMessage="Digite apenas números"
       mobileKeyboard="number"
+    />
+  );
+};
+```
+
+### Input com Máscara
+
+```tsx
+import React, { useState } from "react";
+import { Input } from "lavex-design-system";
+
+const MaskedInput = () => {
+  const [value, setValue] = useState("");
+
+  return (
+    <Input
+      label="Campo com Máscara"
+      value={value}
+      placeholder="000-000-000"
+      onChange={setValue}
+      mask="000-000-000"
+      mobileKeyboard="number"
+    />
+  );
+};
+```
+
+### Input com Teclado Específico
+
+```tsx
+import React, { useState } from "react";
+import { Input } from "lavex-design-system";
+
+const EmailKeyboardInput = () => {
+  const [value, setValue] = useState("");
+
+  return (
+    <Input
+      label="Campo com Teclado de Email"
+      value={value}
+      placeholder="Exemplo de teclado de email"
+      onChange={setValue}
+      mobileKeyboard="email"
     />
   );
 };
@@ -255,80 +231,49 @@ mobileKeyboard = "number"; // Teclado apenas com números
 
 ## Casos de Uso Comuns
 
-### Formulário de Cadastro
+### Formulário Simples
 
 ```tsx
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { Input, Title2 } from "lavex-design-system";
 
-const SignupForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [cpf, setCpf] = useState("");
+const SimpleForm = () => {
+  const [field1, setField1] = useState("");
+  const [field2, setField2] = useState("");
+  const [field3, setField3] = useState("");
 
-  const validateEmail = (value: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
-  };
-
-  const validatePhone = (value: string): boolean => {
-    const cleanPhone = value.replace(/\D/g, "");
-    return cleanPhone.length >= 10 && cleanPhone.length <= 11;
-  };
-
-  const validateCpf = (value: string): boolean => {
-    const cleanCpf = value.replace(/\D/g, "");
-    return cleanCpf.length === 11;
-  };
-
-  const validateName = (value: string): boolean => {
+  const validateMinLength = (value: string): boolean => {
     return value.length >= 2;
   };
 
   return (
     <ScrollView style={{ padding: 20 }}>
-      <Title2 text="Cadastro" />
+      <Title2 text="Formulário Simples" />
 
       <Input
-        label="Nome Completo"
-        value={name}
-        placeholder="Digite seu nome completo"
-        onChange={setName}
-        validation={validateName}
-        errorMessage="Nome deve ter pelo menos 2 caracteres"
+        label="Campo 1"
+        value={field1}
+        placeholder="Digite o valor do campo 1"
+        onChange={setField1}
+        validation={validateMinLength}
+        errorMessage="Deve ter pelo menos 2 caracteres"
       />
 
       <Input
-        label="Email"
-        value={email}
-        placeholder="seu@email.com"
-        onChange={setEmail}
-        validation={validateEmail}
-        errorMessage="Digite um email válido"
+        label="Campo 2"
+        value={field2}
+        placeholder="Digite o valor do campo 2"
+        onChange={setField2}
         mobileKeyboard="email"
       />
 
       <Input
-        label="Telefone"
-        value={phone}
-        placeholder="(11) 99999-9999"
-        onChange={setPhone}
-        validation={validatePhone}
-        errorMessage="Digite um telefone válido"
-        mask="(00) 00000-0000"
-        mobileKeyboard="phone"
-      />
-
-      <Input
-        label="CPF"
-        value={cpf}
-        placeholder="000.000.000-00"
-        onChange={setCpf}
-        validation={validateCpf}
-        errorMessage="Digite um CPF válido"
-        mask="000.000.000-00"
+        label="Campo 3"
+        value={field3}
+        placeholder="Digite o valor do campo 3"
+        onChange={setField3}
+        mask="000-000-000"
         mobileKeyboard="number"
       />
     </ScrollView>
@@ -348,7 +293,7 @@ const SearchForm = () => {
 
   return (
     <View style={{ padding: 16 }}>
-      <Title3 text="Buscar Produtos" />
+      <Title3 text="Buscar" />
       <Input
         label="Termo de Busca"
         value={search}
@@ -360,55 +305,56 @@ const SearchForm = () => {
 };
 ```
 
-### Formulário de Contato
+### Formulário com Validações
 
 ```tsx
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { Input, Title2 } from "lavex-design-system";
 
-const ContactForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+const ValidatedForm = () => {
+  const [textField, setTextField] = useState("");
+  const [numericField, setNumericField] = useState("");
+  const [maskedField, setMaskedField] = useState("");
 
-  const validateEmail = (value: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
+  const validateText = (value: string): boolean => {
+    return value.length >= 3;
   };
 
-  const validateName = (value: string): boolean => {
-    return value.length >= 2;
+  const validateNumeric = (value: string): boolean => {
+    return /^\d+$/.test(value);
   };
 
   return (
     <ScrollView style={{ padding: 20 }}>
-      <Title2 text="Entre em Contato" />
+      <Title2 text="Formulário com Validações" />
 
       <Input
-        label="Seu Nome"
-        value={name}
-        placeholder="Digite seu nome"
-        onChange={setName}
-        validation={validateName}
-        errorMessage="Nome deve ter pelo menos 2 caracteres"
+        label="Campo de Texto"
+        value={textField}
+        placeholder="Mínimo 3 caracteres"
+        onChange={setTextField}
+        validation={validateText}
+        errorMessage="Deve ter pelo menos 3 caracteres"
       />
 
       <Input
-        label="Email"
-        value={email}
-        placeholder="seu@email.com"
-        onChange={setEmail}
-        validation={validateEmail}
-        errorMessage="Digite um email válido"
-        mobileKeyboard="email"
+        label="Campo Numérico"
+        value={numericField}
+        placeholder="Apenas números"
+        onChange={setNumericField}
+        validation={validateNumeric}
+        errorMessage="Digite apenas números"
+        mobileKeyboard="number"
       />
 
       <Input
-        label="Mensagem"
-        value={message}
-        placeholder="Digite sua mensagem..."
-        onChange={setMessage}
+        label="Campo com Máscara"
+        value={maskedField}
+        placeholder="000-000-000"
+        onChange={setMaskedField}
+        mask="000-000-000"
+        mobileKeyboard="number"
       />
     </ScrollView>
   );
@@ -422,16 +368,21 @@ import React, { useState } from "react";
 import { View, ScrollView, Alert } from "react-native";
 import { Input, Title1, Title2 } from "lavex-design-system";
 
-const UserProfileForm = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [age, setAge] = useState("");
+const CompleteFormExample = () => {
+  const [textField, setTextField] = useState("");
+  const [numericField, setNumericField] = useState("");
+  const [maskedField, setMaskedField] = useState("");
+  const [emailField, setEmailField] = useState("");
 
-  // Funções de validação
-  const validateName = (value: string): boolean => {
-    return value.length >= 2;
+  // Funções de validação genéricas
+  const validateMinLength =
+    (minLength: number) =>
+    (value: string): boolean => {
+      return value.length >= minLength;
+    };
+
+  const validateNumeric = (value: string): boolean => {
+    return /^\d+$/.test(value);
   };
 
   const validateEmail = (value: string): boolean => {
@@ -439,29 +390,12 @@ const UserProfileForm = () => {
     return emailRegex.test(value);
   };
 
-  const validatePhone = (value: string): boolean => {
-    const cleanPhone = value.replace(/\D/g, "");
-    return cleanPhone.length >= 10 && cleanPhone.length <= 11;
-  };
-
-  const validateCpf = (value: string): boolean => {
-    const cleanCpf = value.replace(/\D/g, "");
-    return cleanCpf.length === 11;
-  };
-
-  const validateAge = (value: string): boolean => {
-    const num = parseInt(value);
-    return num >= 18 && num <= 120;
-  };
-
   const handleSave = () => {
     // Validação geral antes de salvar
     const isFormValid =
-      validateName(name) &&
-      validateEmail(email) &&
-      validatePhone(phone) &&
-      validateCpf(cpf) &&
-      validateAge(age);
+      validateMinLength(3)(textField) &&
+      validateNumeric(numericField) &&
+      validateEmail(emailField);
 
     if (isFormValid) {
       Alert.alert("Sucesso", "Dados salvos com sucesso!");
@@ -473,60 +407,47 @@ const UserProfileForm = () => {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
       <View style={{ padding: 20 }}>
-        <Title1 text="Meu Perfil" />
+        <Title1 text="Formulário Completo" />
 
         <View style={{ marginTop: 20 }}>
-          <Title2 text="Informações Pessoais" />
+          <Title2 text="Campos de Entrada" />
 
           <Input
-            label="Nome Completo"
-            value={name}
-            placeholder="Digite seu nome completo"
-            onChange={setName}
-            validation={validateName}
-            errorMessage="Nome deve ter pelo menos 2 caracteres"
+            label="Campo de Texto"
+            value={textField}
+            placeholder="Digite pelo menos 3 caracteres"
+            onChange={setTextField}
+            validation={validateMinLength(3)}
+            errorMessage="Deve ter pelo menos 3 caracteres"
           />
 
           <Input
-            label="Email"
-            value={email}
-            placeholder="seu@email.com"
-            onChange={setEmail}
+            label="Campo Numérico"
+            value={numericField}
+            placeholder="Digite apenas números"
+            onChange={setNumericField}
+            validation={validateNumeric}
+            errorMessage="Digite apenas números"
+            mobileKeyboard="number"
+          />
+
+          <Input
+            label="Campo com Máscara"
+            value={maskedField}
+            placeholder="000-000-000"
+            onChange={setMaskedField}
+            mask="000-000-000"
+            mobileKeyboard="number"
+          />
+
+          <Input
+            label="Campo de Email"
+            value={emailField}
+            placeholder="exemplo@email.com"
+            onChange={setEmailField}
             validation={validateEmail}
             errorMessage="Digite um email válido"
             mobileKeyboard="email"
-          />
-
-          <Input
-            label="Telefone"
-            value={phone}
-            placeholder="(11) 99999-9999"
-            onChange={setPhone}
-            validation={validatePhone}
-            errorMessage="Digite um telefone válido (10 ou 11 dígitos)"
-            mask="(00) 00000-0000"
-            mobileKeyboard="phone"
-          />
-
-          <Input
-            label="CPF"
-            value={cpf}
-            placeholder="000.000.000-00"
-            onChange={setCpf}
-            validation={validateCpf}
-            errorMessage="Digite um CPF válido (11 dígitos)"
-            mask="000.000.000-00"
-            mobileKeyboard="number"
-          />
-
-          <Input
-            label="Idade"
-            value={age}
-            placeholder="Digite sua idade"
-            onChange={setAge}
-            validation={validateAge}
-            errorMessage="Idade deve estar entre 18 e 120 anos"
-            mobileKeyboard="number"
           />
         </View>
       </View>
@@ -534,5 +455,164 @@ const UserProfileForm = () => {
   );
 };
 
-export default UserProfileForm;
+export default CompleteFormExample;
+```
+
+## Criando Inputs Especializados
+
+O componente `Input` genérico pode ser usado como base para criar inputs especializados. Aqui estão alguns exemplos de como criar componentes específicos:
+
+### Input de Email Especializado
+
+```tsx
+import React, { useState } from "react";
+import { Input, InputProps } from "lavex-design-system";
+
+interface EmailInputProps
+  extends Omit<InputProps, "validation" | "errorMessage" | "mobileKeyboard"> {
+  required?: boolean;
+}
+
+export const EmailInput: React.FC<EmailInputProps> = ({
+  required = false,
+  ...props
+}) => {
+  const validateEmail = (value: string): boolean => {
+    if (required && !value) return false;
+    if (!value) return true; // Campo opcional vazio é válido
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
+  return (
+    <Input
+      {...props}
+      validation={validateEmail}
+      errorMessage={required ? "Email é obrigatório" : "Digite um email válido"}
+      mobileKeyboard="email"
+    />
+  );
+};
+```
+
+### Input de CPF Especializado
+
+```tsx
+import React, { useState } from "react";
+import { Input, InputProps } from "lavex-design-system";
+
+interface CpfInputProps
+  extends Omit<
+    InputProps,
+    "validation" | "errorMessage" | "mobileKeyboard" | "mask"
+  > {
+  required?: boolean;
+}
+
+export const CpfInput: React.FC<CpfInputProps> = ({
+  required = false,
+  ...props
+}) => {
+  const validateCpf = (value: string): boolean => {
+    if (required && !value) return false;
+    if (!value) return true; // Campo opcional vazio é válido
+    const cleanCpf = value.replace(/\D/g, "");
+    return cleanCpf.length === 11;
+  };
+
+  return (
+    <Input
+      {...props}
+      validation={validateCpf}
+      errorMessage={
+        required ? "CPF é obrigatório" : "Digite um CPF válido (11 dígitos)"
+      }
+      mask="000.000.000-00"
+      mobileKeyboard="number"
+    />
+  );
+};
+```
+
+### Input de Telefone Especializado
+
+```tsx
+import React, { useState } from "react";
+import { Input, InputProps } from "lavex-design-system";
+
+interface PhoneInputProps
+  extends Omit<
+    InputProps,
+    "validation" | "errorMessage" | "mobileKeyboard" | "mask"
+  > {
+  required?: boolean;
+}
+
+export const PhoneInput: React.FC<PhoneInputProps> = ({
+  required = false,
+  ...props
+}) => {
+  const validatePhone = (value: string): boolean => {
+    if (required && !value) return false;
+    if (!value) return true; // Campo opcional vazio é válido
+    const cleanPhone = value.replace(/\D/g, "");
+    return cleanPhone.length >= 10 && cleanPhone.length <= 11;
+  };
+
+  return (
+    <Input
+      {...props}
+      validation={validatePhone}
+      errorMessage={
+        required
+          ? "Telefone é obrigatório"
+          : "Digite um telefone válido (10 ou 11 dígitos)"
+      }
+      mask="(00) 00000-0000"
+      mobileKeyboard="phone"
+    />
+  );
+};
+```
+
+### Uso dos Inputs Especializados
+
+```tsx
+import React, { useState } from "react";
+import { View } from "react-native";
+import { EmailInput, CpfInput, PhoneInput } from "./specialized-inputs";
+
+const SpecializedForm = () => {
+  const [email, setEmail] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [phone, setPhone] = useState("");
+
+  return (
+    <View style={{ padding: 20 }}>
+      <EmailInput
+        label="Email"
+        value={email}
+        placeholder="seu@email.com"
+        onChange={setEmail}
+        required={true}
+      />
+
+      <CpfInput
+        label="CPF"
+        value={cpf}
+        placeholder="000.000.000-00"
+        onChange={setCpf}
+        required={true}
+      />
+
+      <PhoneInput
+        label="Telefone"
+        value={phone}
+        placeholder="(11) 99999-9999"
+        onChange={setPhone}
+        required={false}
+      />
+    </View>
+  );
+};
 ```
