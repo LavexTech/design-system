@@ -11,6 +11,8 @@ export interface InputProps {
   errorMessage?: string;
   mask?: string;
   mobileKeyboard?: "text" | "email" | "phone" | "number";
+  onBlur?: () => void;
+  onEndEditing?: () => void;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -22,6 +24,8 @@ export const Input: React.FC<InputProps> = ({
   errorMessage,
   mask,
   mobileKeyboard = "text",
+  onBlur,
+  onEndEditing,
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true);
 
@@ -93,6 +97,8 @@ export const Input: React.FC<InputProps> = ({
         onChangeText={handleTextChange}
         keyboardType={getKeyboardType()}
         placeholderTextColor={Constants.styles.textColor.INFO}
+        onBlur={onBlur}
+        onEndEditing={onEndEditing}
       />
       {!isValid && errorMessage && (
         <Text style={styles.errorText}>{errorMessage}</Text>
