@@ -16,14 +16,12 @@ export const InputCPF: React.FC<InputCPFProps> = ({
   placeholder = "000.000.000-00",
   errorMessage = "CPF deve ter formato válido",
 }) => {
-  // Validação de CPF
   const validateCPF = (cpf: string): boolean => {
-    if (!cpf) return true; // Campo vazio é válido (não obrigatório)
+    if (!cpf) return true;
 
     const digits = cpf.replace(/\D/g, "");
     if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) return false;
 
-    // Validação dos dígitos verificadores
     const checkDigit = (digits: string, length: number): number => {
       const sum = digits
         .slice(0, length)
