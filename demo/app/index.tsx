@@ -1,8 +1,11 @@
 import React from "react";
-import { InputDemo } from "../examples";
+import { ScrollView } from "react-native";
+import { InputNameDemo } from "../examples/InputNameDemo/InputNameDemo";
 
 export default function Index() {
-  return <InputDemo />;
-  // return <CardDemo />;
-  // return <ButtonDemo />;
+  return (
+    <ScrollView>
+      <InputNameDemo />
+    </ScrollView>
+  )
 }
