@@ -12,18 +12,15 @@ export const InputCPFDemo: React.FC = () => {
   const [cpf4, setCpf4] = useState("");
   const [cpf5, setCpf5] = useState("");
 
-  // Função para determinar mensagem de erro inteligente
   const getErrorMessage = (cpf: string): string => {
     if (!cpf) return "CPF deve ter formato válido";
 
     const digits = cpf.replace(/\D/g, "");
 
-    // Se não tem 11 dígitos, é erro de formato
     if (digits.length !== 11) {
       return "CPF deve ter formato válido";
     }
 
-    // Se tem 11 dígitos mas é inválido, é erro de verificação
     return "CPF não passa na verificação";
   };
 
