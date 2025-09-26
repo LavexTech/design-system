@@ -1,6 +1,13 @@
 import React from "react";
-import { InputDemo } from "../examples";
+import { ScrollView } from "react-native";
+import { InputDemo } from "../examples/InputDemo/InputDemo";
+import { InputPasswordDemo } from "../examples/InputPasswordDemo/InputPasswordDemo";
 
 export default function Index() {
-  return <InputDemo />;
+  return (
+    <ScrollView>
+      <InputDemo />
+      <InputPasswordDemo />
+    </ScrollView>
+  );
 }
