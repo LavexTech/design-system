@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.LARGE,
         paddingVertical: Constants.styles.spacing.MEDIUM,
         borderRadius: Constants.styles.borderRadius.MEDIUM,
-        minWidth: 120,
+        width: "100%",
+        alignSelf: "stretch",
     },
     buttonText: {
         fontSize: Constants.styles.fontSize.MEDIUM,
