@@ -44,14 +44,12 @@ const MyComponent = () => {
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Title2, TextArea } from "lavex-design-system";
+import { TextArea } from "lavex-design-system";
 
 const ContactForm = () => {
   const [message, setMessage] = useState("");
 
   return (
-    <View style={{ padding: 20 }}>
-      <Title2 text="Entre em Contato" />
       <TextArea
         label="Mensagem"
         value={message}
@@ -68,14 +66,13 @@ const ContactForm = () => {
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Title3, TextArea } from "lavex-design-system";
+import { TextArea } from "lavex-design-system";
 
 const CommentSection = () => {
   const [comment, setComment] = useState("");
 
   return (
     <View style={{ padding: 16 }}>
-      <Title3 text="Deixe seu comentário" />
       <TextArea
         label="Comentário"
         value={comment}
