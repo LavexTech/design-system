@@ -10,12 +10,13 @@ import { TextArea } from "lavex-design-system";
 
 ## Props
 
-| Prop          | Tipo                      | Obrigatório | Descrição                                     |
-| ------------- | ------------------------- | ----------- | --------------------------------------------- |
-| `label`       | `string`                  | ✅          | O texto do título que fica acima da caixa     |
-| `value`       | `string`                  | ✅          | O valor atual do texto                        |
-| `placeholder` | `string`                  | ✅          | O texto que aparece quando a caixa está vazia |
-| `onChange`    | `(value: string) => void` | ✅          | Função chamada quando o texto é alterado      |
+| Prop          | Tipo                      | Obrigatório | Descrição                                                              |
+| ------------- | ------------------------- | ----------- | ---------------------------------------------------------------------- |
+| `label`       | `string`                  | ✅          | O texto do título que fica acima da caixa                              |
+| `value`       | `string`                  | ❌          | O valor atual do texto                                                 |
+| `placeholder` | `string`                  | ❌          | O texto que aparece quando a caixa está vazia                          |
+| `onChange`    | `(value: string) => void` | ✅          | Função chamada quando o texto é alterado                               |
+| `maxLength`   | `number`                  | ❌          | Limite máximo de caracteres. Quando definido, exibe um contador visual |
 
 ## Uso Básico
 
@@ -83,3 +84,29 @@ const CommentSection = () => {
   );
 };
 ```
+
+### Com Limite de Caracteres
+
+```tsx
+import React, { useState } from "react";
+import { View } from "react-native";
+import { TextArea } from "lavex-design-system";
+
+const FeedbackForm = () => {
+  const [feedback, setFeedback] = useState("");
+
+  return (
+    <View style={{ padding: 16 }}>
+      <TextArea
+        label="Seu feedback"
+        value={feedback}
+        placeholder="Compartilhe sua opinião (máximo 200 caracteres)..."
+        onChange={setFeedback}
+        maxLength={200}
+      />
+    </View>
+  );
+};
+```
+
+**Observação**: Quando a prop `maxLength` é fornecida, um contador de caracteres aparece automaticamente abaixo do campo, mostrando quantos caracteres foram digitados em relação ao limite máximo.

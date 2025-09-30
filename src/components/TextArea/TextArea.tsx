@@ -4,8 +4,8 @@ import Constants from "../../constants/constants";
 
 export interface TextAreaProps {
   label: string;
-  value: string;
-  placeholder: string;
+  value?: string;
+  placeholder?: string;
   onChange: (value: string) => void;
   maxLength?: number;
 }
@@ -24,6 +24,8 @@ export const TextArea: React.FC<TextAreaProps> = ({
     onChange(text);
   };
 
+  const currentLength = value?.length || 0;
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -37,7 +39,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
       />
       {maxLength && (
         <Text style={styles.charCounter}>
-          {value.length}/{maxLength} caracteres
+          {currentLength}/{maxLength} caracteres
         </Text>
       )}
     </View>
