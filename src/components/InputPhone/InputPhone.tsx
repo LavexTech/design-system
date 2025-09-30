@@ -17,27 +17,17 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   errorMessage = "Telefone deve ter formato válido",
 }) => {
   const applyPhoneMask = (inputValue: string): string => {
-    const digits = inputValue.replace(/\D/g, "");
+    const digits = inputValue.replace(/\D/g, "").slice(0, 11);
 
-    if (digits.length <= 2) {
-      return digits;
-    } else if (digits.length <= 6) {
-      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    } else if (digits.length <= 10) {
-      return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
-    } else if (digits.length <= 11) {
-      return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
-    } else {
-      const limitedDigits = digits.slice(0, 11);
-      return `(${limitedDigits.slice(0, 2)}) ${limitedDigits.slice(2, 7)}-${limitedDigits.slice(7)}`;
-    }
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
   };
 
   const validatePhone = (phone: string): boolean => {
     if (!phone) return true;
-
     const digits = phone.replace(/\D/g, "");
-
     return digits.length === 10 || digits.length === 11;
   };
 
