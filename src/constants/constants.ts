@@ -52,6 +52,9 @@ const Constants = {
       REGULAR: 0.8,
       THICK: 1.2,
     },
+    color: {
+      GOLD: "#FFD700",
+    },
   },
 };
 
