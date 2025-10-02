@@ -10,14 +10,12 @@ import { InputName } from "lavex-design-system";
 
 ## Props
 
-| Prop           | Tipo                         | Obrigatório | Descrição                                          |
-| -------------- | ---------------------------- | ----------- | -------------------------------------------------- |
-| `label`        | `string`                     | ✅          | O texto que aparece acima do campo de entrada      |
-| `value`        | `string`                     | ✅          | O valor atual do input                             |
-| `placeholder`  | `string`                     | ❌          | Texto de placeholder quando o campo está vazio     |
-| `onChange`     | `(value: string) => void`    | ✅          | Função chamada quando o valor do input muda        |
-| `validation`   | `(value: string) => boolean` | ❌          | Função de validação externa que retorna true/false |
-| `errorMessage` | `string`                     | ❌          | Mensagem de erro exibida quando a validação falha  |
+| Prop          | Tipo                      | Obrigatório | Descrição                                      |
+| ------------- | ------------------------- | ----------- | ---------------------------------------------- |
+| `label`       | `string`                  | ✅          | O texto que aparece acima do campo de entrada  |
+| `value`       | `string`                  | ✅          | O valor atual do input                         |
+| `placeholder` | `string`                  | ❌          | Texto de placeholder quando o campo está vazio |
+| `onChange`    | `(value: string) => void` | ✅          | Função chamada quando o valor do input muda    |
 
 ## Uso Básico
 
@@ -61,7 +59,9 @@ const BasicNameInput = () => {
 };
 ```
 
-### InputName com Validação Externa
+### InputName com Validação Automática
+
+O componente `InputName` possui validação interna automática que verifica se o usuário digitou pelo menos nome e sobrenome:
 
 ```tsx
 import React, { useState } from "react";
@@ -70,18 +70,12 @@ import { InputName } from "lavex-design-system";
 const ValidatedNameInput = () => {
   const [name, setName] = useState("");
 
-  const validateName = (value: string): boolean => {
-    return value.trim().split(" ").length >= 2;
-  };
-
   return (
     <InputName
       label="Nome Completo"
       value={name}
       placeholder="Nome Sobrenome"
       onChange={setName}
-      validation={validateName}
-      errorMessage="Digite pelo menos nome e sobrenome"
     />
   );
 };
@@ -130,8 +124,17 @@ O componente automaticamente:
 - Habilita capitalização automática (`autoCapitalize="words"`)
 - Desabilita correção automática (`autoCorrect={false}`)
 
+## Validação Automática
+
+O componente `InputName` possui validação interna que:
+
+- **Verifica nome completo**: Exige pelo menos 2 palavras (nome e sobrenome)
+- **Mensagem de erro**: "Digite pelo menos nome e sobrenome"
+- **Validação inteligente**: Não mostra erro quando o campo está vazio
+- **Feedback em tempo real**: Validação acontece durante a digitação
+
 ## Boas Práticas
 
 1. **Use labels descritivos**: Sempre forneça um label claro que explique o que o usuário deve inserir
 2. **Placeholders úteis**: Use placeholders que mostrem o formato esperado
-3. **Validação apropriada**: Implemente validação para garantir nomes completos
+3. **Validação automática**: O componente já possui validação interna para nomes completos

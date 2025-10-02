@@ -6,8 +6,6 @@ export interface InputNameProps {
     value: string;
     placeholder?: string;
     onChange: (value: string) => void;
-    validation?: (value: string) => boolean;
-    errorMessage?: string;
 }
 
 export const InputName: React.FC<InputNameProps> = ({
@@ -15,8 +13,6 @@ export const InputName: React.FC<InputNameProps> = ({
     value,
     placeholder = "Nome Sobrenome",
     onChange,
-    validation,
-    errorMessage,
 }) => {
     const formatName = (inputValue: string): string => {
         const words = inputValue.split(' ');
@@ -43,6 +39,19 @@ export const InputName: React.FC<InputNameProps> = ({
         onChange(formattedValue);
     };
 
+    // Validação interna: verifica se tem pelo menos 2 palavras (nome e sobrenome)
+    const validateName = (inputValue: string): boolean => {
+        const trimmedValue = inputValue.trim();
+        if (trimmedValue.length === 0) return true; // Não mostra erro se estiver vazio
+
+        const words = trimmedValue.split(' ').filter(word => word.length > 0);
+        return words.length >= 2;
+    };
+
+    const getErrorMessage = (): string => {
+        return "Digite pelo menos nome e sobrenome";
+    };
+
     return (
         <Input
             label={label}
@@ -50,8 +59,8 @@ export const InputName: React.FC<InputNameProps> = ({
             placeholder={placeholder}
             onChange={handleChange}
             mobileKeyboard="text"
-            validation={validation}
-            errorMessage={errorMessage}
+            validation={validateName}
+            errorMessage={getErrorMessage()}
             onBlur={handleBlur}
             onEndEditing={handleEndEditing}
         />
