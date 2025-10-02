@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Text, View, StyleSheet } from "react-native";
+import { TextInput, View, StyleSheet } from "react-native";
 import Constants from "../../constants/constants";
+import { TextBox as Text } from "../Text/Text";
 
 export interface InputProps {
   label: string;
@@ -28,14 +29,27 @@ export const Input: React.FC<InputProps> = ({
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue;
 
-    const cleanValue = inputValue.replace(/\D/g, "");
+    const cleanValue = inputValue.replace(/[^a-zA-Z0-9]/g, "");
     let maskedValue = "";
     let valueIndex = 0;
 
     for (let i = 0; i < maskPattern.length && valueIndex < cleanValue.length; i++) {
-      if (maskPattern[i] === "0" || maskPattern[i] === "9") {
-        maskedValue += cleanValue[valueIndex];
-        valueIndex++;
+      const maskChar = maskPattern[i].toUpperCase();
+
+      if (maskChar === 'X' || maskChar === '9' || maskChar === '0' || maskChar === 'A') {
+        const char = cleanValue[valueIndex];
+        const isValidChar =
+          maskChar === 'X' ||
+          (maskChar === '9' && /\d/.test(char)) ||
+          (maskChar === '0' && /\d/.test(char)) ||
+          (maskChar === 'A' && /[a-zA-Z]/.test(char));
+
+        if (isValidChar) {
+          maskedValue += char;
+          valueIndex++;
+        } else {
+          continue;
+        }
       } else {
         maskedValue += maskPattern[i];
       }
@@ -85,7 +99,7 @@ export const Input: React.FC<InputProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <Text text={label} />
       <TextInput
         style={[styles.input, !isValid && styles.inputError]}
         value={value}
@@ -95,7 +109,7 @@ export const Input: React.FC<InputProps> = ({
         placeholderTextColor={Constants.styles.textColor.INFO}
       />
       {!isValid && errorMessage && (
-        <Text style={styles.errorText}>{errorMessage}</Text>
+        <Text text={errorMessage} />
       )}
     </View>
   );
