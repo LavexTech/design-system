@@ -117,7 +117,6 @@ export const Input: React.FC<InputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: Constants.styles.spacing.MEDIUM,
   },
   label: {
     fontSize: Constants.styles.fontSize.SMALL,
@@ -132,8 +131,8 @@ const styles = StyleSheet.create({
     borderRadius: Constants.styles.borderRadius.MEDIUM,
     paddingHorizontal: Constants.styles.spacing.MEDIUM,
     paddingVertical: Constants.styles.spacing.MEDIUM,
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
+    fontSize: "20px",
+    fontFamily: "Roboto-Regular",
     color: Constants.styles.textColor.DEFAULT,
     backgroundColor: Constants.styles.backgroundColor.WHITE,
   },
