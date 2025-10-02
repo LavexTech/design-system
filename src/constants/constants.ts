@@ -52,6 +52,14 @@ const Constants = {
       REGULAR: 0.8,
       THICK: 1.2,
     },
+    imageSize: {
+      SMALL: 60,
+      MEDIUM: 100,
+      LARGE: 150,
+    },
+    minWidth: {
+      QUANTITY: 30,
+    },
   },
 };
 
