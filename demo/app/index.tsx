@@ -1,9 +1,10 @@
 import { View } from "react-native";
-import { Title1 } from "@src/components/Title1/Title1";
-import { Title2 } from "@src/components/Title2/Title2";
-import { Title3 } from "@src/components/Title3/Title3";
+import { MainTitle } from "@src/components/MainTitle/MainTitle";
+import { Title } from "@src/components/Title/Title";
+import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Grid } from "@src/components/Grid/Grid";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { Image } from "@src/components/Image/Image";
 
 export default function Index() {
   return (
@@ -17,15 +18,32 @@ export default function Index() {
       <Grid columns={3} gap={4}>
         <>
           <Text text="Column 1" />
-          <Title1 text="Hello World" />
+          <MainTitle text="Hello World" />
+          <Image
+            src="https://picsum.photos/id/11/100/100"
+            alt="Placeholder image"
+            size={80}
+            onClick={() => console.log('Image clicked!')}
+          />
         </>
         <>
           <Text text="Column 2" />
-          <Title2 text="Hello World" />
+          <Title text="Hello World" />
+          <Image
+            src="https://picsum.photos/id/1/100"
+            alt="Logo placeholder"
+            size={60}
+          />
         </>
         <>
           <Text text="Column 3" />
-          <Title3 text="Hello World" />
+          <Subtitle text="Hello World" />
+          <Image
+            src="https://picsum.photos/id/10/100/100"
+            alt="Icon placeholder"
+            size={100}
+            onClick={() => alert('Icon clicked!')}
+          />
         </>
       </Grid>
     </View>
