@@ -4,6 +4,8 @@ import { Title } from "@src/components/Title/Title";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Grid } from "@src/components/Grid/Grid";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { TextArea } from "@src/components/TextArea/TextArea";
+import { useState } from "react";
 
 export default function Index() {
   const [contactMessage, setContactMessage] = useState("");
@@ -31,6 +33,10 @@ export default function Index() {
           <Subtitle text="Hello World" />
         </>
       </Grid>
+
+      <View style={{ marginTop: 20, width: "70%" }}>
+        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
+      </View>
     </View>
   );
 }
