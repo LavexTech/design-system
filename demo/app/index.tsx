@@ -9,7 +9,7 @@ import { Card } from "@src/components/Card/Card";
 
 export default function Index() {
   return (
-    <ScrollView>
+    <ScrollView style={{ marginTop: 20, padding: 20 }}>
       <MainTitle text="Main Title" />
       <Subtitle text="Subtitle" />
       <Title text="Title" />
