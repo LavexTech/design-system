@@ -1,11 +1,18 @@
-import { View } from "react-native";
+import React, { useState } from "react";
+import { View, Button } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Title } from "@src/components/Title/Title";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Grid } from "@src/components/Grid/Grid";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { Modal } from "@src/components/Modal/Modal";
 
 export default function Index() {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <View
       style={{
@@ -28,6 +35,18 @@ export default function Index() {
           <Subtitle text="Hello World" />
         </>
       </Grid>
+
+      <View style={{ marginTop: 20 }}>
+        <Button title="Mostrar Modal" onPress={() => setShowModal(true)} />
+
+        <Modal
+          title="Atenção!"
+          text="Deseja realmente excluir este item? Esta ação não pode ser desfeita."
+          buttonText="Confirmar"
+          onClose={() => setShowModal(false)}
+          visible={showModal}
+        />
+      </View>
     </View>
   );
 }
