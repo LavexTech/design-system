@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -13,7 +13,7 @@ export default function Index() {
   const [contactMessage, setContactMessage] = useState("");
 
   return (
-    <ScrollView>
+    <ScrollView style={{ marginTop: 20, padding: 20 }}>
       <MainTitle text="Main Title" />
       <Subtitle text="Subtitle" />
       <Title text="Title" />
