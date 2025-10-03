@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
-import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
+import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Grid } from "@src/components/Grid/Grid";
 import { TextBox as Text } from "@src/components/Text/Text";
 
@@ -16,16 +16,16 @@ export default function Index() {
     >
       <Grid columns={3} gap={4}>
         <>
-          <Text text="Main Title" />
+          <Text text="Column 1" />
           <MainTitle text="Hello World" />
         </>
         <>
-          <Text text="Subtitle" />
-          <Subtitle text="Hello World" />
+          <Text text="Column 2" />
+          <Title text="Hello World" />
         </>
         <>
-          <Text text="Title" />
-          <Title text="Hello World" />
+          <Text text="Column 3" />
+          <Subtitle text="Hello World" />
         </>
       </Grid>
     </View>
