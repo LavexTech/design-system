@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: Constants.styles.spacing.TINY,
-    padding: Constants.styles.spacing.TINY,
+    padding: Constants.styles.spacing.SMALL,
+    paddingBottom: Constants.styles.spacing.EXTRA_LARGE,
   },
   iconContainer: {
     alignItems: "center",
