@@ -52,6 +52,16 @@ const Constants = {
       REGULAR: 0.8,
       THICK: 1.2,
     },
+    componentSize: {
+      BUTTON_HEIGHT: 40,
+      BUTTON_WIDTH: 40,
+      INPUT_MIN_WIDTH: 50,
+    },
+    opacity: {
+      DISABLED: 0.5,
+      SEMI_TRANSPARENT: 0.7,
+      FULL: 1,
+    },
   },
 };
 
