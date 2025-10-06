@@ -27,9 +27,9 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
-    "typescript": "~5.9.2",
     "eslint": "^9.25.0",
-    "eslint-config-expo": "~10.0.0"
+    "eslint-config-expo": "~10.0.0",
+    "typescript": "~5.9.2"
   },
   "repository": {
     "type": "git",
@@ -38,5 +38,10 @@
   "bugs": {
     "url": "https://github.com/lavex/lavex-design-system/issues"
   },
-  "homepage": "https://github.com/lavex/lavex-design-system#readme"
+  "homepage": "https://github.com/lavex/lavex-design-system#readme",
+  "dependencies": {
+    "gluestack-ui": "^3.0.7",
+    "init": "^0.1.2",
+    "npx": "^10.2.2"
+  }
 }
