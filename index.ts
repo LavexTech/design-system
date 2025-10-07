@@ -6,5 +6,6 @@ export { TextBox as Text } from "./src/components/Text/Text";
 export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
 export { Grid } from "./src/components/Grid/Grid";
+export { Accordion } from "./src/components/Accordion/Accordion";
 
 export { useGlobalFonts } from "./src/fontSetup";

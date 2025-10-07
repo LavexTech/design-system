@@ -6,6 +6,7 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { Accordion } from "@src/components/Accordion/Accordion";
 
 export default function Index() {
   return (
@@ -23,6 +24,12 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+      <Accordion text="O que é um FAQ?">
+        <Text text="FAQ significa 'Perguntas Frequentes' e é usado para organizar informações comuns." />
+      </Accordion>
+      <Accordion text="Como usar o Accordion?">
+        <Info text="Clique no título para expandir ou recolher o conteúdo." />
+      </Accordion>
     </ScrollView>
   )
 }
