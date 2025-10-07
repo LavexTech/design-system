@@ -7,3 +7,6 @@ export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
 export { Input } from "./src/components/Input/Input";
 export { InputPhone } from "./src/components/InputPhone/InputPhone";
+export { Grid } from "./src/components/Grid/Grid";
+
+export { useFonts } from "./src/fontSetup";
