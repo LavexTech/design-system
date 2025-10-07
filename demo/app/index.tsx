@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useState } from "react";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
@@ -7,6 +7,7 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { InputName } from "@src/components/InputName/InputName";
 
 export default function Index() {
   const [userName, setUserName] = useState("");
@@ -26,6 +27,15 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+
+      <View style={{ marginTop: 20}}>
+        <InputName
+          label="Nome Completo"
+          value={userName}
+          placeholder="Digite seu nome completo"
+          onChange={setUserName}
+        />
+      </View>
     </ScrollView>
   )
 }
