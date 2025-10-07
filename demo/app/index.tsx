@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -6,6 +6,7 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { Button } from "@src/components/Button/Button";
 
 export default function Index() {
   return (
@@ -23,6 +24,9 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+      <View>
+        <Button text="Button" onClick={() => {}} />
+      </View>
     </ScrollView>
   )
 }
