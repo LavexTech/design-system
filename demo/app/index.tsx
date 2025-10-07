@@ -6,8 +6,17 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal";
 
 export default function Index() {
+  const sampleUser = {
+    id: "1",
+    name: "Fulano",
+    profileImage: "https://picsum.photos/id/15/200/200",
+    ordersCount: 32,
+    rating: 3.5,
+  };
+
   return (
     <ScrollView style={{ marginTop: 20, padding: 20 }}>
       <MainTitle text="Main Title" />
@@ -23,6 +32,15 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+      <Title text="UserCardHorizontal" />
+      <UserCardHorizontal
+        user={sampleUser}
+        onClick={() => console.log("Usuário clicado:", sampleUser.id)}
+      />
+      <UserCardHorizontal
+        user={{ ...sampleUser, id: "2", name: "Maria Silva", rating: 5, ordersCount: 48 }}
+        onClick={() => console.log("Usuário clicado: 2")}
+      />
     </ScrollView>
   )
 }
