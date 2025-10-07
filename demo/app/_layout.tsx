@@ -1,12 +1,8 @@
 import { Stack } from "expo-router";
-import { useGlobalFonts } from "@src/fontSetup";
+
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
+import '@/global.css';
 
 export default function RootLayout() {
-  const ready = useGlobalFonts();
-
-  if (!ready) {
-    return null;
-  }
-
   return <Stack />;
 }
