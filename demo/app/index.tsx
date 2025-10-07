@@ -7,6 +7,7 @@ import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Image } from "@src/components/Image/Image";
+import { Gallery } from "@src/components/Gallery/Gallery";
 
 export default function Index() {
   return (
@@ -53,6 +54,18 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+      <Title text="Gallery Component" />
+      <Gallery
+        images={[
+          "https://picsum.photos/id/10/200/200",
+          "https://picsum.photos/id/11/200/200",
+          "https://picsum.photos/id/12/200/200",
+          "https://picsum.photos/id/13/200/200",
+          "https://picsum.photos/id/14/200/200",
+          "https://picsum.photos/id/15/200/200",
+        ]}
+        onClick={(imageUrl: string, index: number) => console.log(`Clicked image ${index + 1}:`, imageUrl)}
+      />
     </ScrollView>
   )
 }

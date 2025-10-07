@@ -10,7 +10,7 @@ export interface ImageProps {
     style?: ImageStyle;
 }
 
-export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 100, style }) => {
+export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 100, style }: ImageProps) => {
     const imageStyle = [
         styles.image,
         {
