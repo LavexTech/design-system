@@ -7,5 +7,6 @@ export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
 export { Grid } from "./src/components/Grid/Grid";
 export { Accordion } from "./src/components/Accordion/Accordion";
+export { OrderList } from "./src/components/OrderList/OrderList";
 
 export { useGlobalFonts } from "./src/fontSetup";
