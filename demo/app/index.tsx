@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -7,6 +7,7 @@ import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal";
+import { UserList } from "@src/components/UserList/UserList";
 
 export default function Index() {
   const sampleUser = {
@@ -16,6 +17,30 @@ export default function Index() {
     ordersCount: 32,
     rating: 3.5,
   };
+
+  const usersList = [
+    {
+      id: "1",
+      name: "Fulano",
+      profileImage: "https://picsum.photos/id/10/200/200",
+      ordersCount: 32,
+      rating: 4.5,
+    },
+    {
+      id: "2",
+      name: "Sicrano",
+      profileImage: "https://picsum.photos/id/11/200/200",
+      ordersCount: 12,
+      rating: 3.5,
+    },
+    {
+      id: "3",
+      name: "Beltrano",
+      profileImage: "https://picsum.photos/id/12/200/200",
+      ordersCount: 1,
+      rating: 1.5,
+    },
+  ];
 
   return (
     <ScrollView style={{ marginTop: 20, padding: 20 }}>
@@ -41,6 +66,14 @@ export default function Index() {
         user={{ ...sampleUser, id: "2", name: "Maria Silva", rating: 5, ordersCount: 48 }}
         onClick={() => console.log("Usuário clicado: 2")}
       />
+      <Title text="UserList" />
+      <View style={{ marginBottom: 60 }}>
+        <UserList
+          users={usersList}
+          onUserClick={(user: any) => console.log("Usuário da lista clicado:", user.name)}
+        />
+      </View>
+      
     </ScrollView>
   )
 }
