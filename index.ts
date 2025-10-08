@@ -7,5 +7,6 @@ export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
 export { Grid } from "./src/components/Grid/Grid";
 export { UserCardHorizontal } from "./src/components/UserCardHorizontal/UserCardHorizontal";
+export { UserList } from "./src/components/UserList/UserList";
 
 export { useFonts } from "./src/fontSetup";
