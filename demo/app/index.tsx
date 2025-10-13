@@ -12,29 +12,31 @@ export default function Index() {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <ScrollView style={{ marginTop: 20, padding: 20 }}>
-      <MainTitle text="Main Title" />
-      <Subtitle text="Subtitle" />
-      <Title text="Title" />
-      <Text text="TextBox" />
-      <Info text="Info" />
-      <Grid columns={3} gap={4}>
-        <Text text="Column 1" />
-        <Text text="Column 2" />
-        <Text text="Column 3" />
-      </Grid>
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ marginTop: 20, padding: 20 }}>
+        <MainTitle text="Main Title" />
+        <Subtitle text="Subtitle" />
+        <Title text="Title" />
+        <Text text="TextBox" />
+        <Info text="Info" />
+        <Grid columns={3} gap={4}>
+          <Text text="Column 1" />
+          <Text text="Column 2" />
+          <Text text="Column 3" />
+        </Grid>
 
-      <View style={{ marginTop: 20 }}>
-        <Button title="Mostrar Modal" onPress={() => setShowModal(true)} />
+        <View style={{ marginTop: 20 }}>
+          <Button title="Mostrar Modal" onPress={() => setShowModal(true)} />
+        </View>
+      </ScrollView>
 
-        <Modal
-          title="Atenção!"
-          text="Deseja realmente excluir este item? Esta ação não pode ser desfeita."
-          buttonText="Confirmar"
-          onClose={() => setShowModal(false)}
-          visible={showModal}
-        />
-      </View>
-    </ScrollView>
+      <Modal
+        title="Atenção!"
+        text="Deseja realmente excluir este item? Esta ação não pode ser desfeita."
+        buttonText="Confirmar"
+        onClose={() => setShowModal(false)}
+        visible={showModal}
+      />
+    </View>
   );
 }
