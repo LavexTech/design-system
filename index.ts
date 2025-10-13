@@ -8,4 +8,4 @@ export { Card } from "./src/components/Card/Card";
 export { Grid } from "./src/components/Grid/Grid";
 export { Modal } from "./src/components/Modal/Modal";
 
-export { useGlobalFonts } from "./src/fontSetup";
+export { useFonts } from "./src/fontSetup";

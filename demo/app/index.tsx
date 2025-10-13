@@ -1,39 +1,27 @@
 import React, { useState } from "react";
-import { View, Button } from "react-native";
+import { View, ScrollView, Button } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
-import { Title } from "@src/components/Title/Title";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
-import { Grid } from "@src/components/Grid/Grid";
+import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
 import { Modal } from "@src/components/Modal/Modal";
+import { Info } from "@src/components/Info/Info";
+import { Grid } from "@src/components/Grid/Grid";
 
 export default function Index() {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [showInfoModal, setShowInfoModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <ScrollView style={{ marginTop: 20, padding: 20 }}>
+      <MainTitle text="Main Title" />
+      <Subtitle text="Subtitle" />
+      <Title text="Title" />
+      <Text text="TextBox" />
+      <Info text="Info" />
       <Grid columns={3} gap={4}>
-        <>
-          <Text text="Column 1" />
-          <MainTitle text="Hello World" />
-        </>
-        <>
-          <Text text="Column 2" />
-          <Title text="Hello World" />
-        </>
-        <>
-          <Text text="Column 3" />
-          <Subtitle text="Hello World" />
-        </>
+        <Text text="Column 1" />
+        <Text text="Column 2" />
+        <Text text="Column 3" />
       </Grid>
 
       <View style={{ marginTop: 20 }}>
@@ -47,6 +35,6 @@ export default function Index() {
           visible={showModal}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 }
