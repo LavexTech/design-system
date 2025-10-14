@@ -1,12 +1,8 @@
 import { Stack } from "expo-router";
-import { useGlobalFonts } from "@src/fontSetup";
+import '@src/global.css';
 
 export default function RootLayout() {
-  const ready = useGlobalFonts();
-
-  if (!ready) {
-    return null;
-  }
-
-  return <Stack />;
+  return (
+    <Stack screenOptions={{ headerShown: false }} />
+  );
 }
