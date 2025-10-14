@@ -1,4 +1,6 @@
-import { ScrollView } from "react-native";
+import { View,ScrollView } from "react-native";
+import { useState } from "react";
+
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -6,8 +8,10 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { Input } from "@src/components/Input/Input";
 
 export default function Index() {
+  const [value, setValue] = useState("");
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
@@ -86,6 +90,16 @@ export default function Index() {
            </GridItem>
          </Grid>
       </Grid>
+      <Card>
+        <Text text="Card" />
+      </Card>
+      <View style={{ marginTop: 20 }}>
+        <Input label="Input" value={value} placeholder="Enter Text here..." onChange={setValue} validation={validateInput} errorMessage="Input must be less than 7 characters"/>
+      </View>
     </ScrollView>
   )
+}
+
+const validateInput = (value: string) => {
+  return value.length < 7;
 }

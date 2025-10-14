@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, View, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
+import { StyleSheet } from "react-native";
 import { TextBox as Text } from "../Text/Text";
+import { Info } from "../Info/Info";
+
+import Constants from "../../constants/constants";
+import { Input as InputBase, InputField } from '../../ui/input';
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
+import { Grid, GridItem } from "../Grid/Grid";
 
 export interface InputProps {
   label: string;
@@ -98,51 +103,48 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <Text text={label} />
-      <TextInput
-        style={[styles.input, !isValid && styles.inputError]}
-        value={value}
-        placeholder={placeholder}
-        onChangeText={handleTextChange}
-        keyboardType={getKeyboardType()}
-        placeholderTextColor={Constants.styles.textColor.INFO}
-      />
-      {!isValid && errorMessage && (
-        <Text text={errorMessage} />
-      )}
-    </View>
+    <GluestackUIProvider>
+      <Grid columns={1} gap={2}>
+        <GridItem colSpan={4}>
+          <Text text={label} />
+        </GridItem>
+        <GridItem colSpan={4}>
+        <InputBase
+          style={[styles.input, !isValid && styles.inputError]}
+          variant="outline"
+          size="xl"
+          isDisabled={false}
+          isInvalid={!isValid}
+          isReadOnly={false}
+        >
+          <InputField 
+            placeholder={placeholder} 
+            value={value} 
+            onChangeText={handleTextChange} 
+            keyboardType={getKeyboardType()} 
+            placeholderTextColor={Constants.styles.textColor.INFO} 
+          />
+        </InputBase>
+        </GridItem>
+        {!isValid && errorMessage && (
+          <GridItem colSpan={4}>
+          <Info text={errorMessage} />
+          </GridItem>
+        )}
+      </Grid>
+    </GluestackUIProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-  },
-  label: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontWeight: Constants.styles.fontWeight.NORMAL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
-    marginBottom: Constants.styles.spacing.TINY,
-  },
   input: {
-    borderWidth: Constants.styles.borderWidth.REGULAR,
-    borderColor: Constants.styles.borderColor.MEDIUM,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    paddingHorizontal: Constants.styles.spacing.MEDIUM,
-    paddingVertical: Constants.styles.spacing.MEDIUM,
-    fontSize: "20px",
-    fontFamily: "Roboto-Regular",
-    color: Constants.styles.textColor.DEFAULT,
     backgroundColor: Constants.styles.backgroundColor.WHITE,
+    borderRadius: Constants.styles.borderRadius.MEDIUM,
   },
   inputError: {
     borderColor: Constants.styles.textColor.DANGER,
   },
-  errorText: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
+  info: {
     color: Constants.styles.textColor.DANGER,
-    marginTop: Constants.styles.spacing.TINY,
   },
 });
