@@ -32,20 +32,27 @@ export const Input: React.FC<InputProps> = ({
 
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue;
+    
+    const invalidChars = /[A-WYZa-wyz0-9]/;
+    if (invalidChars.test(maskPattern)) {
+      console.warn(`Máscara inválida: "${maskPattern}".`);
+      return inputValue;
+    }
 
     const cleanValue = inputValue.replace(/[^a-zA-Z0-9]/g, "");
     let maskedValue = "";
     let valueIndex = 0;
 
-    for (let i = 0; i < maskPattern.length && valueIndex < cleanValue.length; i++) {
-      const maskChar = maskPattern[i].toUpperCase();
+    for (let i = 0; i < maskPattern.length; i++) {
+      if (valueIndex >= cleanValue.length) break;
 
-      if (maskChar === 'X') {
-        const char = cleanValue[valueIndex];
-        maskedValue += char;
+      const maskChar = maskPattern[i];
+
+      if (maskChar === 'X' || maskChar === 'x') {
+        maskedValue += cleanValue[valueIndex];
         valueIndex++;
       } else {
-        maskedValue += maskPattern[i];
+        maskedValue += maskChar;
       }
     }
 
