@@ -16,14 +16,15 @@ export default function Index() {
       <Title text="Title" />
       <Text text="TextBox" />
       <Info text="Info" />
-      <Grid columns={3} gap={4}>
+      <Grid columns={3} gap={0}>
         <>
           <Text text="Column 1" />
           <MainTitle text="Hello World" />
           <Image
             src="https://picsum.photos/id/11/100/100"
             alt="Placeholder image"
-            size={80}
+            size="lg"
+            type="circle"
             onClick={() => console.log('Image clicked!')}
           />
         </>
@@ -33,7 +34,8 @@ export default function Index() {
           <Image
             src="https://picsum.photos/id/1/100"
             alt="Logo placeholder"
-            size={60}
+            size="md"
+            type="default"
           />
         </>
         <>
@@ -42,7 +44,8 @@ export default function Index() {
           <Image
             src="https://picsum.photos/id/10/100/100"
             alt="Icon placeholder"
-            size={100}
+            size="xl"
+            type="circle"
             onClick={() => alert('Icon clicked!')}
           />
         </>
