@@ -30,13 +30,24 @@ export default function Index() {
         </View>
       </ScrollView>
 
-      <Modal
-        title="Atenção!"
-        text="Deseja realmente excluir este item? Esta ação não pode ser desfeita."
-        buttonText="Confirmar"
-        onClose={() => setShowModal(false)}
-        visible={showModal}
-      />
+      {showModal && (
+        <View style={{ 
+          position: 'absolute', 
+          top: 0, 
+          left: 0, 
+          right: 0, 
+          bottom: 0, 
+          zIndex: 1000 
+        }}>
+          <Modal
+            title="Atenção!"
+            text="Deseja realmente excluir este item? Esta ação não pode ser desfeita."
+            buttonText="Confirmar"
+            onClose={() => setShowModal(false)}
+            visible={showModal}
+          />
+        </View>
+      )}
     </View>
   );
 }
