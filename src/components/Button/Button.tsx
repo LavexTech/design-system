@@ -1,6 +1,6 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
+import { Button as GluestackButton, ButtonText } from "../../ui/button";
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
 
 export interface ButtonProps {
   text: string;
@@ -14,89 +14,33 @@ export interface ButtonProps {
   onClick: () => void;
 }
 
+const variantMap = {
+  default: { action: "primary" as const, variant: "solid" as const },
+  "default-outline": { action: "primary" as const, variant: "outline" as const },
+  success: { action: "positive" as const, variant: "solid" as const },
+  danger: { action: "negative" as const, variant: "solid" as const },
+  "success-outline": { action: "positive" as const, variant: "outline" as const },
+  "danger-outline": { action: "negative" as const, variant: "outline" as const },
+};
+
 export const Button: React.FC<ButtonProps> = ({
   text,
   variant = "default",
   onClick,
 }) => {
-  const buttonStyle = [styles.button, styles[variant]];
-
-  const textStyle = [styles.text, styles[`${variant}Text`]];
+  const { action, variant: gluestackVariant } = variantMap[variant];
 
   return (
-    <TouchableOpacity
-      style={buttonStyle}
+    <GluestackUIProvider>
+    <GluestackButton
+      action={action}
+      variant={gluestackVariant}
+      size="md"
       onPress={onClick}
-      activeOpacity={0.7}
     >
-      <Text style={textStyle}>{text}</Text>
-    </TouchableOpacity>
+      {/* @ts-expect-error */}
+      <ButtonText>{text}</ButtonText>
+    </GluestackButton>
+    </GluestackUIProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: Constants.styles.spacing.SMALL,
-    paddingHorizontal: Constants.styles.spacing.MEDIUM,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 48,
-  },
-  text: {
-    fontSize: Constants.styles.fontSize.NORMAL,
-    fontWeight: Constants.styles.fontWeight.NORMAL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    textAlign: "center",
-  },
-
-  default: {
-    backgroundColor: Constants.styles.textColor.DEFAULT,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: Constants.styles.textColor.DEFAULT,
-  },
-  success: {
-    backgroundColor: Constants.styles.textColor.SUCCESS,
-  },
-  danger: {
-    backgroundColor: Constants.styles.textColor.DANGER,
-  },
-  "default-outline": {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: Constants.styles.textColor.DEFAULT,
-  },
-  "success-outline": {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: Constants.styles.textColor.SUCCESS,
-  },
-  "danger-outline": {
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: Constants.styles.textColor.DANGER,
-  },
-
-  defaultText: {
-    color: Constants.styles.backgroundColor.WHITE,
-  },
-  successText: {
-    color: Constants.styles.backgroundColor.WHITE,
-  },
-  dangerText: {
-    color: Constants.styles.backgroundColor.WHITE,
-  },
-  "default-outlineText": {
-    color: Constants.styles.textColor.DEFAULT,
-  },
-  "success-outlineText": {
-    color: Constants.styles.textColor.SUCCESS,
-  },
-  "danger-outlineText": {
-    color: Constants.styles.textColor.DANGER,
-  },
-});
