@@ -9,9 +9,11 @@ import { Info } from "@src/components/Info/Info";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Input } from "@src/components/Input/Input";
+import { InputEmail } from "@src/components/InputEmail/InputEmail";
 
 export default function Index() {
   const [value, setValue] = useState("");
+  const [email, setEmail] = useState("");
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
@@ -93,8 +95,23 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <View style={{ marginTop: 20 }}>
-        <Input label="Input" value={value} placeholder="Enter Text here..." onChange={setValue} validation={validateInput} errorMessage="Input must be less than 7 characters"/>
+      <View style={{ marginTop: 20, gap: 20 }}>
+        <Input 
+          label="Input" 
+          value={value} 
+          placeholder="Enter Text here..." 
+          onChange={setValue} 
+          validation={validateInput} 
+          errorMessage="Input must be less than 7 characters"
+          mobileKeyboard="text"
+        />
+        <InputEmail
+          value={email}
+          onChange={setEmail}
+          label="Input Email"
+          placeholder="Enter Email here..."
+          errorMessage="Email must be valid"
+        />
       </View>
     </ScrollView>
   )
