@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import { ScrollView } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
@@ -7,18 +6,10 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
-import { Input } from "@src/components/Input/Input";
-import { useState } from "react";
 
 export default function Index() {
-  const [input, setInput] = useState("");
-
-  const validateMinLength = (value: string): boolean => {
-    return value.length >= 5;
-  };
-
   return (
-    <ScrollView>
+    <ScrollView style={{ marginTop: 20, padding: 20 }}>
       <MainTitle text="Main Title" />
       <Subtitle text="Subtitle" />
       <Title text="Title" />
@@ -32,14 +23,6 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <Input
-        label="Entrada com Validação"
-        value={input}
-        placeholder="Mínimo 5 caracteres"
-        onChange={setInput}
-        validation={validateMinLength}
-        errorMessage="Deve ter pelo menos 5 caracteres"
-      />
     </ScrollView>
-  );
+  )
 }

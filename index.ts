@@ -8,4 +8,4 @@ export { Card } from "./src/components/Card/Card";
 export { Input } from "./src/components/Input/Input";
 export { Grid } from "./src/components/Grid/Grid";
 
-export { useGlobalFonts } from "./src/fontSetup";
+export { useFonts } from "./src/fontSetup";
