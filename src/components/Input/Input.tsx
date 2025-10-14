@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Text, View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { TextBox as Text } from "../Text/Text";
+
 import Constants from "../../constants/constants";
+import { Input as InputBase, InputField } from '../../ui/input';
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
+import { Grid, GridItem } from "../Grid/Grid";
 
 export interface InputProps {
   label: string;
@@ -27,17 +32,27 @@ export const Input: React.FC<InputProps> = ({
 
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue;
+    
+    const invalidChars = /[A-WYZa-wyz0-9]/;
+    if (invalidChars.test(maskPattern)) {
+      console.warn(`Máscara inválida: "${maskPattern}".`);
+      return inputValue;
+    }
 
-    const cleanValue = inputValue.replace(/\D/g, "");
+    const cleanValue = inputValue.replace(/[^a-zA-Z0-9]/g, "");
     let maskedValue = "";
     let valueIndex = 0;
 
-    for (let i = 0; i < maskPattern.length && valueIndex < cleanValue.length; i++) {
-      if (maskPattern[i] === "0" || maskPattern[i] === "9") {
+    for (let i = 0; i < maskPattern.length; i++) {
+      if (valueIndex >= cleanValue.length) break;
+
+      const maskChar = maskPattern[i];
+
+      if (maskChar === 'X' || maskChar === 'x') {
         maskedValue += cleanValue[valueIndex];
         valueIndex++;
       } else {
-        maskedValue += maskPattern[i];
+        maskedValue += maskChar;
       }
     }
 
@@ -84,52 +99,45 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
-        style={[styles.input, !isValid && styles.inputError]}
-        value={value}
-        placeholder={placeholder}
-        onChangeText={handleTextChange}
-        keyboardType={getKeyboardType()}
-        placeholderTextColor={Constants.styles.textColor.INFO}
-      />
-      {!isValid && errorMessage && (
-        <Text style={styles.errorText}>{errorMessage}</Text>
-      )}
-    </View>
+    <GluestackUIProvider>
+      <Grid columns={1} gap={2}>
+        <GridItem colSpan={4}>
+          <Text text={label} size="small" />
+        </GridItem>
+        <GridItem colSpan={4}>
+        <InputBase
+          style={[styles.input, !isValid && styles.inputError]}
+          variant="outline"
+          size="xl"
+          isDisabled={false}
+          isInvalid={!isValid}
+          isReadOnly={false}
+        >
+          <InputField 
+            placeholder={placeholder} 
+            value={value} 
+            onChangeText={handleTextChange} 
+            keyboardType={getKeyboardType()} 
+            placeholderTextColor={Constants.styles.textColor.INFO} 
+          />
+        </InputBase>
+        </GridItem>
+        {!isValid && errorMessage && (
+          <GridItem colSpan={4}>
+          <Text size="small" level="error" text={errorMessage} />
+          </GridItem>
+        )}
+      </Grid>
+    </GluestackUIProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: Constants.styles.spacing.MEDIUM,
-  },
-  label: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontWeight: Constants.styles.fontWeight.NORMAL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
-    marginBottom: Constants.styles.spacing.TINY,
-  },
   input: {
-    borderWidth: Constants.styles.borderWidth.REGULAR,
-    borderColor: Constants.styles.borderColor.MEDIUM,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    paddingHorizontal: Constants.styles.spacing.MEDIUM,
-    paddingVertical: Constants.styles.spacing.MEDIUM,
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
     backgroundColor: Constants.styles.backgroundColor.WHITE,
+    borderRadius: Constants.styles.borderRadius.MEDIUM,
   },
   inputError: {
     borderColor: Constants.styles.textColor.DANGER,
-  },
-  errorText: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DANGER,
-    marginTop: Constants.styles.spacing.TINY,
   },
 });
