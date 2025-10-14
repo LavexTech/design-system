@@ -91,7 +91,7 @@ export default function Index() {
          </Grid>
       </Grid>
       <Card>
-        <Text text="Card" />
+        <Text text="Card" level="warning" />
       </Card>
       <View style={{ marginTop: 20 }}>
         <Input label="Input" value={value} placeholder="Enter Text here..." onChange={setValue} validation={validateInput} errorMessage="Input must be less than 7 characters"/>
