@@ -117,8 +117,9 @@ export const Input: React.FC<InputProps> = ({
           isInvalid={!isValid}
           isReadOnly={false}
         >
-          <InputField 
-            placeholder={placeholder} 
+          
+          <InputField
+            placeholder={placeholder}
             value={value} 
             onChangeText={handleTextChange} 
             keyboardType={getKeyboardType()} 
