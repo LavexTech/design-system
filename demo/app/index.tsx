@@ -16,9 +16,9 @@ export default function Index() {
       <Text text="TextBox" />
       <Info text="Info" />
       <Grid columns={3} gap={4}>
-        <Text text="Column 1" />
-        <Text text="Column 2" />
-        <Text text="Column 3" />
+        <Text text="Column 1" size="small" />
+        <Text text="Column 2"  />
+        <Text text="Column 3" size="large"/>
       </Grid>
       <Card>
         <Text text="Card" />
