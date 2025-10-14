@@ -17,11 +17,11 @@ export default function Index() {
       <Info text="Info" />
       <Grid columns={3} gap={4}>
         <Text text="Column 1" size="small" />
-        <Text text="Column 2"  />
+        <Text text="Column 2" level="success" />
         <Text text="Column 3" size="large"/>
       </Grid>
       <Card>
-        <Text text="Card" />
+        <Text text="Card" level="warning" />
       </Card>
     </ScrollView>
   )
