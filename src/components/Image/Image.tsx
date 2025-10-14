@@ -1,53 +1,45 @@
 import React from "react";
-import { Image as RNImage, TouchableOpacity, StyleSheet, ImageStyle } from "react-native";
-import Constants from "../../constants/constants";
+import { TouchableOpacity } from "react-native";
+import { Image as GluestackImage } from "../../ui/image";
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
+
+export type ImageSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
+export type ImageType = 'default' | 'circle';
 
 export interface ImageProps {
     src: string;
     alt: string;
     onClick?: () => void;
-    size?: number;
-    style?: ImageStyle;
+    size?: ImageSize;
+    type?: ImageType;
 }
 
-export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 100, style }) => {
-    const imageStyle = [
-        styles.image,
-        {
-            width: size,
-            height: size,
-            borderRadius: size / 2,
-        },
-        style,
-    ];
+export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 'md', type = 'default' }) => {
+    const getBorderRadiusClass = () => {
+        if (type === 'circle') {
+            return 'rounded-full';
+        }
+        return 'rounded-lg';
+    };
+
+    const imageComponent = (
+        <GluestackUIProvider>
+            <GluestackImage
+                source={{ uri: src }}
+                size={size}
+                alt={alt}
+                className={getBorderRadiusClass()}
+            />
+        </GluestackUIProvider>
+    );
 
     if (onClick) {
         return (
             <TouchableOpacity onPress={onClick} activeOpacity={0.7}>
-                <RNImage
-                    source={{ uri: src }}
-                    style={imageStyle}
-                    accessibilityLabel={alt}
-                    accessibilityRole="image"
-                />
+                {imageComponent}
             </TouchableOpacity>
         );
     }
 
-    return (
-        <RNImage
-            source={{ uri: src }}
-            style={imageStyle}
-            accessibilityLabel={alt}
-            accessibilityRole="image"
-        />
-    );
+    return imageComponent;
 };
-
-const styles = StyleSheet.create({
-    image: {
-        backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
-        borderWidth: Constants.styles.borderWidth.THIN,
-        borderColor: Constants.styles.borderColor.LIGHT,
-    },
-});
