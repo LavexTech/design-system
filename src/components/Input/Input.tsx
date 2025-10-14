@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { TextBox as Text } from "../Text/Text";
-import { Info } from "../Info/Info";
 
 import Constants from "../../constants/constants";
 import { Input as InputBase, InputField } from '../../ui/input';
@@ -41,20 +40,10 @@ export const Input: React.FC<InputProps> = ({
     for (let i = 0; i < maskPattern.length && valueIndex < cleanValue.length; i++) {
       const maskChar = maskPattern[i].toUpperCase();
 
-      if (maskChar === 'X' || maskChar === '9' || maskChar === '0' || maskChar === 'A') {
+      if (maskChar === 'X') {
         const char = cleanValue[valueIndex];
-        const isValidChar =
-          maskChar === 'X' ||
-          (maskChar === '9' && /\d/.test(char)) ||
-          (maskChar === '0' && /\d/.test(char)) ||
-          (maskChar === 'A' && /[a-zA-Z]/.test(char));
-
-        if (isValidChar) {
-          maskedValue += char;
-          valueIndex++;
-        } else {
-          continue;
-        }
+        maskedValue += char;
+        valueIndex++;
       } else {
         maskedValue += maskPattern[i];
       }
@@ -106,7 +95,7 @@ export const Input: React.FC<InputProps> = ({
     <GluestackUIProvider>
       <Grid columns={1} gap={2}>
         <GridItem colSpan={4}>
-          <Text text={label} />
+          <Text text={label} size="small" />
         </GridItem>
         <GridItem colSpan={4}>
         <InputBase
@@ -128,7 +117,7 @@ export const Input: React.FC<InputProps> = ({
         </GridItem>
         {!isValid && errorMessage && (
           <GridItem colSpan={4}>
-          <Info text={errorMessage} />
+          <Text size="small" level="error" text={errorMessage} />
           </GridItem>
         )}
       </Grid>
@@ -143,8 +132,5 @@ const styles = StyleSheet.create({
   },
   inputError: {
     borderColor: Constants.styles.textColor.DANGER,
-  },
-  info: {
-    color: Constants.styles.textColor.DANGER,
   },
 });
