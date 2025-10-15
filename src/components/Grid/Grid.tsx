@@ -1,60 +1,119 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
+import { Grid as GluestackGrid, GridItem as GluestackGridItem } from "../../ui/grid";
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
 
 export interface GridProps {
   children: React.ReactNode;
-  columns: number;
+  columns?: number;
   gap?: number;
+  gapX?: number;
+  gapY?: number;
 }
 
 export const Grid: React.FC<GridProps> = ({
   children,
-  columns,
-  gap = Constants.styles.spacing.SMALL,
+  columns = 12,
+  gap,
+  gapX,
+  gapY,
 }) => {
   const childrenArray = React.Children.toArray(children);
 
-  const gridStyle = [
-    styles.grid,
-    gap > 0 && {
-      gap: gap,
-    },
-  ];
+  const getGapClass = (gapValue?: number) => {
+    if (!gapValue || gapValue <= 0) return "";
+    if (gapValue <= 1) return "gap-1";
+    if (gapValue <= 2) return "gap-2";
+    if (gapValue <= 3) return "gap-3";
+    if (gapValue <= 4) return "gap-4";
+    if (gapValue <= 6) return "gap-6";
+    if (gapValue <= 8) return "gap-8";
+    return "gap-12";
+  };
 
-  // Calculate width accounting for gaps
-  // For n columns, there are (n-1) gaps between items
-  const gapWidth = gap * (columns - 1);
-  const availableWidth = 100;
-  const itemWidth =
-    gap === 0 ? 100 / columns : (availableWidth - gapWidth) / columns;
+  const getGapXClass = (gapValue?: number) => {
+    if (!gapValue || gapValue <= 0) return "";
+    if (gapValue <= 1) return "gap-x-1";
+    if (gapValue <= 2) return "gap-x-2";
+    if (gapValue <= 3) return "gap-x-3";
+    if (gapValue <= 4) return "gap-x-4";
+    if (gapValue <= 6) return "gap-x-6";
+    if (gapValue <= 8) return "gap-x-8";
+    return "gap-x-12";
+  };
 
-  const itemStyle = [
-    styles.item,
-    {
-      width: `${itemWidth}%`,
-    },
-    gap > 0 && {
-      paddingHorizontal: Constants.styles.spacing.TINY,
-    },
-  ];
+  const getGapYClass = (gapValue?: number) => {
+    if (!gapValue || gapValue <= 0) return "";
+    if (gapValue <= 1) return "gap-y-1";
+    if (gapValue <= 2) return "gap-y-2";
+    if (gapValue <= 3) return "gap-y-3";
+    if (gapValue <= 4) return "gap-y-4";
+    if (gapValue <= 6) return "gap-y-6";
+    if (gapValue <= 8) return "gap-y-8";
+    return "gap-y-12";
+  };
+
+  const gapClasses = [
+    gap && getGapClass(gap),
+    gapX && getGapXClass(gapX),
+    gapY && getGapYClass(gapY),
+  ].filter(Boolean).join(" ");
 
   return (
-    <View style={gridStyle}>
-      {childrenArray.map((child, index) => (
-        <View key={index} style={itemStyle}>
-          {child}
-        </View>
-      ))}
-    </View>
+    <GluestackUIProvider>
+      <GluestackGrid 
+        className={gapClasses}
+        _extra={{ 
+          className: `grid-cols-${columns}` 
+        }}
+      >
+        {childrenArray.map((child, index) => {
+          if (React.isValidElement(child) && child.type === GridItem) {
+            const colSpan = (child.props as any).colSpan || 1;
+            const actualColSpan = Math.min(colSpan, columns);
+            return (
+              <GluestackGridItem
+                key={index}
+                _extra={{ 
+                  className: `col-span-${actualColSpan}` 
+                }}
+              >
+                {(child.props as any).children}
+              </GluestackGridItem>
+            );
+          }
+          
+          return (
+            <GluestackGridItem
+              key={index}
+              _extra={{ 
+                className: `col-span-1` 
+              }}
+            >
+              {child}
+            </GluestackGridItem>
+          );
+        })}
+      </GluestackGrid>
+    </GluestackUIProvider>
   );
 };
 
-const styles = StyleSheet.create({
-  grid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-  },
-  item: {},
-});
+export interface GridItemProps {
+  children: React.ReactNode;
+  colSpan?: number;
+}
+
+export const GridItem: React.FC<GridItemProps> = ({
+  children,
+  colSpan = 1,
+}) => {
+  return (
+    <GluestackGridItem
+      _extra={{ 
+        className: `col-span-${colSpan}` 
+      }}
+    >
+      {children}
+    </GluestackGridItem>
+  );
+};
