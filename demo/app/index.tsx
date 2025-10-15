@@ -21,6 +21,24 @@ export default function Index() {
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
+        <View style={{ marginTop: 20 }}>
+          <Subtitle text="Com Mensagem de Erro Customizada" />
+          <Info text="Exemplo com mensagem de erro personalizada" />
+          <InputCPF
+            value={cpf}
+            onChange={setCpf}
+            errorMessage="Por favor, insira um CPF válido"
+          />
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Input
+            label="Input"
+            value={value}
+            placeholder="Enter Text here..."
+            onChange={setValue}
+            validation={validateInput}
+            errorMessage="Input must be less than 7 characters" />
+        </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
         <Title text="Title" />
@@ -95,24 +113,6 @@ export default function Index() {
       <Card>
         <Text text="Card" level="warning" />
       </Card>
-      <View style={{ marginTop: 20 }}>
-        <Subtitle text="Com Mensagem de Erro Customizada" />
-        <Info text="Exemplo com mensagem de erro personalizada" />
-        <InputCPF
-          value={cpf}
-          onChange={setCpf}
-          errorMessage="Por favor, insira um CPF válido"
-        />
-      </View>
-      <View style={{ marginTop: 10 }}>
-        <Input
-          label="Input"
-          value={value}
-          placeholder="Enter Text here..."
-          onChange={setValue}
-          validation={validateInput}
-          errorMessage="Input must be less than 7 characters" />
-      </View>
     </ScrollView>
   )
 }
