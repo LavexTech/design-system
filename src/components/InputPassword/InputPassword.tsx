@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Input } from "../Input/Input";
 import Constants from "../../constants/constants";
 
-export interface InputPasswordProps {
+type InputPasswordProps = {
     label: string;
     value: string;
     placeholder?: string;
@@ -22,19 +22,19 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
     showPasswordToggle = true,
     errorMessage,
 }) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
     const togglePasswordVisibility = () => {
-        setIsPasswordVisible(!isPasswordVisible);
+        setIsPasswordVisible(!isPasswordVisible)
     };
     
     const validatePassword = (password: string) => {
-        if (password.length < 8) return false;
-        if (!/[A-Z]/.test(password)) return false;  
-        if (!/[a-z]/.test(password)) return false;
-        if (!/[0-9]/.test(password)) return false;
+        if (password.length < 8) return false
+        if (!/[A-Z]/.test(password)) return false
+        if (!/[a-z]/.test(password)) return false
+        if (!/[0-9]/.test(password)) return false
         
-        return true;
+        return true
     }
 
     const rightElement = showPasswordToggle ? (
@@ -49,7 +49,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
                 color={Constants.styles.textColor.DEFAULT}
             />
         </TouchableOpacity>
-    ) : undefined;
+    ) : undefined
 
     return (
         <Input
@@ -62,12 +62,12 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             secureTextEntry={!isPasswordVisible}
             rightElement={rightElement}
         />
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     toggleButton: {
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
     },
-});
+})
