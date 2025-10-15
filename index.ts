@@ -9,4 +9,4 @@ export { Grid } from "./src/components/Grid/Grid";
 export { Input } from "./src/components/Input/Input";
 export { InputName } from "./src/components/InputName/InputName";
 
-export { useGlobalFonts } from "./src/fontSetup";
+export { useFonts } from "./src/fontSetup";
