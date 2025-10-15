@@ -42,6 +42,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             style={styles.toggleButton}
             onPress={togglePasswordVisibility}
         >
+            { /* TODO: Colocar ícone como componente usando SVG do Font Awesome*/}
             <Ionicons 
                 name={isPasswordVisible ? "eye-off" : "eye"} 
                 size={24} 
