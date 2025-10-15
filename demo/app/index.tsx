@@ -17,8 +17,8 @@ export default function Index() {
       <Title text="Title" />
       <Text text="TextBox" />
       <Info text="Info" />
-      <IconAdd />
-      <IconAdd stroke="red" />
+      <IconAdd fill="black" />
+      <IconAdd fill="red" />
       <Grid columns={3} gap={4}>
         <Text text="Column 1" />
         <Text text="Column 2" />
