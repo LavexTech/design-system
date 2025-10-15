@@ -7,6 +7,7 @@ import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Accordion } from "@src/components/Accordion/Accordion";
+import { IconAdd } from "@src/components/Icons/IconAdd";
 
 export default function Index() {
   return (
@@ -16,6 +17,8 @@ export default function Index() {
       <Title text="Title" />
       <Text text="TextBox" />
       <Info text="Info" />
+      <IconAdd />
+      <IconAdd stroke="red" />
       <Grid columns={3} gap={4}>
         <Text text="Column 1" />
         <Text text="Column 2" />
