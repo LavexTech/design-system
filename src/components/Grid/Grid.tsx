@@ -2,7 +2,7 @@ import React from "react";
 import { Grid as GluestackGrid, GridItem as GluestackGridItem } from "../../ui/grid";
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
 
-export interface GridProps {
+type GridProps = {
   children: React.ReactNode;
   columns?: number;
   gap?: number;
@@ -28,7 +28,7 @@ export const Grid: React.FC<GridProps> = ({
     if (gapValue <= 6) return "gap-6";
     if (gapValue <= 8) return "gap-8";
     return "gap-12";
-  };
+  }
 
   const getGapXClass = (gapValue?: number) => {
     if (!gapValue || gapValue <= 0) return "";
@@ -39,7 +39,7 @@ export const Grid: React.FC<GridProps> = ({
     if (gapValue <= 6) return "gap-x-6";
     if (gapValue <= 8) return "gap-x-8";
     return "gap-x-12";
-  };
+  }
 
   const getGapYClass = (gapValue?: number) => {
     if (!gapValue || gapValue <= 0) return "";
@@ -50,13 +50,13 @@ export const Grid: React.FC<GridProps> = ({
     if (gapValue <= 6) return "gap-y-6";
     if (gapValue <= 8) return "gap-y-8";
     return "gap-y-12";
-  };
+  }
 
   const gapClasses = [
     gap && getGapClass(gap),
     gapX && getGapXClass(gapX),
     gapY && getGapYClass(gapY),
-  ].filter(Boolean).join(" ");
+  ].filter(Boolean).join(" ")
 
   return (
     <GluestackUIProvider>
@@ -68,7 +68,7 @@ export const Grid: React.FC<GridProps> = ({
       >
         {childrenArray.map((child, index) => {
           if (React.isValidElement(child) && child.type === GridItem) {
-            const colSpan = (child.props as any).colSpan || 1;
+            const colSpan = (child.props as any).colSpan || 1
             const actualColSpan = Math.min(colSpan, columns);
             return (
               <GluestackGridItem
@@ -79,7 +79,7 @@ export const Grid: React.FC<GridProps> = ({
               >
                 {(child.props as any).children}
               </GluestackGridItem>
-            );
+            )
           }
           
           return (
@@ -91,14 +91,14 @@ export const Grid: React.FC<GridProps> = ({
             >
               {child}
             </GluestackGridItem>
-          );
+          )
         })}
       </GluestackGrid>
     </GluestackUIProvider>
-  );
-};
+  )
+}
 
-export interface GridItemProps {
+type GridItemProps = {
   children: React.ReactNode;
   colSpan?: number;
 }
@@ -115,5 +115,5 @@ export const GridItem: React.FC<GridItemProps> = ({
     >
       {children}
     </GluestackGridItem>
-  );
-};
+  )
+}
