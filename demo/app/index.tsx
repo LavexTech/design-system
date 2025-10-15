@@ -12,8 +12,8 @@ import { Input } from "@src/components/Input/Input";
 import { InputPhone } from "@src/components/InputPhone/InputPhone";
 
 export default function Index() {
-  const [phone, setPhone] = useState('');
-  const [value, setValue] = useState("");
+  const [phone, setPhone] = useState('')
+  const [value, setValue] = useState("")
 
   return (
     <ScrollView
@@ -22,6 +22,24 @@ export default function Index() {
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
+        <View style={{ marginTop: 20 }}>
+          <Subtitle text="Com Mensagem de Erro Customizada" />
+          <Info text="Exemplo com mensagem de erro personalizada" />
+          <InputPhone
+              value={phone}
+              onChange={setPhone}
+              errorMessage="Por favor, insira um telefone válido"
+          />
+        </View>
+        <View style={{ marginTop: 10 }}>
+          <Input
+            label="Input"
+            value={value}
+            placeholder="Enter Text here..."
+            onChange={setValue}
+            validation={validateInput}
+            errorMessage="Input must be less than 7 characters" />
+        </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
         <Title text="Title" />
@@ -96,24 +114,6 @@ export default function Index() {
       <Card>
         <Text text="Card" level="warning" />
       </Card>
-      <View>
-        <Subtitle text="Com Mensagem de Erro Customizada" />
-        <Info text="Exemplo com mensagem de erro personalizada" />
-        <InputPhone
-            value={phone}
-            onChange={setPhone}
-            errorMessage="Por favor, insira um telefone válido"
-        />
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Input
-          label="Input"
-          value={value}
-          placeholder="Enter Text here..."
-          onChange={setValue}
-          validation={validateInput}
-          errorMessage="Input must be less than 7 characters" />
-      </View>
     </ScrollView>
   )
 }
