@@ -2,7 +2,7 @@ import React from "react";
 import { Button as GluestackButton, ButtonText } from "../../ui/button";
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
 
-export interface ButtonProps {
+type ButtonProps = {
   text: string;
   variant?:
   | "default"
@@ -16,12 +16,12 @@ export interface ButtonProps {
 
 const variantMap = {
   default: { action: "primary" as const, variant: "solid" as const },
-  "default-outline": { action: "primary" as const, variant: "outline" as const },
   success: { action: "positive" as const, variant: "solid" as const },
   danger: { action: "negative" as const, variant: "solid" as const },
+  "default-outline": { action: "primary" as const, variant: "outline" as const },
   "success-outline": { action: "positive" as const, variant: "outline" as const },
   "danger-outline": { action: "negative" as const, variant: "outline" as const },
-};
+}
 
 export const Button: React.FC<ButtonProps> = ({
   text,
@@ -42,5 +42,5 @@ export const Button: React.FC<ButtonProps> = ({
       <ButtonText>{text}</ButtonText>
     </GluestackButton>
     </GluestackUIProvider>
-  );
-};
+  )
+}
