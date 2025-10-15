@@ -1,48 +1,49 @@
-import React from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
+import React from "react"
+import { View, Text, FlatList, StyleSheet } from "react-native"
+import Constants from "../../constants/constants"
+import { Grid, GridItem } from "../Grid/Grid"
 
-export interface ListProps {
-  title?: string;
-  children: React.ReactNode;
+type ListProps ={
+  title?: string
+  children: React.ReactNode
 }
 
 export const List: React.FC<ListProps> = ({ title, children }) => {
-  const childrenArray = React.Children.toArray(children);
+  const childrenArray = React.Children.toArray(children)
 
   const renderItem = ({ item, index }: { item: React.ReactNode; index: number }) => (
     <View style={styles.itemContainer}>
       {item}
     </View>
-  );
+  )
 
-  const ItemSeparatorComponent = () => <View style={styles.separator} />;
+  const ItemSeparatorComponent = () => <View style={styles.separator} />
 
   return (
-    <View style={styles.container}>
-      {title && <Text style={styles.title}>{title}</Text>}
-      <FlatList
-        data={childrenArray}
-        renderItem={renderItem}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        keyExtractor={(item, index) => index.toString()}
-        scrollEnabled={false}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
-  );
-};
+    <Grid columns={1} gap={4}>
+      <GridItem>
+        {title && <Text style={styles.title}>{title}</Text>}
+      </GridItem>
+      <GridItem>
+        <FlatList
+          data={childrenArray}
+          renderItem={renderItem}
+          ItemSeparatorComponent={ItemSeparatorComponent}
+          keyExtractor={(item: any, index: number) => index.toString()}
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+        />
+      </GridItem>
+    </Grid>
+  )
+}
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: Constants.styles.spacing.MEDIUM,
-  },
   title: {
-    fontSize: Constants.styles.fontSize.NORMAL,
+    fontSize: Constants.styles.fontSize.MEDIUM,
     fontWeight: Constants.styles.fontWeight.BOLD,
-    fontFamily: Constants.styles.fontFamily.MAIN,
+    fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,
-    marginBottom: Constants.styles.spacing.MEDIUM,
     textAlign: "left",
   },
   itemContainer: {
@@ -53,4 +54,4 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.styles.borderColor.LIGHT,
     marginVertical: Constants.styles.spacing.SMALL,
   },
-});
+})
