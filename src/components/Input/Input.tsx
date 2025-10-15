@@ -7,7 +7,7 @@ import { Input as InputBase, InputField } from '../../ui/input';
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
 import { Grid, GridItem } from "../Grid/Grid";
 
-export interface InputProps {
+type InputProps = {
   label: string;
   value: string;
   placeholder?: string;
@@ -28,58 +28,58 @@ export const Input: React.FC<InputProps> = ({
   mask,
   mobileKeyboard = "text",
 }) => {
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [isValid, setIsValid] = useState<boolean>(true)
 
   const applyMask = (inputValue: string, maskPattern?: string): string => {
-    if (!maskPattern) return inputValue;
+    if (!maskPattern) return inputValue
     
     const invalidChars = /[A-WYZa-wyz0-9]/;
     if (invalidChars.test(maskPattern)) {
-      console.warn(`Máscara inválida: "${maskPattern}".`);
-      return inputValue;
+      console.warn(`Máscara inválida: "${maskPattern}".`)
+      return inputValue
     }
 
-    const cleanValue = inputValue.replace(/[^a-zA-Z0-9]/g, "");
-    let maskedValue = "";
-    let valueIndex = 0;
+    const cleanValue = inputValue.replace(/[^a-zA-Z0-9]/g, "")
+    let maskedValue = ""
+    let valueIndex = 0
 
     for (let i = 0; i < maskPattern.length; i++) {
-      if (valueIndex >= cleanValue.length) break;
+      if (valueIndex >= cleanValue.length) break
 
-      const maskChar = maskPattern[i];
+      const maskChar = maskPattern[i]
 
       if (maskChar === 'X' || maskChar === 'x') {
-        maskedValue += cleanValue[valueIndex];
-        valueIndex++;
+        maskedValue += cleanValue[valueIndex]
+        valueIndex++
       } else {
-        maskedValue += maskChar;
+        maskedValue += maskChar
       }
     }
 
-    return maskedValue;
+    return maskedValue
   };
 
   const handleTextChange = (text: string) => {
-    let processedValue = text;
+    let processedValue = text
 
     if (mask) {
-      processedValue = applyMask(text, mask);
+      processedValue = applyMask(text, mask)
     }
 
-    onChange(processedValue);
+    onChange(processedValue)
 
     if (validation) {
-      const valid = validation(processedValue);
-      setIsValid(valid);
+      const valid = validation(processedValue)
+      setIsValid(valid)
     }
   };
 
   useEffect(() => {
     if (validation && value) {
-      const valid = validation(value);
-      setIsValid(valid);
+      const valid = validation(value)
+      setIsValid(valid)
     }
-  }, [value, validation]);
+  }, [value, validation])
 
   const getKeyboardType = ():
     | "default"
@@ -88,13 +88,13 @@ export const Input: React.FC<InputProps> = ({
     | "phone-pad" => {
     switch (mobileKeyboard) {
       case "email":
-        return "email-address";
+        return "email-address"
       case "phone":
-        return "phone-pad";
+        return "phone-pad"
       case "number":
-        return "numeric";
+        return "numeric"
       default:
-        return "default";
+        return "default"
     }
   };
 
@@ -129,8 +129,8 @@ export const Input: React.FC<InputProps> = ({
         )}
       </Grid>
     </GluestackUIProvider>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   input: {
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
   inputError: {
     borderColor: Constants.styles.textColor.DANGER,
   },
-});
+})
