@@ -1,7 +1,8 @@
 import React from "react"
-import { View, Text, FlatList, StyleSheet } from "react-native"
+import { View, FlatList, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
 import { Grid, GridItem } from "../Grid/Grid"
+import { Subtitle } from "../Subtitle/Subtitle"
 
 type ListProps ={
   title?: string
@@ -22,7 +23,7 @@ export const List: React.FC<ListProps> = ({ title, children }) => {
   return (
     <Grid columns={1} gap={4}>
       <GridItem>
-        {title && <Text style={styles.title}>{title}</Text>}
+        {title && <Subtitle text={title} />}
       </GridItem>
       <GridItem>
         <FlatList
