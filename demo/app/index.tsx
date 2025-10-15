@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -90,11 +90,13 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <List title="Lista de exemplo">
-        <Text text="Item 1" />
-        <Text text="Item 2" />
-        <Text text="Item 3" />
-      </List>
+      <View style={{ marginTop: 20 }} >
+        <List title="Lista de exemplo">
+          <Text text="Item 1" />
+          <Text text="Item 2" />
+          <Text text="Item 3" />
+        </List>
+      </View>
     </ScrollView>
   )
 }
