@@ -21,6 +21,23 @@ export default function Index() {
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
+        <View style={{ marginTop: 20}}>
+          <InputName
+            label="Nome Completo"
+            value={userName}
+            placeholder="Digite seu nome completo"
+            onChange={setUserName}
+          />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Input
+            label="Input"
+            value={value}
+            placeholder="Enter Text here..."
+            onChange={setValue}
+            validation={validateInput}
+            errorMessage="Input must be less than 7 characters" />
+        </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
         <Title text="Title" />
@@ -95,24 +112,6 @@ export default function Index() {
       <Card>
         <Text text="Card" level="warning" />
       </Card>
-
-      <View style={{ marginTop: 20}}>
-        <InputName
-          label="Nome Completo"
-          value={userName}
-          placeholder="Digite seu nome completo"
-          onChange={setUserName}
-        />
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Input
-          label="Input"
-          value={value}
-          placeholder="Enter Text here..."
-          onChange={setValue}
-          validation={validateInput}
-          errorMessage="Input must be less than 7 characters" />
-      </View>
     </ScrollView>
   )
 }
