@@ -1,25 +1,34 @@
-import { Text, View } from "react-native";
+import { ScrollView } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
+import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
+import { TextBox as Text } from "@src/components/Text/Text";
+import { Info } from "@src/components/Info/Info";
+import { Grid } from "@src/components/Grid/Grid";
+import { Card } from "@src/components/Card/Card";
 import { List } from "@src/components/List/List";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <MainTitle text="Hello World" />
-      <Title text="Hello World" />
-
+    <ScrollView style={{ marginTop: 20, padding: 20 }}>
+      <MainTitle text="Main Title" />
+      <Subtitle text="Subtitle" />
+      <Title text="Title" />
+      <Text text="TextBox" />
+      <Info text="Info" />
+      <Grid columns={3} gap={4}>
+        <Text text="Column 1" />
+        <Text text="Column 2" />
+        <Text text="Column 3" />
+      </Grid>
+      <Card>
+        <Text text="Card" />
+      </Card>
       <List title="Lista de exemplo">
-        <Text>Item 1</Text>
-        <Text>Item 2</Text>
-        <Text>Item 3</Text>
+        <Text text="Item 1" />
+        <Text text="Item 2" />
+        <Text text="Item 3" />
       </List>
-    </View>
-  );
+    </ScrollView>
+  )
 }
