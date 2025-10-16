@@ -1,6 +1,7 @@
-import React from "react";
-import { Text, Pressable } from "react-native";
-import { GluestackUIProvider } from '../../ui/gluestack-ui-provider';
+import React from "react"
+import { GluestackUIProvider } from '../../ui/gluestack-ui-provider'
+import { TextBox as Text } from "../Text/Text"
+import { Button } from "../Button/Button"
 import {
     Modal as GluestackModal,
     ModalBackdrop,
@@ -8,14 +9,14 @@ import {
     ModalHeader,
     ModalBody,
     ModalFooter,
-} from "../../ui/modal";
+} from "../../ui/modal"
 
-export interface ModalProps {
-    title: string;
-    text: string;
-    buttonText: string;
-    onClose: () => void;
-    visible?: boolean;
+type ModalProps = {
+    title: string,
+    text: string,
+    buttonText: string,
+    onClose: () => void,
+    visible?: boolean
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -35,27 +36,20 @@ export const Modal: React.FC<ModalProps> = ({
                 <ModalBackdrop />
                 <ModalContent>
                     <ModalHeader {...({} as any)}>
-                        <Text className="text-typography-950 text-xl font-bold text-center flex-1">
-                            {title}
-                        </Text>
+                        <Text text={title} />
                     </ModalHeader>
                     <ModalBody {...({} as any)}>
-                        <Text className="text-typography-900 text-base text-center leading-relaxed">
-                            {text}
-                        </Text>
+                        <Text size="small" text={text} />
                     </ModalBody>
                     <ModalFooter {...({} as any)}>
-                        <Pressable
-                            onPress={onClose}
-                            className="bg-typography-950 px-6 py-3 rounded-lg w-full active:opacity-80"
-                        >
-                            <Text className="text-background-0 text-base font-bold text-center">
-                                {buttonText}
-                            </Text>
-                        </Pressable>
+                        <Button
+                            text={buttonText}
+                            onClick={onClose}
+                            variant="default"
+                        />
                     </ModalFooter>
                 </ModalContent>
             </GluestackModal>
         </GluestackUIProvider>
-    );
-};
+    )
+}
