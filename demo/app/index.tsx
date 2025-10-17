@@ -5,6 +5,7 @@ import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
 import { Modal } from "@src/components/Modal/Modal";
+import { Alert } from "@src/components/Alert/Alert";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
@@ -12,9 +13,28 @@ import { Button } from "@src/components/Button/Button";
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState<"danger" | "success" | "info">("info");
+  const [alertText, setAlertText] = useState("");
+  const [alertIcon, setAlertIcon] = useState("");
+
+  const showAlertExample = (type: "danger" | "success" | "info", text: string, icon: string) => {
+    setAlertType(type);
+    setAlertText(text);
+    setAlertIcon(icon);
+    setShowAlert(true);
+  };
 
   return (
     <View style={{ flex: 1 }}>
+      {showAlert && (
+        <Alert
+          text={alertText}
+          icon={alertIcon}
+          type={alertType}
+          onClose={() => setShowAlert(false)}
+        />
+      )}
       <ScrollView style={{ marginTop: 20, padding: 20 }}>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
@@ -23,6 +43,27 @@ export default function Index() {
         <Info text="Info" />
         <View style={{ marginTop: 20, marginBottom: 20 }}>
           <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
+        </View>
+
+        <View style={{ marginTop: 20, gap: 10 }}>
+          <Title text="Alert Examples" />
+          <Button
+            variant="danger"
+            text="Show Danger Alert"
+            onClick={() => showAlertExample("danger", "Erro! Algo deu errado.", "")}
+          />
+
+          <Button
+            variant="success"
+            text="Show Success Alert"
+            onClick={() => showAlertExample("success", "Sucesso! Operação concluída.", "")}
+          />
+
+          <Button
+            variant="default"
+            text="Show Info Alert"
+            onClick={() => showAlertExample("info", "Informação importante para você.", "")}
+          />
         </View>
         <Grid columns={3} gap={4}>
           <Text text="Column 1" />
@@ -61,6 +102,8 @@ export default function Index() {
           />
         </View>
       )}
+
+      
     </View>
   );
 }

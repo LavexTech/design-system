@@ -1,5 +1,6 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
+import { Button } from "../Button/Button";
 import { TextBox as Text } from "../Text/Text";
 import Constants from "../../constants/constants";
 
@@ -43,100 +44,67 @@ export const Alert: React.FC<AlertProps> = ({ text, icon, type, onClose }) => {
     const alertStyles = getAlertStyles();
 
     return (
-        <Modal
-            transparent={true}
-            animationType="fade"
-            visible={true}
-            onRequestClose={onClose}
-        >
-            <View style={styles.overlay}>
-                <View style={[styles.alertContainer, { backgroundColor: alertStyles.backgroundColor, borderColor: alertStyles.borderColor }]}>
-                    <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                        <Text text="✕" style={[styles.closeIcon, { color: alertStyles.iconColor }]} />
-                    </TouchableOpacity>
-
-                    <View style={styles.content}>
-                        {icon && (
-                            <View style={styles.iconContainer}>
-                                <Text
-                                    text={icon}
-                                    style={[styles.icon, { color: alertStyles.iconColor }]}
-                                />
-                            </View>
-                        )}
-                        <View style={styles.textContainer}>
-                            <Text text={text} style={styles.text} />
-                        </View>
-                    </View>
-                </View>
-            </View>
-        </Modal>
+        <GluestackUIProvider>
+            <div 
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 1000,
+                    padding: '20px'
+                }}
+                onClick={onClose}
+            >
+                <div 
+                    style={{
+                        maxWidth: '600px',
+                        width: '100%',
+                        position: 'relative'
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div style={{
+                        backgroundColor: alertStyles.backgroundColor,
+                        borderColor: alertStyles.borderColor,
+                        borderWidth: '2px',
+                        borderStyle: 'solid',
+                        borderRadius: '12px',
+                        padding: '30px',
+                        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        minHeight: '120px'
+                    }}>
+                        <div style={{
+                            width: '100%',
+                            textAlign: 'center',
+                            marginBottom: '25px'
+                        }}>
+                            <div style={{
+                                fontSize: '18px',
+                                lineHeight: '1.5',
+                                fontWeight: '500',
+                                color: alertStyles.iconColor
+                            }}>
+                                <Text text={text} />
+                            </div>
+                        </div>
+                        <Button 
+                            variant="default" 
+                            text="Fechar" 
+                            onClick={onClose} 
+                        />
+                    </div>
+                </div>
+            </div>
+        </GluestackUIProvider>
     );
 };
-
-const styles = StyleSheet.create({
-    overlay: {
-        flex: 1,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: Constants.styles.spacing.LARGE,
-    },
-    alertContainer: {
-        backgroundColor: Constants.styles.backgroundColor.WHITE,
-        borderRadius: Constants.styles.borderRadius.MEDIUM,
-        borderWidth: Constants.styles.borderWidth.REGULAR,
-        padding: Constants.styles.spacing.LARGE,
-        width: "100%",
-        maxWidth: 400,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 4,
-        },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-        elevation: 8,
-        position: "relative",
-    },
-    content: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingRight: Constants.styles.spacing.MEDIUM,
-    },
-    iconContainer: {
-        marginRight: Constants.styles.spacing.MEDIUM,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    icon: {
-        fontSize: Constants.styles.fontSize.LARGER,
-    },
-    textContainer: {
-        flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-    },
-    text: {
-        fontSize: Constants.styles.fontSize.MEDIUM,
-        lineHeight: Constants.styles.fontSize.MEDIUM * 1.4,
-        textAlign: "center",
-    },
-    closeButton: {
-        position: "absolute",
-        top: Constants.styles.spacing.MEDIUM,
-        right: Constants.styles.spacing.MEDIUM,
-        padding: Constants.styles.spacing.SMALL,
-        borderRadius: Constants.styles.borderRadius.SMALL,
-        backgroundColor: "rgba(0, 0, 0, 0.05)",
-        justifyContent: "center",
-        alignItems: "center",
-        minWidth: 32,
-        minHeight: 32,
-    },
-    closeIcon: {
-        fontSize: Constants.styles.fontSize.MEDIUM,
-        fontWeight: Constants.styles.fontWeight.BOLD,
-    },
-});
