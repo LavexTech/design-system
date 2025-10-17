@@ -1,15 +1,15 @@
-import React from "react";
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
-import { TextBox } from "../Text/Text";
-import Constants from "../../constants/constants";
+import React from "react"
+import { TouchableOpacity, StyleSheet } from "react-native"
+import { TextBox } from "../Text/Text"
+import Constants from "../../constants/constants"
 
-export interface MessageProps {
-    text: string;
-    onClick?: () => void;
-    isOwn?: boolean;
+type MessageProps = {
+    text: string,
+    onClick?: () => void,
+    isOwn?: boolean,
 }
 
-export const Message: React.FC<MessageProps> = ({ text, onClick, isOwn = false }) => {
+export const Message = ({ text, onClick, isOwn = false }: MessageProps) => {
     return (
         <TouchableOpacity
             style={[
@@ -19,14 +19,10 @@ export const Message: React.FC<MessageProps> = ({ text, onClick, isOwn = false }
             onPress={onClick}
             activeOpacity={onClick ? 0.7 : 1}
         >
-            {isOwn ? (
-                <Text style={styles.ownMessageText}>{text}</Text>
-            ) : (
-                <TextBox text={text} />
-            )}
+            <TextBox text={text} />
         </TouchableOpacity>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     messageContainer: {
@@ -43,18 +39,8 @@ const styles = StyleSheet.create({
         borderColor: Constants.styles.borderColor.LIGHT,
     },
     ownMessage: {
-        backgroundColor: "#007AFF",
+        backgroundColor: "#d7e7fa",
         alignSelf: "flex-end",
-        borderColor: "#007AFF",
-    },
-    ownMessageText: {
-        fontSize: Constants.styles.fontSize.MEDIUM,
-        fontWeight: Constants.styles.fontWeight.NORMAL,
-        lineHeight: Constants.styles.fontSize.MEDIUM,
-        fontFamily: Constants.styles.fontFamily.REGULAR,
-        color: "#FFFFFF",
-        textAlign: "left",
-        flexWrap: "wrap",
-        flexShrink: 1,
+        borderColor: Constants.styles.borderColor.LIGHT,
     },
 });
