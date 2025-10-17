@@ -1,12 +1,12 @@
-import React from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { Image } from "../Image/Image";
+import React from "react"
+import { View, ScrollView, StyleSheet } from "react-native"
+import { Image } from "../Image/Image"
 
-export type GalleryClickHandler = (imageUrl: string, index: number) => void;
+type GalleryClickHandler = (imageUrl: string, index: number) => void
 
-export interface GalleryProps {
-    images: string[];
-    onClick?: GalleryClickHandler;
+type GalleryProps = {
+    images: string[],
+    onClick?: GalleryClickHandler,
 }
 
 export const Gallery: React.FC<GalleryProps> = ({ images, onClick }: GalleryProps) => {
@@ -23,14 +23,14 @@ export const Gallery: React.FC<GalleryProps> = ({ images, onClick }: GalleryProp
                         src={imageUrl}
                         alt={`Gallery image ${index + 1}`}
                         size={80}
-                        onClick={onClick ? (imageUrl: string, index: number) => onClick(imageUrl, index) : undefined}
+                        onClick={onClick ? () => onClick(imageUrl, index) : undefined}
                         style={styles.image}
                     />
                 ))}
             </ScrollView>
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
     image: {
         borderRadius: 16,
     },
-});
+})
