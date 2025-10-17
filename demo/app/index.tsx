@@ -7,7 +7,6 @@ import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Accordion } from "@src/components/Accordion/Accordion";
-import { IconAdd } from "@src/components/Icons/IconAdd";
 
 export default function Index() {
   return (
@@ -17,8 +16,9 @@ export default function Index() {
       <Title text="Title" />
       <Text text="TextBox" />
       <Info text="Info" />
-      <IconAdd fill="black" />
-      <IconAdd fill="red" />
+      <Accordion text="Accordion">
+        <Text text="Accordion Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos." />
+      </Accordion>
       <Grid columns={3} gap={4}>
         <Text text="Column 1" />
         <Text text="Column 2" />
@@ -27,11 +27,14 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <Accordion text="O que é um FAQ?">
-        <Text text="FAQ significa 'Perguntas Frequentes' e é usado para organizar informações comuns." />
+      <Accordion text="Accordion">
+        <Text text="Accordion Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos." />
       </Accordion>
-      <Accordion text="Como usar o Accordion?">
-        <Info text="Clique no título para expandir ou recolher o conteúdo." />
+      <Accordion text="Accordion">
+        <Text text="Accordion Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos." />
+      </Accordion>
+      <Accordion text="Accordion">
+        <Text text="Accordion Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos." />
       </Accordion>
     </ScrollView>
   )
