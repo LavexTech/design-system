@@ -8,5 +8,6 @@ export { Card } from "./src/components/Card/Card";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
 export { Alert } from "./src/components/Alert/Alert";
+export { Modal } from "./src/components/Modal/Modal";
 
 export { useFonts } from "./src/fontSetup";

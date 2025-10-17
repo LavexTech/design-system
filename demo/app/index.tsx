@@ -1,27 +1,17 @@
-import { ScrollView, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, ScrollView } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { Modal } from "@src/components/Modal/Modal";
 import { Info } from "@src/components/Info/Info";
 import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
-import { Alert } from "@src/components/Alert/Alert";
-import { useState } from "react";
 import { Button } from "@src/components/Button/Button";
 
 export default function Index() {
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState<"danger" | "success" | "info">("info");
-  const [alertText, setAlertText] = useState("");
-  const [alertIcon, setAlertIcon] = useState("");
-
-  const showAlertExample = (type: "danger" | "success" | "info", text: string, icon: string) => {
-    setAlertType(type);
-    setAlertText(text);
-    setAlertIcon(icon);
-    setShowAlert(true);
-  };
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <View style={{ flex: 1 }}>
@@ -31,6 +21,9 @@ export default function Index() {
         <Title text="Title" />
         <Text text="TextBox" />
         <Info text="Info" />
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
+          <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
+        </View>
         <Grid columns={3} gap={4}>
           <Text text="Column 1" />
           <Text text="Column 2" />
@@ -48,39 +41,26 @@ export default function Index() {
           <Button variant="success-outline" text="Button" onClick={() => {}} />
         </Grid>
 
-        <View style={{ marginTop: 20, gap: 10 }}>
-          <Title text="Alert Examples" />
-          <TouchableOpacity
-            style={{ backgroundColor: "#DC2626", padding: 10, borderRadius: 8, marginBottom: 10 }}
-            onPress={() => showAlertExample("danger", "Erro! Algo deu errado.", "⚠️")}
-          >
-            <Text text="Show Danger Alert" style={{ color: "white", textAlign: "center" }} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{ backgroundColor: "#059669", padding: 10, borderRadius: 8, marginBottom: 10 }}
-            onPress={() => showAlertExample("success", "Sucesso! Operação concluída.", "✅")}
-          >
-            <Text text="Show Success Alert" style={{ color: "white", textAlign: "center" }} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{ backgroundColor: "#8F98AD", padding: 10, borderRadius: 8, marginBottom: 10 }}
-            onPress={() => showAlertExample("info", "Informação importante para você.", "ℹ️")}
-          >
-            <Text text="Show Info Alert" style={{ color: "white", textAlign: "center" }} />
-          </TouchableOpacity>
-        </View>
       </ScrollView>
 
-      {showAlert && (
-        <Alert
-          text={alertText}
-          icon={alertIcon}
-          type={alertType}
-          onClose={() => setShowAlert(false)}
-        />
+      {showModal && (
+        <View style={{ 
+          position: 'absolute', 
+          top: 0, 
+          left: 0, 
+          right: 0, 
+          bottom: 0, 
+          zIndex: 1000 
+        }}>
+          <Modal
+            title="Atenção!"
+            text="Deseja realmente excluir este item? Esta ação não pode ser desfeita."
+            buttonText="Confirmar"
+            onClose={() => setShowModal(false)}
+            visible={showModal}
+          />
+        </View>
       )}
     </View>
-  )
+  );
 }
