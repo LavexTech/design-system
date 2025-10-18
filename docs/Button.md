@@ -2,135 +2,63 @@
 
 O componente Button é usado para ações interativas como "Salvar", "Cancelar" ou "Enviar".
 
+## Importação
+
+```tsx
+import { Button } from "lavex-design-system";
+```
+
 ## Props
 
-| Prop      | Tipo                                                                                             | Obrigatório | Padrão      | Descrição                           |
-| --------- | ------------------------------------------------------------------------------------------------ | ----------- | ----------- | ----------------------------------- |
-| `text`    | `string`                                                                                         | ✅          | -           | Texto exibido no botão              |
-| `variant` | `"default" \| "default-outline" \| "success" \| "success-outline" \| "danger" \| "danger-outline"` | ❌          | `"default"` | Define o estilo e a cor do botão    |
-| `onClick` | `() => void`                                                                                     | ✅          | -           | Função executada ao clicar no botão |
+| Prop      | Tipo       | Obrigatório | Padrão      | Descrição                    |
+| --------- | ---------- | ----------- | ----------- | ---------------------------- |
+| `text`    | `string`   | Sim         | `""`        | Texto do botão               |
+| `variant` | `string`   | Não         | `"default"` | Estilo visual (veja abaixo)  |
+| `onClick` | `() => void` | Sim       | -           | Função ao clicar             |
 
-## Variantes Disponíveis
+## Variantes
 
-### Default (Padrão)
+| Variante            | Aparência         | Cor   | Quando usar                    |
+| ------------------- | ----------------- | ----- | ------------------------------ |
+| `default`           | Preenchido        | Azul  | Ação primária padrão           |
+| `default-outline`   | Borda             | Azul  | Ação secundária padrão         |
+| `success`           | Preenchido        | Verde | Confirmar, Salvar, Enviar      |
+| `success-outline`   | Borda             | Verde | Ação positiva secundária       |
+| `danger`            | Preenchido        | Vermelho | Excluir, Remover            |
+| `danger-outline`    | Borda             | Vermelho | Cancelar ação destrutiva    |
 
-- **Aparência**: Botão preenchido com cor primária
-- **Texto**: Branco
-- **Uso**: Ações primárias gerais
-
-### Default Outline
-
-- **Aparência**: Botão com borda primária
-- **Texto**: Cor primária
-- **Uso**: Ações secundárias gerais
-
-### Success
-
-- **Aparência**: Botão preenchido com cor verde
-- **Texto**: Branco
-- **Uso**: Ações positivas como "Salvar", "Confirmar", "Enviar"
-
-### Success Outline
-
-- **Aparência**: Botão com borda verde
-- **Texto**: Verde
-- **Uso**: Ações positivas secundárias
-
-### Danger
-
-- **Aparência**: Botão preenchido com cor vermelha
-- **Texto**: Branco
-- **Uso**: Ações destrutivas como "Excluir", "Remover"
-
-### Danger Outline
-
-- **Aparência**: Botão com borda vermelha
-- **Texto**: Vermelho
-- **Uso**: Ações destrutivas secundárias como "Cancelar"
-
-## Exemplos de Uso
-
-### Botão Default (Padrão)
+## Exemplos
 
 ```tsx
-import { Button } from "lavex-design-system";
+// Padrão (default é opcional)
+<Button 
+  text="Salvar" 
+  onClick={() => console.log("Salvando")} 
+/>
 
-<Button text="Salvar" onClick={() => console.log("Salvando...")} />;
+// Success
+<Button 
+  text="Confirmar" 
+  variant="success" 
+  onClick={() => console.log("Confirmado")} 
+/>
+
+// Danger
+<Button 
+  text="Excluir" 
+  variant="danger" 
+  onClick={() => console.log("Excluído")} 
+/>
+
+// Outline variants
+<Button text="Voltar" variant="default-outline" onClick={() => {}} />
+<Button text="Enviar" variant="success-outline" onClick={() => {}} />
+<Button text="Cancelar" variant="danger-outline" onClick={() => {}} />
 ```
 
-### Botão Success
+## Regras de Uso
 
-```tsx
-import { Button } from "lavex-design-system";
-
-<Button
-  text="Confirmar"
-  variant="success"
-  onClick={() => console.log("Confirmando...")}
-/>;
-```
-
-### Botão Success Outline
-
-```tsx
-import { Button } from "lavex-design-system";
-
-<Button
-  text="Enviar"
-  variant="success-outline"
-  onClick={() => console.log("Enviando...")}
-/>;
-```
-
-### Botão Danger
-
-```tsx
-import { Button } from "lavex-design-system";
-
-<Button
-  text="Excluir"
-  variant="danger"
-  onClick={() => console.log("Excluindo...")}
-/>;
-```
-
-### Botão Danger Outline
-
-```tsx
-import { Button } from "lavex-design-system";
-
-<Button
-  text="Cancelar"
-  variant="danger-outline"
-  onClick={() => console.log("Cancelando...")}
-/>;
-```
-
-### Botão Default Outline
-
-```tsx
-import { Button } from "lavex-design-system";
-
-<Button
-  text="Voltar"
-  variant="default-outline"
-  onClick={() => console.log("Voltando...")}
-/>;
-```
-
-## Diretrizes de Uso
-
-1. **Hierarquia Visual**: Use variantes sólidas (`default`, `success`, `danger`) para ações primárias e variantes outline (`default-outline`, `success-outline`, `danger-outline`) para ações secundárias
-2. **Cores Semânticas**: Use `success` para ações positivas, `danger` para ações destrutivas e `default` para ações gerais
-3. **Texto Descritivo**: Use textos claros e específicos (ex: "Salvar Alterações" em vez de apenas "Salvar")
-4. **Agrupamento**: Agrupe botões relacionados e mantenha consistência visual
-5. **Espaçamento**: Mantenha espaçamento adequado entre botões para facilitar o toque
-6. **Variante Padrão**: O botão usa `variant="default"` quando nenhuma variante é especificada
-
-## Casos de Uso Comuns
-
-- **Formulários**: Botões de "Salvar" e "Cancelar"
-- **Confirmações**: Botões de "Confirmar" e "Cancelar"
-- **Navegação**: Botões de "Próximo" e "Voltar"
-- **Ações Destrutivas**: Botões de "Excluir" e "Remover"
-- **Upload/Download**: Botões de "Enviar" e "Baixar"
+1. **Preenchido** = ação primária | **Outline** = ação secundária
+2. **Success** = positivo | **Danger** = destrutivo | **Default** = neutro
+3. Use textos claros e descritivos
+4. Sempre passe uma função para `onClick`

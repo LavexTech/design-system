@@ -1,6 +1,6 @@
-import React from "react";
-import { Button as GluestackButton, ButtonText } from "../../ui/button";
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
+import React from "react"
+import { Button as GluestackButton, ButtonText } from "../../ui/button"
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 
 type ButtonProps = {
   text: string;
@@ -11,7 +11,7 @@ type ButtonProps = {
   | "danger"
   | "success-outline"
   | "danger-outline";
-  onClick: () => void;
+  onClick: () => void
 }
 
 const variantMap = {
@@ -28,7 +28,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "default",
   onClick,
 }) => {
-  const { action, variant: gluestackVariant } = variantMap[variant];
+  const { action, variant: gluestackVariant } = variantMap[variant]
 
   return (
     <GluestackUIProvider>
@@ -38,7 +38,6 @@ export const Button: React.FC<ButtonProps> = ({
       size="md"
       onPress={onClick}
     >
-      {/* @ts-expect-error */}
       <ButtonText>{text}</ButtonText>
     </GluestackButton>
     </GluestackUIProvider>
