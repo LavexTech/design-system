@@ -9,6 +9,7 @@ import { Card } from "@src/components/Card/Card";
 import { List } from "@src/components/List/List";
 
 export default function Index() {
+  const [value, setValue] = useState("");
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
@@ -27,61 +28,56 @@ export default function Index() {
           <Text text="Column 2" />
           <Text text="Column 3" />
         </Grid>
-         <Subtitle text="Grid with Cards (2 columns)" />
-         <Grid columns={2} gap={4}>
-           <Card>
-             <Text text="Card 1" />
-           </Card>
-           <Card>
-             <Text text="Card 2" />
-           </Card>
-           <Card>
-             <Text text="Card 3" />
-           </Card>
-           <Card>
-             <Text text="Card 4" />
-           </Card>
-         </Grid>
+        <Subtitle text="Grid with Cards (2 columns)" />
+        <Grid columns={2} gap={4}>
+          <Card>
+            <Text text="Card 1" />
+          </Card>
+          <Card>
+            <Text text="Card 2" />
+          </Card>
+          <Card>
+            <Text text="Card 3" />
+          </Card>
+          <Card>
+            <Text text="Card 4" />
+          </Card>
+        </Grid>
 
-         <Subtitle text="Custom Column Spans (10 columns grid)" />
-         <Grid columns={10} gap={4}>
+        <Subtitle text="Custom Column Spans (10 columns grid)" />
+        <Grid columns={10} gap={4}>
           <GridItem colSpan={3}>
-             <Card>
+            <Card>
               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={5}>
-             <Card>
+            </Card>
+          </GridItem>
+          <GridItem colSpan={5}>
+            <Card>
               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={2}>
-             <Card>
+            </Card>
+          </GridItem>
+          <GridItem colSpan={2}>
+            <Card>
               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={4}>
-             <Card>
+            </Card>
+          </GridItem>
+          <GridItem colSpan={4}>
+            <Card>
               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={6}>
-             <Card>
+            </Card>
+          </GridItem>
+          <GridItem colSpan={6}>
+            <Card>
               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={2}>
-             <Card>
+            </Card>
+          </GridItem>
+          <GridItem colSpan={2}>
+            <Card>
               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={4}>
-             <Card>
-               <></>
-             </Card>
-           </GridItem>
-           <GridItem colSpan={4}>
-             <Card>
+            </Card>
+          </GridItem>
+          <GridItem colSpan={4}>
+            <Card>
               <></>
              </Card>
            </GridItem>
@@ -99,4 +95,8 @@ export default function Index() {
       </View>
     </ScrollView>
   )
+}
+
+const validateInput = (value: string) => {
+  return value.length < 7;
 }
