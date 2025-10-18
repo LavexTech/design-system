@@ -24,25 +24,69 @@ npm install lavex-design-system
 
 ## Uso
 
+### Exemplo Básico
+
 ```tsx
 import React from 'react';
 import { View } from 'react-native';
-import { HelloWorld } from 'lavex-design-system';
+import { Title1, Card, Text } from 'lavex-design-system';
 
 export default function App() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <HelloWorld />
+    <View style={{ flex: 1, padding: 20 }}>
+      <Title1 text="Meu App" />
+      <Card title="Bem-vindo">
+        <Text text="Este é um exemplo usando o Lavex Design System" />
+      </Card>
     </View>
+  );
+}
+```
+
+### Exemplo com Lista
+
+```tsx
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { Title1, List, Card, Text, Info } from 'lavex-design-system';
+
+export default function App() {
+  return (
+    <ScrollView style={{ flex: 1, padding: 20 }}>
+      <Title1 text="Dashboard" />
+      
+      <List title="Tarefas Pendentes">
+        <Card title="Revisar código">
+          <Text text="Fazer code review do PR #123" />
+          <Info text="Prazo: hoje" />
+        </Card>
+        <Card title="Atualizar documentação">
+          <Text text="Documentar novos componentes" />
+          <Info text="Prazo: amanhã" />
+        </Card>
+      </List>
+    </ScrollView>
   );
 }
 ```
 
 ## Componentes Disponíveis
 
-### HelloWorld
+Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
-Um componente simples para exibir texto.
+### Componentes de Texto
+- **Title1** - Títulos principais (Heading 1) - [Documentação](./docs/Title1.md)
+- **Title2** - Títulos secundários (Heading 2) - [Documentação](./docs/Title2.md)
+- **Title3** - Títulos terciários (Heading 3) - [Documentação](./docs/Title3.md)
+- **Text** - Texto padrão para conteúdo
+- **Info** - Texto informativo secundário - [Documentação](./docs/Info.md)
+
+### Componentes Estruturais
+- **Card** - Container para agrupar conteúdo relacionado
+- **List** - Lista organizada de itens com separadores - [Documentação](./docs/List.md)
+
+### Componentes de Demonstração
+- **HelloWorld** - Componente simples para testes
 
 ## Desenvolvimento
 
