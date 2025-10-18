@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Input } from "../Input/Input";
-import Constants from "../../constants/constants";
+import React, { useState } from "react"
+import { TouchableOpacity, StyleSheet } from "react-native"
+// TODO: Substituir por componente SVG do Font Awesome
+import { Ionicons } from "@expo/vector-icons"
+import { Input } from "../Input/Input"
+import Constants from "../../constants/constants"
 
 type InputPasswordProps = {
-    label: string;
-    value: string;
-    placeholder?: string;
+    label: string,
+    value: string,
+    placeholder?: string,
     onChange: (value: string) => void;
-    showPasswordToggle?: boolean;
-    validation?: (value: string) => boolean;
-    errorMessage?: string;
+    showPasswordToggle?: boolean,
+    validation?: (value: string) => boolean,
+    errorMessage?: string,
 }
 
 export const InputPassword: React.FC<InputPasswordProps> = ({

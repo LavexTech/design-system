@@ -1,6 +1,6 @@
-# Como utilizar - InputPassword
+# InputPassword
 
-O componente `InputPassword` é uma caixa de texto especializada para entrada de senhas que oferece funcionalidade de toggle de visibilidade da senha. É uma versão simplificada e focada do componente `Input` genérico.
+Campo de texto especializado para entrada de senha com validação automática e botão para mostrar/ocultar.
 
 ## Importação
 
@@ -10,117 +10,93 @@ import { InputPassword } from "lavex-design-system";
 
 ## Props
 
-| Prop                 | Tipo                      | Obrigatório | Descrição                                                       |
-| -------------------- | ------------------------- | ----------- | --------------------------------------------------------------- |
-| `label`              | `string`                  | ✅          | O texto que aparece acima do campo de entrada                   |
-| `value`              | `string`                  | ✅          | O valor atual do input                                          |
-| `placeholder`        | `string`                  | ❌          | Texto de placeholder quando o campo está vazio                  |
-| `onChange`           | `(value: string) => void` | ✅          | Função chamada quando o valor do input muda                     |
-| `showPasswordToggle` | `boolean`                 | ❌          | Mostra botão para alternar visibilidade da senha (padrão: true) |
+| Prop                 | Tipo                      | Obrigatório | Descrição                                                         |
+| -------------------- | ------------------------- | ----------- | ----------------------------------------------------------------- |
+| `label`              | `string`                  | Sim         | Texto que aparece acima do campo                                  |
+| `value`              | `string`                  | Sim         | Valor atual do input                                              |
+| `onChange`           | `(value: string) => void` | Sim         | Função chamada quando o valor muda                                |
+| `placeholder`        | `string`                  | Não         | Texto placeholder (padrão: "Digite sua senha")                    |
+| `showPasswordToggle` | `boolean`                 | Não         | Mostra botão para alternar visibilidade (padrão: true)            |
+| `errorMessage`       | `string`                  | Não         | Mensagem de erro customizada quando validação falha               |
 
-## Uso Básico
+## O que faz
 
-```tsx
-import React, { useState } from "react";
-import { InputPassword } from "lavex-design-system";
+- Wrapper do componente Input configurado para senha
+- Validação automática de senha forte
+- Botão para mostrar/ocultar senha (ícone de olho)
+- Campo com `secureTextEntry` (caracteres mascarados)
+- Validação: mínimo 8 caracteres, com maiúscula, minúscula e número
 
-const MyComponent = () => {
-  const [password, setPassword] = useState("");
-
-  return (
-    <InputPassword
-      label="Senha"
-      value={password}
-      placeholder="Digite sua senha"
-      onChange={setPassword}
-    />
-  );
-};
-```
-
-## Exemplos de Uso
-
-### InputPassword Básico
+## Exemplo Básico
 
 ```tsx
-import React, { useState } from "react";
 import { InputPassword } from "lavex-design-system";
+import { useState } from "react";
 
-const BasicPasswordInput = () => {
-  const [password, setPassword] = useState("");
+const [password, setPassword] = useState("");
 
-  return (
-    <InputPassword
-      label="Senha"
-      value={password}
-      placeholder="Digite sua senha"
-      onChange={setPassword}
-    />
-  );
-};
+<InputPassword
+  label="Senha"
+  value={password}
+  onChange={setPassword}
+/>
 ```
 
-### InputPassword sem Toggle de Visibilidade
+## Exemplo sem Toggle
 
 ```tsx
-import React, { useState } from "react";
-import { InputPassword } from "lavex-design-system";
-
-const HiddenTogglePasswordInput = () => {
-  const [password, setPassword] = useState("");
-
-  return (
-    <InputPassword
-      label="Senha Confidencial"
-      value={password}
-      placeholder="Digite sua senha"
-      onChange={setPassword}
-      showPasswordToggle={false}
-    />
-  );
-};
+<InputPassword
+  label="Senha Confidencial"
+  value={password}
+  onChange={setPassword}
+  showPasswordToggle={false}
+/>
 ```
 
-### InputPassword com Placeholder Customizado
+## Exemplo com Mensagem de Erro
 
 ```tsx
-import React, { useState } from "react";
-import { InputPassword } from "lavex-design-system";
-
-const CustomPlaceholderInput = () => {
-  const [password, setPassword] = useState("");
-
-  return (
-    <InputPassword
-      label="Nova Senha"
-      value={password}
-      placeholder="Digite uma nova senha"
-      onChange={setPassword}
-    />
-  );
-};
+<InputPassword
+  label="Nova Senha"
+  value={password}
+  placeholder="Digite uma senha forte"
+  onChange={setPassword}
+  errorMessage="Senha fraca"
+/>
 ```
 
-## Características
+## Validação Automática
 
-### Toggle de Visibilidade
+A senha deve atender aos seguintes critérios:
 
-O componente inclui um botão "Mostrar/Ocultar" que permite ao usuário alternar entre ver e ocultar o texto da senha:
+```tsx
+// Válido
+"Senha123"      // 8+ caracteres, maiúscula, minúscula, número
 
-- **Mostrar**: Exibe o texto da senha em texto simples
-- **Ocultar**: Exibe a senha com caracteres mascarados (••••••)
+// Inválido
+"senha"         // falta maiúscula e número
+"SENHA123"      // falta minúscula
+"SenhaForte"    // falta número
+"Senha1"        // menos de 8 caracteres
+```
 
-### Configurações de Segurança
+**Regras:**
+- Mínimo 8 caracteres
+- Pelo menos 1 letra maiúscula
+- Pelo menos 1 letra minúscula
+- Pelo menos 1 número
 
-O componente automaticamente:
+## Como funciona
 
-- Desabilita a capitalização automática (`autoCapitalize="none"`)
-- Desabilita a correção automática (`autoCorrect={false}`)
-- Usa entrada de texto segura (`secureTextEntry`)
+1. Renderiza o componente `Input` com configurações de senha
+2. Adiciona estado interno para controlar visibilidade da senha
+3. Aplica validação automática de senha forte
+4. Renderiza botão de toggle com ícone de olho (Ionicons)
+5. Alterna `secureTextEntry` entre true/false ao clicar no botão
 
-## Boas Práticas
+## Observações
 
-1. **Use labels descritivos**: Sempre forneça um label claro que explique o que o usuário deve inserir
-2. **Placeholders úteis**: Use placeholders que mostrem o contexto esperado
-3. **Toggle de visibilidade**: Mantenha `showPasswordToggle={true}` para melhor experiência do usuário
-4. **Teste em dispositivos móveis**: Sempre teste a funcionalidade em dispositivos móveis
+- É um wrapper do componente `Input`
+- Usa `Ionicons` para ícone do olho (eye/eye-off)
+- Toggle fica à direita do campo (como `rightElement`)
+- Validação é obrigatória (sempre ativa)
