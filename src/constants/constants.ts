@@ -25,6 +25,7 @@ const Constants = {
       SUCCESS: "#059669",
       DANGER: "#DC2626",
       INFO: "#8F98AD",
+      WARNING: "#F59E0B",
     },
     backgroundColor: {
       WHITE: "#FFFFFF",
