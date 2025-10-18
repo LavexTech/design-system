@@ -1,4 +1,5 @@
 import { ScrollView, View } from "react-native";
+import { useState } from "react";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -7,10 +8,13 @@ import { Info } from "@src/components/Info/Info";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { List } from "@src/components/List/List";
+import { Input } from "@src/components/Input/Input";
+import { InputPassword } from "@src/components/InputPassword/InputPassword";
 
 export default function Index() {
   const [value, setValue] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
@@ -18,6 +22,24 @@ export default function Index() {
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
+      <View style={{ marginTop: 20 }}>
+        <Input
+          label="Input"
+          value={value}
+          placeholder="Enter Text here..."
+          onChange={setValue}
+          validation={validateInput}
+          errorMessage="Input must be less than 7 characters" />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <InputPassword
+          label="Senha"
+          value={password}
+          placeholder="Digite sua senha"
+          onChange={setPassword}
+          showPasswordToggle={true}
+          errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+      </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
         <Title text="Title" />
