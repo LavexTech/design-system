@@ -10,6 +10,7 @@ import { List } from "@src/components/List/List";
 
 export default function Index() {
   const [value, setValue] = useState("");
+  const [email, setEmail] = useState("");
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
