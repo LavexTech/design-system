@@ -10,6 +10,8 @@ import { Card } from "@src/components/Card/Card"
 export default function Index() {
     console.log("Exemplo A")
 
+    console.log("Exemplo B")
+
     return (
         <ScrollView style={{ marginTop: 20, padding: 20 }}>
             <MainTitle text="Main Title" />
