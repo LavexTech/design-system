@@ -8,6 +8,10 @@ import { Grid } from "@src/components/Grid/Grid"
 import { Card } from "@src/components/Card/Card"
 
 export default function Index() {
+    // tiroliro no fuba
+
+    // xpto
+
     console.log("Exemplo A")
 
     console.log("Exemplo B")
