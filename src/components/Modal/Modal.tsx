@@ -1,4 +1,5 @@
 import React from "react"
+import { View } from "react-native"
 import { GluestackUIProvider } from '../../ui/gluestack-ui-provider'
 import { TextBox as Text } from "../Text/Text"
 import { Button } from "../Button/Button"
@@ -10,6 +11,7 @@ import {
     ModalBody,
     ModalFooter,
 } from "../../ui/modal"
+import { Grid, GridItem } from "../Grid/Grid"
 
 type ModalProps = {
     title: string,
@@ -35,20 +37,32 @@ export const Modal: React.FC<ModalProps> = ({
             >
                 <ModalBackdrop />
                 <ModalContent>
-                    <ModalHeader {...({} as any)}>
-                        <Text text={title} />
-                    </ModalHeader>
-                    <ModalBody {...({} as any)}>
-                        <Text size="small" text={text} />
-                    </ModalBody>
-                    <ModalFooter {...({} as any)}>
-                        <Button
-                            text={buttonText}
-                            onClick={onClose}
-                            variant="default"
-                        />
-                    </ModalFooter>
-                </ModalContent>
+                    <Grid columns={1} gap={1}>
+                        <GridItem>  
+                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                <ModalHeader {...({} as any)}>
+                                    <Text text={title} />    
+                                </ModalHeader>
+                            </View>
+                        </GridItem>
+                        <GridItem>
+                            <ModalBody {...({} as any)}>
+                                <Text size="small" text={text} />
+                            </ModalBody>
+                        </GridItem>
+                        <GridItem>
+                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                <ModalFooter {...({} as any)}>
+                                    <Button
+                                        text={buttonText}
+                                        onClick={onClose}
+                                        variant="default"
+                                    />
+                                </ModalFooter>
+                            </View>
+                        </GridItem>
+                    </Grid>
+                </ModalContent>  
             </GluestackModal>
         </GluestackUIProvider>
     )
