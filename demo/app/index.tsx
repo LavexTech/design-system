@@ -6,7 +6,7 @@ import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
 import { Modal } from "@src/components/Modal/Modal";
 import { Info } from "@src/components/Info/Info";
-import { Grid } from "@src/components/Grid/Grid";
+import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Button } from "@src/components/Button/Button";
 

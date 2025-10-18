@@ -6,9 +6,10 @@ import Constants from "../../constants/constants";
 export interface TextProps {
   text: string;
   size?: "small" | "medium" | "large";
+  level? : "success" | "error" | "warning" | "default";
 }
 
-export const TextBox: React.FC<TextProps> = ({ text, size = "medium" }) => {
+export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "default" }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
   if (!fontLoaded) return null;
 
@@ -18,12 +19,21 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium" }) => {
     large: 20,
   }
 
+  const levels = {
+    success: Constants.styles.textColor.SUCCESS,
+    error: Constants.styles.textColor.DANGER,
+    warning: Constants.styles.textColor.WARNING,
+    default: Constants.styles.textColor.DEFAULT,
+  }
+
   const fontSize = sizes[size];
+  const color = levels[level];
 
   return <Text style={
     {
       ...styles.text,
-      fontSize
+      fontSize,
+      color
     }}>
     {text}
   </Text>;
@@ -34,7 +44,6 @@ const styles = StyleSheet.create({
     fontWeight: Constants.styles.fontWeight.NORMAL,
     lineHeight: Constants.styles.fontSize.MEDIUM,
     fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
     textAlign: "left",
     flexWrap: "wrap",
     flexShrink: 1,
