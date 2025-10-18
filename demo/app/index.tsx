@@ -8,6 +8,11 @@ import { Grid } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 
 export default function Index() {
+
+	// tiroliro no fuba
+
+	// xpto
+	
   return (
     <ScrollView style={{ marginTop: 20, padding: 20 }}>
       <MainTitle text="Main Title" />
