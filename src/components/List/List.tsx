@@ -40,13 +40,6 @@ export const List: React.FC<ListProps> = ({ title, children }) => {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
-    textAlign: "left",
-  },
   itemContainer: {
     width: "100%",
   },
