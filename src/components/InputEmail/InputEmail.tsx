@@ -1,12 +1,12 @@
-import React from "react";
-import { Input } from "../Input/Input";
+import React from "react"
+import { Input } from "../Input/Input"
 
-export interface InputEmailProps {
-  value: string;
-  onChange: (value: string) => void;
-  label?: string;
-  placeholder?: string;
-  errorMessage?: string;
+type InputEmailProps = {
+  value: string,
+  onChange: (value: string) => void,
+  label?: string,
+  placeholder?: string,
+  errorMessage?: string,
 }
 
 export const InputEmail: React.FC<InputEmailProps> = ({
