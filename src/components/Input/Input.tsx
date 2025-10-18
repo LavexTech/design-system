@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { TextBox as Text } from "../Text/Text";
-
-import Constants from "../../constants/constants";
-import { Input as InputBase, InputField } from '../../ui/input';
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
-import { Grid, GridItem } from "../Grid/Grid";
+import React, { useState, useEffect } from "react"
+import { StyleSheet } from "react-native"
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { TextBox as Text } from "../Text/Text"
+import { Input as InputBase, InputField } from '../../ui/input'
+import { Grid, GridItem } from "../Grid/Grid"
+import Constants from "../../constants/constants"
 
 type InputProps = {
-  label: string;
-  value: string;
-  placeholder?: string;
-  onChange: (value: string) => void;
-  validation?: (value: string) => boolean;
-  errorMessage?: string;
-  mask?: string;
-  mobileKeyboard?: "text" | "email" | "phone" | "number";
+  label: string
+  value: string
+  placeholder?: string
+  onChange: (value: string) => void
+  validation?: (value: string) => boolean
+  errorMessage?: string
+  mask?: string
+  mobileKeyboard?: "text" | "email" | "phone" | "number"
 }
 
 export const Input: React.FC<InputProps> = ({
