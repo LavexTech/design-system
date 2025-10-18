@@ -33,13 +33,15 @@ export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 'md', ty
         </GluestackUIProvider>
     )
 
-    if (onClick) {
-        return (
-            <TouchableOpacity onPress={onClick} activeOpacity={0.7}>
-                {imageComponent}
-            </TouchableOpacity>
-        )
+    const handleClick = function(){
+       if ( onClick !== undefined ) onClick( )
     }
 
-    return imageComponent;
+    const opacity = onClick !== undefined ? 0.7 : 1
+
+     return (
+         <TouchableOpacity onPress={handleClick} activeOpacity={opacity}>
+             {imageComponent}
+         </TouchableOpacity>
+     )
 }
