@@ -1,13 +1,17 @@
-import React from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
+import React from "react"
+import { View, StyleSheet } from "react-native"
+import { Textarea, TextareaInput } from "../../ui/textarea"
+import { TextBox } from "../Text/Text"
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { Grid, GridItem } from "../Grid/Grid"
+import Constants from "../../constants/constants"
 
-export interface TextAreaProps {
-  label: string;
-  value?: string;
-  placeholder?: string;
-  onChange: (value: string) => void;
-  maxLength?: number;
+type TextAreaProps = {
+  label: string,
+  value?: string,
+  placeholder?: string,
+  onChange: (value: string) => void,
+  maxLength?: number,
 }
 
 export const TextArea: React.FC<TextAreaProps> = ({
@@ -19,61 +23,50 @@ export const TextArea: React.FC<TextAreaProps> = ({
 }: TextAreaProps) => {
   const handleChange = (text: string) => {
     if (maxLength && text.length > maxLength) {
-      return;
+      return
     }
-    onChange(text);
-  };
+    onChange(text)
+  }
 
-  const currentLength = value?.length || 0;
+  const currentLength = value?.length || 0
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
-        style={styles.textArea}
-        value={value}
-        placeholder={placeholder}
-        onChangeText={handleChange}
-        multiline={true}
-        textAlignVertical="top"
-      />
-      {maxLength && (
-        <Text style={styles.charCounter}>
-          {currentLength}/{maxLength} caracteres
-        </Text>
-      )}
-    </View>
-  );
-};
+    <GluestackUIProvider>
+      <Grid columns={1} gapY={2}>
+        <GridItem colSpan={1}>
+          <TextBox text={label} size="small" />
+        </GridItem>
+        <GridItem colSpan={1}>
+          <Textarea style={styles.textarea} size="xl">
+            <TextareaInput
+              {...({
+                value,
+                placeholder,
+                onChangeText: handleChange,
+                multiline: true,
+                placeholderTextColor: Constants.styles.textColor.INFO,
+              } as any)}
+            />
+          </Textarea>
+        </GridItem>
+        {maxLength && (
+          <View style={styles.charCounterContainer}>
+            <TextBox 
+              text={`${currentLength}/${maxLength} caracteres`} 
+              size="small" 
+            />
+          </View>
+        )}
+      </Grid>
+    </GluestackUIProvider>
+  )
+}
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: Constants.styles.spacing.MEDIUM,
-  },
-  label: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontWeight: Constants.styles.fontWeight.NORMAL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
-    marginBottom: Constants.styles.spacing.SMALL,
-  },
-  textArea: {
-    borderWidth: Constants.styles.borderWidth.REGULAR,
-    borderColor: Constants.styles.borderColor.MEDIUM,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    padding: Constants.styles.spacing.MEDIUM,
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
+  textarea: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
-    minHeight: 100,
-    textAlignVertical: "top",
   },
-  charCounter: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
-    marginTop: Constants.styles.spacing.SMALL,
-    textAlign: "right",
+  charCounterContainer: {
+    alignItems: 'flex-end',
   },
-});
+})
