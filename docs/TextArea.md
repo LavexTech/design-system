@@ -1,6 +1,6 @@
 # Como utilizar - TextArea
 
-O componente `TextArea` é uma caixa de texto editável multilinha, ideal para textos longos como comentários, descrições ou mensagens. Quando vazio, exibe um placeholder para orientar o usuário sobre o que deve ser inserido.
+O componente `TextArea` é uma caixa de texto editável multilinha baseada no Gluestack UI, ideal para textos longos como comentários, descrições ou mensagens. Utiliza o componente `TextBox` personalizado para labels e contador de caracteres.
 
 ## Importação
 
@@ -12,11 +12,19 @@ import { TextArea } from "lavex-design-system";
 
 | Prop          | Tipo                      | Obrigatório | Descrição                                                              |
 | ------------- | ------------------------- | ----------- | ---------------------------------------------------------------------- |
-| `label`       | `string`                  | ✅          | O texto do título que fica acima da caixa                              |
-| `value`       | `string`                  | ❌          | O valor atual do texto                                                 |
-| `placeholder` | `string`                  | ❌          | O texto que aparece quando a caixa está vazia                          |
-| `onChange`    | `(value: string) => void` | ✅          | Função chamada quando o texto é alterado                               |
-| `maxLength`   | `number`                  | ❌          | Limite máximo de caracteres. Quando definido, exibe um contador visual |
+| `label`       | `string`                  | Sim          | O texto do título que fica acima da caixa                              |
+| `value`       | `string`                  | Não          | O valor atual do texto                                                 |
+| `placeholder` | `string`                  | Não          | O texto que aparece quando a caixa está vazia                          |
+| `onChange`    | `(value: string) => void` | Sim          | Função chamada quando o texto é alterado                               |
+| `maxLength`   | `number`                  | Não          | Limite máximo de caracteres. Quando definido, exibe um contador visual |
+
+## Implementação
+
+- **Base**: Gluestack UI Textarea + TextareaInput
+- **Layout**: Grid system com GridItem para estruturação
+- **Label**: Componente TextBox personalizado
+- **Contador**: TextBox personalizado alinhado à direita
+- **Provider**: GluestackUIProvider para contexto de tema
 
 ## Uso Básico
 
@@ -38,75 +46,25 @@ const MyComponent = () => {
 };
 ```
 
-## Exemplos de Uso
-
-### Formulário de Contato
+## Exemplo com Limite de Caracteres
 
 ```tsx
 import React, { useState } from "react";
-import { View } from "react-native";
-import { TextArea } from "lavex-design-system";
-
-const ContactForm = () => {
-  const [message, setMessage] = useState("");
-
-  return (
-      <TextArea
-        label="Mensagem"
-        value={message}
-        placeholder="Conte-nos como podemos ajudar..."
-        onChange={setMessage}
-      />
-    </View>
-  );
-};
-```
-
-### Comentários em Posts
-
-```tsx
-import React, { useState } from "react";
-import { View } from "react-native";
-import { TextArea } from "lavex-design-system";
-
-const CommentSection = () => {
-  const [comment, setComment] = useState("");
-
-  return (
-    <View style={{ padding: 16 }}>
-      <TextArea
-        label="Comentário"
-        value={comment}
-        placeholder="O que você achou deste post?"
-        onChange={setComment}
-      />
-    </View>
-  );
-};
-```
-
-### Com Limite de Caracteres
-
-```tsx
-import React, { useState } from "react";
-import { View } from "react-native";
 import { TextArea } from "lavex-design-system";
 
 const FeedbackForm = () => {
   const [feedback, setFeedback] = useState("");
 
   return (
-    <View style={{ padding: 16 }}>
-      <TextArea
-        label="Seu feedback"
-        value={feedback}
-        placeholder="Compartilhe sua opinião (máximo 200 caracteres)..."
-        onChange={setFeedback}
-        maxLength={200}
-      />
-    </View>
+    <TextArea
+      label="Seu feedback"
+      value={feedback}
+      placeholder="Compartilhe sua opinião (máximo 200 caracteres)..."
+      onChange={setFeedback}
+      maxLength={200}
+    />
   );
 };
 ```
 
-**Observação**: Quando a prop `maxLength` é fornecida, um contador de caracteres aparece automaticamente abaixo do campo, mostrando quantos caracteres foram digitados em relação ao limite máximo.
+**Nota**: O componente utiliza TypeScript com type assertion (`as any`) para compatibilidade com as props do TextareaInput do Gluestack UI.
