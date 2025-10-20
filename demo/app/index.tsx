@@ -11,12 +11,13 @@ import { Card } from "@src/components/Card/Card";
 import { List } from "@src/components/List/List";
 import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
+import { InputEmail } from "@src/components/InputEmail/InputEmail";
 
 export default function Index() {
   const [value, setValue] = useState("");
   const [password, setPassword] = useState("");
   const [contactMessage, setContactMessage] = useState("");
-  
+
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
@@ -41,6 +42,9 @@ export default function Index() {
           onChange={setPassword}
           showPasswordToggle={true}
           errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+      </View>
+      <View style={{ marginTop: 20 }} >
+        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
       </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
@@ -111,9 +115,7 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <View style={{ marginTop: 20 }} >
-        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
-      </View>
+      
       <View style={{ marginTop: 20 }} >
         <List title="Lista de exemplo">
           <Text text="Item 1" />
