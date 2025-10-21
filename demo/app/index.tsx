@@ -134,35 +134,36 @@ export default function Index() {
         borderRadius: 8
       }}>
         <MainTitle text="UserInfo Demo" />
-
         <View style={{ marginTop: 20 }}>
-          <UserInfo
-            user={sampleUser}
-            type="name"
-            onClick={() => alert('Nome clicado!')}
-          />
+          <Grid columns={1} gap={4}>
+            <UserInfo
+              user={sampleUser}
+              type="name"
+              onClick={() => alert('Nome clicado!')}
+            />
 
-          <UserInfo
-            user={sampleUser}
-            type="email"
-            onClick={() => alert('Email clicado!')}
-          />
+            <UserInfo
+              user={sampleUser}
+              type="email"
+              onClick={() => alert('Email clicado!')}
+            />
 
-          <UserInfo
-            user={sampleUser}
-            type="phone"
-          />
+            <UserInfo
+              user={sampleUser}
+              type="phone"
+            />
 
-          <UserInfo
-            user={sampleUser}
-            type="bio"
-          />
+            <UserInfo
+              user={sampleUser}
+              type="bio"
+            />
 
-          <UserInfo
-            user={sampleUser}
-            type="company"
-            onClick={() => alert('Empresa clicada!')}
-          />
+            <UserInfo
+              user={sampleUser}
+              type="company"
+              onClick={() => alert('Empresa clicada!')}
+            />
+          </Grid>
         </View>
       </View>
     </ScrollView>
