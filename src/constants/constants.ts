@@ -8,9 +8,9 @@ const Constants = {
       SMALL: 14,
     },
     fontWeight: {
-      BOLD: "700",
-      NORMAL: "400",
-      THIN: "100",
+      BOLD: "700" as any,
+      NORMAL: "400" as any,
+      THIN: "100" as any,
     },
     fontFamily: {
       REGULAR: "Roboto-Regular",
@@ -25,6 +25,7 @@ const Constants = {
       SUCCESS: "#059669",
       DANGER: "#DC2626",
       INFO: "#8F98AD",
+      WARNING: "#F59E0B",
     },
     backgroundColor: {
       WHITE: "#FFFFFF",
