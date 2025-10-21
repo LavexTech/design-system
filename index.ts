@@ -7,6 +7,7 @@ export { Card } from "./src/components/Card/Card";
 export { List } from "./src/components/List/List";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
+export { Image } from "./src/components/Image/Image";
 export { Input } from "./src/components/Input/Input";
 export { InputEmail } from "./src/components/InputEmail/InputEmail";
 export { InputPassword } from "./src/components/InputPassword/InputPassword";
