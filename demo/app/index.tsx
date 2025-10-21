@@ -12,11 +12,12 @@ import { Gallery } from "@src/components/Gallery/Gallery";
 import { List } from "@src/components/List/List";
 import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
+import { Image } from "@src/components/Image/Image";
 
 export default function Index() {
   const [value, setValue] = useState("");
   const [password, setPassword] = useState("");
-
+  
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
@@ -68,6 +69,38 @@ export default function Index() {
             <Text text="Card 4" />
           </Card>
         </Grid>
+        <Grid columns={3} gap={0}>
+          <GridItem>
+              <Text text="Column 1" />
+              <MainTitle text="Hello World" />
+              <Image
+                  src="https://picsum.photos/id/11/100/100"
+                  alt="Placeholder image"
+                  size="lg"
+                  type="circle"
+                  onClick={() => console.log("Image clicked!")}
+              />
+          </GridItem>
+          <GridItem>
+              <Text text="Column 2" />
+              <Title text="Hello World" />
+              <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
+          </GridItem>
+          <GridItem>
+              <Text text="Column 3" />
+              <Subtitle text="Hello World" />
+              <Image
+                  src="https://picsum.photos/id/10/100/100"
+                  alt="Icon placeholder"
+                  size="xl"
+                  type="circle"
+                  onClick={() => alert("Icon clicked!")}
+              />
+          </GridItem>
+          <Text text="Column 1" size="small" />
+          <Text text="Column 2" level="success" />
+          <Text text="Column 3" size="large" />
+      </Grid>
 
         <Subtitle text="Custom Column Spans (10 columns grid)" />
         <Grid columns={10} gap={4}>

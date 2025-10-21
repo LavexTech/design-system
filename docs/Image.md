@@ -12,11 +12,11 @@ import { Image } from "lavex-design-system";
 
 | Prop      | Tipo         | Obrigatório | Padrão | Descrição                                |
 | --------- | ------------ | ----------- | ------ | ---------------------------------------- |
-| `src`     | `string`     | ✅          | -      | URL da imagem que será exibida           |
-| `alt`     | `string`     | ✅          | -      | Descrição para acessibilidade            |
-| `onClick` | `function`   | ❌          | -      | Função chamada quando a imagem é clicada |
-| `size`    | `number`     | ❌          | `100`  | Tamanho da imagem em pixels              |
-| `style`   | `ImageStyle` | ❌          | -      | Estilos adicionais para personalização   |
+| `src`     | `string`     | Sim         | -      | URL da imagem que será exibida           |
+| `alt`     | `string`     | Sim         | -      | Descrição para acessibilidade            |
+| `onClick` | `function`   | Não         | -      | Função chamada quando a imagem é clicada |
+| `size`    | `number`     | Não         | `100`  | Tamanho da imagem em pixels              |
+| `style`   | `ImageStyle` | Não         | -      | Estilos adicionais para personalização   |
 
 ## Uso Básico
 
