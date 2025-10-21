@@ -145,21 +145,23 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <Title text="Stepper Component" />
-      <Stepper
-        text="Camiseta"
-        min={0}
-        max={10}
-        value={shirtCount}
-        onChange={setShirtCount}
-      />
-      <Stepper
-        text="Calça"
-        min={0}
-        max={5}
-        value={pantsCount}
-        onChange={setPantsCount}
-      />
+      <Grid columns={1} gap={4}>
+        <Title text="Stepper Component" />
+        <Stepper
+          text="Camiseta"
+          min={0}
+          max={10}
+          value={shirtCount}
+          onChange={setShirtCount}
+        />
+        <Stepper
+          text="Calça"
+          min={0}
+          max={5}
+          value={pantsCount}
+          onChange={setPantsCount}
+        />
+      </Grid>
       <View style={{ marginTop: 20 }} >
         <List title="Lista de exemplo">
           <Text text="Item 1" />
