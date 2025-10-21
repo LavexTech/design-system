@@ -16,11 +16,11 @@ type AccordionItemProps = {
   id: string,
   title: string,
   children: React.ReactNode
-};
+}
 
 type AccordionProps = {
   children: React.ReactNode
-};
+}
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children }) => {
   return (
