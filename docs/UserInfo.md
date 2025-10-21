@@ -12,9 +12,10 @@ import { UserInfo } from "lavex-design-system";
 
 | Prop      | Tipo       | Obrigatório | Descrição                                                                 |
 | --------- | ---------- | ----------- | ------------------------------------------------------------------------- |
-| `user`    | `object`   | ✅          | Objeto contendo todas as informações do usuário                           |
-| `type`    | `string`   | ✅          | Especifica qual informação do user deve ser exibida (ex: "name", "email") |
-| `onClick` | `function` | ❌          | Função chamada quando o texto é clicado (opcional)                        |
+| `user`    | `object`   | Sim          | Objeto contendo todas as informações do usuário                           |
+| `type`    | `string`   | Sim          | Especifica qual informação do user deve ser exibida (ex: "name", "email") |
+| `label`   | `string`   | Não          | Label personalizada para exibição (sobrescreve a label padrão)            |
+| `onClick` | `function` | Não          | Função chamada quando o texto é clicado (opcional)                        |
 
 ## Uso Básico
 
@@ -26,7 +27,8 @@ const user = {
 };
 
 <UserInfo user={user} type="name" />
-<UserInfo user={user} type="email" onClick={() => alert("Editar email")} />
+<UserInfo user={user} type="email" label="E-mail de Contato" />
+<UserInfo user={user} type="phone" onClick={() => alert("Editar telefone")} />
 ```
 
 ## Tipos Suportados
@@ -39,5 +41,11 @@ const user = {
 | `bio`      | BIO           |
 | `company`  | EMPRESA       |
 | `position` | CARGO         |
+| `department` | DEPARTAMENTO |
+| `address`    | ENDEREÇO      |
+| `city`       | CIDADE        |
+| `country`    | PAÍS          |
+| `website`    | WEBSITE       |
+| `age`        | IDADE         |
 
-Para outros tipos, a label será capitalizada automaticamente.
+Para outros tipos, a label será capitalizada automaticamente. Use a prop `label` para personalizar a exibição.
