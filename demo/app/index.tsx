@@ -14,8 +14,8 @@ import { InputPassword } from "@src/components/InputPassword/InputPassword";
 
 export default function Index() {
   const [value, setValue] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
   return (
     <ScrollView 
       style={{ flex: 1, padding: 20 }} 
