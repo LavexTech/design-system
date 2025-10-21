@@ -1,89 +1,76 @@
-# Stepper Component
+# Stepper
 
-Componente que permite ajustar um valor numérico em passos fixos.
+Componente para ajustar valores numéricos em passos fixos com controles de incremento/decremento.
+
+## Importação
+
+```typescript
+import { Stepper } from "lavex-design-system";
+```
 
 ## Props
 
-| Prop | Tipo | Descrição |
-|------|------|-----------|
-| `text` | `string` | Rótulo ou descrição que acompanha o contador (ex: "Camiseta") |
-| `max` | `number` | Valor máximo que o número pode alcançar |
-| `min` | `number` | Valor mínimo que o número pode ter |
-| `value` | `number` | Número atual que o stepper está mostrando e controlando |
-| `onChange` | `(value: number) => void` | Função chamada sempre que o valor é alterado (aumentado ou diminuído) |
+| Prop      | Tipo                      | Obrigatório | Descrição                                    |
+| --------- | ------------------------- | ----------- | -------------------------------------------- |
+| `text`    | `string`                  | Sim          | Rótulo que acompanha o contador              |
+| `min`     | `number`                  | Sim          | Valor mínimo permitido                       |
+| `max`     | `number`                  | Sim          | Valor máximo permitido                       |
+| `value`   | `number`                  | Sim          | Valor atual do stepper                       |
+| `onChange`| `(value: number) => void` | Sim          | Função chamada quando o valor muda           |
 
-## Uso
-
-```tsx
-import { useState } from "react";
-import { Stepper } from "lavex-design-system";
-
-export default function MyComponent() {
-  const [quantity, setQuantity] = useState(0);
-
-  return (
-    <Stepper
-      text="Camiseta"
-      min={0}
-      max={10}
-      value={quantity}
-      onChange={setQuantity}
-    />
-  );
-}
-```
-
-## Características
-
-- **Layout responsivo**: Utiliza Grid para organização visual
-- **Estados dos botões**: Os botões de incremento/decremento são desabilitados automaticamente quando atingem os limites (min/max)
-- **Visual consistente**: Utiliza valores de `constants.ts` para espaçamento, cores, fontes e bordas
-- **Feedback visual**: Estados desabilitados têm opacidade reduzida e cor diferente
-
-## Exemplo com múltiplos steppers
+## Uso Básico
 
 ```tsx
 import { useState } from "react";
 import { Stepper } from "lavex-design-system";
 
-export default function MyComponent() {
-  const [shirts, setShirts] = useState(0);
-  const [pants, setPants] = useState(1);
-  const [shoes, setShoes] = useState(0);
+const [quantity, setQuantity] = useState(0);
 
-  return (
-    <>
-      <Stepper
-        text="Camisetas"
-        min={0}
-        max={10}
-        value={shirts}
-        onChange={setShirts}
-      />
-      <Stepper
-        text="Calças"
-        min={0}
-        max={5}
-        value={pants}
-        onChange={setPants}
-      />
-      <Stepper
-        text="Sapatos"
-        min={0}
-        max={3}
-        value={shoes}
-        onChange={setShoes}
-      />
-    </>
-  );
-}
+<Stepper
+  text="Camiseta"
+  min={0}
+  max={10}
+  value={quantity}
+  onChange={setQuantity}
+/>
 ```
 
-## Design
+## Exemplo com Múltiplos Steppers
 
-O componente é dividido em duas colunas usando Grid:
-- **Coluna 1**: Label/texto descritivo
-- **Coluna 2**: Controles (botão -, valor, botão +)
+```tsx
+const [shirts, setShirts] = useState(0);
+const [pants, setPants] = useState(1);
 
-Os botões de incremento e decremento têm bordas arredondadas nas extremidades e compartilham uma borda comum com o display do valor central.
+<>
+  <Stepper
+    text="Camisetas"
+    min={0}
+    max={10}
+    value={shirts}
+    onChange={setShirts}
+  />
+  <Stepper
+    text="Calças"
+    min={0}
+    max={5}
+    value={pants}
+    onChange={setPants}
+  />
+</>
+```
+
+## Como funciona
+
+1. Renderiza label e controles em Grid de 2 colunas
+2. Botões +/- são desabilitados automaticamente nos limites (min/max)
+3. Valor central exibe o número atual
+4. Estados desabilitados têm opacidade reduzida
+5. Usa constantes do design system para estilos
+
+## Estilos
+
+- **Layout**: Grid responsivo com 2 colunas
+- **Botões**: Bordas arredondadas nas extremidades, compartilham borda com valor central
+- **Estados**: Desabilitados com opacidade reduzida e cor diferente
+- **Valor**: Centralizado em container com fundo cinza claro
 
