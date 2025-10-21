@@ -7,7 +7,6 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
-import { Image } from "@src/components/Image/Image";
 import { Gallery } from "@src/components/Gallery/Gallery";
 import { List } from "@src/components/List/List";
 import { Input } from "@src/components/Input/Input";
@@ -145,18 +144,20 @@ export default function Index() {
         <Text text="Card" />
       </Card>
       <View style={{ marginTop: 20 }}>
-        <Title text="Gallery Component" />
-        <Gallery
-          images={[
-            "https://picsum.photos/id/10/200/200",
-            "https://picsum.photos/id/11/200/200",
-            "https://picsum.photos/id/12/200/200",
-            "https://picsum.photos/id/13/200/200",
-            "https://picsum.photos/id/14/200/200",
-            "https://picsum.photos/id/15/200/200",
-          ]}
-          onClick={(imageUrl: string, index: number) => console.log(`Clicked image ${index + 1}:`, imageUrl)}
-        />
+        <Grid columns={1} gap={4}>
+          <Title text="Gallery Component" />
+          <Gallery
+            images={[
+              "https://picsum.photos/id/10/200/200",
+              "https://picsum.photos/id/11/200/200",
+              "https://picsum.photos/id/12/200/200",
+              "https://picsum.photos/id/13/200/200",
+              "https://picsum.photos/id/14/200/200",
+              "https://picsum.photos/id/15/200/200",
+            ]}
+            onClick={(imageUrl: string, index: number) => console.log(`Clicked image ${index + 1}:`, imageUrl)}
+          />
+        </Grid>
       </View>
       <View style={{ marginTop: 20 }} >
         <List title="Lista de exemplo">
