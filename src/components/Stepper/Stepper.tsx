@@ -1,14 +1,15 @@
-import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
-import { Grid } from "../Grid/Grid";
+import React from "react"
+import { View, Text, Pressable, StyleSheet } from "react-native"
+import Constants from "../../constants/constants"
+import { Grid } from "../Grid/Grid"
+import { TextBox } from "../Text/Text"
 
-export interface StepperProps {
-  text: string;
-  max: number;
-  min: number;
-  value: number;
-  onChange: (value: number) => void;
+type StepperProps = {
+  text: string,
+  max: number,
+  min: number,
+  value: number,
+  onChange: (value: number) => void
 }
 
 export const Stepper: React.FC<StepperProps> = ({
@@ -20,23 +21,23 @@ export const Stepper: React.FC<StepperProps> = ({
 }) => {
   const handleIncrement = () => {
     if (value < max) {
-      onChange(value + 1);
+      onChange(value + 1)
     }
   };
 
   const handleDecrement = () => {
     if (value > min) {
-      onChange(value - 1);
+      onChange(value - 1)
     }
   };
 
-  const isMinDisabled = value <= min;
-  const isMaxDisabled = value >= max;
+  const isMinDisabled = value <= min
+  const isMaxDisabled = value >= max
 
   return (
     <Grid columns={2} gap={Constants.styles.spacing.SMALL}>
       <View style={styles.labelContainer}>
-        <Text style={styles.label}>{text}</Text>
+        <TextBox text={text} />
       </View>
       <View style={styles.controlsContainer}>
         <Pressable
@@ -48,6 +49,7 @@ export const Stepper: React.FC<StepperProps> = ({
             isMinDisabled && styles.buttonDisabled,
           ]}
         >
+          {/* TODO: Trocar para utizar ícone em vez de <Text */}
           <Text
             style={[
               styles.buttonText,
@@ -69,6 +71,7 @@ export const Stepper: React.FC<StepperProps> = ({
             isMaxDisabled && styles.buttonDisabled,
           ]}
         >
+          {/* TODO: Trocar para utizar ícone em vez de <Text */}
           <Text
             style={[
               styles.buttonText,
@@ -80,19 +83,12 @@ export const Stepper: React.FC<StepperProps> = ({
         </Pressable>
       </View>
     </Grid>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   labelContainer: {
-    justifyContent: "center",
-    alignItems: "flex-start",
-  },
-  label: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontWeight: Constants.styles.fontWeight.NORMAL as any,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
+    marginTop: Constants.styles.spacing.SMALL,
   },
   controlsContainer: {
     flexDirection: "row",
@@ -106,17 +102,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderWidth: Constants.styles.borderWidth.REGULAR,
+    borderWidth: 1,
     borderColor: Constants.styles.borderColor.MEDIUM,
   },
   buttonLeft: {
     borderTopLeftRadius: Constants.styles.borderRadius.MEDIUM,
     borderBottomLeftRadius: Constants.styles.borderRadius.MEDIUM,
+    borderWidth: 1,
     borderRightWidth: 0,
   },
   buttonRight: {
     borderTopRightRadius: Constants.styles.borderRadius.MEDIUM,
     borderBottomRightRadius: Constants.styles.borderRadius.MEDIUM,
+    borderWidth: 1,
     borderLeftWidth: 0,
   },
   buttonDisabled: {
@@ -138,8 +136,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
-    borderTopWidth: Constants.styles.borderWidth.REGULAR,
-    borderBottomWidth: Constants.styles.borderWidth.REGULAR,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
     borderColor: Constants.styles.borderColor.MEDIUM,
   },
   valueText: {
@@ -148,5 +146,5 @@ const styles = StyleSheet.create({
     fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,
   },
-});
+})
 
