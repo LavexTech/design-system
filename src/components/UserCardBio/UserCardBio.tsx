@@ -1,21 +1,21 @@
-import React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { Card } from "../Card/Card";
-import { TextBox } from "../Text/Text";
-import Constants from "../../constants/constants";
+import React from "react"
+import { View, Image, StyleSheet } from "react-native"
+import { Card } from "../Card/Card"
+import { TextBox } from "../Text/Text"
+import Constants from "../../constants/constants"
 
-export interface User {
-  id: string;
-  name: string;
-  profileImage: string;
-  ordersCount: number;
-  rating: number;
-  bio: string;
+type User = {
+  id: string,
+  name: string,
+  profileImage: string,
+  ordersCount: number,
+  rating: number,
+  bio: string
 }
 
-export interface UserCardBioProps {
-  user: User;
-  onClick?: () => void;
+type UserCardBioProps = {
+  user: User,
+  onClick?: () => void
 }
 
 export const UserCardBio: React.FC<UserCardBioProps> = ({
@@ -23,9 +23,9 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
   onClick,
 }: UserCardBioProps) => {
   const getStarsText = (rating: number) => {
-    const fullStars = Math.round(rating);
-    return "★".repeat(fullStars) + "☆".repeat(5 - fullStars);
-  };
+    const fullStars = Math.round(rating)
+    return "★".repeat(fullStars) + "☆".repeat(5 - fullStars)
+  }
 
   return (
     <Card onClick={onClick}>
@@ -55,8 +55,8 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
         </View>
       </View>
     </Card>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   ratingContainer: {
     alignItems: "center",
   },
-});
+})
