@@ -7,9 +7,10 @@ export interface TextProps {
   text: string;
   size?: "small" | "medium" | "large";
   level? : "success" | "error" | "warning" | "default";
+  position? : "left" | "center" | "right";
 }
 
-export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "default" }) => {
+export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "default", position = "left" }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
   if (!fontLoaded) return null;
 
@@ -29,6 +30,17 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
   const fontSize = sizes[size];
   const color = levels[level];
 
+  const styles = StyleSheet.create({
+    text: {
+      fontWeight: Constants.styles.fontWeight.NORMAL,
+      lineHeight: Constants.styles.fontSize.MEDIUM,
+      fontFamily: Constants.styles.fontFamily.REGULAR,
+      textAlign: position,
+      flexWrap: "wrap",
+      flexShrink: 1,
+    },
+  });
+
   return <Text style={
     {
       ...styles.text,
@@ -39,13 +51,4 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
   </Text>;
 };
 
-const styles = StyleSheet.create({
-  text: {
-    fontWeight: Constants.styles.fontWeight.NORMAL,
-    lineHeight: Constants.styles.fontSize.MEDIUM,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    textAlign: "left",
-    flexWrap: "wrap",
-    flexShrink: 1,
-  },
-});
+
