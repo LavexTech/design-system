@@ -1,11 +1,11 @@
-import React from "react";
-import { TextBox as Text } from "../Text/Text";
-import { View, StyleSheet, Dimensions } from "react-native";
-import { InfoAlertIcon } from "../Icons/InfoAlertIcon";
-import Constants from "../../constants/constants";
+import React from "react"
+import { TextBox as Text } from "../Text/Text"
+import { View, StyleSheet, Dimensions } from "react-native"
+import { InfoAlertIcon } from "../Icons/InfoAlertIcon"
+import Constants from "../../constants/constants"
 
-export interface AlertProps {
-    text: string;
+type AlertProps = {
+    text: string
 }
 
 export const Alert: React.FC<AlertProps> = ({ text }) => {
@@ -23,10 +23,10 @@ export const Alert: React.FC<AlertProps> = ({ text }) => {
                 </View>
             </View>
         </View>
-    );
-};
+    )
+}
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container: {
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center',
     },
-});
+})
