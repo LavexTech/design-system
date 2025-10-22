@@ -143,18 +143,24 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <Title text="Text list" />
-      <Card>
-        <TextList
-          texts={[
-            "1x Calça Tiroliro",
-            "2x Blusa xpto etc",
-            "5x Camiseta de banda",
-            "3x Pares de meia",
-            "1x Edredom",
-          ]}
-        />
-      </Card>
+      <View style={{ marginTop: 30, marginBottom: 30 }}>
+        <Grid columns={1} gap={2}>
+          <GridItem>
+            <Title text="Text list" />
+          </GridItem>
+          <GridItem>
+            <TextList
+              texts={[
+                "1x Calça Tiroliro",
+                "2x Blusa xpto etc",
+                "5x Camiseta de banda",
+                "3x Pares de meia",
+                "1x Edredom",
+              ]}
+            />
+          </GridItem>
+        </Grid>
+      </View>
       <View style={{ marginTop: 20 }} >
         <List title="Lista de exemplo">
           <Text text="Item 1" />
