@@ -6,15 +6,15 @@ O componente TextList é usado para exibir uma lista simples de strings de forma
 
 | Prop    | Tipo       | Obrigatório | Padrão | Descrição                                    |
 | ------- | ---------- | ----------- | ------ | -------------------------------------------- |
-| `texts` | `string[]` | ✅          | -      | Array de strings que serão exibidas na lista |
+| `texts` | `string[]` | Sim         | -      | Array de strings que serão exibidas na lista |
 
 ## Como Funciona
 
-O TextList renderiza cada string do array como um componente `Text` individual, mantendo:
-
-- Espaçamento consistente entre os itens (8px)
-- Estilo de texto padrão do design system
-- Layout vertical organizado
+O TextList renderiza cada string do array como um componente `Text` individual, usando internamente uma `FlatList` otimizada para:
+- Performance otimizada com FlatList do React Native
+- Separadores automáticos entre os itens (linha cinza de 1px)
+- Layout limpo sem fundo branco
+- Scroll interno desabilitado (deve ser usado dentro de ScrollView)
 
 ## Exemplos de Uso
 
