@@ -1,5 +1,5 @@
-import { ScrollView, View } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
+import { View, ScrollView } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -12,6 +12,27 @@ import { List } from "@src/components/List/List";
 import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
 import { Image } from "@src/components/Image/Image";
+import { Alert } from "@src/components/Alert/Alert";
+import { IconHome } from "@src/components/Icons/IconHome";
+import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft";
+import { IconArrowRight } from "@src/components/Icons/IconArrowRight";
+import { IconChevronLeft } from "@src/components/Icons/IconChevronLeft";
+import { IconChevronRight } from "@src/components/Icons/IconChevronRight";
+import { IconSend } from "@src/components/Icons/IconSend";
+import { IconPlus } from "@src/components/Icons/IconPlus";
+import { IconMinus } from "@src/components/Icons/IconMinus";
+import { IconClose } from "@src/components/Icons/IconClose";
+import { IconTrash } from "@src/components/Icons/IconTrash";
+import { IconSearch } from "@src/components/Icons/IconSearch";
+import { IconFilter } from "@src/components/Icons/IconFilter";
+import { IconProfile } from "@src/components/Icons/IconProfile";
+import { IconEye } from "@src/components/Icons/IconEye";
+import { IconEyeClosed } from "@src/components/Icons/IconEyeClosed";
+import { IconMessage } from "@src/components/Icons/IconMessage";
+import { IconHistory } from "@src/components/Icons/IconHistory";
+import { IconImage } from "@src/components/Icons/IconImage";
+import { IconExclamation } from "@src/components/Icons/IconExclamation";
+import { Stars } from "@src/components/Stars/Stars";
 
 export default function Index() {
   const [value, setValue] = useState("");
@@ -161,6 +182,11 @@ export default function Index() {
           </GridItem>
         </Grid>
       </View>
+      <View style={{ marginTop: 20, padding: 20 }}>
+        <Alert
+          text="O pagamento deve ser efetuado antes da data de vencimento."
+        />
+      </View>
       <View style={{ marginTop: 20 }} >
         <List title="Lista de exemplo">
           <Text text="Item 1" />
@@ -168,6 +194,63 @@ export default function Index() {
           <Text text="Item 3" />
         </List>
       </View>
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Title text="Icons" />
+      </View>
+      
+      <Card title="⭐ Avaliação e Favoritos">
+        <Stars rating={3.5} size={32} />
+      </Card>
+
+      <Card title="🏠 Navegação">
+        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <IconHome fill="#4A90E2" width={32} height={32} />
+          <IconArrowLeft fill="#4A90E2" width={32} height={32} />
+          <IconArrowRight fill="#4A90E2" width={32} height={32} />
+          <IconChevronLeft fill="#4A90E2" width={32} height={32} />
+          <IconChevronRight fill="#4A90E2" width={32} height={32} />
+        </View>
+      </Card>
+
+      <Card title="✉️ Ações">
+        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <IconSend fill="#34C759" width={32} height={32} />
+          <IconPlus fill="#34C759" width={32} height={32} />
+          <IconMinus fill="#FF9500" width={32} height={32} />
+          <IconClose fill="#FF3B30" width={32} height={32} />
+          <IconTrash fill="#FF3B30" width={32} height={32} />
+        </View>
+      </Card>
+
+      <Card title="🔍 Pesquisa e Filtro">
+        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <IconSearch fill="#8E8E93" width={32} height={32} />
+          <IconFilter fill="#8E8E93" width={32} height={32} />
+        </View>
+      </Card>
+
+      <Card title="👤 Usuário e Perfil">
+        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <IconProfile fill="#5856D6" width={32} height={32} />
+          <IconEye fill="#5856D6" width={32} height={32} />
+          <IconEyeClosed fill="#5856D6" width={32} height={32} />
+        </View>
+      </Card>
+
+      <Card title="💬 Comunicação">
+        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <IconMessage fill="#007AFF" width={32} height={32} />
+          <IconHistory fill="#007AFF" width={32} height={32} />
+        </View>
+      </Card>
+
+      <Card title="🖼️ Mídia e Alertas">
+        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+          <IconImage fill="#AF52DE" width={32} height={32} />
+          <IconExclamation fill="#FF9500" width={32} height={32} />
+        </View>
+      </Card>
     </ScrollView>
   )
 }
