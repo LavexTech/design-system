@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
+import Constants from '../../constants'
 import { IconStar } from '../Icons/IconStar'
 import { IconStarHalf } from '../Icons/IconStarHalf'
 
@@ -21,7 +22,7 @@ export const Stars: React.FC<StarsProps> = ({ rating, size = 24 }) => {
       stars.push(
         <IconStar 
           key={`full-${i}`} 
-          fill="#FFD700" 
+          fill={Constants.styles.color.GOLD}
           width={size} 
           height={size} 
         />
@@ -32,7 +33,7 @@ export const Stars: React.FC<StarsProps> = ({ rating, size = 24 }) => {
       stars.push(
         <IconStarHalf 
           key="half" 
-          fill="#FFD700" 
+          fill={Constants.styles.color.GOLD} 
           width={size} 
           height={size} 
         />
@@ -48,7 +49,7 @@ export const Stars: React.FC<StarsProps> = ({ rating, size = 24 }) => {
       stars.push(
         <IconStar 
           key={`bg-${i}`} 
-          fill="#E0E0E0" 
+          fill={Constants.styles.color.GRAY} 
           width={size} 
           height={size} 
         />
