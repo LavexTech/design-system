@@ -7,6 +7,13 @@ const Constants = {
       MEDIUM: 18,
       SMALL: 14,
     },
+    lineHeight: {
+      LARGEST: 30,
+      LARGER: 26,
+      LARGE: 22,
+      MEDIUM: 18,
+      SMALL: 14,
+    },
     fontWeight: {
       BOLD: "700" as any,
       NORMAL: "400" as any,

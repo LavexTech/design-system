@@ -33,7 +33,7 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
   const styles = StyleSheet.create({
     text: {
       fontWeight: Constants.styles.fontWeight.NORMAL,
-      lineHeight: Constants.styles.fontSize.MEDIUM,
+      lineHeight: Constants.styles.lineHeight.LARGE,
       fontFamily: Constants.styles.fontFamily.REGULAR,
       textAlign: position,
       flexWrap: "wrap",
