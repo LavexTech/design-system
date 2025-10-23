@@ -1,10 +1,11 @@
-export { HelloWorld } from "./src/components/HelloWorld/HelloWorld";
 export { MainTitle } from "./src/components/MainTitle/MainTitle";
 export { Title } from "./src/components/Title/Title";
 export { Subtitle } from "./src/components/Subtitle/Subtitle";
 export { TextBox as Text } from "./src/components/Text/Text";
 export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
+export { List } from "./src/components/List/List";
+export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
 export { IconStar } from "./src/components/Icons/IconStar";
 export { IconStarHalf } from "./src/components/Icons/IconStarHalf";
@@ -27,5 +28,9 @@ export { IconArrowLeft } from "./src/components/Icons/IconArrowLeft";
 export { IconArrowRight } from "./src/components/Icons/IconArrowRight";
 export { IconChevronLeft } from "./src/components/Icons/IconChevronLeft";
 export { IconChevronRight } from "./src/components/Icons/IconChevronRight";
+export { Image } from "./src/components/Image/Image";
+export { Input } from "./src/components/Input/Input";
+export { InputEmail } from "./src/components/InputEmail/InputEmail";
+export { InputPassword } from "./src/components/InputPassword/InputPassword";
 
 export { useFonts } from "./src/fontSetup";
