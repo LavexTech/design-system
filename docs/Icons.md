@@ -18,10 +18,10 @@ Todos os componentes de ícones compartilham as mesmas props:
 
 | Prop     | Tipo     | Obrigatório | Padrão      | Descrição                                    |
 | -------- | -------- | ----------- | ----------- | -------------------------------------------- |
-| `fill`   | `string` | ❌          | `'#262627'` | Cor de preenchimento do ícone                |
-| `stroke` | `string` | ❌          | -           | Cor da borda do ícone (opcional)             |
-| `width`  | `number` | ❌          | `24`        | Largura do ícone em pixels                   |
-| `height` | `number` | ❌          | `24`        | Altura do ícone em pixels                    |
+| `fill`   | `string` | Não         | `'#262627'` | Cor de preenchimento do ícone                |
+| `stroke` | `string` | Não         | -           | Cor da borda do ícone (opcional)             |
+| `width`  | `number` | Não         | `24`        | Largura do ícone em pixels                   |
+| `height` | `number` | Não         | `24`        | Altura do ícone em pixels                    |
 
 ## Ícones Disponíveis
 
