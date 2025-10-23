@@ -32,6 +32,7 @@ import { IconMessage } from "@src/components/Icons/IconMessage";
 import { IconHistory } from "@src/components/Icons/IconHistory";
 import { IconImage } from "@src/components/Icons/IconImage";
 import { IconExclamation } from "@src/components/Icons/IconExclamation";
+import { Stars } from "@src/components/Stars/Stars";
 
 export default function Index() {
   const [value, setValue] = useState("");
@@ -176,10 +177,7 @@ export default function Index() {
       </View>
       
       <Card title="⭐ Avaliação e Favoritos">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconStar fill="#FFD700" width={32} height={32} />
-          <IconStarHalf fill="#FFD700" width={32} height={32} />
-        </View>
+        <Stars rating={3.5} size={32} />
       </Card>
 
       <Card title="🏠 Navegação">
