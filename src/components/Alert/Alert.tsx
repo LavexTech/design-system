@@ -1,7 +1,7 @@
 import React from "react"
 import { TextBox as Text } from "../Text/Text"
 import { View, StyleSheet, Dimensions } from "react-native"
-import { InfoAlertIcon } from "../Icons/InfoAlertIcon"
+import { IconExclamation } from "../Icons/IconExclamation"
 import Constants from "../../constants/constants"
 
 type AlertProps = {
@@ -15,7 +15,7 @@ export const Alert: React.FC<AlertProps> = ({ text }) => {
             <View style={styles.alertBox}>
                 <View style={styles.contentContainer}>
                     <View style={styles.iconContainer}>
-                        <InfoAlertIcon />
+                        <IconExclamation width={48} height={48} />
                     </View>
                     <View style={styles.textContainer}>
                         <Text text={text} size="medium" position="center" />
