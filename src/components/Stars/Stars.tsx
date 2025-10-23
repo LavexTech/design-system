@@ -1,40 +1,86 @@
-import React from "react";
-import { Text, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
-import { Grid } from "../Grid/Grid";
+import React from 'react'
+import { View, StyleSheet } from 'react-native'
+import { IconStar } from '../Icons/IconStar'
+import { IconStarHalf } from '../Icons/IconStarHalf'
 
-export interface StarsProps {
-  rating: number;
+type StarsProps = {
+  rating: number,
+  size?: number,
 }
 
-export const Stars: React.FC<StarsProps> = ({ rating }) => {
-  const renderStar = (index: number): string => {
-    const starValue = rating - index;
+export const Stars: React.FC<StarsProps> = ({ rating, size = 24 }) => {
+  const normalizedRating = Math.max(0, Math.min(5, rating))
+  
+  const fullStars = Math.floor(normalizedRating)
+  const hasHalfStar = normalizedRating % 1 >= 0.5
+  
+  const renderRatingStars = () => {
+    const stars = []
     
-    if (starValue >= 1) {
-      return "★";
-    } else if (starValue > 0) {
-      return "✩";
-    } else {
-      return "☆";
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <IconStar 
+          key={`full-${i}`} 
+          fill="#FFD700" 
+          width={size} 
+          height={size} 
+        />
+      )
     }
-  };
+    
+    if (hasHalfStar && fullStars < 5) {
+      stars.push(
+        <IconStarHalf 
+          key="half" 
+          fill="#FFD700" 
+          width={size} 
+          height={size} 
+        />
+      )
+    }
+    
+    return stars
+  }
+  
+  const renderBackgroundStars = () => {
+    const stars = []
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <IconStar 
+          key={`bg-${i}`} 
+          fill="#E0E0E0" 
+          width={size} 
+          height={size} 
+        />
+      )
+    }
+    return stars
+  }
 
   return (
-    <Grid columns={5} gap={2}>
-      {[0, 1, 2, 3, 4].map((index) => (
-        <Text key={index} style={styles.star}>
-          {renderStar(index)}
-        </Text>
-      ))}
-    </Grid>
-  );
-};
+    <View style={styles.container}>
+      <View style={styles.starsRow}>
+        {renderBackgroundStars()}
+      </View>
+      
+      <View style={[styles.starsRow, styles.ratingLayer]}>
+        {renderRatingStars()}
+      </View>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
-  star: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    color: Constants.styles.color.GOLD,
-    textAlign: 'center',
+  container: {
+    position: 'relative',
   },
-});
+  starsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingLayer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+})
