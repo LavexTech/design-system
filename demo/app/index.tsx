@@ -164,7 +164,7 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: 20, padding: 20 }}>
         <Alert
           text="O pagamento deve ser efetuado antes da data de vencimento."
         />
