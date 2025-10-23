@@ -7,13 +7,12 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { TextList } from "@src/components/TextList/TextList";
 import { List } from "@src/components/List/List";
 import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
 import { Image } from "@src/components/Image/Image";
 import { Alert } from "@src/components/Alert/Alert";
-import { IconStar } from "@src/components/Icons/IconStar";
-import { IconStarHalf } from "@src/components/Icons/IconStarHalf";
 import { IconHome } from "@src/components/Icons/IconHome";
 import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft";
 import { IconArrowRight } from "@src/components/Icons/IconArrowRight";
@@ -165,6 +164,24 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+      <View style={{ marginTop: 30, marginBottom: 30 }}>
+        <Grid columns={1} gap={2}>
+          <GridItem>
+            <Title text="Text list" />
+          </GridItem>
+          <GridItem>
+            <TextList
+              texts={[
+                "1x Calça Tiroliro",
+                "2x Blusa xpto etc",
+                "5x Camiseta de banda",
+                "3x Pares de meia",
+                "1x Edredom",
+              ]}
+            />
+          </GridItem>
+        </Grid>
+      </View>
       <View style={{ marginTop: 20, padding: 20 }}>
         <Alert
           text="O pagamento deve ser efetuado antes da data de vencimento."
