@@ -1,14 +1,14 @@
 import React from 'react'
 import Svg, { Path } from 'react-native-svg'
 
-export type IconMinusProps = {
+export type IconProfileProps = {
   fill?: string
   stroke?: string
   width?: number
   height?: number
 }
 
-export const IconMinus: React.FC<IconMinusProps> = ({ 
+export const IconProfile: React.FC<IconProfileProps> = ({ 
   fill = '#262627',
   stroke,
   width = 24,
@@ -21,7 +21,7 @@ export const IconMinus: React.FC<IconMinusProps> = ({
       viewBox="0 0 640 640"
     >
       <Path
-        d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z"
+        d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z"
         fill={fill}
         stroke={stroke}
       />

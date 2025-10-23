@@ -1,14 +1,14 @@
 import React from 'react'
 import Svg, { Path } from 'react-native-svg'
 
-export type IconMinusProps = {
+export type IconChevronRightProps = {
   fill?: string
   stroke?: string
   width?: number
   height?: number
 }
 
-export const IconMinus: React.FC<IconMinusProps> = ({ 
+export const IconChevronRight: React.FC<IconChevronRightProps> = ({ 
   fill = '#262627',
   stroke,
   width = 24,
@@ -21,7 +21,7 @@ export const IconMinus: React.FC<IconMinusProps> = ({
       viewBox="0 0 640 640"
     >
       <Path
-        d="M96 320C96 302.3 110.3 288 128 288L512 288C529.7 288 544 302.3 544 320C544 337.7 529.7 352 512 352L128 352C110.3 352 96 337.7 96 320z"
+        d="M471.1 297.4C483.6 309.9 483.6 330.2 471.1 342.7L279.1 534.7C266.6 547.2 246.3 547.2 233.8 534.7C221.3 522.2 221.3 501.9 233.8 489.4L403.2 320L233.9 150.6C221.4 138.1 221.4 117.8 233.9 105.3C246.4 92.8 266.7 92.8 279.2 105.3L471.2 297.3z"
         fill={fill}
         stroke={stroke}
       />
