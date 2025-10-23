@@ -1,5 +1,5 @@
-import { ScrollView, View } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
+import { View, ScrollView } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -11,6 +11,7 @@ import { List } from "@src/components/List/List";
 import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
 import { Image } from "@src/components/Image/Image";
+import { Alert } from "@src/components/Alert/Alert";
 import { IconStar } from "@src/components/Icons/IconStar";
 import { IconStarHalf } from "@src/components/Icons/IconStarHalf";
 import { IconHome } from "@src/components/Icons/IconHome";
@@ -37,32 +38,32 @@ import { Stars } from "@src/components/Stars/Stars";
 export default function Index() {
   const [value, setValue] = useState("");
   const [password, setPassword] = useState("");
-  
+
   return (
-    <ScrollView 
-      style={{ flex: 1, padding: 20 }} 
+    <ScrollView
+      style={{ flex: 1, padding: 20 }}
       contentContainerStyle={{ paddingBottom: 40 }}
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
-      <View style={{ marginTop: 20 }}>
-        <Input
-          label="Input"
-          value={value}
-          placeholder="Enter Text here..."
-          onChange={setValue}
-          validation={validateInput}
-          errorMessage="Input must be less than 7 characters" />
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <InputPassword
-          label="Senha"
-          value={password}
-          placeholder="Digite sua senha"
-          onChange={setPassword}
-          showPasswordToggle={true}
-          errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
-      </View>
+        <View style={{ marginTop: 20 }}>
+          <Input
+            label="Input"
+            value={value}
+            placeholder="Enter Text here..."
+            onChange={setValue}
+            validation={validateInput}
+            errorMessage="Input must be less than 7 characters" />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <InputPassword
+            label="Senha"
+            value={password}
+            placeholder="Digite sua senha"
+            onChange={setPassword}
+            showPasswordToggle={true}
+            errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+        </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
         <Title text="Title" />
@@ -91,36 +92,36 @@ export default function Index() {
         </Grid>
         <Grid columns={3} gap={0}>
           <GridItem>
-              <Text text="Column 1" />
-              <MainTitle text="Hello World" />
-              <Image
-                  src="https://picsum.photos/id/11/100/100"
-                  alt="Placeholder image"
-                  size="lg"
-                  type="circle"
-                  onClick={() => console.log("Image clicked!")}
-              />
+            <Text text="Column 1" />
+            <MainTitle text="Hello World" />
+            <Image
+              src="https://picsum.photos/id/11/100/100"
+              alt="Placeholder image"
+              size="lg"
+              type="circle"
+              onClick={() => console.log("Image clicked!")}
+            />
           </GridItem>
           <GridItem>
-              <Text text="Column 2" />
-              <Title text="Hello World" />
-              <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
+            <Text text="Column 2" />
+            <Title text="Hello World" />
+            <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
           </GridItem>
           <GridItem>
-              <Text text="Column 3" />
-              <Subtitle text="Hello World" />
-              <Image
-                  src="https://picsum.photos/id/10/100/100"
-                  alt="Icon placeholder"
-                  size="xl"
-                  type="circle"
-                  onClick={() => alert("Icon clicked!")}
-              />
+            <Text text="Column 3" />
+            <Subtitle text="Hello World" />
+            <Image
+              src="https://picsum.photos/id/10/100/100"
+              alt="Icon placeholder"
+              size="xl"
+              type="circle"
+              onClick={() => alert("Icon clicked!")}
+            />
           </GridItem>
           <Text text="Column 1" size="small" />
           <Text text="Column 2" level="success" />
           <Text text="Column 3" size="large" />
-      </Grid>
+        </Grid>
 
         <Subtitle text="Custom Column Spans (10 columns grid)" />
         <Grid columns={10} gap={4}>
@@ -157,13 +158,18 @@ export default function Index() {
           <GridItem colSpan={4}>
             <Card>
               <></>
-             </Card>
-           </GridItem>
-         </Grid>
+            </Card>
+          </GridItem>
+        </Grid>
       </Grid>
       <Card>
         <Text text="Card" />
       </Card>
+      <View style={{ marginTop: 20, padding: 20 }}>
+        <Alert
+          text="O pagamento deve ser efetuado antes da data de vencimento."
+        />
+      </View>
       <View style={{ marginTop: 20 }} >
         <List title="Lista de exemplo">
           <Text text="Item 1" />
