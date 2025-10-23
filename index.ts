@@ -5,7 +5,6 @@ export { TextBox as Text } from "./src/components/Text/Text";
 export { Info } from "./src/components/Info/Info";
 export { Card } from "./src/components/Card/Card";
 export { Alert } from "./src/components/Alert/Alert";
-export { Modal } from "./src/components/Modal/Modal";
 export { List } from "./src/components/List/List";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
