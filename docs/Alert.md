@@ -1,97 +1,52 @@
-# Como utilizar - Alert
+# Alert Component
 
-O componente `Alert` é um popup modal que aparece na tela para exibir mensagens de notificação importantes. É usado para avisos de sucesso, erro, informações ou alertas que podem ser temporárias ou precisar de fechamento manual.
+O componente Alert é um popup modal que aparece na tela para exibir mensagens de notificação importantes.
 
 ## Importação
 
-```typescript
+```tsx
 import { Alert } from "lavex-design-system";
 ```
 
 ## Props
 
-| Prop      | Tipo                              | Obrigatório | Descrição                                                                   |
-| --------- | --------------------------------- | ----------- | --------------------------------------------------------------------------- |
-| `text`    | `string`                          | ✅          | A mensagem principal que será exibida no alerta                             |
-| `icon`    | `string`                          | ❌          | Ícone opcional que pode acompanhar a mensagem para dar mais contexto visual |
-| `type`    | `"danger" \| "success" \| "info"` | ✅          | Define o estilo visual e a cor do alerta                                    |
-| `onClose` | `() => void`                      | ✅          | Função chamada quando o usuário fecha o alerta                              |
+| Prop   | Tipo     | Obrigatório | Descrição                                    |
+| ------ | -------- | ----------- | -------------------------------------------- |
+| `text` | `string` | Sim         | A mensagem principal que será exibida no alerta |
 
-## Uso Básico
+## O que faz
+
+- Popup modal centralizado na tela
+- Ícone de exclamação automático
+- Texto centralizado com tamanho médio
+- Fundo branco com bordas arredondadas
+- Responsivo (máximo 90% da largura da tela ou 400px)
+
+## Exemplo Básico
 
 ```tsx
-import React, { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
 import { Alert } from "lavex-design-system";
 
-const MyComponent = () => {
-  const [showAlert, setShowAlert] = useState(false);
-
-  return (
-    <View>
-      <TouchableOpacity onPress={() => setShowAlert(true)}>
-        <Text>Mostrar Alerta</Text>
-      </TouchableOpacity>
-
-      {showAlert && (
-        <Alert
-          text="Operação realizada com sucesso!"
-          type="success"
-          onClose={() => setShowAlert(false)}
-        />
-      )}
-    </View>
-  );
-};
+<Alert text="Operação realizada com sucesso." />
 ```
 
 ## Exemplos de Uso
 
-### Alerta de Sucesso
-
 ```tsx
-<Alert
-  text="Dados salvos com sucesso!"
-  icon="✅"
-  type="success"
-  onClose={() => setShowAlert(false)}
-/>
+<Alert text="Erro ao processar solicitação. Tente novamente." />
 ```
 
-### Alerta de Erro
+## Como funciona
 
-```tsx
-<Alert
-  text="Erro ao processar solicitação. Tente novamente."
-  icon="⚠️"
-  type="danger"
-  onClose={() => setShowAlert(false)}
-/>
-```
+1. Renderiza um container centralizado na tela
+2. Exibe um box branco com bordas arredondadas
+3. Mostra ícone de exclamação no topo
+4. Centraliza o texto abaixo do ícone
+5. Responsivo para diferentes tamanhos de tela
 
-## Tipos de Alert
+## Observações
 
-### Danger (Perigo/Erro)
-
-- **Cor**: Vermelho (#DC2626)
-- **Fundo**: Vermelho claro (#FEF2F2)
-- **Uso**: Erros, falhas, avisos críticos
-
-### Success (Sucesso)
-
-- **Cor**: Verde (#059669)
-- **Fundo**: Verde claro (#F0FDF4)
-- **Uso**: Confirmações, sucessos, operações concluídas
-
-### Info (Informação)
-
-- **Cor**: Cinza (#8F98AD)
-- **Fundo**: Cinza claro (#F8FAFC)
-- **Uso**: Informações gerais, dicas, avisos
-
-## Boas Práticas
-
-1. **Use com moderação**: Alertas devem ser usados apenas para informações importantes
-2. **Seja claro**: Mensagens devem ser diretas e fáceis de entender
-3. **Considere o contexto**: Use o tipo apropriado para cada situação
-4. **Forneça ação**: Sempre permita que o usuário feche o alerta
+- Não possui botão de fechamento automático
+- Deve ser controlado externamente (mostrar/ocultar)
+- Usa ícone fixo de exclamação
+- Ideal para mensagens temporárias ou de confirmação
