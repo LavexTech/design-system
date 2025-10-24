@@ -1,0 +1,31 @@
+import React from 'react'
+import Svg, { Path } from 'react-native-svg'
+
+export type IconMessageProps = {
+  fill?: string
+  stroke?: string
+  width?: number
+  height?: number
+}
+
+export const IconMessage: React.FC<IconMessageProps> = ({ 
+  fill = '#262627',
+  stroke,
+  width = 24,
+  height = 24,
+}) => {
+  return (
+    <Svg 
+      width={width} 
+      height={height} 
+      viewBox="0 0 640 640"
+    >
+      <Path
+        d="M64 416L64 192C64 139 107 96 160 96L480 96C533 96 576 139 576 192L576 416C576 469 533 512 480 512L360 512C354.8 512 349.8 513.7 345.6 516.8L230.4 603.2C226.2 606.3 221.2 608 216 608C202.7 608 192 597.3 192 584L192 512L160 512C107 512 64 469 64 416z"
+        fill={fill}
+        stroke={stroke}
+      />
+    </Svg>
+  )
+}
+

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { TouchableOpacity, StyleSheet } from "react-native"
-// TODO: Substituir por componente SVG do Font Awesome
-import { Ionicons } from "@expo/vector-icons"
+import { IconEye } from "../Icons/IconEye"
+import { IconEyeClosed } from "../Icons/IconEyeClosed"
 import { Input } from "../Input/Input"
 import Constants from "../../constants/constants"
 
@@ -43,12 +43,11 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             style={styles.toggleButton}
             onPress={togglePasswordVisibility}
         >
-            { /* TODO: Colocar ícone como componente usando SVG do Font Awesome*/}
-            <Ionicons 
-                name={isPasswordVisible ? "eye-off" : "eye"} 
-                size={24} 
-                color={Constants.styles.textColor.DEFAULT}
-            />
+            {isPasswordVisible ? (
+                <IconEye />
+            ) : (
+                <IconEyeClosed />
+            )}
         </TouchableOpacity>
     ) : undefined
 
