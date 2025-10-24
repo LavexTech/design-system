@@ -187,6 +187,9 @@ export default function Index() {
       <Card>
         <Text text="Card" />
       </Card>
+      <View style={{ marginTop: 30, marginBottom: 30 }}>
+        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
+      </View>
 
       <View style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid columns={1} gap={2}>
