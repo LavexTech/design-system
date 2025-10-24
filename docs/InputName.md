@@ -12,10 +12,10 @@ import { InputName } from "lavex-design-system";
 
 | Prop          | Tipo                      | Obrigatório | Padrão              | Descrição                                      |
 | ------------- | ------------------------- | ----------- | ------------------- | ---------------------------------------------- |
-| `label`       | `string`                  | ✅          | -                   | O texto que aparece acima do campo de entrada  |
-| `value`       | `string`                  | ✅          | -                   | O valor atual do input                         |
-| `placeholder` | `string`                  | ❌          | "Nome Sobrenome"    | Texto de placeholder quando o campo está vazio |
-| `onChange`    | `(value: string) => void` | ✅          | -                   | Função chamada quando o valor do input muda    |
+| `label`       | `string`                  | Sim         | -                   | O texto que aparece acima do campo de entrada  |
+| `value`       | `string`                  | Sim         | -                   | O valor atual do input                         |
+| `placeholder` | `string`                  | Não          | "Nome Sobrenome"    | Texto de placeholder quando o campo está vazio |
+| `onChange`    | `(value: string) => void` | Sim         | -                   | Função chamada quando o valor do input muda    |
 
 ## Características
 
