@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { IconSend } from '../Icons/IconSend';
+import Constants from '@/src/constants/constants';
 
 interface InputToolbarProps {
   value: string;
@@ -37,7 +38,7 @@ export function InputToolbar({
         onPress={handleSend}
         disabled={!value.trim()}
       >
-        <Ionicons name="send" size={20} color={value.trim() ? '#007AFF' : '#999'} />
+        <IconSend fill={value.trim() ? "#007AFF" : "#999"} width={20} height={20} />
       </TouchableOpacity>
     </View>
   );
