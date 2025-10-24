@@ -2,9 +2,9 @@ import React from "react"
 import { Input } from "../Input/Input"
 
 type InputNameProps = {
-    label: string,
-    value: string,
-    placeholder?: string,
+    label: string
+    value: string
+    placeholder?: string
     onChange: (value: string) => void
 }
 
@@ -34,10 +34,6 @@ export const InputName: React.FC<InputNameProps> = ({
         onChange(formattedValue)
     }
 
-    const handleEndEditing = () => {
-        const formattedValue = formatName(value)
-        onChange(formattedValue)
-    }
 
     const validateName = (inputValue: string): boolean => {
         const trimmedValue = inputValue.trim()
@@ -61,7 +57,6 @@ export const InputName: React.FC<InputNameProps> = ({
             validation={validateName}
             errorMessage={getErrorMessage()}
             onBlur={handleBlur}
-            onEndEditing={handleEndEditing}
         />
     )
 }
