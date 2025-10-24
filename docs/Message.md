@@ -12,9 +12,9 @@ import { Message } from "lavex-design-system";
 
 | Prop      | Tipo         | Obrigatório | Descrição                                                 |
 | --------- | ------------ | ----------- | --------------------------------------------------------- |
-| `text`    | `string`     | ✅          | O conteúdo da mensagem que será exibida                   |
-| `onClick` | `() => void` | ❌          | Função chamada quando a mensagem for clicada              |
-| `isOwn`   | `boolean`    | ❌          | Define se a mensagem é do usuário atual (padrão: `false`) |
+| `text`    | `string`     | Sim         | O conteúdo da mensagem que será exibida                   |
+| `onClick` | `() => void` | Não         | Função chamada quando a mensagem for clicada              |
+| `isOwn`   | `boolean`    | Não         | Define se a mensagem é do usuário atual (padrão: `false`) |
 
 ## Uso Básico
 
