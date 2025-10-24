@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { config } from './config';
 import { View, ViewProps } from 'react-native';
 import { OverlayProvider } from '@gluestack-ui/core/overlay/creator';
@@ -15,17 +15,15 @@ export function GluestackUIProvider({
   children?: React.ReactNode;
   style?: ViewProps['style'];
 }) {
-  const { colorScheme, setColorScheme } = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
-  useEffect(() => {
-    setColorScheme(mode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mode]);
+  // Use the provided mode or fall back to system color scheme
+  const activeScheme = mode === 'system' ? colorScheme : mode;
 
   return (
     <View
       style={[
-        config[colorScheme!],
+        config[activeScheme || 'light'],
         { flex: 1, height: '100%', width: '100%' },
         props.style,
       ]}
