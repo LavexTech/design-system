@@ -54,20 +54,9 @@ export default function Index() {
       contentContainerStyle={{ paddingBottom: 40 }}
       showsVerticalScrollIndicator={true}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 30}
-      >
-        <View style={{ paddingBottom: insets.bottom }}>
-          <InputToolbar
-            value={inputValue}
-            onChange={setInputValue}
-            onSend={handleSend}
-            placeholder="Digite sua mensagem..."
-          />
-        </View>
-      </KeyboardAvoidingView>
+      
       <Grid columns={1} gap={2}>
+        
         <View style={{ marginTop: 20 }}>
           <Input
             label="Input"
@@ -86,6 +75,19 @@ export default function Index() {
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
         </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 30}
+        >
+          <View style={{ paddingBottom: insets.bottom }}>
+            <InputToolbar
+              value={inputValue}
+              onChange={setInputValue}
+              onSend={handleSend}
+              placeholder="Digite sua mensagem..."
+            />
+          </View>
+        </KeyboardAvoidingView>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
         <Title text="Title" />
