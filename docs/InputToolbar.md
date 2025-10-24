@@ -12,10 +12,10 @@ import { InputToolbar } from "lavex-design-system";
 
 | Prop          | Tipo                    | Obrigatório | Padrão                  | Descrição                                                    |
 | ------------- | ----------------------- | ----------- | ----------------------- | ------------------------------------------------------------ |
-| `value`       | `string`                | ✅          | -                       | O valor atual do campo de texto                              |
-| `onChange`    | `(value: string) => void` | ✅          | -                       | Função chamada quando o texto é alterado                     |
-| `onSend`      | `() => void`            | ✅          | -                       | Função chamada quando o botão de envio é pressionado         |
-| `placeholder` | `string`                | ❌          | `"Enviar mensagem..."` | Texto de placeholder exibido quando o campo está vazio       |
+| `value`       | `string`                | Sim          | -                       | O valor atual do campo de texto                              |
+| `onChange`    | `(value: string) => void` | Sim          | -                       | Função chamada quando o texto é alterado                     |
+| `onSend`      | `() => void`            | Sim          | -                       | Função chamada quando o botão de envio é pressionado         |
+| `placeholder` | `string`                | Não          | `"Enviar mensagem..."` | Texto de placeholder exibido quando o campo está vazio       |
 
 ## Como Funciona
 
