@@ -1,11 +1,11 @@
-import React from "react";
-import { Input } from "../Input/Input";
+import React from "react"
+import { Input } from "../Input/Input"
 
-type InputNameProps ={
-    label: string;
-    value: string;
-    placeholder?: string;
-    onChange: (value: string) => void;
+type InputNameProps = {
+    label: string,
+    value: string,
+    placeholder?: string,
+    onChange: (value: string) => void
 }
 
 export const InputName: React.FC<InputNameProps> = ({
@@ -23,21 +23,21 @@ export const InputName: React.FC<InputNameProps> = ({
 
             return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
         }).join(' ')
-    };
+    }
 
     const handleChange = (newValue: string) => {
         onChange(newValue)
-    };
+    }
 
     const handleBlur = () => {
         const formattedValue = formatName(value)
         onChange(formattedValue)
-    };
+    }
 
     const handleEndEditing = () => {
         const formattedValue = formatName(value)
         onChange(formattedValue)
-    };
+    }
 
     const validateName = (inputValue: string): boolean => {
         const trimmedValue = inputValue.trim()
@@ -45,11 +45,11 @@ export const InputName: React.FC<InputNameProps> = ({
 
         const words = trimmedValue.split(' ').filter(word => word.length > 0)
         return words.length >= 2;
-    };
+    }
 
     const getErrorMessage = (): string => {
         return "Digite pelo menos nome e sobrenome"
-    };
+    }
 
     return (
         <Input
@@ -63,5 +63,5 @@ export const InputName: React.FC<InputNameProps> = ({
             onBlur={handleBlur}
             onEndEditing={handleEndEditing}
         />
-    );
-};
+    )
+}
