@@ -13,7 +13,7 @@ import { Gallery } from "lavex-design-system";
 | Prop      | Tipo                                        | Obrigatório | Padrão | Descrição                                           |
 | --------- | ------------------------------------------- | ----------- | ------ | --------------------------------------------------- |
 | `images`  | `string[]`                                  | ✅          | -      | Array de URLs das imagens que serão exibidas        |
-| `onClick` | `(imageUrl: string, index: number) => void` | ❌          | -      | Função chamada quando uma imagem é clicada          |
+| `onClick` | `(imageUrl: string, index: number) => void` | Não         | -      | Função chamada quando uma imagem é clicada          |
 
 ## Uso Básico
 
