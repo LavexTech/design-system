@@ -9,7 +9,7 @@ type MessageProps = {
     isOwn?: boolean,
 }
 
-export const Message = ({ text, onClick, isOwn = false }: MessageProps) => {
+export const Message: React.FC<MessageProps> = ({ text, onClick, isOwn = false }) => {
     return (
         <TouchableOpacity
             style={[
