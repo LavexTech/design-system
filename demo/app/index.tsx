@@ -33,7 +33,7 @@ import { IconHistory } from "@src/components/Icons/IconHistory";
 import { IconImage } from "@src/components/Icons/IconImage";
 import { IconExclamation } from "@src/components/Icons/IconExclamation";
 import { Stars } from "@src/components/Stars/Stars";
-import { InputToolbar } from "@src/components/InputToolbar/InputToolbar";
+import { InputChat } from "@src/components/InputChat/InputChat";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Index() {
@@ -80,7 +80,7 @@ export default function Index() {
           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 30}
         >
           <View style={{ paddingBottom: insets.bottom }}>
-            <InputToolbar
+            <InputChat
               value={inputValue}
               onChange={setInputValue}
               onSend={handleSend}

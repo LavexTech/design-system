@@ -1,11 +1,11 @@
-# InputToolbar Component
+# InputChat Component
 
-O componente InputToolbar é uma barra de entrada de texto otimizada para aplicativos de mensagens e chat. Combina um campo de texto multilinha com um botão de envio, proporcionando uma experiência de usuário fluida e intuitiva.
+O componente InputChat é uma barra de entrada de texto otimizada para aplicativos de mensagens e chat. Combina um campo de texto multilinha com um botão de envio, proporcionando uma experiência de usuário fluida e intuitiva.
 
 ## Importação
 
 ```typescript
-import { InputToolbar } from "lavex-design-system";
+import { InputChat } from "lavex-design-system";
 ```
 
 ## Props
@@ -19,7 +19,7 @@ import { InputToolbar } from "lavex-design-system";
 
 ## Como Funciona
 
-O InputToolbar oferece:
+O InputChat oferece:
 
 - Campo de texto multilinha que permite quebras de linha com Enter
 - Botão de envio com ícone que só fica ativo quando há texto
@@ -32,7 +32,7 @@ O InputToolbar oferece:
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { InputToolbar } from "lavex-design-system";
+import { InputChat } from "lavex-design-system";
 
 const ChatScreen = () => {
   const [message, setMessage] = useState('');
@@ -45,7 +45,7 @@ const ChatScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       {/* Conteúdo do chat */}
-      <InputToolbar
+      <InputChat
         value={message}
         onChange={setMessage}
         onSend={handleSend}
@@ -57,7 +57,7 @@ const ChatScreen = () => {
 
 ## Integração com KeyboardAvoidingView
 
-Para garantir que o InputToolbar não seja coberto pelo teclado, sempre use com `KeyboardAvoidingView`:
+Para garantir que o InputChat não seja coberto pelo teclado, sempre use com `KeyboardAvoidingView`:
 
 ```tsx
 import { KeyboardAvoidingView, Platform } from "react-native";
@@ -74,7 +74,7 @@ const ChatScreen = () => {
     >
       {/* Conteúdo */}
       <View style={{ paddingBottom: insets.bottom }}>
-        <InputToolbar {...props} />
+        <InputChat {...props} />
       </View>
     </KeyboardAvoidingView>
   );

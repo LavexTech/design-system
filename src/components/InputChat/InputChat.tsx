@@ -1,21 +1,20 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { IconSend } from '../Icons/IconSend';
-import Constants from '@/src/constants/constants';
 
-interface InputToolbarProps {
+interface InputChatProps {
   value: string;
   placeholder?: string;
   onChange: (value: string) => void;
   onSend: () => void;
 }
 
-export function InputToolbar({
+export function InputChat({
   value,
   placeholder = 'Enviar mensagem...',
   onChange,
   onSend,
-}: InputToolbarProps) {
+}: InputChatProps) {
   const handleSend = () => {
     if (value.trim()) {
       onSend();
