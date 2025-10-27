@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         borderColor: Constants.styles.borderColor.LIGHT,
     },
     ownMessage: {
-        backgroundColor: "#d7e7fa",
+        backgroundColor: Constants.styles.color.SOFT_BLUE,
         alignSelf: "flex-end",
         borderColor: Constants.styles.borderColor.LIGHT,
     },

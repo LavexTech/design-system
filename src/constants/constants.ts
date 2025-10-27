@@ -63,6 +63,7 @@ const Constants = {
     color: {
       GOLD: "#FFD700",
       GRAY: "#E0E0E0",
+      SOFT_BLUE: "#D7E7FA" 
     },
   },
 };
