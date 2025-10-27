@@ -8,9 +8,10 @@ import { Info } from "@src/components/Info/Info";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Message } from "@src/components/Message/Message";
+import { Input } from "@src/components/Input/Input";
+import { InputName } from "@src/components/InputName/InputName";
 import { TextList } from "@src/components/TextList/TextList";
 import { List } from "@src/components/List/List";
-import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
 import { Image } from "@src/components/Image/Image";
 import { Alert } from "@src/components/Alert/Alert";
@@ -37,6 +38,7 @@ import { Stars } from "@src/components/Stars/Stars";
 
 export default function Index() {
   const [value, setValue] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
   return (
@@ -46,6 +48,14 @@ export default function Index() {
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
+        <View style={{ marginTop: 20}}>
+          <InputName
+            label="Nome Completo"
+            value={userName}
+            placeholder="Digite seu nome completo"
+            onChange={setUserName}
+          />
+        </View>
         <View style={{ marginTop: 20 }}>
           <Input
             label="Input"
@@ -160,10 +170,15 @@ export default function Index() {
               <></>
             </Card>
           </GridItem>
+          <GridItem colSpan={4}>
+            <Card>
+              <></>
+            </Card>
+          </GridItem>
         </Grid>
       </Grid>
       <Card>
-        <Text text="Card" />
+        <Text text="Card" level="warning" />
       </Card>
       <View style={{ marginTop: 20, padding: 20 }}>
         <Message

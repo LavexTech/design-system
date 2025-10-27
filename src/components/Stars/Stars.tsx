@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import Constants from '../../constants'
+import Constants from '../../constants/constants'
 import { IconStar } from '../Icons/IconStar'
 import { IconStarHalf } from '../Icons/IconStarHalf'
 
