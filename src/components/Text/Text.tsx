@@ -51,4 +51,3 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
   </Text>;
 };
 
-
