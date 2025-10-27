@@ -28,6 +28,7 @@ export const Input: React.FC<InputProps> = ({
   validation,
   errorMessage,
   mask,
+  isMultiline = false,
   mobileKeyboard = "text",
   secureTextEntry = false,
   rightElement,
@@ -127,6 +128,7 @@ export const Input: React.FC<InputProps> = ({
             placeholderTextColor={Constants.styles.textColor.INFO}
             secureTextEntry={secureTextEntry}
             onBlur={onBlur}
+            multiline={isMultiline}
           />
           {rightElement}
         </InputBase>
