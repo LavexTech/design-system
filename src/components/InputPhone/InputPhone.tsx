@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { Input } from "../Input/Input";
+import React, { useState, useEffect } from "react"
+import { Input } from "../Input/Input"
 
 type InputPhoneProps = {
-  value: string;
-  onChange: (value: string) => void;
-  label?: string;
-  placeholder?: string;
-  errorMessage?: string;
+  value: string,
+  onChange: (value: string) => void,
+  label?: string,
+  placeholder?: string,
+  errorMessage?: string
 }
 
 export const InputPhone: React.FC<InputPhoneProps> = ({
@@ -16,7 +16,7 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   placeholder = "(00) 00000-0000",
   errorMessage = "Telefone deve ter formato válido",
 }) => {
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const [isValid, setIsValid] = useState<boolean>(true)
 
   const applyPhoneMask = (inputValue: string): string => {
     const digits = inputValue.replace(/\D/g, "").slice(0, 11)
