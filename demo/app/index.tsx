@@ -5,6 +5,7 @@ import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
 import { Info } from "@src/components/Info/Info";
+import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Message } from "@src/components/Message/Message";
@@ -41,7 +42,7 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
+  
   return (
     <ScrollView
       style={{ flex: 1, padding: 20 }}
@@ -178,6 +179,19 @@ export default function Index() {
           </GridItem>
         </Grid>
       </Grid>
+      <View style={{ marginTop: 20, marginBottom: 20 }}>
+        <Accordion>
+          <AccordionItem id="item-1" title="Primeiro Item">
+            <Text size="small" text="Conteúdo do primeiro item do accordion. Este item pode ser expandido e colapsado independentemente." />
+          </AccordionItem>
+          <AccordionItem id="item-2" title="Segundo Item">
+            <Text size="small" text="Conteúdo do segundo item. Cada item tem seu próprio estado de expansão/colapso." />
+          </AccordionItem>
+          <AccordionItem id="item-3" title="Terceiro Item">
+            <Text size="small" text="Conteúdo do terceiro item. Todos os itens estão dentro de um único componente Accordion." />
+          </AccordionItem>
+        </Accordion>
+      </View>
       <Card>
         <Text text="Card" level="warning" />
       </Card>

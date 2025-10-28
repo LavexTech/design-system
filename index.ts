@@ -8,6 +8,7 @@ export { Alert } from "./src/components/Alert/Alert";
 export { List } from "./src/components/List/List";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
+export { Accordion } from "./src/components/Accordion/Accordion";
 export { Message } from "./src/components/Message/Message";
 export { Input } from "./src/components/Input/Input";
 export { InputName } from "./src/components/InputName/InputName";
