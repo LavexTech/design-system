@@ -8,9 +8,11 @@ import { Info } from "@src/components/Info/Info";
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { Message } from "@src/components/Message/Message";
+import { Input } from "@src/components/Input/Input";
+import { InputName } from "@src/components/InputName/InputName";
 import { TextList } from "@src/components/TextList/TextList";
 import { List } from "@src/components/List/List";
-import { Input } from "@src/components/Input/Input";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
 import { Image } from "@src/components/Image/Image";
 import { Alert } from "@src/components/Alert/Alert";
@@ -34,9 +36,11 @@ import { IconHistory } from "@src/components/Icons/IconHistory";
 import { IconImage } from "@src/components/Icons/IconImage";
 import { IconExclamation } from "@src/components/Icons/IconExclamation";
 import { Stars } from "@src/components/Stars/Stars";
+import Constants from "@src/constants/constants";
 
 export default function Index() {
   const [value, setValue] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   
   return (
@@ -46,6 +50,14 @@ export default function Index() {
       showsVerticalScrollIndicator={true}
     >
       <Grid columns={1} gap={2}>
+        <View style={{ marginTop: 20 }}>
+          <InputName
+            label="Nome Completo"
+            value={userName}
+            placeholder="Digite seu nome completo"
+            onChange={setUserName}
+          />
+        </View>
         <View style={{ marginTop: 20 }}>
           <Input
             label="Input"
@@ -160,6 +172,11 @@ export default function Index() {
               <></>
             </Card>
           </GridItem>
+          <GridItem colSpan={4}>
+            <Card>
+              <></>
+            </Card>
+          </GridItem>
         </Grid>
       </Grid>
       <View style={{ marginTop: 20, marginBottom: 20 }}>
@@ -176,8 +193,43 @@ export default function Index() {
         </Accordion>
       </View>
       <Card>
-        <Text text="Card" />
+        <Text text="Card" level="warning" />
       </Card>
+      <View style={{ marginTop: 20 }}>
+        <Title text="Message Components" />
+        <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
+          <Message
+            text="Blah?"
+            onClick={() => console.log("Mensagem clicada!")}
+            isOwn={false}
+            senderName="Maria"
+            timestamp="14:30"
+            avatarUrl="https://picsum.photos/id/91/40/40"
+          />
+          <Message
+            text="Blah blah blah  blah blah blah blah blah blah"
+            onClick={() => console.log("Mensagem clicada!")}
+            isOwn={true}
+            timestamp="14:31"
+            avatarUrl="https://picsum.photos/id/64/40/40"
+          />
+          <Message
+            text="Blah blah blah  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
+            onClick={() => console.log("Mensagem clicada!")}
+            isOwn={false}
+            senderName="Maria"
+            timestamp="14:32"
+            avatarUrl="https://picsum.photos/id/91/40/40"
+          />
+          <Message
+            text="Blah."
+            onClick={() => console.log("Mensagem clicada!")}
+            isOwn={true}
+            timestamp="14:33"
+            avatarUrl="https://picsum.photos/id/64/40/40"
+          />
+        </View>
+      </View>
       <View style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid columns={1} gap={2}>
           <GridItem>
@@ -212,7 +264,7 @@ export default function Index() {
       <View style={{ marginTop: 20, marginBottom: 10 }}>
         <Title text="Icons" />
       </View>
-      
+
       <Card title="⭐ Avaliação e Favoritos">
         <Stars rating={3.5} size={32} />
       </Card>

@@ -9,6 +9,9 @@ export { List } from "./src/components/List/List";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
 export { Accordion } from "./src/components/Accordion/Accordion";
+export { Message } from "./src/components/Message/Message";
+export { Input } from "./src/components/Input/Input";
+export { InputName } from "./src/components/InputName/InputName";
 export { TextList } from "./src/components/TextList/TextList";
 export { IconStar } from "./src/components/Icons/IconStar";
 export { IconStarHalf } from "./src/components/Icons/IconStarHalf";
@@ -32,7 +35,6 @@ export { IconArrowRight } from "./src/components/Icons/IconArrowRight";
 export { IconChevronLeft } from "./src/components/Icons/IconChevronLeft";
 export { IconChevronRight } from "./src/components/Icons/IconChevronRight";
 export { Image } from "./src/components/Image/Image";
-export { Input } from "./src/components/Input/Input";
 export { InputEmail } from "./src/components/InputEmail/InputEmail";
 export { InputPassword } from "./src/components/InputPassword/InputPassword";
 
