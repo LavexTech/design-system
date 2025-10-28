@@ -45,6 +45,7 @@ export default function Index() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState('');
+  const [cpf, setCpf] = useState('');
   
   return (
     <ScrollView
@@ -87,6 +88,13 @@ export default function Index() {
             onChange={setPassword}
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <InputCPF
+            value={cpf}
+            onChange={setCpf}
+            errorMessage="Por favor, insira um CPF válido"
+          />
         </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
