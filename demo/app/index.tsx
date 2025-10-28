@@ -11,6 +11,7 @@ import { Card } from "@src/components/Card/Card";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
 import { InputName } from "@src/components/InputName/InputName";
+import { InputPhone } from "@src/components/InputPhone/InputPhone";
 import { TextList } from "@src/components/TextList/TextList";
 import { List } from "@src/components/List/List";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
@@ -42,6 +43,7 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState('');
   
   return (
     <ScrollView
@@ -51,6 +53,15 @@ export default function Index() {
     >
       <Grid columns={1} gap={2}>
         <View style={{ marginTop: 20 }}>
+          <Subtitle text="Com Mensagem de Erro Customizada" />
+          <Info text="Exemplo com mensagem de erro personalizada" />
+          <InputPhone
+              value={phone}
+              onChange={setPhone}
+              errorMessage="Por favor, insira um telefone válido"
+          />
+        </View>
+        <View style={{ marginTop: 10 }}>
           <InputName
             label="Nome Completo"
             value={userName}
