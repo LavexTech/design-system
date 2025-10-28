@@ -12,11 +12,11 @@ import { InputCPF } from "lavex-design-system";
 
 | Prop           | Tipo       | Obrigatório | Descrição                                                |
 | -------------- | ---------- | ----------- | -------------------------------------------------------- |
-| `value`        | `string`   | ✅          | O valor atual do campo de CPF                            |
-| `onChange`     | `function` | ✅          | Função chamada quando o valor muda                       |
-| `label`        | `string`   | ❌          | Texto do rótulo (padrão: "CPF")                          |
-| `placeholder`  | `string`   | ❌          | Texto de placeholder (padrão: "000.000.000-00")          |
-| `errorMessage` | `string`   | ❌          | Mensagem de erro (padrão: "CPF deve ter formato válido") |
+| `value`        | `string`   | Sim         | O valor atual do campo de CPF                            |
+| `onChange`     | `function` | Sim         | Função chamada quando o valor muda                       |
+| `label`        | `string`   | Não         | Texto do rótulo (padrão: "CPF")                          |
+| `placeholder`  | `string`   | Não         | Texto de placeholder (padrão: "000.000.000-00")          |
+| `errorMessage` | `string`   | Não         | Mensagem de erro (padrão: "CPF deve ter formato válido") |
 
 ## Uso Básico
 
