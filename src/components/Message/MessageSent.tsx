@@ -5,7 +5,7 @@ import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
 
-export type MessageSentProps = {
+type MessageSentProps = {
     text: string
     timestamp?: string
     senderName?: string
@@ -20,7 +20,7 @@ export const MessageSent: React.FC<MessageSentProps> = ({
 }: MessageSentProps) => {
     return (
         <View style={styles.container}>
-            <Grid columns={12} gap={2}>
+            <Grid columns={12} gap={0}>
                 <GridItem colSpan={10}>
                     <View style={styles.messageWrapper}>
                         <View style={styles.messageBubble}>
@@ -36,7 +36,7 @@ export const MessageSent: React.FC<MessageSentProps> = ({
                         <Image 
                             src={avatarUrl} 
                             alt={`${senderName} avatar`}
-                            size="sm"
+                            size="xs"
                             type="circle"
                         />
                     </View>
@@ -49,8 +49,6 @@ export const MessageSent: React.FC<MessageSentProps> = ({
 const styles = StyleSheet.create({
     container: {
         marginVertical: Constants.styles.spacing.TINY,
-        paddingHorizontal: Constants.styles.spacing.MEDIUM,
-        
     },
     messageWrapper: {
         alignItems: 'flex-end',
@@ -61,7 +59,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
         borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
-        maxWidth: '90%',
+        maxWidth: Constants.styles.maxWidth.messageBubble,
         alignSelf: 'flex-end',
     },
     messageInfo: {
@@ -71,7 +69,5 @@ const styles = StyleSheet.create({
     avatarContainer: {
         alignItems: 'center',
         justifyContent: 'flex-start',
-        minWidth: 64, // Ensure enough space for sm image (h-16 w-16)
-        minHeight: 64,
     },
 })

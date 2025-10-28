@@ -5,7 +5,7 @@ import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
 
-export type MessageReceivedProps = {
+type MessageReceivedProps = {
     text: string
     timestamp?: string
     senderName?: string
@@ -20,13 +20,13 @@ export const MessageReceived: React.FC<MessageReceivedProps> = ({
 }: MessageReceivedProps) => {
     return (
         <View style={styles.container}>
-            <Grid columns={12} gap={4}>
+            <Grid columns={12} gap={0}>
                 <GridItem colSpan={2}>
                     <View style={styles.avatarContainer}>
                         <Image
                             src={avatarUrl}
                             alt={`${senderName} avatar`}
-                            size="sm"
+                            size="xs"
                             type="circle"
                         />
                     </View>
@@ -56,13 +56,10 @@ const styles = StyleSheet.create({
     avatarContainer: {
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingTop: Constants.styles.spacing.LARGE, // Align with message bubble
-        minWidth: 64, // Ensure enough space for sm image (h-16 w-16)
-        minHeight: 64,
+        paddingTop: Constants.styles.spacing.LARGE,
     },
     messageWrapper: {
         alignItems: 'flex-start',
-        paddingLeft: Constants.styles.spacing.SMALL, // Add space between avatar and message
     },
     senderInfo: {
         marginBottom: Constants.styles.spacing.TINY,
@@ -76,7 +73,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: Constants.styles.borderRadius.SMALL,
         borderWidth: Constants.styles.borderWidth.THIN,
         borderColor: Constants.styles.borderColor.LIGHT,
-        maxWidth: '90%',
+        maxWidth: Constants.styles.maxWidth.messageBubble,
     },
     messageInfo: {
         marginTop: Constants.styles.spacing.TINY,
