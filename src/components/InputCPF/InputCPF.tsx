@@ -1,12 +1,12 @@
-import React from "react";
-import { Input } from "../Input/Input";
+import React from "react"
+import { Input } from "../Input/Input"
 
 type InputCPFProps = {
-  value: string;
-  onChange: (value: string) => void;
-  label?: string;
-  placeholder?: string;
-  errorMessage?: string;
+  value: string,
+  onChange: (value: string) => void,
+  label?: string,
+  placeholder?: string,
+  errorMessage?: string
 }
 
 export const InputCPF: React.FC<InputCPFProps> = ({
