@@ -1,46 +1,51 @@
 import React from "react"
-import { TouchableOpacity, StyleSheet } from "react-native"
-import { TextBox } from "../Text/Text"
-import Constants from "../../constants/constants"
+import { TouchableOpacity } from "react-native"
+import { MessageSent } from "./MessageSent"
+import { MessageReceived } from "./MessageReceived"
 
-type MessageProps = {
-    text: string,
-    onClick?: () => void,
-    isOwn?: boolean,
+export type MessageProps = {
+    text: string
+    onClick?: () => void
+    isOwn?: boolean
+    timestamp?: string
+    senderName?: string
+    avatarUrl?: string
 }
 
-export const Message: React.FC<MessageProps> = ({ text, onClick, isOwn = false }) => {
-    return (
-        <TouchableOpacity
-            style={[
-                styles.messageContainer,
-                isOwn ? styles.ownMessage : styles.otherMessage
-            ]}
-            onPress={onClick}
-            activeOpacity={onClick ? 0.7 : 1}
-        >
-            <TextBox text={text} />
-        </TouchableOpacity>
+export const Message: React.FC<MessageProps> = ({ 
+    text, 
+    onClick, 
+    isOwn = false, 
+    timestamp,
+    senderName,
+    avatarUrl
+}: MessageProps) => {
+    const messageComponent = isOwn ? (
+        <MessageSent 
+            text={text} 
+            timestamp={timestamp}
+            senderName={senderName}
+            avatarUrl={avatarUrl}
+        />
+    ) : (
+        <MessageReceived 
+            text={text} 
+            timestamp={timestamp}
+            senderName={senderName}
+            avatarUrl={avatarUrl}
+        />
     )
-}
 
-const styles = StyleSheet.create({
-    messageContainer: {
-        borderRadius: Constants.styles.borderRadius.MEDIUM,
-        paddingHorizontal: Constants.styles.spacing.MEDIUM,
-        paddingVertical: Constants.styles.spacing.SMALL,
-        marginVertical: Constants.styles.spacing.TINY,
-        maxWidth: "80%",
-        borderWidth: Constants.styles.borderWidth.THIN,
-    },
-    otherMessage: {
-        backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
-        alignSelf: "flex-start",
-        borderColor: Constants.styles.borderColor.LIGHT,
-    },
-    ownMessage: {
-        backgroundColor: Constants.styles.color.SOFT_BLUE,
-        alignSelf: "flex-end",
-        borderColor: Constants.styles.borderColor.LIGHT,
-    },
-});
+    if (onClick) {
+        return (
+            <TouchableOpacity
+                onPress={onClick}
+                activeOpacity={0.7}
+            >
+                {messageComponent}
+            </TouchableOpacity>
+        )
+    }
+
+    return messageComponent
+}
