@@ -183,7 +183,7 @@ export default function Index() {
       </Card>
       <View style={{ marginTop: 20 }}>
         <Title text="Message Components" />
-        <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, padding: 20, marginTop: 10, borderRadius: 8 }}>
+        <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
           <Message
             text="Blah?"
             onClick={() => console.log("Mensagem clicada!")}
