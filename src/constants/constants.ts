@@ -61,6 +61,8 @@ const Constants = {
       THICK: 1.2,
     },
     color: {
+      WHITE: "#FFFFFF",
+      BLACK: "#000000",
       GOLD: "#FFD700",
       GRAY: "#E0E0E0",
       BLUE: "#007AFF",
