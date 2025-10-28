@@ -92,31 +92,12 @@ export default function Index() {
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
         </View>
         <View style={{ marginTop: 20 }} >
-          <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <Input
-            label="Input"
-            value={value}
-            placeholder="Enter Text here..."
-            onChange={setValue}
-            validation={validateInput}
-            errorMessage="Input must be less than 7 characters" />
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <InputPassword
-            label="Senha"
-            value={password}
-            placeholder="Digite sua senha"
-            onChange={setPassword}
-            showPasswordToggle={true}
-            errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <InputCPF
-            value={cpf}
-            onChange={setCpf}
-            errorMessage="Por favor, insira um CPF válido"
+          <TextArea
+            label="Mensagem"
+            value={contactMessage}
+            onChange={setContactMessage}
+            placeholder="Digite sua mensagem aqui..."
+            maxLength={100}
           />
         </View>
         <MainTitle text="Main Title" />
