@@ -10,6 +10,7 @@ import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
+import { InputCPF } from "@src/components/InputCPF/InputCPF";
 import { InputName } from "@src/components/InputName/InputName";
 import { InputPhone } from "@src/components/InputPhone/InputPhone";
 import { TextList } from "@src/components/TextList/TextList";
@@ -44,6 +45,7 @@ export default function Index() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState('');
+  const [cpf, setCpf] = useState('');
   
   return (
     <ScrollView
@@ -86,6 +88,13 @@ export default function Index() {
             onChange={setPassword}
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <InputCPF
+            value={cpf}
+            onChange={setCpf}
+            errorMessage="Por favor, insira um CPF válido"
+          />
         </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />

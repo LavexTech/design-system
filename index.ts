@@ -11,6 +11,7 @@ export { InputName } from "./src/components/InputName/InputName";
 export { InputPhone } from "./src/components/InputPhone/InputPhone";
 export { InputEmail } from "./src/components/InputEmail/InputEmail";
 export { InputPassword } from "./src/components/InputPassword/InputPassword";
+export { InputCPF } from "./src/components/InputCPF/InputCPF";
 
 // Lists
 export { List } from "./src/components/List/List";
