@@ -2,8 +2,9 @@ import React from "react"
 import { TouchableOpacity } from "react-native"
 import { MessageSent } from "./MessageSent"
 import { MessageReceived } from "./MessageReceived"
+import Constants from "../../constants/constants"
 
-export type MessageProps = {
+type MessageProps = {
     text: string
     onClick?: () => void
     isOwn?: boolean
@@ -40,7 +41,7 @@ export const Message: React.FC<MessageProps> = ({
         return (
             <TouchableOpacity
                 onPress={onClick}
-                activeOpacity={0.7}
+                activeOpacity={Constants.styles.opacity.MEDIUM}
             >
                 {messageComponent}
             </TouchableOpacity>
