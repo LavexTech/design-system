@@ -81,6 +81,9 @@ const Constants = {
     },
     stepper: {
       ICON_SIZE: 16,
+    },
+    gallery: {
+      CONTAINER_GAP: 12
     }
   },
 };
