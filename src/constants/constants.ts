@@ -65,11 +65,6 @@ const Constants = {
       BUTTON_WIDTH: 40,
       INPUT_MIN_WIDTH: 50,
     },
-    opacity: {
-      DISABLED: 0.5,
-      SEMI_TRANSPARENT: 0.7,
-      FULL: 1,
-    },
     color: {
       GOLD: "#FFD700",
       GRAY: "#E0E0E0",
@@ -84,6 +79,9 @@ const Constants = {
     maxWidth: {
       messageBubble: "70%"
     },
+    stepper: {
+      ICON_SIZE: 16,
+    }
   },
 };
 

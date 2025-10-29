@@ -3,6 +3,8 @@ import { View, Text, Pressable, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
 import { Grid } from "../Grid/Grid"
 import { TextBox } from "../Text/Text"
+import { IconPlus } from "../Icons/IconPlus"
+import { IconMinus } from "../Icons/IconMinus"
 
 type StepperProps = {
   text: string,
@@ -49,15 +51,7 @@ export const Stepper: React.FC<StepperProps> = ({
             isMinDisabled && styles.buttonDisabled,
           ]}
         >
-          {/* TODO: Trocar para utizar ícone em vez de <Text */}
-          <Text
-            style={[
-              styles.buttonText,
-              isMinDisabled && styles.buttonTextDisabled,
-            ]}
-          >
-            −
-          </Text>
+          <IconMinus width={Constants.styles.stepper.ICON_SIZE} height={Constants.styles.stepper.ICON_SIZE} />
         </Pressable>
         <View style={styles.valueContainer}>
           <Text style={styles.valueText}>{value}</Text>
@@ -71,15 +65,7 @@ export const Stepper: React.FC<StepperProps> = ({
             isMaxDisabled && styles.buttonDisabled,
           ]}
         >
-          {/* TODO: Trocar para utizar ícone em vez de <Text */}
-          <Text
-            style={[
-              styles.buttonText,
-              isMaxDisabled && styles.buttonTextDisabled,
-            ]}
-          >
-            +
-          </Text>
+          <IconPlus width={Constants.styles.stepper.ICON_SIZE} height={Constants.styles.stepper.ICON_SIZE} />
         </Pressable>
       </View>
     </Grid>
@@ -102,33 +88,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderWidth: 1,
+    borderWidth: Constants.styles.borderWidth.THIN,
     borderColor: Constants.styles.borderColor.MEDIUM,
   },
   buttonLeft: {
     borderTopLeftRadius: Constants.styles.borderRadius.MEDIUM,
     borderBottomLeftRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: 1,
+    borderWidth: Constants.styles.borderWidth.THIN,
     borderRightWidth: 0,
   },
   buttonRight: {
     borderTopRightRadius: Constants.styles.borderRadius.MEDIUM,
     borderBottomRightRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: 1,
+    borderWidth: Constants.styles.borderWidth.THIN,
     borderLeftWidth: 0,
   },
   buttonDisabled: {
     backgroundColor: Constants.styles.backgroundColor.GRAY,
-    opacity: Constants.styles.opacity.DISABLED,
-  },
-  buttonText: {
-    fontSize: Constants.styles.fontSize.LARGE,
-    fontWeight: Constants.styles.fontWeight.BOLD as any,
-    color: Constants.styles.textColor.DEFAULT,
-    lineHeight: Constants.styles.fontSize.LARGE,
-  },
-  buttonTextDisabled: {
-    color: Constants.styles.textColor.INFO,
+    opacity: Constants.styles.opacity.LOW,
   },
   valueContainer: {
     minWidth: Constants.styles.componentSize.INPUT_MIN_WIDTH,
@@ -136,8 +113,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderTopWidth: Constants.styles.borderWidth.THIN,
+    borderBottomWidth: Constants.styles.borderWidth.THIN,
     borderColor: Constants.styles.borderColor.MEDIUM,
   },
   valueText: {
