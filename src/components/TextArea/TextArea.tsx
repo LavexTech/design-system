@@ -65,6 +65,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 const styles = StyleSheet.create({
   textarea: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
+    borderRadius: Constants.styles.borderRadius.MEDIUM,
   },
   charCounterContainer: {
     alignItems: 'flex-end',
