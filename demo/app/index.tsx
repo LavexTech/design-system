@@ -4,6 +4,7 @@ import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { TextArea } from "@src/components/TextArea/TextArea";
 import { Info } from "@src/components/Info/Info";
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
@@ -44,6 +45,7 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
   const [cpf, setCpf] = useState('');
   
@@ -89,11 +91,13 @@ export default function Index() {
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
         </View>
-        <View style={{ marginTop: 20 }}>
-          <InputCPF
-            value={cpf}
-            onChange={setCpf}
-            errorMessage="Por favor, insira um CPF válido"
+        <View style={{ marginTop: 20 }} >
+          <TextArea
+            label="Mensagem"
+            value={contactMessage}
+            onChange={setContactMessage}
+            placeholder="Digite sua mensagem aqui..."
+            maxLength={100}
           />
         </View>
         <MainTitle text="Main Title" />
@@ -251,6 +255,10 @@ export default function Index() {
         </View>
       </View>
       <View style={{ marginTop: 30, marginBottom: 30 }}>
+        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
+      </View>
+
+      <View style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid columns={1} gap={2}>
           <GridItem>
             <Title text="Text list" />
@@ -298,7 +306,6 @@ export default function Index() {
           <IconChevronRight fill="#4A90E2" width={32} height={32} />
         </View>
       </Card>
-
       <Card title="✉️ Ações">
         <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
           <IconSend fill="#34C759" width={32} height={32} />
@@ -337,7 +344,7 @@ export default function Index() {
           <IconExclamation fill="#FF9500" width={32} height={32} />
         </View>
       </Card>
-    </ScrollView>
+    </ScrollView >
   )
 }
 
