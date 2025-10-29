@@ -12,6 +12,7 @@ export { InputPhone } from "./src/components/InputPhone/InputPhone";
 export { InputEmail } from "./src/components/InputEmail/InputEmail";
 export { InputPassword } from "./src/components/InputPassword/InputPassword";
 export { InputCPF } from "./src/components/InputCPF/InputCPF";
+export { TextArea } from "./src/components/TextArea/TextArea";
 
 // Lists
 export { List } from "./src/components/List/List";
@@ -22,7 +23,6 @@ export { Card } from "./src/components/Card/Card";
 export { Alert } from "./src/components/Alert/Alert";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
-export { TextArea } from "./src/components/TextArea/TextArea";
 export { Accordion } from "./src/components/Accordion/Accordion";
 export { Message } from "./src/components/Message/Message";
 export { Image } from "./src/components/Image/Image";
