@@ -4,6 +4,7 @@ import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { UserInfo } from "@src/components/UserInfo/UserInfo";
 import { TextArea } from "@src/components/TextArea/TextArea";
 import { Info } from "@src/components/Info/Info";
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
@@ -11,7 +12,6 @@ import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
-import { InputCPF } from "@src/components/InputCPF/InputCPF";
 import { InputName } from "@src/components/InputName/InputName";
 import { InputPhone } from "@src/components/InputPhone/InputPhone";
 import { TextList } from "@src/components/TextList/TextList";
@@ -45,9 +45,17 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  
+  const [sampleUser] = useState({
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+1234567890",
+    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    company: "Example Inc.",
+  });
+
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
-  const [cpf, setCpf] = useState('');
   
   return (
     <ScrollView
@@ -287,6 +295,47 @@ export default function Index() {
           <Text text="Item 2" />
           <Text text="Item 3" />
         </List>
+      </View>
+      <View style={{
+        marginTop: 40,
+        padding: 20,
+        width: "100%",
+        maxWidth: 300,
+        backgroundColor: "#F8F9FA",
+        borderRadius: 8
+      }}>
+        <MainTitle text="UserInfo Demo" />
+        <View style={{ marginTop: 20 }}>
+          <Grid columns={1} gap={4}>
+            <UserInfo
+              user={sampleUser}
+              type="name"
+              onClick={() => alert('Nome clicado!')}
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="email"
+              onClick={() => alert('Email clicado!')}
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="phone"
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="bio"
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="company"
+              onClick={() => alert('Empresa clicada!')}
+            />
+          </Grid>
+        </View>
       </View>
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
