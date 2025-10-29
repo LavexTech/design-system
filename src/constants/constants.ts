@@ -66,6 +66,15 @@ const Constants = {
       GOLD: "#FFD700",
       GRAY: "#E0E0E0",
       BLUE: "#007AFF",
+      SOFT_BLUE: "#D7E7FA",
+    },
+    opacity: {
+      LOW: 0.5,
+      MEDIUM: 0.7,
+      HIGH: 0.9,
+    },
+    maxWidth: {
+      messageBubble: "70%"
     },
   },
 };
