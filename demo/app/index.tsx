@@ -18,6 +18,7 @@ import { TextList } from "@src/components/TextList/TextList";
 import { List } from "@src/components/List/List";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
 import { Image } from "@src/components/Image/Image";
+import { Stepper } from "@src/components/Stepper/Stepper";
 import { Alert } from "@src/components/Alert/Alert";
 import { IconHome } from "@src/components/Icons/IconHome";
 import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft";
@@ -45,6 +46,8 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [shirtCount, setShirtCount] = useState(0);
+  const [pantsCount, setPantsCount] = useState(1);
   
   const [sampleUser] = useState({
     name: "John Doe",
@@ -227,6 +230,23 @@ export default function Index() {
       <Card>
         <Text text="Card" level="warning" />
       </Card>
+      <Grid columns={1} gap={4}>
+        <Title text="Stepper Component" />
+        <Stepper
+          text="Camiseta"
+          min={0}
+          max={10}
+          value={shirtCount}
+          onChange={setShirtCount}
+        />
+        <Stepper
+          text="Calça"
+          min={0}
+          max={5}
+          value={pantsCount}
+          onChange={setPantsCount}
+        />
+      </Grid>
       <View style={{ marginTop: 20 }}>
         <Title text="Message Components" />
         <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
