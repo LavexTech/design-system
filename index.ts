@@ -9,6 +9,7 @@ export { List } from "./src/components/List/List";
 export { Button } from "./src/components/Button/Button";
 export { Grid } from "./src/components/Grid/Grid";
 export { UserInfo } from "./src/components/UserInfo/UserInfo";
+export { TextList } from "./src/components/TextList/TextList";
 export { IconStar } from "./src/components/Icons/IconStar";
 export { IconStarHalf } from "./src/components/Icons/IconStarHalf";
 export { IconSend } from "./src/components/Icons/IconSend";

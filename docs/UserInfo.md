@@ -41,11 +41,7 @@ const user = {
 | `bio`      | BIO           |
 | `company`  | EMPRESA       |
 | `position` | CARGO         |
-| `department` | DEPARTAMENTO |
 | `address`    | ENDEREÇO      |
-| `city`       | CIDADE        |
-| `country`    | PAÍS          |
-| `website`    | WEBSITE       |
 | `age`        | IDADE         |
 
 Para outros tipos, a label será capitalizada automaticamente. Use a prop `label` para personalizar a exibição.

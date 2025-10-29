@@ -2,7 +2,7 @@ import React from "react"
 import { TouchableOpacity } from "react-native"
 import { TextBox as Text } from "../Text/Text"
 import { Grid, GridItem } from "../Grid/Grid"
-import { Subtitle } from "../Subtitle/Subtitle"
+import { Info } from "../Info/Info"
 
 type UserInfoProps = {
   user: { [key: string]: any },
@@ -21,10 +21,6 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user, type, label, onClick }
       age: "Idade",
       city: "Cidade",
       country: "País",
-      website: "Website",
-      company: "Empresa",
-      position: "Cargo",
-      department: "Departamento",
     }
     return labels[type] || type.charAt(0).toUpperCase() + type.slice(1)
   }
@@ -39,7 +35,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user, type, label, onClick }
   const Content = () => (
     <Grid columns={1} gapY={2}>
       <GridItem colSpan={1}>
-        <Subtitle text={displayLabel} />
+        <Info text={displayLabel}/>
       </GridItem>
       <GridItem colSpan={1}>
         <Text text={value} />
