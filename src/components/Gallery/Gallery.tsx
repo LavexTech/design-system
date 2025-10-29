@@ -1,6 +1,7 @@
 import React from "react"
 import { View, ScrollView, StyleSheet } from "react-native"
 import { Image } from "../Image/Image"
+import Constants from "@/src/constants/constants"
 
 type GalleryClickHandler = (imageUrl: string, index: number) => void
 
@@ -31,7 +32,7 @@ export const Gallery: React.FC<GalleryProps> = ({ images, onClick }: GalleryProp
 
 const styles = StyleSheet.create({
     scrollContent: {
-        paddingHorizontal: 4,
-        gap: 12,
+        paddingHorizontal: Constants.styles.spacing.TINY,
+        gap: Constants.styles.gallery.CONTAINER_GAP,
     }
 })
