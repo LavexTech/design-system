@@ -7,6 +7,13 @@ const Constants = {
       MEDIUM: 18,
       SMALL: 14,
     },
+    lineHeight: {
+      LARGEST: 30,
+      LARGER: 26,
+      LARGE: 22,
+      MEDIUM: 18,
+      SMALL: 14,
+    },
     fontWeight: {
       BOLD: "700" as any,
       NORMAL: "400" as any,
@@ -53,6 +60,28 @@ const Constants = {
       REGULAR: 0.8,
       THICK: 1.2,
     },
+    componentSize: {
+      BUTTON_HEIGHT: 40,
+      BUTTON_WIDTH: 40,
+      INPUT_MIN_WIDTH: 50,
+    },
+    color: {
+      GOLD: "#FFD700",
+      GRAY: "#E0E0E0",
+      SOFT_BLUE: "#D7E7FA",
+      WHITE: "#FFFFFF"
+    },
+    opacity: {
+      LOW: 0.5,
+      MEDIUM: 0.7,
+      HIGH: 0.9,
+    },
+    maxWidth: {
+      messageBubble: "70%"
+    },
+    stepper: {
+      ICON_SIZE: 16,
+    }
   },
 };
 

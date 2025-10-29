@@ -15,6 +15,9 @@ type InputProps = {
   errorMessage?: string
   mask?: string
   mobileKeyboard?: "text" | "email" | "phone" | "number"
+  secureTextEntry?: boolean
+  rightElement?: React.ReactNode
+  onBlur?: () => void
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -26,6 +29,9 @@ export const Input: React.FC<InputProps> = ({
   errorMessage,
   mask,
   mobileKeyboard = "text",
+  secureTextEntry = false,
+  rightElement,
+  onBlur,
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -118,8 +124,11 @@ export const Input: React.FC<InputProps> = ({
             value={value} 
             onChangeText={handleTextChange} 
             keyboardType={getKeyboardType()} 
-            placeholderTextColor={Constants.styles.textColor.INFO} 
+            placeholderTextColor={Constants.styles.textColor.INFO}
+            secureTextEntry={secureTextEntry}
+            onBlur={onBlur}
           />
+          {rightElement}
         </InputBase>
         </GridItem>
         {!isValid && errorMessage && (
