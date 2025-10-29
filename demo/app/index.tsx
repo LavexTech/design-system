@@ -4,6 +4,8 @@ import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
 import { TextBox as Text } from "@src/components/Text/Text";
+import { UserInfo } from "@src/components/UserInfo/UserInfo";
+import { TextArea } from "@src/components/TextArea/TextArea";
 import { Info } from "@src/components/Info/Info";
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
@@ -11,6 +13,7 @@ import { Card } from "@src/components/Card/Card";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
 import { InputName } from "@src/components/InputName/InputName";
+import { InputPhone } from "@src/components/InputPhone/InputPhone";
 import { TextList } from "@src/components/TextList/TextList";
 import { List } from "@src/components/List/List";
 import { InputPassword } from "@src/components/InputPassword/InputPassword";
@@ -46,6 +49,17 @@ export default function Index() {
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
   
+  const [sampleUser] = useState({
+    name: "John Doe",
+    email: "john.doe@example.com",
+    phone: "+1234567890",
+    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    company: "Example Inc.",
+  });
+
+  const [contactMessage, setContactMessage] = useState("");
+  const [phone, setPhone] = useState('');
+  
   return (
     <ScrollView
       style={{ flex: 1, padding: 20 }}
@@ -54,6 +68,15 @@ export default function Index() {
     >
       <Grid columns={1} gap={2}>
         <View style={{ marginTop: 20 }}>
+          <Subtitle text="Com Mensagem de Erro Customizada" />
+          <Info text="Exemplo com mensagem de erro personalizada" />
+          <InputPhone
+              value={phone}
+              onChange={setPhone}
+              errorMessage="Por favor, insira um telefone válido"
+          />
+        </View>
+        <View style={{ marginTop: 10 }}>
           <InputName
             label="Nome Completo"
             value={userName}
@@ -78,6 +101,15 @@ export default function Index() {
             onChange={setPassword}
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+        </View>
+        <View style={{ marginTop: 20 }} >
+          <TextArea
+            label="Mensagem"
+            value={contactMessage}
+            onChange={setContactMessage}
+            placeholder="Digite sua mensagem aqui..."
+            maxLength={100}
+          />
         </View>
         <MainTitle text="Main Title" />
         <Subtitle text="Subtitle" />
@@ -251,6 +283,10 @@ export default function Index() {
         </View>
       </View>
       <View style={{ marginTop: 30, marginBottom: 30 }}>
+        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
+      </View>
+
+      <View style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid columns={1} gap={2}>
           <GridItem>
             <Title text="Text list" />
@@ -280,6 +316,47 @@ export default function Index() {
           <Text text="Item 3" />
         </List>
       </View>
+      <View style={{
+        marginTop: 40,
+        padding: 20,
+        width: "100%",
+        maxWidth: 300,
+        backgroundColor: "#F8F9FA",
+        borderRadius: 8
+      }}>
+        <MainTitle text="UserInfo Demo" />
+        <View style={{ marginTop: 20 }}>
+          <Grid columns={1} gap={4}>
+            <UserInfo
+              user={sampleUser}
+              type="name"
+              onClick={() => alert('Nome clicado!')}
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="email"
+              onClick={() => alert('Email clicado!')}
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="phone"
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="bio"
+            />
+
+            <UserInfo
+              user={sampleUser}
+              type="company"
+              onClick={() => alert('Empresa clicada!')}
+            />
+          </Grid>
+        </View>
+      </View>
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
         <Title text="Icons" />
@@ -298,7 +375,6 @@ export default function Index() {
           <IconChevronRight fill="#4A90E2" width={32} height={32} />
         </View>
       </Card>
-
       <Card title="✉️ Ações">
         <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
           <IconSend fill="#34C759" width={32} height={32} />
@@ -337,7 +413,7 @@ export default function Index() {
           <IconExclamation fill="#FF9500" width={32} height={32} />
         </View>
       </Card>
-    </ScrollView>
+    </ScrollView >
   )
 }
 
