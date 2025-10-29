@@ -1,7 +1,7 @@
 import React from "react"
 import { ScrollView, StyleSheet } from "react-native"
 import { Image } from "../Image/Image"
-import Constants from "@/src/constants/constants"
+import Constants from "../../constants/constants"
 
 type GalleryClickHandler = (imageUrl: string, index: number) => void
 
