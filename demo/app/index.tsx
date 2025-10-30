@@ -114,7 +114,7 @@ export default function Index() {
   };
 
   return (
-    <View>
+    <>
       <ScrollView
         style={{ flex: 1, padding: 20 }}
         contentContainerStyle={{ paddingBottom: 40 }}
@@ -515,7 +515,7 @@ export default function Index() {
           console.log('Tab selecionada:', tabs[index]);
         }}
       />
-    </View>
+    </>
   )
 }
 
