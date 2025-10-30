@@ -11,7 +11,6 @@ import {
     ModalBody,
     ModalFooter,
 } from "../../ui/modal"
-import { Grid, GridItem } from "../Grid/Grid"
 
 type ModalProps = {
     title: string,
@@ -30,39 +29,29 @@ export const Modal: React.FC<ModalProps> = ({
 }: ModalProps) => {
     return (
         <GluestackUIProvider>
-            <GluestackModal 
-                isOpen={visible} 
-                onClose={onClose} 
+            <GluestackModal
+                isOpen={visible}
+                onClose={onClose}
                 size="md"
             >
-                <ModalBackdrop />
+                <ModalBackdrop onPress={onClose} />
                 <ModalContent>
-                    <Grid columns={1} gap={1}>
-                        <GridItem>  
-                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                <ModalHeader {...({} as any)}>
-                                    <Text text={title} />    
-                                </ModalHeader>
-                            </View>
-                        </GridItem>
-                        <GridItem>
-                            <ModalBody {...({} as any)}>
-                                <Text size="small" text={text} />
-                            </ModalBody>
-                        </GridItem>
-                        <GridItem>
-                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                <ModalFooter {...({} as any)}>
-                                    <Button
-                                        text={buttonText}
-                                        onClick={onClose}
-                                        variant="default"
-                                    />
-                                </ModalFooter>
-                            </View>
-                        </GridItem>
-                    </Grid>
-                </ModalContent>  
+                    <ModalHeader>
+                        <View style={{ flex: 1, alignItems: "center" }}>
+                            <Text text={title} position="flex-end" />
+                        </View>
+                    </ModalHeader>
+                    <ModalBody>
+                        <Text size="small" text={text} position="center" />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button
+                            text={buttonText}
+                            onClick={onClose}
+                            variant="default"
+                        />
+                    </ModalFooter>
+                </ModalContent>
             </GluestackModal>
         </GluestackUIProvider>
     )
