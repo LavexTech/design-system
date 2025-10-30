@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
-import { Grid } from "../Grid/Grid";
+import React, { useState } from "react"
+import { View, TouchableOpacity, StyleSheet } from "react-native"
+import { TextBox as Text } from "../Text/Text"
+import Constants from "../../constants/constants"
+import { Grid } from "../Grid/Grid"
 
-export interface TabBarProps {
-  options: string[];
-  icons?: ((isSelected: boolean) => React.ReactNode)[];
-  onSelected: (index: number) => void;
+type TabBarProps = {
+  options: string[],
+  icons?: ((isSelected: boolean) => React.ReactNode)[],
+  onSelected: (index: number) => void
 }
 
-export const TabBar: React.FC<TabBarProps> = ({ options, icons, onSelected }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export const TabBar: React.FC<TabBarProps> = ({ options, icons, onSelected }: TabBarProps) => {
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleTabPress = (index: number) => {
-    setSelectedIndex(index);
-    onSelected(index);
-  };
+    setSelectedIndex(index)
+    onSelected(index)
+  }
 
   return (
     <View style={styles.container}>
@@ -35,21 +36,14 @@ export const TabBar: React.FC<TabBarProps> = ({ options, icons, onSelected }) =>
                   {icons[index](isSelected)}
                 </View>
               )}
-              <Text
-                style={[
-                  styles.tabText,
-                  isSelected && styles.tabTextActive,
-                ]}
-              >
-                {option}
-              </Text>
+              <Text text={option} size="small"/>
             </TouchableOpacity>
           );
         })}
       </Grid>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -92,5 +86,5 @@ const styles = StyleSheet.create({
     fontFamily: Constants.styles.fontFamily.BOLD,
     color: Constants.styles.textColor.DEFAULT,
   },
-});
+})
 
