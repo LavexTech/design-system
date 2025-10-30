@@ -66,23 +66,26 @@ const Constants = {
       INPUT_MIN_WIDTH: 50,
     },
     color: {
+      WHITE: "#FFFFFF",
+      BLACK: "#000000",
       GOLD: "#FFD700",
       GRAY: "#E0E0E0",
+      BLUE: "#007AFF",
       SOFT_BLUE: "#D7E7FA",
-      WHITE: "#FFFFFF"
     },
     opacity: {
       LOW: 0.5,
       MEDIUM: 0.7,
       HIGH: 0.9,
     },
+    icon: {
+      SMALL: 16,
+      MEDIUM: 20,
+    },
     maxWidth: {
       messageBubble: "70%"
-    },
-    stepper: {
-      ICON_SIZE: 16,
     }
-  },
+  }
 };
 
 export default Constants;
