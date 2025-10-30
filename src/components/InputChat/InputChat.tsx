@@ -43,8 +43,8 @@ export function InputChat({
           >
             <IconSend
               fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.GRAY}
-              width={Constants.styles.icon.WIDTH}
-              height={Constants.styles.icon.HEIGHT}
+              width={Constants.styles.icon.MEDIUM}
+              height={Constants.styles.icon.MEDIUM}
             />
           </TouchableOpacity>
         </View>
