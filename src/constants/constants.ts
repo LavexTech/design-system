@@ -79,16 +79,13 @@ const Constants = {
       HIGH: 0.9,
     },
     icon: {
-      WIDTH: 20,
-      HEIGHT: 20,
+      SMALL: 16,
+      MEDIUM: 20,
     },
     maxWidth: {
       messageBubble: "70%"
-    },
-    stepper: {
-      ICON_SIZE: 16,
     }
-  },
+  }
 };
 
 export default Constants;
