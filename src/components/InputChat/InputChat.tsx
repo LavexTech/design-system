@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { IconSend } from '../Icons/IconSend';
-import { Input } from '../Input/Input';
-import Constants from '../../constants/constants';
-import { Grid, GridItem } from '../Grid/Grid';
+import React from 'react'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { IconSend } from '../Icons/IconSend'
+import { Input } from '../Input/Input'
+import Constants from '../../constants/constants'
+import { Grid, GridItem } from '../Grid/Grid'
 
 type InputChatProps = {
   value: string,
