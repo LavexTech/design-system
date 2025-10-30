@@ -48,5 +48,5 @@
 ## Chat
 
 - [ ] Message (text, onClick)
-- [ ] InputToolBar (value, placeholder, onChange(value), onSend)
+- [ ] InputChat (value, placeholder, onChange(value), onSend)
 

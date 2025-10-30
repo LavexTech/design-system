@@ -12,6 +12,7 @@ export { InputPhone } from "./src/components/InputPhone/InputPhone";
 export { InputEmail } from "./src/components/InputEmail/InputEmail";
 export { InputPassword } from "./src/components/InputPassword/InputPassword";
 export { InputCPF } from "./src/components/InputCPF/InputCPF";
+export { InputChat } from "./src/components/InputChat/InputChat";
 export { TextArea } from "./src/components/TextArea/TextArea";
 
 // Lists

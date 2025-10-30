@@ -51,7 +51,7 @@ export const Stepper: React.FC<StepperProps> = ({
             isMinDisabled && styles.buttonDisabled,
           ]}
         >
-          <IconMinus width={Constants.styles.stepper.ICON_SIZE} height={Constants.styles.stepper.ICON_SIZE} />
+          <IconMinus width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
         <View style={styles.valueContainer}>
           <Text style={styles.valueText}>{value}</Text>
@@ -65,7 +65,7 @@ export const Stepper: React.FC<StepperProps> = ({
             isMaxDisabled && styles.buttonDisabled,
           ]}
         >
-          <IconPlus width={Constants.styles.stepper.ICON_SIZE} height={Constants.styles.stepper.ICON_SIZE} />
+          <IconPlus width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
       </View>
     </Grid>

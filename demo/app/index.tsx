@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import { MainTitle } from "@src/components/MainTitle/MainTitle";
 import { Subtitle } from "@src/components/Subtitle/Subtitle";
 import { Title } from "@src/components/Title/Title";
@@ -41,6 +41,8 @@ import { IconHistory } from "@src/components/Icons/IconHistory";
 import { IconImage } from "@src/components/Icons/IconImage";
 import { IconExclamation } from "@src/components/Icons/IconExclamation";
 import { Stars } from "@src/components/Stars/Stars";
+import { InputChat } from "@src/components/InputChat/InputChat";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Constants from "@src/constants/constants";
 
 export default function Index() {
@@ -48,6 +50,14 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [inputValue, setInputValue] = useState("");
+
+  const insets = useSafeAreaInsets();
+  
+  const handleSend = () => {
+    console.log("Mensagem enviada:", inputValue);
+    setInputValue("");
+  };
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
   
@@ -104,6 +114,19 @@ export default function Index() {
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
         </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 30}
+        >
+          <View style={{ paddingBottom: insets.bottom }}>
+            <InputChat
+              value={inputValue}
+              onChange={setInputValue}
+              onSend={handleSend}
+              placeholder="Digite sua mensagem..."
+            />
+          </View>
+        </KeyboardAvoidingView>
         <View style={{ marginTop: 20 }} >
           <TextArea
             label="Mensagem"
@@ -139,6 +162,31 @@ export default function Index() {
         </Grid>
         <Grid columns={3} gap={0}>
           <GridItem>
+              <Text text="Column 1" />
+              <MainTitle text="Hello World" />
+              <Image
+                  src="https://picsum.photos/id/11/100/100"
+                  alt="Placeholder image"
+                  size="lg"
+                  type="circle"
+                  onClick={() => console.log("Image clicked!")}
+              />
+          </GridItem>
+          <GridItem>
+              <Text text="Column 2" />
+              <Title text="Hello World" />
+              <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
+          </GridItem>
+          <GridItem>
+              <Text text="Column 3" />
+              <Subtitle text="Hello World" />
+              <Image
+                  src="https://picsum.photos/id/10/100/100"
+                  alt="Icon placeholder"
+                  size="xl"
+                  type="circle"
+                  onClick={() => alert("Icon clicked!")}
+              />
             <Text text="Column 1" />
             <MainTitle text="Hello World" />
             <Image
@@ -168,7 +216,7 @@ export default function Index() {
           <Text text="Column 1" size="small" />
           <Text text="Column 2" level="success" />
           <Text text="Column 3" size="large" />
-        </Grid>
+      </Grid>
 
         <Subtitle text="Custom Column Spans (10 columns grid)" />
         <Grid columns={10} gap={4}>
