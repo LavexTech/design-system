@@ -11,6 +11,8 @@ import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Gallery } from "@src/components/Gallery/Gallery";
+import { Button } from "@src/components/Button/Button";
+import { Modal } from "@src/components/Modal/Modal";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
 import { InputName } from "@src/components/InputName/InputName";
@@ -46,20 +48,21 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Constants from "@src/constants/constants";
 
 export default function Index() {
+  const [showModal, setShowModal] = useState(false);
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [inputValue, setInputValue] = useState("");
 
   const insets = useSafeAreaInsets();
-  
+
   const handleSend = () => {
     console.log("Mensagem enviada:", inputValue);
     setInputValue("");
   };
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
-  
+
   const [sampleUser] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -70,233 +73,211 @@ export default function Index() {
 
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
-  
+
   return (
-    <ScrollView
-      style={{ flex: 1, padding: 20 }}
-      contentContainerStyle={{ paddingBottom: 40 }}
-      showsVerticalScrollIndicator={true}
-    >
-      <Grid columns={1} gap={2}>
-        <View style={{ marginTop: 20 }}>
-          <Subtitle text="Com Mensagem de Erro Customizada" />
-          <Info text="Exemplo com mensagem de erro personalizada" />
-          <InputPhone
+    <View style={{ flex: 1 }}>
+      <ScrollView
+        style={{ flex: 1, padding: 20 }}
+        contentContainerStyle={{ paddingBottom: 40 }}
+        showsVerticalScrollIndicator={true}
+      >
+        <Grid columns={1} gap={2}>
+          <View style={{ marginTop: 20 }}>
+            <Subtitle text="Com Mensagem de Erro Customizada" />
+            <Info text="Exemplo com mensagem de erro personalizada" />
+            <InputPhone
               value={phone}
               onChange={setPhone}
               errorMessage="Por favor, insira um telefone válido"
-          />
-        </View>
-        <View style={{ marginTop: 10 }}>
-          <InputName
-            label="Nome Completo"
-            value={userName}
-            placeholder="Digite seu nome completo"
-            onChange={setUserName}
-          />
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <Input
-            label="Input"
-            value={value}
-            placeholder="Enter Text here..."
-            onChange={setValue}
-            validation={validateInput}
-            errorMessage="Input must be less than 7 characters" />
-        </View>
-        <View style={{ marginTop: 20 }}>
-          <InputPassword
-            label="Senha"
-            value={password}
-            placeholder="Digite sua senha"
-            onChange={setPassword}
-            showPasswordToggle={true}
-            errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
-        </View>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 30}
-        >
-          <View style={{ paddingBottom: insets.bottom }}>
-            <InputChat
-              value={inputValue}
-              onChange={setInputValue}
-              onSend={handleSend}
-              placeholder="Digite sua mensagem..."
             />
           </View>
-        </KeyboardAvoidingView>
-        <View style={{ marginTop: 20 }} >
-          <TextArea
-            label="Mensagem"
-            value={contactMessage}
-            onChange={setContactMessage}
-            placeholder="Digite sua mensagem aqui..."
-            maxLength={100}
-          />
-        </View>
-        <MainTitle text="Main Title" />
-        <Subtitle text="Subtitle" />
-        <Title text="Title" />
-        <Text text="TextBox" />
-        <Info text="Info" />
-        <Title text="Grid Components" />
-        <Grid columns={3} gap={4}>
-          <Text text="Column 1" />
-          <Text text="Column 2" />
-          <Text text="Column 3" />
-        </Grid>
-        <Subtitle text="Grid with Cards (2 columns)" />
-        <Grid columns={2} gap={4}>
+          <View style={{ marginTop: 10 }}>
+            <InputName
+              label="Nome Completo"
+              value={userName}
+              placeholder="Digite seu nome completo"
+              onChange={setUserName}
+            />
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <Input
+              label="Input"
+              value={value}
+              placeholder="Enter Text here..."
+              onChange={setValue}
+              validation={validateInput}
+              errorMessage="Input must be less than 7 characters" />
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <InputPassword
+              label="Senha"
+              value={password}
+              placeholder="Digite sua senha"
+              onChange={setPassword}
+              showPasswordToggle={true}
+              errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número" />
+          </View>
+          <View style={{ marginTop: 20, marginBottom: 20 }}>
+            <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
+          </View>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 30}
+          >
+            <View style={{ paddingBottom: insets.bottom }}>
+              <InputChat
+                value={inputValue}
+                onChange={setInputValue}
+                onSend={handleSend}
+                placeholder="Digite sua mensagem..."
+              />
+            </View>
+          </KeyboardAvoidingView>
+          <View style={{ marginTop: 20 }} >
+            <TextArea
+              label="Mensagem"
+              value={contactMessage}
+              onChange={setContactMessage}
+              placeholder="Digite sua mensagem aqui..."
+              maxLength={100}
+            />
+          </View>
+          <MainTitle text="Main Title" />
+          <Subtitle text="Subtitle" />
+          <Title text="Title" />
+          <Text text="TextBox" />
+          <Info text="Info" />
+          <Grid columns={3} gap={4}>
+            <Text text="Column 1" />
+            <Text text="Column 2" />
+            <Text text="Column 3" />
+          </Grid>
           <Card>
-            <Text text="Card 1" />
+            <Text text="Card" />
           </Card>
-          <Card>
-            <Text text="Card 2" />
-          </Card>
-          <Card>
-            <Text text="Card 3" />
-          </Card>
-          <Card>
-            <Text text="Card 4" />
-          </Card>
-        </Grid>
-        <Grid columns={3} gap={0}>
-          <GridItem>
+          <Grid columns={3} gap={2}>
+            <Button variant="default" text="Button" onClick={() => { }} />
+            <Button variant="danger" text="Button" onClick={() => { }} />
+            <Button variant="success" text="Button" onClick={() => { }} />
+            <Button variant="default-outline" text="Button" onClick={() => { }} />
+            <Button variant="danger-outline" text="Button" onClick={() => { }} />
+            <Button variant="success-outline" text="Button" onClick={() => { }} />
+          </Grid>
+          <Grid columns={3} gap={0}>
+            <GridItem>
               <Text text="Column 1" />
               <MainTitle text="Hello World" />
               <Image
-                  src="https://picsum.photos/id/11/100/100"
-                  alt="Placeholder image"
-                  size="lg"
-                  type="circle"
-                  onClick={() => console.log("Image clicked!")}
+                src="https://picsum.photos/id/11/100/100"
+                alt="Placeholder image"
+                size="lg"
+                type="circle"
+                onClick={() => console.log("Image clicked!")}
               />
-          </GridItem>
-          <GridItem>
+            </GridItem>
+            <GridItem>
               <Text text="Column 2" />
               <Title text="Hello World" />
               <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
-          </GridItem>
-          <GridItem>
+            </GridItem>
+            <GridItem>
               <Text text="Column 3" />
               <Subtitle text="Hello World" />
               <Image
-                  src="https://picsum.photos/id/10/100/100"
-                  alt="Icon placeholder"
-                  size="xl"
-                  type="circle"
-                  onClick={() => alert("Icon clicked!")}
+                src="https://picsum.photos/id/10/100/100"
+                alt="Icon placeholder"
+                size="xl"
+                type="circle"
+                onClick={() => alert("Icon clicked!")}
               />
-            <Text text="Column 1" />
-            <MainTitle text="Hello World" />
-            <Image
-              src="https://picsum.photos/id/11/100/100"
-              alt="Placeholder image"
-              size="lg"
-              type="circle"
-              onClick={() => console.log("Image clicked!")}
-            />
-          </GridItem>
-          <GridItem>
-            <Text text="Column 2" />
-            <Title text="Hello World" />
-            <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
-          </GridItem>
-          <GridItem>
-            <Text text="Column 3" />
-            <Subtitle text="Hello World" />
-            <Image
-              src="https://picsum.photos/id/10/100/100"
-              alt="Icon placeholder"
-              size="xl"
-              type="circle"
-              onClick={() => alert("Icon clicked!")}
-            />
-          </GridItem>
-          <Text text="Column 1" size="small" />
-          <Text text="Column 2" level="success" />
-          <Text text="Column 3" size="large" />
-      </Grid>
+              <Text text="Column 1" />
+              <MainTitle text="Hello World" />
+              <Image
+                src="https://picsum.photos/id/11/100/100"
+                alt="Placeholder image"
+                size="lg"
+                type="circle"
+                onClick={() => console.log("Image clicked!")}
+              />
+            </GridItem>
+            <GridItem>
+              <Text text="Column 2" />
+              <Title text="Hello World" />
+              <Image src="https://picsum.photos/id/1/100" alt="Logo placeholder" size="md" type="default" />
+            </GridItem>
+            <GridItem>
+              <Text text="Column 3" />
+              <Subtitle text="Hello World" />
+              <Image
+                src="https://picsum.photos/id/10/100/100"
+                alt="Icon placeholder"
+                size="xl"
+                type="circle"
+                onClick={() => alert("Icon clicked!")}
+              />
+            </GridItem>
+            <Text text="Column 1" size="small" />
+            <Text text="Column 2" level="success" />
+            <Text text="Column 3" size="large" />
+          </Grid>
 
-        <Subtitle text="Custom Column Spans (10 columns grid)" />
-        <Grid columns={10} gap={4}>
-          <GridItem colSpan={3}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={5}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={4}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={6}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={2}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={4}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
-          <GridItem colSpan={4}>
-            <Card>
-              <></>
-            </Card>
-          </GridItem>
+          <Subtitle text="Custom Column Spans (10 columns grid)" />
+          <Grid columns={10} gap={4}>
+            <GridItem colSpan={3}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={5}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={2}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={4}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={6}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={2}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={4}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+            <GridItem colSpan={4}>
+              <Card>
+                <></>
+              </Card>
+            </GridItem>
+          </Grid>
         </Grid>
-      </Grid>
-      <View style={{ marginTop: 20, marginBottom: 20 }}>
-        <Accordion>
-          <AccordionItem id="item-1" title="Primeiro Item">
-            <Text size="small" text="Conteúdo do primeiro item do accordion. Este item pode ser expandido e colapsado independentemente." />
-          </AccordionItem>
-          <AccordionItem id="item-2" title="Segundo Item">
-            <Text size="small" text="Conteúdo do segundo item. Cada item tem seu próprio estado de expansão/colapso." />
-          </AccordionItem>
-          <AccordionItem id="item-3" title="Terceiro Item">
-            <Text size="small" text="Conteúdo do terceiro item. Todos os itens estão dentro de um único componente Accordion." />
-          </AccordionItem>
-        </Accordion>
-      </View>
-      <Card>
-        <Text text="Card" level="warning" />
-      </Card>
-      <Grid columns={1} gap={4}>
-        <Title text="Stepper Component" />
-        <Stepper
-          text="Camiseta"
-          min={0}
-          max={10}
-          value={shirtCount}
-          onChange={setShirtCount}
-        />
-        <Stepper
-          text="Calça"
-          min={0}
-          max={5}
-          value={pantsCount}
-          onChange={setPantsCount}
-        />
-      </Grid>
-      <View style={{ marginTop: 20 }}>
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
+          <Accordion>
+            <AccordionItem id="item-1" title="Primeiro Item">
+              <Text size="small" text="Conteúdo do primeiro item do accordion. Este item pode ser expandido e colapsado independentemente." />
+            </AccordionItem>
+            <AccordionItem id="item-2" title="Segundo Item">
+              <Text size="small" text="Conteúdo do segundo item. Cada item tem seu próprio estado de expansão/colapso." />
+            </AccordionItem>
+            <AccordionItem id="item-3" title="Terceiro Item">
+              <Text size="small" text="Conteúdo do terceiro item. Todos os itens estão dentro de um único componente Accordion." />
+            </AccordionItem>
+          </Accordion>
+        </View>
         <Grid columns={1} gap={4}>
           <Title text="Gallery Component" />
           <Gallery
@@ -311,172 +292,213 @@ export default function Index() {
             onClick={(imageUrl: string, index: number) => console.log(`Clicked image ${index + 1}:`, imageUrl)}
           />
         </Grid>
-        <Title text="Message Components" />
-        <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
-          <Message
-            text="Blah?"
-            onClick={() => console.log("Mensagem clicada!")}
-            isOwn={false}
-            senderName="Maria"
-            timestamp="14:30"
-            avatarUrl="https://picsum.photos/id/91/40/40"
+        <Card>
+          <Text text="Card" level="warning" />
+        </Card>
+        <Grid columns={1} gap={4}>
+          <Title text="Stepper Component" />
+          <Stepper
+            text="Camiseta"
+            min={0}
+            max={10}
+            value={shirtCount}
+            onChange={setShirtCount}
           />
-          <Message
-            text="Blah blah blah  blah blah blah blah blah blah"
-            onClick={() => console.log("Mensagem clicada!")}
-            isOwn={true}
-            timestamp="14:31"
-            avatarUrl="https://picsum.photos/id/64/40/40"
+          <Stepper
+            text="Calça"
+            min={0}
+            max={5}
+            value={pantsCount}
+            onChange={setPantsCount}
           />
-          <Message
-            text="Blah blah blah  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
-            onClick={() => console.log("Mensagem clicada!")}
-            isOwn={false}
-            senderName="Maria"
-            timestamp="14:32"
-            avatarUrl="https://picsum.photos/id/91/40/40"
-          />
-          <Message
-            text="Blah."
-            onClick={() => console.log("Mensagem clicada!")}
-            isOwn={true}
-            timestamp="14:33"
-            avatarUrl="https://picsum.photos/id/64/40/40"
-          />
-        </View>
-      </View>
-      <View style={{ marginTop: 30, marginBottom: 30 }}>
-        <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
-      </View>
-
-      <View style={{ marginTop: 30, marginBottom: 30 }}>
-        <Grid columns={1} gap={2}>
-          <GridItem>
-            <Title text="Text list" />
-          </GridItem>
-          <GridItem>
-            <TextList
-              texts={[
-                "1x Calça Tiroliro",
-                "2x Blusa xpto etc",
-                "5x Camiseta de banda",
-                "3x Pares de meia",
-                "1x Edredom",
-              ]}
-            />
-          </GridItem>
         </Grid>
-      </View>
-      <View style={{ marginTop: 20, padding: 20 }}>
-        <Alert
-          text="O pagamento deve ser efetuado antes da data de vencimento."
-        />
-      </View>
-      <View style={{ marginTop: 20 }} >
-        <List title="Lista de exemplo">
-          <Text text="Item 1" />
-          <Text text="Item 2" />
-          <Text text="Item 3" />
-        </List>
-      </View>
-      <View style={{
-        marginTop: 40,
-        padding: 20,
-        width: "100%",
-        maxWidth: 300,
-        backgroundColor: "#F8F9FA",
-        borderRadius: 8
-      }}>
-        <MainTitle text="UserInfo Demo" />
         <View style={{ marginTop: 20 }}>
-          <Grid columns={1} gap={4}>
-            <UserInfo
-              user={sampleUser}
-              type="name"
-              onClick={() => alert('Nome clicado!')}
+          <Title text="Message Components" />
+          <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
+            <Message
+              text="Blah?"
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={false}
+              senderName="Maria"
+              timestamp="14:30"
+              avatarUrl="https://picsum.photos/id/91/40/40"
             />
+            <Message
+              text="Blah blah blah  blah blah blah blah blah blah"
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={true}
+              timestamp="14:31"
+              avatarUrl="https://picsum.photos/id/64/40/40"
+            />
+            <Message
+              text="Blah blah blah  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={false}
+              senderName="Maria"
+              timestamp="14:32"
+              avatarUrl="https://picsum.photos/id/91/40/40"
+            />
+            <Message
+              text="Blah."
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={true}
+              timestamp="14:33"
+              avatarUrl="https://picsum.photos/id/64/40/40"
+            />
+          </View>
+        </View>
+        <View style={{ marginTop: 30, marginBottom: 30 }}>
+          <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
+        </View>
 
-            <UserInfo
-              user={sampleUser}
-              type="email"
-              onClick={() => alert('Email clicado!')}
-            />
-
-            <UserInfo
-              user={sampleUser}
-              type="phone"
-            />
-
-            <UserInfo
-              user={sampleUser}
-              type="bio"
-            />
-
-            <UserInfo
-              user={sampleUser}
-              type="company"
-              onClick={() => alert('Empresa clicada!')}
-            />
+        <View style={{ marginTop: 30, marginBottom: 30 }}>
+          <Grid columns={1} gap={2}>
+            <GridItem>
+              <Title text="Text list" />
+            </GridItem>
+            <GridItem>
+              <TextList
+                texts={[
+                  "1x Calça Tiroliro",
+                  "2x Blusa xpto etc",
+                  "5x Camiseta de banda",
+                  "3x Pares de meia",
+                  "1x Edredom",
+                ]}
+              />
+            </GridItem>
           </Grid>
         </View>
-      </View>
-
-      <View style={{ marginTop: 20, marginBottom: 10 }}>
-        <Title text="Icons" />
-      </View>
-
-      <Card title="⭐ Avaliação e Favoritos">
-        <Stars rating={3.5} size={32} />
-      </Card>
-
-      <Card title="🏠 Navegação">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconHome fill="#4A90E2" width={32} height={32} />
-          <IconArrowLeft fill="#4A90E2" width={32} height={32} />
-          <IconArrowRight fill="#4A90E2" width={32} height={32} />
-          <IconChevronLeft fill="#4A90E2" width={32} height={32} />
-          <IconChevronRight fill="#4A90E2" width={32} height={32} />
+        <View style={{ marginTop: 20, padding: 20 }}>
+          <Alert
+            text="O pagamento deve ser efetuado antes da data de vencimento."
+          />
         </View>
-      </Card>
-      <Card title="✉️ Ações">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconSend fill="#34C759" width={32} height={32} />
-          <IconPlus fill="#34C759" width={32} height={32} />
-          <IconMinus fill="#FF9500" width={32} height={32} />
-          <IconClose fill="#FF3B30" width={32} height={32} />
-          <IconTrash fill="#FF3B30" width={32} height={32} />
+        <View style={{ marginTop: 20 }} >
+          <List title="Lista de exemplo">
+            <Text text="Item 1" />
+            <Text text="Item 2" />
+            <Text text="Item 3" />
+          </List>
         </View>
-      </Card>
+        <View style={{
+          marginTop: 40,
+          padding: 20,
+          width: "100%",
+          maxWidth: 300,
+          backgroundColor: "#F8F9FA",
+          borderRadius: 8
+        }}>
+          <MainTitle text="UserInfo Demo" />
+          <View style={{ marginTop: 20 }}>
+            <Grid columns={1} gap={4}>
+              <UserInfo
+                user={sampleUser}
+                type="name"
+                onClick={() => alert('Nome clicado!')}
+              />
 
-      <Card title="🔍 Pesquisa e Filtro">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconSearch fill="#8E8E93" width={32} height={32} />
-          <IconFilter fill="#8E8E93" width={32} height={32} />
-        </View>
-      </Card>
+              <UserInfo
+                user={sampleUser}
+                type="email"
+                onClick={() => alert('Email clicado!')}
+              />
 
-      <Card title="👤 Usuário e Perfil">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconProfile fill="#5856D6" width={32} height={32} />
-          <IconEye fill="#5856D6" width={32} height={32} />
-          <IconEyeClosed fill="#5856D6" width={32} height={32} />
-        </View>
-      </Card>
+              <UserInfo
+                user={sampleUser}
+                type="phone"
+              />
 
-      <Card title="💬 Comunicação">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconMessage fill="#007AFF" width={32} height={32} />
-          <IconHistory fill="#007AFF" width={32} height={32} />
-        </View>
-      </Card>
+              <UserInfo
+                user={sampleUser}
+                type="bio"
+              />
 
-      <Card title="🖼️ Mídia e Alertas">
-        <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-          <IconImage fill="#AF52DE" width={32} height={32} />
-          <IconExclamation fill="#FF9500" width={32} height={32} />
+              <UserInfo
+                user={sampleUser}
+                type="company"
+                onClick={() => alert('Empresa clicada!')}
+              />
+            </Grid>
+          </View>
         </View>
-      </Card>
-    </ScrollView >
+
+        <View style={{ marginTop: 20, marginBottom: 10 }}>
+          <Title text="Icons" />
+        </View>
+
+        <Card title="⭐ Avaliação e Favoritos">
+          <Stars rating={3.5} size={32} />
+        </Card>
+
+        <Card title="🏠 Navegação">
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <IconHome fill="#4A90E2" width={32} height={32} />
+            <IconArrowLeft fill="#4A90E2" width={32} height={32} />
+            <IconArrowRight fill="#4A90E2" width={32} height={32} />
+            <IconChevronLeft fill="#4A90E2" width={32} height={32} />
+            <IconChevronRight fill="#4A90E2" width={32} height={32} />
+          </View>
+        </Card>
+        <Card title="✉️ Ações">
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <IconSend fill="#34C759" width={32} height={32} />
+            <IconPlus fill="#34C759" width={32} height={32} />
+            <IconMinus fill="#FF9500" width={32} height={32} />
+            <IconClose fill="#FF3B30" width={32} height={32} />
+            <IconTrash fill="#FF3B30" width={32} height={32} />
+          </View>
+        </Card>
+
+        <Card title="🔍 Pesquisa e Filtro">
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <IconSearch fill="#8E8E93" width={32} height={32} />
+            <IconFilter fill="#8E8E93" width={32} height={32} />
+          </View>
+        </Card>
+
+        <Card title="👤 Usuário e Perfil">
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <IconProfile fill="#5856D6" width={32} height={32} />
+            <IconEye fill="#5856D6" width={32} height={32} />
+            <IconEyeClosed fill="#5856D6" width={32} height={32} />
+          </View>
+        </Card>
+
+        <Card title="💬 Comunicação">
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <IconMessage fill="#007AFF" width={32} height={32} />
+            <IconHistory fill="#007AFF" width={32} height={32} />
+          </View>
+        </Card>
+
+        <Card title="🖼️ Mídia e Alertas">
+          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
+            <IconImage fill="#AF52DE" width={32} height={32} />
+            <IconExclamation fill="#FF9500" width={32} height={32} />
+          </View>
+        </Card>
+      </ScrollView>
+
+      {showModal && (
+        <View style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 1000,
+        }}>
+          <Modal
+            title="Exemplo de Modal"
+            text="Este é um exemplo de como usar o componente Modal com suas propriedades. Você pode personalizar o título, texto e botão."
+            buttonText="Fechar"
+            onClose={() => setShowModal(false)}
+            visible={showModal}
+          />
+        </View>
+      )}
+    </View>
   )
 }
 
