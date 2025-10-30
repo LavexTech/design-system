@@ -73,6 +73,10 @@ const Constants = {
       MEDIUM: 0.7,
       HIGH: 0.9,
     },
+    icon: {
+      WIDTH: 20,
+      HEIGHT: 20,
+    },
     maxWidth: {
       messageBubble: "70%"
     },
