@@ -27,7 +27,7 @@
 - [ ] Image (src: string, alt: string, onClick)
 - [ ] Gallery (images: string[], onClick)
 - [ ] OfferCard (offer: Offer, onClick)
-- [ ] Stepper (text, max, min, value, onChange(value))
+- [x] Stepper (text, max, min, value, onChange(value))
 - [ ] StarRating (rating, count, size, onRate(rating))
 - [ ] Alert (text, icon, type (danger, success, info), onClose)
 

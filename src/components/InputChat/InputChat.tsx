@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { IconSend } from '../Icons/IconSend';
+import { Input } from '../Input/Input';
+import Constants from '../../constants/constants';
+import { Grid, GridItem } from '../Grid/Grid';
 
-interface InputChatProps {
-  value: string;
-  placeholder?: string;
-  onChange: (value: string) => void;
-  onSend: () => void;
+type InputChatProps = {
+  value: string,
+  placeholder?: string,
+  onChange: (value: string) => void,
+  onSend: () => void
 }
 
 export function InputChat({
@@ -19,55 +22,51 @@ export function InputChat({
     if (value.trim()) {
       onSend();
     }
-  };
+  }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        value={value}
-        onChangeText={onChange}
-        placeholder={placeholder}
-        placeholderTextColor="#888"
-        multiline
-        textAlignVertical="top"
-      />
-      <TouchableOpacity
-        style={[styles.button, !value.trim() && styles.disabledButton]}
-        onPress={handleSend}
-        disabled={!value.trim()}
-      >
-        <IconSend fill={value.trim() ? "#007AFF" : "#999"} width={20} height={20} />
-      </TouchableOpacity>
-    </View>
-  );
+    <Grid columns={12} gap={4}>
+      <GridItem colSpan={11}>
+        <Input
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          placeholderTextColor={Constants.styles.color.GRAY}
+        />
+      </GridItem>
+      <GridItem colSpan={1}>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, !value.trim() && styles.disabledButton]}
+            onPress={handleSend}
+            disabled={!value.trim()}
+          >
+            <IconSend
+              fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.GRAY}
+              width={Constants.styles.icon.WIDTH}
+              height={Constants.styles.icon.HEIGHT}
+            />
+          </TouchableOpacity>
+        </View>
+      </GridItem>
+    </Grid>
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
+  buttonContainer: {
     alignItems: 'center',
-    padding: 12,
-    borderTopWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: '#fff',
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 12,
-    fontSize: 16,
-    color: '#000',
+    justifyContent: 'flex-end',
+    height: '100%',
+    paddingBottom: Constants.styles.spacing.TINY,
   },
   button: {
-    marginLeft: 8,
-    padding: 10,
-    borderRadius: 50,
+    padding: Constants.styles.spacing.SMALL,
+    borderRadius: Constants.styles.borderRadius.LARGE,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   disabledButton: {
-    opacity: 0.5,
+    opacity: Constants.styles.opacity.LOW,
   },
-});
+})
