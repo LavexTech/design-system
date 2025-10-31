@@ -1,9 +1,15 @@
 {
   "name": "lavex-design-system",
-  "version": "0.1.19",
+  "version": "0.1.21",
   "description": "Lavex Design System for React Native",
   "files": [
     "src/",
+    "docs/",
+    "babel.config.js",
+    "tailwind.config.js",
+    "nativewind-env.d.ts",
+    "react-native.config.js",
+    "metro.config.js",
     "README.md",
     "index.ts"
   ],
