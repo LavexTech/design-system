@@ -42,6 +42,7 @@ import { IconExclamation } from "@src/components/Icons/IconExclamation";
 import { Stars } from "@src/components/Stars/Stars";
 import { InputChat } from "@src/components/InputChat/InputChat";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal";
 import Constants from "@src/constants/constants";
 
 export default function Index() {
@@ -59,13 +60,17 @@ export default function Index() {
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
   
-  const [sampleUser] = useState({
+  const sampleUser = {
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "+1234567890",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     company: "Example Inc.",
-  });
+    profileImage: "https://picsum.photos/id/15/200/200",
+    ordersCount: 32,
+    rating: 3.5,
+    id: "1",
+  };
 
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
@@ -333,7 +338,16 @@ export default function Index() {
       <View style={{ marginTop: 30, marginBottom: 30 }}>
         <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
       </View>
-
+      <View style={{ marginTop: 20 }}>
+        <UserCardHorizontal
+          user={sampleUser}
+          onClick={() => console.log("Usuário clicado:", sampleUser.id)}
+        />
+        <UserCardHorizontal
+          user={{ ...sampleUser, id: "2", name: "Maria Silva", rating: 5, ordersCount: 48 }}
+          onClick={() => console.log("Usuário clicado: 2")}
+        />
+      </View>
       <View style={{ marginTop: 30, marginBottom: 30 }}>
         <Grid columns={1} gap={2}>
           <GridItem>
