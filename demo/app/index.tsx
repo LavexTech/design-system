@@ -10,6 +10,7 @@ import { Info } from "@src/components/Info/Info";
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
+import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVertical";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
 import { InputName } from "@src/components/InputName/InputName";
@@ -283,6 +284,14 @@ export default function Index() {
       <Card>
         <Text text="Card" level="warning" />
       </Card>
+      
+      <Title text="UserCardVertical" />
+      <Grid columns={2} gap={1}>
+        <UserCardVertical
+          user={ sampleUser }
+          onClick={() => {}}
+        />
+      </Grid>
       <Grid columns={1} gap={4}>
         <Title text="Stepper Component" />
         <Stepper
