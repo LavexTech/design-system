@@ -28,40 +28,33 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
 
   return (
     <Card onClick={onClick}>
-      <View style={styles.container}>
-        <Grid columns={12} gap={2}>
-          <GridItem colSpan={3}>
-            <Image
-              src={user.profileImage}
-              alt={user.name}
-              size="md"
-              type="circle"
-              />
-          </GridItem>
+      <Grid columns={12} gap={2}>
+        <GridItem colSpan={3}>
+          <Image
+            src={user.profileImage}
+            alt={user.name}
+            size="md"
+            type="circle"
+            />
+        </GridItem>
 
-          <GridItem colSpan={9}>
-            <View>
-              <Text text={user.name} />
-              <Info text={`${user.ordersCount} pedidos feitos`} />
-            </View>
+        <GridItem colSpan={9}>
+          <View>
+            <Text text={user.name} />
+            <Info text={`${user.ordersCount} pedidos feitos`} />
+          </View>
 
-            <View style={styles.ratingContainer}>
-              <Stars rating={user.rating} size={16} />
-              <Info text={`${user.rating}/5`} />
-            </View>
-          </GridItem>
-          </Grid>
-      </View>
+          <View style={styles.ratingContainer}>
+            <Stars rating={user.rating} size={16} />
+            <Info text={`${user.rating}/5`} />
+          </View>
+        </GridItem>
+      </Grid>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-  },
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
