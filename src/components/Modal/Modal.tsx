@@ -14,7 +14,7 @@ import {
 
 type ModalProps = {
     title: string,
-    text: string,
+    children: React.ReactNode,
     buttonText: string,
     onClose: () => void,
     visible?: boolean
@@ -22,7 +22,7 @@ type ModalProps = {
 
 export const Modal: React.FC<ModalProps> = ({
     title,
-    text,
+    children,
     buttonText,
     onClose,
     visible = true,
@@ -42,7 +42,7 @@ export const Modal: React.FC<ModalProps> = ({
                         </View>
                     </ModalHeader>
                     <ModalBody>
-                        <Text size="small" text={text} position="center" />
+                        {children}
                     </ModalBody>
                     <ModalFooter>
                         <Button
