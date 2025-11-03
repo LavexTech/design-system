@@ -340,11 +340,11 @@ export default function Index() {
       </View>
       <View style={{ marginTop: 20 }}>
         <UserCardHorizontal
-          user={sampleUser2}
-          onClick={() => console.log("Usuário clicado:", sampleUser2.id)}
+          user={sampleUser}
+          onClick={() => console.log("Usuário clicado:", sampleUser.id)}
         />
         <UserCardHorizontal
-          user={{ ...sampleUser2, id: "2", name: "Maria Silva", rating: 5, ordersCount: 48 }}
+          user={{ ...sampleUser, id: "2", name: "Maria Silva", rating: 5, ordersCount: 48 }}
           onClick={() => console.log("Usuário clicado: 2")}
         />
       </View>
