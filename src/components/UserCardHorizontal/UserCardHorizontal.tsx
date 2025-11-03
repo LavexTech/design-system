@@ -51,8 +51,8 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
         </GridItem>
       </Grid>
     </Card>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   ratingContainer: {
