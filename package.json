@@ -1,9 +1,15 @@
 {
   "name": "lavex-design-system",
-  "version": "0.1.18",
+  "version": "0.1.22",
   "description": "Lavex Design System for React Native",
   "files": [
     "src/",
+    "docs/",
+    "babel.config.js",
+    "tailwind.config.js",
+    "nativewind-env.d.ts",
+    "react-native.config.js",
+    "metro.config.js",
     "README.md",
     "index.ts"
   ],
@@ -23,10 +29,16 @@
   "peerDependencies": {
     "expo-font": ">=14.0.0",
     "react": "19.1.0",
-    "react-native": "0.81.4"
+    "react-native": "0.81.4",
+    "@gluestack-ui/core": "^3.0.10",
+    "@gluestack-ui/utils": "^3.0.7",
+    "@legendapp/motion": "^2.4.0",
+    "nativewind": "^4.2.1",
+    "react-native-svg": "^15.13.0"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "@types/react-native": "^0.72.8",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "typescript": "~5.9.2"
@@ -41,19 +53,15 @@
   "homepage": "https://github.com/lavex/lavex-design-system#readme",
   "dependencies": {
     "@expo/html-elements": "^0.10.1",
-    "@gluestack-ui/core": "^3.0.10",
-    "@gluestack-ui/utils": "^3.0.7",
-    "@legendapp/motion": "^2.4.0",
+    "@gluestack-ui/accordion": "^1.0.14",
     "babel-plugin-module-resolver": "^5.0.2",
     "expo": "^54.0.12",
     "gluestack-ui": "^3.0.7",
     "init": "^0.1.2",
-    "nativewind": "^4.2.1",
     "npx": "^3.0.0",
     "react-aria": "^3.44.0",
     "react-native-reanimated": "~4.1.0",
     "react-native-safe-area-context": "^5.6.1",
-    "react-native-svg": "^15.13.0",
     "react-native-worklets": "^0.5.1",
     "react-stately": "^3.42.0",
     "tailwind-variants": "^0.1.20",

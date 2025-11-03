@@ -51,3 +51,7 @@ export function useFonts(fontNames: string[] = ["Roboto-Regular"]) {
 
   return ready;
 }
+
+export function useGlobalFonts() {
+  return useFonts(Object.keys(AVAILABLE_FONTS));
+}
