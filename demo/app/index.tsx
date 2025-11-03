@@ -589,11 +589,17 @@ export default function Index() {
         }}>
           <Modal
             title="Exemplo de Modal"
-            text="Este é um exemplo de como usar o componente Modal com suas propriedades. Você pode personalizar o título, texto e botão."
             buttonText="Fechar"
             onClose={() => setShowModal(false)}
             visible={showModal}
-          />
+          >
+            <Text 
+              size="small"
+              text="Este é um exemplo de como usar o componente Modal com suas propriedades. Você pode personalizar o título, texto e botão."
+              level="default"
+              position="center"
+            />
+          </Modal>
         </View>
       )}
     </View>
