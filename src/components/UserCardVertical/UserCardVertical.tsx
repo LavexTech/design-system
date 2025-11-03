@@ -1,118 +1,67 @@
-import React from "react";
-import { View, Image, Text as RNText, StyleSheet } from "react-native";
-import { Card } from "../Card/Card";
-import { TextBox } from "../Text/Text";
-import Constants from "../../constants/constants";
+import React from "react"
+import { View, StyleSheet } from "react-native"
+import { Card } from "../Card/Card"
+import { TextBox as Text } from "../Text/Text"
+import { Stars } from "../Stars/Stars"
+import { Info } from "../Info/Info"
+import { Image } from "../Image/Image"
+import { Grid, GridItem } from "../Grid/Grid"
 
-export interface User {
-  id: string;
-  name: string;
-  profileImage: string;
-  ordersCount: number;
-  rating: number;
+type User = {
+  id: string,
+  name: string,
+  profileImage: string,
+  ordersCount: number,
+  rating: number,
 }
 
-export interface UserCardVerticalProps {
-  user: User;
-  onClick?: () => void;
+type UserCardVerticalProps = {
+  user: User,
+  onClick?: () => void,
 }
 
 export const UserCardVertical: React.FC<UserCardVerticalProps> = ({
   user,
   onClick,
 }: UserCardVerticalProps) => {
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.round(rating);
-
-    for (let i = 0; i < 5; i++) {
-      if (i < fullStars) {
-        stars.push(
-          <RNText key={i} style={styles.star}>
-            ★
-          </RNText>
-        );
-      } else {
-        stars.push(
-          <RNText key={i} style={styles.starEmpty}>
-            ★
-          </RNText>
-        );
-      }
-    }
-
-    return stars;
-  };
-
   return (
     <Card onClick={onClick}>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={{ uri: user.profileImage }}
-            style={styles.profileImage}
-            resizeMode="cover"
-          />
-        </View>
-
-        <View style={styles.ordersTextContainer}>
-          <TextBox text={`${user.ordersCount} pedidos feitos`} />
-        </View>
-
-        <View style={styles.ratingContainer}>
-          <View style={styles.starsContainer}>{renderStars(user.rating)}</View>
-        </View>
-
-        <View style={styles.ratingTextContainer}>
-          <TextBox text={`${Math.round(user.rating)}/5`} />
-        </View>
-      </View>
+        <Grid columns={12} gap={2}>
+          <GridItem colSpan={12}>
+            <View style={styles.centerImage}>
+              <Image
+                size="md"
+                src={ user.profileImage }
+                type="circle"
+                alt={ user.name }
+                />
+            </View>
+          </GridItem>
+          <GridItem colSpan={12}>
+            <View style={styles.centerItem}>
+              <Text text={user.name} />
+              <Info text={`${user.ordersCount} pedidos feitos`} />
+            </View>
+          </GridItem>
+          <GridItem colSpan={12}>
+            <View style={styles.centerItem}>
+              <Stars rating={user.rating} size={16} />
+              <Info text={`${Math.round(user.rating)}/5`} />
+            </View>
+          </GridItem>
+        </Grid>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  centerItem: {
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
   },
-  imageContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    overflow: "hidden",
-    marginBottom: Constants.styles.spacing.SMALL,
-    borderWidth: Constants.styles.borderWidth.REGULAR,
-    borderColor: Constants.styles.borderColor.LIGHT,
-  },
-  profileImage: {
-    width: "100%",
-    height: "100%",
-  },
-  ordersTextContainer: {
-    marginBottom: Constants.styles.spacing.TINY,
+  centerImage: {
     alignItems: "center",
-  },
-  ratingContainer: {
-    marginBottom: Constants.styles.spacing.TINY,
-  },
-  starsContainer: {
+    justifyContent: "center",
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  star: {
-    fontSize: 16,
-    color: "#262627",
-    marginHorizontal: 1,
-  },
-  starEmpty: {
-    fontSize: 16,
-    color: "#DEE2E6",
-    marginHorizontal: 1,
-  },
-  ratingTextContainer: {
-    alignItems: "center",
-  },
+  }
 });

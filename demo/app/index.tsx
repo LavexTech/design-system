@@ -61,11 +61,15 @@ export default function Index() {
   const [pantsCount, setPantsCount] = useState(1);
   
   const [sampleUser] = useState({
+    id: "1",
+    profileImage: "https://picsum.photos/id/11/100/100",
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "+1234567890",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     company: "Example Inc.",
+    ordersCount: 10,
+    rating: 4.5,
   });
 
   const [contactMessage, setContactMessage] = useState("");
@@ -283,15 +287,7 @@ export default function Index() {
       <Title text="UserCardVertical" />
       <Grid columns={2} gap={1}>
         <UserCardVertical
-          user={sampleUser}
-          onClick={() => {}}
-        />
-        <UserCardVertical
-          user={{ ...sampleUser, id: "2", rating: 4.5, ordersCount: 45 }}
-          onClick={() => {}}
-        />
-        <UserCardVertical
-          user={{ ...sampleUser, id: "3", rating: 2.0, ordersCount: 12 }}
+          user={ sampleUser }
           onClick={() => {}}
         />
       </Grid>

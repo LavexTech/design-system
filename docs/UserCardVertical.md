@@ -13,8 +13,8 @@ import type { User } from "lavex-design-system";
 
 | Prop      | Tipo         | Obrigatório | Descrição                                    |
 | --------- | ------------ | ----------- | -------------------------------------------- |
-| `user`    | `User`       | ✅          | Objeto com as informações do usuário         |
-| `onClick` | `() => void` | ❌          | Função chamada quando o card é clicado       |
+| `user`    | `User`       | Sim         | Objeto com as informações do usuário         |
+| `onClick` | `() => void` | Não         | Função chamada quando o card é clicado       |
 
 ### Interface User
 
