@@ -15,6 +15,10 @@ export { InputCPF } from "./src/components/InputCPF/InputCPF";
 export { InputChat } from "./src/components/InputChat/InputChat";
 export { TextArea } from "./src/components/TextArea/TextArea";
 
+// User Cards
+export { UserCardVertical } from "./src/components/UserCardVertical/UserCardVertical";
+export { UserCardHorizontal } from "./src/components/UserCardHorizontal/UserCardHorizontal";
+
 // Lists
 export { List } from "./src/components/List/List";
 export { TextList } from "./src/components/TextList/TextList";
@@ -30,7 +34,6 @@ export { Message } from "./src/components/Message/Message";
 export { Image } from "./src/components/Image/Image";
 export { Divider } from "./src/components/Divider/Divider";
 export { Stepper } from "./src/components/Stepper/Stepper";
-export { UserCardVertical } from "./src/components/UserCardVertical/UserCardVertical";
 
 // ------------------------------------------------------------
 
