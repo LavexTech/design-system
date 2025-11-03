@@ -60,20 +60,16 @@ export default function Index() {
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
   
-  const [sampleUser] = useState({
+  const sampleUser = {
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "+1234567890",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     company: "Example Inc.",
-  });
-
-  const sampleUser2 = {
-    id: "1",
-    name: "Fulano",
     profileImage: "https://picsum.photos/id/15/200/200",
     ordersCount: 32,
     rating: 3.5,
+    id: "1",
   };
 
   const [contactMessage, setContactMessage] = useState("");

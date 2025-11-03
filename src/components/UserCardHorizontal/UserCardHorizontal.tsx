@@ -1,62 +1,57 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import { Card } from "../Card/Card"
-import { TextBox } from "../Text/Text"
-import Constants from "../../constants/constants"
+import { TextBox as Text } from "../Text/Text"
+import { Image } from "../Image/Image"
 import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
-import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
+import Constants from "../../constants/constants"
 
 type User = {
   id: string,
   name: string,
   profileImage: string,
   ordersCount: number,
-  rating: number
+  rating: number,
 }
 
 type UserCardHorizontalProps = {
   user: User,
-  onClick?: () => void
+  onClick?: () => void,
 }
 
 export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
   user,
   onClick,
 }: UserCardHorizontalProps) => {
+
   return (
     <Card onClick={onClick}>
-      <Grid columns={3}>
-        <GridItem colSpan={1}>
-          <View>
+      <View style={styles.container}>
+        <Grid columns={12} gap={2}>
+          <GridItem colSpan={3}>
             <Image
               src={user.profileImage}
-              type="circle"
+              alt={user.name}
               size="md"
-            />
-          </View>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <View style={styles.nameContainer}>
-            <TextBox text={user.name} />
-          </View>
-          <View style={styles.ordersContainer}>
-            <Info text={`${user.ordersCount} pedidos feitos`} />
-          </View>
-          <View style={styles.ratingContainer}>
-            <View style={styles.starsContainer}>
-              <Stars rating={user.rating} size={16} />
-            </View>
-            <View>
-              <Info
-                text={user.rating.toFixed(1)}
-                size="small"
+              type="circle"
               />
+          </GridItem>
+
+          <GridItem colSpan={9}>
+            <View>
+              <Text text={user.name} />
+              <Info text={`${user.ordersCount} pedidos feitos`} />
             </View>
-          </View>
-        </GridItem>
-      </Grid>
+
+            <View style={styles.ratingContainer}>
+              <Stars rating={user.rating} size={16} />
+              <Info text={`${user.rating}/5`} />
+            </View>
+          </GridItem>
+          </Grid>
+      </View>
     </Card>
   )
 }
@@ -67,32 +62,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  imageContainer: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    overflow: "hidden",
-    marginRight: Constants.styles.spacing.MEDIUM,
-    borderWidth: Constants.styles.borderWidth.REGULAR,
-    borderColor: Constants.styles.borderColor.LIGHT,
-  },
-  nameContainer: {
-    marginBottom: Constants.styles.spacing.TINY,
-  },
-  ordersContainer: {
-    marginBottom: Constants.styles.spacing.TINY,
-  },
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  starsContainer: {
-    marginRight: Constants.styles.spacing.TINY,
-  },
-  ratingText: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontFamily: Constants.styles.fontFamily.BOLD,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    color: Constants.styles.textColor.DEFAULT,
+    gap: Constants.styles.spacing.TINY,
   },
 });
