@@ -11,6 +11,7 @@ import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
 import { Grid, GridItem } from "@src/components/Grid/Grid";
 import { Card } from "@src/components/Card/Card";
 import { Button } from "@src/components/Button/Button";
+import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVertical";
 import { Message } from "@src/components/Message/Message";
 import { Input } from "@src/components/Input/Input";
 import { InputName } from "@src/components/InputName/InputName";
@@ -43,6 +44,7 @@ import { IconExclamation } from "@src/components/Icons/IconExclamation";
 import { Stars } from "@src/components/Stars/Stars";
 import { InputChat } from "@src/components/InputChat/InputChat";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal";
 import Constants from "@src/constants/constants";
 import { Modal } from "@src/components/Modal/Modal";
 
@@ -62,13 +64,17 @@ export default function Index() {
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
 
-  const [sampleUser] = useState({
+  const sampleUser = {
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "+1234567890",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     company: "Example Inc.",
-  });
+    profileImage: "https://picsum.photos/id/15/200/200",
+    ordersCount: 32,
+    rating: 3.5,
+    id: "1",
+  };
 
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
@@ -297,6 +303,113 @@ export default function Index() {
             onChange={setPantsCount}
           />
         </Grid>
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
+          <Accordion>
+            <AccordionItem id="item-1" title="Primeiro Item">
+              <Text size="small" text="Conteúdo do primeiro item do accordion. Este item pode ser expandido e colapsado independentemente." />
+            </AccordionItem>
+            <AccordionItem id="item-2" title="Segundo Item">
+              <Text size="small" text="Conteúdo do segundo item. Cada item tem seu próprio estado de expansão/colapso." />
+            </AccordionItem>
+            <AccordionItem id="item-3" title="Terceiro Item">
+              <Text size="small" text="Conteúdo do terceiro item. Todos os itens estão dentro de um único componente Accordion." />
+            </AccordionItem>
+          </Accordion>
+        </View>
+        <Card>
+          <Text text="Card" level="warning" />
+        </Card>
+
+        <Title text="UserCardVertical" />
+        <Grid columns={2} gap={1}>
+          <UserCardVertical
+            user={sampleUser}
+            onClick={() => { }}
+          />
+        </Grid>
+        <Grid columns={1} gap={4}>
+          <Title text="Stepper Component" />
+          <Stepper
+            text="Camiseta"
+            min={0}
+            max={10}
+            value={shirtCount}
+            onChange={setShirtCount}
+          />
+          <Stepper
+            text="Calça"
+            min={0}
+            max={5}
+            value={pantsCount}
+            onChange={setPantsCount}
+          />
+        </Grid>
+        <View style={{ marginTop: 20 }}>
+          <Title text="Message Components" />
+          <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
+            <Message
+              text="Blah?"
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={false}
+              senderName="Maria"
+              timestamp="14:30"
+              avatarUrl="https://picsum.photos/id/91/40/40"
+            />
+            <Message
+              text="Blah blah blah  blah blah blah blah blah blah"
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={true}
+              timestamp="14:31"
+              avatarUrl="https://picsum.photos/id/64/40/40"
+            />
+            <Message
+              text="Blah blah blah  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={false}
+              senderName="Maria"
+              timestamp="14:32"
+              avatarUrl="https://picsum.photos/id/91/40/40"
+            />
+            <Message
+              text="Blah."
+              onClick={() => console.log("Mensagem clicada!")}
+              isOwn={true}
+              timestamp="14:33"
+              avatarUrl="https://picsum.photos/id/64/40/40"
+            />
+          </View>
+        </View>
+        <View style={{ marginTop: 30, marginBottom: 30 }}>
+          <TextArea label="Mensagem" value={contactMessage} onChange={setContactMessage} placeholder="Digite sua mensagem aqui..." />
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <UserCardHorizontal
+            user={sampleUser}
+            onClick={() => console.log("Usuário clicado:", sampleUser.id)}
+          />
+          <UserCardHorizontal
+            user={{ ...sampleUser, id: "2", name: "Maria Silva", rating: 5, ordersCount: 48 }}
+            onClick={() => console.log("Usuário clicado: 2")}
+          />
+        </View>
+        <View style={{ marginTop: 30, marginBottom: 30 }}>
+          <Grid columns={1} gap={2}>
+            <GridItem>
+              <Title text="Text list" />
+            </GridItem>
+            <GridItem>
+              <TextList
+                texts={[
+                  "1x Calça Tiroliro",
+                  "2x Blusa xpto etc",
+                  "5x Camiseta de banda",
+                  "3x Pares de meia",
+                  "1x Edredom",
+                ]}
+              />
+            </GridItem>
+          </Grid>
+        </View>
         <View style={{ marginTop: 20 }}>
           <Title text="Message Components" />
           <View style={{ backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY, marginTop: 10, borderRadius: 8 }}>
