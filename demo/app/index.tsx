@@ -66,6 +66,7 @@ import { Gallery } from "@src/components/Gallery/Gallery"
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false);
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -75,6 +76,13 @@ export default function Index() {
     console.log("Mensagem enviada:", inputValue);
     setInputValue("");
   };
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = [
+    "https://picsum.photos/id/10/200/200",
+    "https://picsum.photos/id/11/200/200",
+    "https://picsum.photos/id/12/200/200",
+    "https://picsum.photos/id/13/200/200",
+  ];
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
 
@@ -367,19 +375,14 @@ export default function Index() {
       </View>
 
       <Card>
-        <Grid columns={1} gap={4}>
-          <Gallery
-            images={[
-              "https://picsum.photos/id/10/200/200",
-              "https://picsum.photos/id/11/200/200",
-              "https://picsum.photos/id/12/200/200",
-              "https://picsum.photos/id/13/200/200",
-              "https://picsum.photos/id/14/200/200",
-              "https://picsum.photos/id/15/200/200",
-            ]}
-            onClick={(imageUrl: string, index: number) => console.log(`Clicked image ${index + 1}:`, imageUrl)}
-          />
-        </Grid>
+        <Gallery
+          images={images}
+          onClick={(imageUrl: string, index: number) => {
+            setCurrentImageIndex(index);
+            setShowGalleryModal(true);
+            console.log(`Clicked image ${index + 1}:`, imageUrl);
+          }}
+        />
       </Card>
 
 {/* Message */}
@@ -570,6 +573,32 @@ export default function Index() {
             level="default"
             position="center"
           />
+        </Modal>
+      </View>
+      )
+    }
+    {showGalleryModal && (
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}>
+        <Modal
+          title={`Imagem ${currentImageIndex + 1} de ${images.length}`}
+          onClose={() => setShowGalleryModal(false)}
+          visible={showGalleryModal}
+          modalStyle="info"
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Image
+              src={images[currentImageIndex]}
+              alt="Imagem da galeria"
+              size="2xl"
+              type="default"
+            />
+          </View>
         </Modal>
       </View>
       )
