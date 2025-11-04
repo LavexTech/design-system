@@ -28,8 +28,8 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
 
   return (
     <Card onClick={onClick}>
-      <Grid columns={12} gap={2}>
-        <GridItem colSpan={3}>
+      <Grid columns={12} gap={0}>
+        <GridItem colSpan={4}>
           <Image
             src={user.profileImage}
             alt={user.name}
@@ -38,7 +38,7 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
             />
         </GridItem>
 
-        <GridItem colSpan={9}>
+        <GridItem colSpan={8}>
           <View>
             <Text text={user.name} />
             <Info text={`${user.ordersCount} pedidos feitos`} />

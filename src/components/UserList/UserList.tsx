@@ -10,7 +10,7 @@ type UserListProps = {
 
 export const UserList: React.FC<UserListProps> = ({ users, onUserClick }: UserListProps) => {
   return (
-      <Grid columns={1} gap={0}>
+      <Grid columns={1} gap={2}>
       {users.map((user, index) => (
         <GridItem colSpan={1}>
           <UserCardHorizontal
