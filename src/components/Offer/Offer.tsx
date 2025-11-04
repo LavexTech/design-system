@@ -45,12 +45,6 @@ export const Offer: React.FC<OfferProps> = ({ amount, distance, user, onClick })
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: Constants.styles.borderWidth.THIN,
-    borderColor: Constants.styles.borderColor.LIGHT,
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
