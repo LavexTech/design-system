@@ -12,19 +12,19 @@ import { UserCardBio } from "lavex-design-system";
 
 | Prop      | Tipo         | Obrigatório | Descrição                                    |
 | --------- | ------------ | ----------- | -------------------------------------------- |
-| `user`    | `User`       | ✅          | Objeto com as informações do usuário         |
-| `onClick` | `() => void` | ❌          | Função chamada quando o card é clicado       |
+| `user`    | `User`       | Sim         | Objeto com as informações do usuário         |
+| `onClick` | `() => void` | Não         | Função chamada quando o card é clicado       |
 
 ### Interface User
 
 ```typescript
-interface User {
-  id: string;           // Identificador único do usuário
-  name: string;         // Nome do usuário
-  profileImage: string; // URL da foto de perfil
-  ordersCount: number;  // Quantidade de pedidos feitos
-  rating: number;       // Avaliação de 1 a 5 (será arredondada)
-  bio: string;          // Biografia ou descrição do usuário
+type User = {
+  id: string,           // Identificador único do usuário
+  name: string,         // Nome do usuário
+  profileImage: string, // URL da foto de perfil
+  ordersCount: number,  // Quantidade de pedidos feitos
+  rating: number,       // Avaliação de 1 a 5 (será arredondada)
+  bio: string,          // Biografia ou descrição do usuário
 }
 ```
 
@@ -66,7 +66,7 @@ const MyComponent = () => {
 
 ## Características
 
-- Foto de perfil circular (80x80px) à esquerda
+- Foto de perfil circular à esquerda
 - Seção de biografia ao lado da foto
 - Informações centralizadas na parte inferior
 - Exibição da quantidade de pedidos

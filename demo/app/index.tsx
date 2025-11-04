@@ -280,14 +280,14 @@ export default function Index() {
       </View>
 
       <Grid columns={1} gap={1}>
-        <UserCardHorizontal
+        <UserCardBio
           user={sampleUser}
           onClick={() => console.log("Usuário clicado:", sampleUser.id)}
         />
       </Grid>
 
       <Grid columns={1} gap={1}>
-        <UserCardBio
+        <UserCardHorizontal
           user={sampleUser}
           onClick={() => console.log("Usuário clicado:", sampleUser.id)}
         />
