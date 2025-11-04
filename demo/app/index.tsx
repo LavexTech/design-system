@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import Constants from "@src/constants/constants"
 
@@ -38,6 +37,8 @@ import { Image } from "@src/components/Image/Image"
 import { Stepper } from "@src/components/Stepper/Stepper"
 import { Alert } from "@src/components/Alert/Alert"
 import { Stars } from "@src/components/Stars/Stars"
+import { Modal } from "@src/components/Modal/Modal"
+import { Button } from "@src/components/Button/Button"
 
 // Icons
 import { IconHome } from "@src/components/Icons/IconHome"
@@ -59,7 +60,7 @@ import { IconMessage } from "@src/components/Icons/IconMessage"
 import { IconHistory } from "@src/components/Icons/IconHistory"
 import { IconImage } from "@src/components/Icons/IconImage"
 import { IconExclamation } from "@src/components/Icons/IconExclamation"
-import { Modal } from "@src/components/Modal/Modal"
+
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false);
@@ -91,7 +92,7 @@ export default function Index() {
   const [phone, setPhone] = useState('');
 
   return (
-    <View>
+    <>
       <ScrollView
         style={{ flex: 1, padding: 20 }}
         contentContainerStyle={{ paddingBottom: 40, paddingTop: 40 }}
@@ -172,6 +173,18 @@ export default function Index() {
           <Subtitle text="Subtitle" />
           <Text text="TextBox" />
           <Info text="Info" />
+        </Grid>
+      </Card>
+
+{/* Buttons */}
+
+      <View style={{ marginTop: 20, marginBottom: 20 }}>
+        <Subtitle text="Buttons" />
+      </View>
+
+      <Card>
+        <Grid columns={1} gap={4}>
+          <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
         </Grid>
       </Card>
 
@@ -560,13 +573,12 @@ export default function Index() {
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: 1000,
       }}>
         <Modal
           title="Exemplo de Modal"
-          buttonText="Fechar"
           onClose={() => setShowModal(false)}
           visible={showModal}
+          modalStyle="confirm"
         >
           <Text
             size="small"
@@ -578,7 +590,7 @@ export default function Index() {
       </View>
       )
     }
-    </View >
+    </>
   )
 }
 
