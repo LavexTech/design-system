@@ -18,19 +18,21 @@ export { TextArea } from "./src/components/TextArea/TextArea";
 // User Cards
 export { UserCardVertical } from "./src/components/UserCardVertical/UserCardVertical";
 export { UserCardHorizontal } from "./src/components/UserCardHorizontal/UserCardHorizontal";
+export { UserCardBio } from "./src/components/UserCardBio/UserCardBio";
 
 // Lists
 export { List } from "./src/components/List/List";
 export { TextList } from "./src/components/TextList/TextList";
+export { UserList } from "./src/components/UserList/UserList";
 
 // Others
 export { Card } from "./src/components/Card/Card";
 export { Alert } from "./src/components/Alert/Alert";
 export { Button } from "./src/components/Button/Button";
-export { Grid } from "./src/components/Grid/Grid";
+export { Grid, GridItem } from "./src/components/Grid/Grid";
 export { Modal } from "./src/components/Modal/Modal";
 export { UserInfo } from "./src/components/UserInfo/UserInfo";
-export { Accordion } from "./src/components/Accordion/Accordion";
+export { Accordion, AccordionItem } from "./src/components/Accordion/Accordion";
 export { Message } from "./src/components/Message/Message";
 export { Image } from "./src/components/Image/Image";
 export { Gallery } from "./src/components/Gallery/Gallery";
