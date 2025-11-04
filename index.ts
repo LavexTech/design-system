@@ -35,6 +35,7 @@ export { UserInfo } from "./src/components/UserInfo/UserInfo";
 export { Accordion, AccordionItem } from "./src/components/Accordion/Accordion";
 export { Message } from "./src/components/Message/Message";
 export { Image } from "./src/components/Image/Image";
+export { Gallery } from "./src/components/Gallery/Gallery";
 export { Divider } from "./src/components/Divider/Divider";
 export { Stepper } from "./src/components/Stepper/Stepper";
 export { Offer } from "./src/components/Offer/Offer";

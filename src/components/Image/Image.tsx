@@ -3,7 +3,7 @@ import { TouchableOpacity } from "react-native"
 import { Image as GluestackImage } from "../../ui/image"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 
-type ImageSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full'
+type ImageSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 type ImageType = 'default' | 'circle'
 
 type ImageProps = {
