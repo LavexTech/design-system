@@ -1,39 +1,46 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Constants from "../../constants/constants";
-import { Format } from "../../utils/Format";
-import { Grid } from "../Grid/Grid";
+import React from "react"
+import { View, StyleSheet } from "react-native"
+import { Grid } from "../Grid/Grid"
+import { TextBox as Text } from "../Text/Text"
+import { Info } from "../Info/Info"
+import { Stars } from "../Stars/Stars"
+import { Card } from "../Card/Card"
+import Constants from "../../constants/constants"
 
-export interface User {
-  name: string;
-  rating: number;
+type User = {
+  id: string,
+  name: string,
+  profileImage: string,
+  ordersCount: number,
+  rating: number,
 }
 
-export interface OfferProps {
-  amount: number;
-  distance: number;
-  user: User;
+type OfferProps = {
+  amount: number,
+  distance: number,
+  user: User,
+  onClick?: () => void,
 }
 
-export const Offer: React.FC<OfferProps> = ({ amount, distance, user }) => {
+export const Offer: React.FC<OfferProps> = ({ amount, distance, user, onClick }) => {
 
   return (
-    <View style={styles.container}>
-      <Grid columns={1} gap={4}>
+    <Card onClick={onClick}>
+      <Grid columns={1} gap={2}>
         <View style={styles.header}>
-          <Text style={styles.amount}>{Format.money(amount)}</Text>
-          <Text style={styles.distance}>{Format.distance(distance)}</Text>
+          <Text text={"R$ " + String(amount)} level="success" size="large" />
+          <Info text={String(distance) + "km"} />
         </View>
         
         <View style={styles.userInfo}>
-          <Text style={styles.userName}>{user.name}</Text>
+          <Text text={user.name} />
           <View style={styles.ratingContainer}>
-            <Text style={styles.stars}>{Format.stars(user.rating)}</Text>
-            <Text style={styles.ratingText}>({Format.rating(user.rating)})</Text>
+            <Stars rating={user.rating} size={16} />
+            <Info text={String(user.rating) + "/5"} />
           </View>
         </View>
       </Grid>
-    </View>
+    </Card>
   );
 };
 
@@ -50,44 +57,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: Constants.styles.spacing.SMALL,
   },
-  amount: {
-    fontSize: Constants.styles.fontSize.LARGER,
-    fontWeight: Constants.styles.fontWeight.BOLD as any,
-    fontFamily: Constants.styles.fontFamily.BOLD,
-    color: Constants.styles.textColor.SUCCESS,
-  },
-  distance: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontWeight: Constants.styles.fontWeight.NORMAL as any,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.INFO,
-  },
   userInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  userName: {
-    fontSize: Constants.styles.fontSize.LARGE,
-    fontWeight: Constants.styles.fontWeight.NORMAL as any,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
-    flex: 1,
-    marginRight: Constants.styles.spacing.SMALL,
-  },
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  stars: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    color: Constants.styles.color.GOLD,
-    marginRight: Constants.styles.spacing.TINY,
-  },
-  ratingText: {
-    fontSize: Constants.styles.fontSize.SMALL,
-    fontWeight: Constants.styles.fontWeight.NORMAL as any,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.INFO,
+    gap: Constants.styles.spacing.TINY,
   },
 });
