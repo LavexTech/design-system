@@ -365,7 +365,17 @@ export default function Index() {
           />
         </View>
 
-{/* Text List */}
+{/* Alert */}
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="Alert" />
+      </View>
+
+      <Alert
+        text="O pagamento deve ser efetuado antes da data de vencimento."
+      />
+
+{/* Lists */}
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
         <Subtitle text="Text List" />
@@ -382,18 +392,6 @@ export default function Index() {
           ]}
         />
       </Card>
-
-{/* Alert */}
-
-      <View style={{ marginTop: 20, marginBottom: 10 }}>
-        <Subtitle text="Alert" />
-      </View>
-
-      <Alert
-        text="O pagamento deve ser efetuado antes da data de vencimento."
-      />
-
-{/* List */}
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
         <Subtitle text="List" />
