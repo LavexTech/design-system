@@ -184,6 +184,12 @@ export default function Index() {
 
       <Card>
         <Grid columns={1} gap={4}>
+          <Button text="Default" onClick={() => console.log("Default")} />
+          <Button text="Success" onClick={() => console.log("Success")} variant="success" />
+          <Button text="Danger" onClick={() => console.log("Danger")} variant="danger" />
+          <Button text="Default Outline" onClick={() => console.log("Outline")} variant="default-outline" />
+          <Button text="Success Outline" onClick={() => console.log("Success Outline")} variant="success-outline" />
+          <Button text="Danger Outline" onClick={() => console.log("Danger Outline")} variant="danger-outline" />
           <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
         </Grid>
       </Card>
