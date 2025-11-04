@@ -14,9 +14,9 @@ import { Modal } from "lavex-design-system";
 | ------------ | ------------ | ----------- | ------ | ------------------------------------------------------------------------------- |
 | `title`      | `string`     | Sim         | -      | Título grande que aparece no topo da janela (ex: "Atenção!")                    |
 | `text`       | `string`     | Sim         | -      | Mensagem ou descrição que explica o motivo da janela (ex: "Deseja mesmo sair?") |
-| `buttonText` | `string`     | Sim         | -      | Texto que aparece no botão para fechar a janela (ex: "Entendi" ou "Fechar")     |
 | `onClose`    | `() => void` | Sim         | -      | Função executada quando o botão é clicado para esconder a janela                |
-| `visible`    | `boolean`    | Não         | `true` | Controla se o modal está visível                                                |
+| `visible`    | `boolean`    | Não         | `true` | Controla se o modal está visível          |
+| `modalStyle`    | `info \| save \| confirm`    | Não      | `info` | Info: Botão 'OK', Save: Botão 'Salvar' e 'Cancelar', Confirm: Botão 'OK' e 'Cancelar'                                               |
 
 ## O que faz
 
@@ -44,9 +44,9 @@ const MyComponent = () => {
       <Modal
         title="Confirmação"
         text="Deseja realmente continuar com esta ação?"
-        buttonText="Entendi"
         onClose={() => setShowModal(false)}
         visible={showModal}
+        modalStyle="confirm"
       />
     </View>
   );
@@ -61,7 +61,7 @@ O Modal utiliza:
 - **Gluestack Modal Components**: ModalBackdrop, ModalContent, ModalHeader, ModalBody, ModalFooter
 - **Grid System**: Para layout estruturado interno
 - **Text Component**: Para título e conteúdo
-- **Button Component**: Para ação de fechamento
+- **Button Component**: Para ações de clique
 
 ## Posicionamento
 
@@ -97,7 +97,6 @@ Para garantir que o modal apareça sobre todo o conteúdo da tela:
 
 ## Limitações
 
-- Não suporta múltiplos botões (apenas um botão de ação)
 - Não possui variantes de estilo (sempre usa o padrão do design system)
 - Requer gerenciamento manual do estado de visibilidade
 - Não inclui validação de conteúdo ou tamanho máximo
