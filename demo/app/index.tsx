@@ -24,8 +24,9 @@ import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardH
 import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVertical"
 
 // Lists
-import { TextList } from "@src/components/TextList/TextList"
 import { List } from "@src/components/List/List"
+import { TextList } from "@src/components/TextList/TextList"
+import { UserList } from "@src/components/UserList/UserList"
 
 // Others
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion"
@@ -419,6 +420,18 @@ export default function Index() {
 {/* Lists */}
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="List" />
+      </View>
+
+      <Card>
+        <List title="Itens">
+          <Text text="Item 1" />
+          <Text text="Item 2" />
+          <Text text="Item 3" />
+        </List>
+      </Card>
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
         <Subtitle text="Text List" />
       </View>
 
@@ -432,18 +445,6 @@ export default function Index() {
             "1x Edredom",
           ]}
         />
-      </Card>
-
-      <View style={{ marginTop: 20, marginBottom: 10 }}>
-        <Subtitle text="List" />
-      </View>
-
-      <Card>
-        <List title="Itens">
-          <Text text="Item 1" />
-          <Text text="Item 2" />
-          <Text text="Item 3" />
-        </List>
       </Card>
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
@@ -480,6 +481,17 @@ export default function Index() {
             onClick={() => alert('Empresa clicada!')}
           />
         </Grid>
+      </Card>
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="UserList" />
+      </View>
+
+      <Card>
+        <UserList
+          users={[sampleUser, sampleUser, sampleUser]}
+            onUserClick={() => console.log("Usuário clicado:", sampleUser.id)}
+          />
       </Card>
 
 {/* Icons */}
