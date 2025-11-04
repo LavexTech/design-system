@@ -514,62 +514,6 @@ export default function Index() {
           <IconImage fill="#AF52DE" width={32} height={32} />
           <IconExclamation fill="#FF9500" width={32} height={32} />
         </View>
-
-        <View style={{ marginTop: 20, marginBottom: 10 }}>
-          <Title text="Icons" />
-        </View>
-
-        <Card title="⭐ Avaliação e Favoritos">
-          <Stars rating={3.5} size={32} />
-        </Card>
-
-        <Card title="🏠 Navegação">
-          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-            <IconHome fill="#4A90E2" width={32} height={32} />
-            <IconArrowLeft fill="#4A90E2" width={32} height={32} />
-            <IconArrowRight fill="#4A90E2" width={32} height={32} />
-            <IconChevronLeft fill="#4A90E2" width={32} height={32} />
-            <IconChevronRight fill="#4A90E2" width={32} height={32} />
-          </View>
-        </Card>
-        <Card title="✉️ Ações">
-          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-            <IconSend fill="#34C759" width={32} height={32} />
-            <IconPlus fill="#34C759" width={32} height={32} />
-            <IconMinus fill="#FF9500" width={32} height={32} />
-            <IconClose fill="#FF3B30" width={32} height={32} />
-            <IconTrash fill="#FF3B30" width={32} height={32} />
-          </View>
-        </Card>
-
-        <Card title="🔍 Pesquisa e Filtro">
-          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-            <IconSearch fill="#8E8E93" width={32} height={32} />
-            <IconFilter fill="#8E8E93" width={32} height={32} />
-          </View>
-        </Card>
-
-        <Card title="👤 Usuário e Perfil">
-          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-            <IconProfile fill="#5856D6" width={32} height={32} />
-            <IconEye fill="#5856D6" width={32} height={32} />
-            <IconEyeClosed fill="#5856D6" width={32} height={32} />
-          </View>
-        </Card>
-
-        <Card title="💬 Comunicação">
-          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-            <IconMessage fill="#007AFF" width={32} height={32} />
-            <IconHistory fill="#007AFF" width={32} height={32} />
-          </View>
-        </Card>
-
-        <Card title="🖼️ Mídia e Alertas">
-          <View style={{ flexDirection: 'row', gap: 10, flexWrap: 'wrap' }}>
-            <IconImage fill="#AF52DE" width={32} height={32} />
-            <IconExclamation fill="#FF9500" width={32} height={32} />
-          </View>
-        </Card>
       </Card>
     </ScrollView>
     {showModal && (
