@@ -15,17 +15,45 @@ import {
 type ModalProps = {
     title: string,
     children: React.ReactNode,
-    buttonText: string,
     onClose: () => void,
-    visible?: boolean
+    visible?: boolean,
+    modalStyle?: 'info' | 'confirm' | 'save',
+    onSave?: () => void,
+    onConfirm?: () => void,
+}
+
+const modalStyleMap = (
+        modalStyle: 'info' | 'confirm' | 'save',
+        onClose: () => void,
+        onSave: () => void,
+        onConfirm: () => void
+    ) => {
+    switch (modalStyle) {
+        case 'info':
+            return <Button text="OK" onClick={onClose} variant="default" />
+        case 'confirm':
+            return <>
+                <Button text="OK" onClick={onConfirm} variant="default" />
+                <Button text="Cancelar" onClick={onClose} variant="default-outline" />
+            </>
+        case 'save':
+            return <>
+                <Button text="Salvar" onClick={onSave} variant="default" />
+                <Button text="Cancelar" onClick={onClose} variant="default-outline" />
+            </>
+        default:
+            return null
+    }
 }
 
 export const Modal: React.FC<ModalProps> = ({
     title,
     children,
-    buttonText,
     onClose,
     visible = true,
+    modalStyle = 'info',
+    onSave,
+    onConfirm,
 }: ModalProps) => {
     return (
         <GluestackUIProvider>
@@ -45,11 +73,7 @@ export const Modal: React.FC<ModalProps> = ({
                         {children}
                     </ModalBody>
                     <ModalFooter>
-                        <Button
-                            text={buttonText}
-                            onClick={onClose}
-                            variant="default"
-                        />
+                        {modalStyleMap(modalStyle, onClose, onSave || (() => {}), onConfirm || (() => {}))}
                     </ModalFooter>
                 </ModalContent>
             </GluestackModal>
