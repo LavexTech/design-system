@@ -1,51 +1,64 @@
-import React, { useState } from "react";
-import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
-import { MainTitle } from "@src/components/MainTitle/MainTitle";
-import { Subtitle } from "@src/components/Subtitle/Subtitle";
-import { Title } from "@src/components/Title/Title";
+import React, { useState } from "react"
+import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
+
+import Constants from "@src/constants/constants"
+
+// Texts
+import { MainTitle } from "@src/components/MainTitle/MainTitle"
+import { Subtitle } from "@src/components/Subtitle/Subtitle"
+import { Title } from "@src/components/Title/Title"
 import { TextBox as Text } from "@src/components/Text/Text";
-import { UserInfo } from "@src/components/UserInfo/UserInfo";
-import { TextArea } from "@src/components/TextArea/TextArea";
-import { Info } from "@src/components/Info/Info";
-import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion";
-import { Grid, GridItem } from "@src/components/Grid/Grid";
-import { Card } from "@src/components/Card/Card";
-import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVertical";
-import { Message } from "@src/components/Message/Message";
-import { Input } from "@src/components/Input/Input";
-import { InputName } from "@src/components/InputName/InputName";
-import { InputPhone } from "@src/components/InputPhone/InputPhone";
-import { TextList } from "@src/components/TextList/TextList";
-import { List } from "@src/components/List/List";
-import { InputPassword } from "@src/components/InputPassword/InputPassword";
-import { Image } from "@src/components/Image/Image";
-import { Stepper } from "@src/components/Stepper/Stepper";
-import { Alert } from "@src/components/Alert/Alert";
-import { IconHome } from "@src/components/Icons/IconHome";
-import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft";
-import { IconArrowRight } from "@src/components/Icons/IconArrowRight";
-import { IconChevronLeft } from "@src/components/Icons/IconChevronLeft";
-import { IconChevronRight } from "@src/components/Icons/IconChevronRight";
-import { IconSend } from "@src/components/Icons/IconSend";
-import { IconPlus } from "@src/components/Icons/IconPlus";
-import { IconMinus } from "@src/components/Icons/IconMinus";
-import { IconClose } from "@src/components/Icons/IconClose";
-import { IconTrash } from "@src/components/Icons/IconTrash";
-import { IconSearch } from "@src/components/Icons/IconSearch";
-import { IconFilter } from "@src/components/Icons/IconFilter";
-import { IconProfile } from "@src/components/Icons/IconProfile";
-import { IconEye } from "@src/components/Icons/IconEye";
-import { IconEyeClosed } from "@src/components/Icons/IconEyeClosed";
-import { IconMessage } from "@src/components/Icons/IconMessage";
-import { IconHistory } from "@src/components/Icons/IconHistory";
-import { IconImage } from "@src/components/Icons/IconImage";
-import { IconExclamation } from "@src/components/Icons/IconExclamation";
-import { Stars } from "@src/components/Stars/Stars";
-import { InputChat } from "@src/components/InputChat/InputChat";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal";
-import { UserCardBio } from "@src/components/UserCardBio/UserCardBio";
-import Constants from "@src/constants/constants";
+import { UserInfo } from "@src/components/UserInfo/UserInfo"
+import { TextArea } from "@src/components/TextArea/TextArea"
+import { Info } from "@src/components/Info/Info"
+
+// Inputs
+import { Input } from "@src/components/Input/Input"
+import { InputName } from "@src/components/InputName/InputName"
+import { InputPhone } from "@src/components/InputPhone/InputPhone"
+import { InputChat } from "@src/components/InputChat/InputChat"
+
+// User Cards
+import { UserCardBio } from "@src/components/UserCardBio/UserCardBio"
+import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal"
+import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVertical"
+
+// Lists
+import { TextList } from "@src/components/TextList/TextList"
+import { List } from "@src/components/List/List"
+
+// Others
+import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion"
+import { Grid, GridItem } from "@src/components/Grid/Grid"
+import { Card } from "@src/components/Card/Card"
+import { Message } from "@src/components/Message/Message"
+import { InputPassword } from "@src/components/InputPassword/InputPassword"
+import { Image } from "@src/components/Image/Image"
+import { Stepper } from "@src/components/Stepper/Stepper"
+import { Alert } from "@src/components/Alert/Alert"
+import { Stars } from "@src/components/Stars/Stars"
+
+// Icons
+import { IconHome } from "@src/components/Icons/IconHome"
+import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft"
+import { IconArrowRight } from "@src/components/Icons/IconArrowRight"
+import { IconChevronLeft } from "@src/components/Icons/IconChevronLeft"
+import { IconChevronRight } from "@src/components/Icons/IconChevronRight"
+import { IconSend } from "@src/components/Icons/IconSend"
+import { IconPlus } from "@src/components/Icons/IconPlus"
+import { IconMinus } from "@src/components/Icons/IconMinus"
+import { IconClose } from "@src/components/Icons/IconClose"
+import { IconTrash } from "@src/components/Icons/IconTrash"
+import { IconSearch } from "@src/components/Icons/IconSearch"
+import { IconFilter } from "@src/components/Icons/IconFilter"
+import { IconProfile } from "@src/components/Icons/IconProfile"
+import { IconEye } from "@src/components/Icons/IconEye"
+import { IconEyeClosed } from "@src/components/Icons/IconEyeClosed"
+import { IconMessage } from "@src/components/Icons/IconMessage"
+import { IconHistory } from "@src/components/Icons/IconHistory"
+import { IconImage } from "@src/components/Icons/IconImage"
+import { IconExclamation } from "@src/components/Icons/IconExclamation"
 
 export default function Index() {
   const [value, setValue] = useState("");
