@@ -8,7 +8,7 @@ import { Info } from "../Info/Info"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
 
-type User = {
+export type User = {
   id: string,
   name: string,
   profileImage: string,
@@ -59,5 +59,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: Constants.styles.spacing.TINY,
+    marginTop: Constants.styles.spacing.SMALL,
   },
 });
