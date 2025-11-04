@@ -37,6 +37,7 @@ export { Message } from "./src/components/Message/Message";
 export { Image } from "./src/components/Image/Image";
 export { Divider } from "./src/components/Divider/Divider";
 export { Stepper } from "./src/components/Stepper/Stepper";
+export { Offer } from "./src/components/Offer/Offer";
 
 // ------------------------------------------------------------
 

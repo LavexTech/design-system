@@ -40,6 +40,7 @@ import { Alert } from "@src/components/Alert/Alert"
 import { Stars } from "@src/components/Stars/Stars"
 import { Modal } from "@src/components/Modal/Modal"
 import { Button } from "@src/components/Button/Button"
+import { Offer } from "@src/components/Offer/Offer"
 
 // Icons
 import { IconHome } from "@src/components/Icons/IconHome"
@@ -493,6 +494,14 @@ export default function Index() {
             onUserClick={() => console.log("Usuário clicado:", sampleUser.id)}
           />
       </Card>
+
+{/* Offer */}
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="Offer" />
+      </View>
+
+      <Offer amount={100} distance={10} user={sampleUser} />
 
 {/* Icons */}
 
