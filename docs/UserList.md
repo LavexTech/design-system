@@ -12,8 +12,8 @@ import { UserList } from "lavex-design-system";
 
 | Prop          | Tipo                  | Obrigatório | Descrição                                      |
 | ------------- | --------------------- | ----------- | ---------------------------------------------- |
-| `users`       | `User[]`              | ✅          | Array de objetos com informações dos usuários  |
-| `onUserClick` | `(user: User) => void`| ❌          | Função chamada quando um usuário é clicado     |
+| `users`       | `User[]`              | Sim         | Array de objetos com informações dos usuários  |
+| `onUserClick` | `(user: User) => void`| Não         | Função chamada quando um usuário é clicado     |
 
 ### Interface User
 
@@ -91,5 +91,4 @@ const MyComponent = () => {
 - Lista vertical de usuários
 - Separadores entre os itens
 - Usa `UserCardHorizontal` para cada usuário
-- Container com borda e padding
 - Callback opcional para clique em usuários
