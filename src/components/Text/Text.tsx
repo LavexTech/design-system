@@ -25,6 +25,7 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
     error: Constants.styles.textColor.DANGER,
     warning: Constants.styles.textColor.WARNING,
     default: Constants.styles.textColor.DEFAULT,
+    primary: Constants.styles.textColor.PRIMARY
   }
 
   const fontSize = sizes[size];
