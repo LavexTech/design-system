@@ -521,6 +521,19 @@ export default function Index() {
           />
       </Card>
 
+{/* Order */}
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="Order" />
+      </View>
+
+      <Order 
+        title="Pedido 1" 
+        createdAt={new Date()} 
+        itemList={[{ quantity: 1, name: "Camiseta" }, { quantity: 2, name: "Calça" }, { quantity: 3, name: "Camiseta" }]} 
+        images={["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"]} 
+      />
+
 {/* Offer */}
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
