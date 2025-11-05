@@ -23,6 +23,7 @@
 - [ ] Button (text, type (danger, success), style(fullfiled, outline), onClick)
 - [ ] Accordion (text, children, onClick)
 - [ ] TabBar (options (string[]), onSelected)
+- [ ] NavigationBar (activeRoute, onNavigate(page))
 - [ ] Modal (title, text, buttonText, onClose)
 - [ ] Image (src: string, alt: string, onClick)
 - [ ] Gallery (images: string[], onClick)

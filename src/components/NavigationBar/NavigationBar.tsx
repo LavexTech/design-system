@@ -4,13 +4,13 @@ import { TextBox as Text } from "../Text/Text"
 import Constants from "../../constants/constants"
 import { Grid } from "../Grid/Grid"
 
-type TabBarProps = {
+type NavbarProps = {
   options: string[],
   icons?: ((isSelected: boolean) => React.ReactNode)[],
   onSelected: (index: number) => void
 }
 
-export const TabBar: React.FC<TabBarProps> = ({ options, icons, onSelected }: TabBarProps) => {
+export const NavigationBar: React.FC<NavbarProps> = ({ options, icons, onSelected }: NavbarProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleTabPress = (index: number) => {

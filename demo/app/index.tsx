@@ -63,7 +63,7 @@ import { IconHistory } from "@src/components/Icons/IconHistory"
 import { IconImage } from "@src/components/Icons/IconImage"
 import { IconExclamation } from "@src/components/Icons/IconExclamation"
 import { Gallery } from "@src/components/Gallery/Gallery"
-import { TabBar } from "@src/components/TabBar/TabBar"
+import { NavigationBar } from "@src/components/NavigationBar/NavigationBar"
 
 
 export default function Index() {
@@ -608,7 +608,7 @@ export default function Index() {
         </View>
       </Card>
     </ScrollView>
-    <TabBar
+    <NavigationBar
       options={tabs}
       icons={icons}
       onSelected={(index: number) => {

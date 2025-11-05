@@ -38,7 +38,7 @@ export { Image } from "./src/components/Image/Image";
 export { Gallery } from "./src/components/Gallery/Gallery";
 export { Divider } from "./src/components/Divider/Divider";
 export { Stepper } from "./src/components/Stepper/Stepper";
-export { TabBar } from "./src/components/TabBar/TabBar";
+export { NavigationBar } from "./src/components/NavigationBar/NavigationBar";
 export { Offer } from "./src/components/Offer/Offer";
 
 // ------------------------------------------------------------

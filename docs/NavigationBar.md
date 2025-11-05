@@ -1,27 +1,27 @@
-# Como utilizar - TabBar
+# Como utilizar - NavigationBar
 
-O componente `TabBar` é uma barra de navegação fixa posicionada no rodapé da tela. Permite que o usuário alterne entre diferentes seções ou telas do aplicativo através de abas clicáveis com ícones e textos.
+O componente `NavigationBar` é uma barra de navegação fixa posicionada no rodapé da tela. Permite que o usuário alterne entre diferentes seções ou telas do aplicativo através de abas clicáveis com ícones e textos.
 
 ## Importação
 
 ```typescript
-import { TabBar } from "lavex-design-system";
+import { NavigationBar } from "lavex-design-system";
 ```
 
 ## Props
 
 | Prop         | Tipo                                             | Obrigatório | Descrição                                                      |
 | ------------ | ------------------------------------------------ | ----------- | -------------------------------------------------------------- |
-| `options`    | `string[]`                                       | ✅          | Array de textos que serão exibidos em cada aba                 |
-| `icons`      | `((isSelected: boolean) => React.ReactNode)[]`   | ❌          | Array de funções que retornam ícones para cada aba             |
-| `onSelected` | `(index: number) => void`                        | ✅          | Função callback chamada quando uma aba é selecionada           |
+| `options`    | `string[]`                                       | Sim          | Array de textos que serão exibidos em cada aba                 |
+| `icons`      | `((isSelected: boolean) => React.ReactNode)[]`   | Não          | Array de funções que retornam ícones para cada aba             |
+| `onSelected` | `(index: number) => void`                        | Sim          | Função callback chamada quando uma aba é selecionada           |
 
 ## Uso Básico
 
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { TabBar } from "lavex-design-system";
+import { NavigationBar } from "lavex-design-system";
 
 const MyApp = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -30,7 +30,7 @@ const MyApp = () => {
     <View style={{ flex: 1 }}>
       {/* Conteúdo do app */}
       
-      <TabBar 
+      <NavigationBar 
         options={['Home', 'Perfil', 'Configurações']}
         onSelected={(index) => setSelectedTab(index)} 
       />
@@ -44,7 +44,7 @@ const MyApp = () => {
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { TabBar } from "lavex-design-system";
+import { NavigationBar } from "lavex-design-system";
 import { Ionicons } from "@expo/vector-icons";
 
 const MyApp = () => {
@@ -79,7 +79,7 @@ const MyApp = () => {
     <View style={{ flex: 1 }}>
       {/* Conteúdo do app */}
       
-      <TabBar 
+      <NavigationBar 
         options={tabs}
         icons={icons}
         onSelected={(index) => setSelectedTab(index)} 
@@ -94,7 +94,7 @@ const MyApp = () => {
 ```tsx
 import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
-import { TabBar } from "lavex-design-system";
+import { NavigationBar } from "lavex-design-system";
 import { Ionicons } from "@expo/vector-icons";
 
 const AppWithNavigation = () => {
@@ -137,13 +137,13 @@ const AppWithNavigation = () => {
         style={{ flex: 1 }}
         contentContainerStyle={{ 
           padding: 16, 
-          paddingBottom: 100 // Espaço para o TabBar
+          paddingBottom: 100 // Espaço para o NavigationBar
         }}
       >
         {renderContent()}
       </ScrollView>
 
-      <TabBar 
+      <NavigationBar 
         options={tabs}
         icons={icons}
         onSelected={(index) => {
@@ -175,7 +175,7 @@ import Constants from "lavex-design-system/constants";
 1. **Use 3-5 abas**: O ideal é ter entre 3 e 5 abas para não sobrecarregar a interface
 2. **Ícones claros**: Use ícones que representem claramente a seção
 3. **Textos curtos**: Mantenha os textos das abas curtos (1-2 palavras)
-4. **Reserve espaço**: Lembre-se de adicionar padding-bottom ao conteúdo para não ser coberto pelo TabBar
+4. **Reserve espaço**: Lembre-se de adicionar padding-bottom ao conteúdo para não ser coberto pelo NavigationBar
 5. **Consistência**: Use o mesmo padrão de ícones em todo o aplicativo
 6. **Feedback visual**: O componente já fornece feedback visual automático ao selecionar
 
@@ -230,7 +230,7 @@ const icons = [
 
 ## Observações Importantes
 
-- O TabBar é sempre renderizado no rodapé da tela, fixo
+- O NavigationBar é sempre renderizado no rodapé da tela, fixo
 - Certifique-se de que o conteúdo principal tenha padding-bottom suficiente
 - Os ícones devem ser funções que recebem `isSelected` para reagir ao estado
 - A primeira aba (índice 0) é selecionada por padrão
