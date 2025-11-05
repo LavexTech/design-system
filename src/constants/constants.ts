@@ -29,6 +29,7 @@ const Constants = {
     },
     textColor: {
       DEFAULT: "#262627",
+      PRIMARY: "#007AFF",
       SUCCESS: "#059669",
       DANGER: "#DC2626",
       INFO: "#8F98AD",
@@ -71,6 +72,7 @@ const Constants = {
       GOLD: "#FFD700",
       GRAY: "#E0E0E0",
       BLUE: "#007AFF",
+      MEDIUM_GRAY: "#6C757D",
       SOFT_BLUE: "#D7E7FA",
     },
     opacity: {
