@@ -1,6 +1,6 @@
 # Como utilizar - NavigationBar
 
-O componente `NavigationBar` é uma barra de navegação fixa posicionada no rodapé da tela. Permite que o usuário alterne entre diferentes seções ou telas do aplicativo através de abas clicáveis com ícones e textos.
+O componente `NavigationBar` é uma barra de navegação fixa posicionada no rodapé da tela. Permite que o usuário alterne entre as páginas "Pedido", "Histórico" e "Conta" do aplicativo.
 
 ## Importação
 
@@ -12,9 +12,10 @@ import { NavigationBar } from "lavex-design-system";
 
 | Prop         | Tipo                                             | Obrigatório | Descrição                                                      |
 | ------------ | ------------------------------------------------ | ----------- | -------------------------------------------------------------- |
-| `options`    | `string[]`                                       | Sim          | Array de textos que serão exibidos em cada aba                 |
-| `icons`      | `((isSelected: boolean) => React.ReactNode)[]`   | Não          | Array de funções que retornam ícones para cada aba             |
-| `onSelected` | `(index: number) => void`                        | Sim          | Função callback chamada quando uma aba é selecionada           |
+| `pages`      | `string[]`                                       | Sim         | Array de textos que serão exibidos em cada aba                |
+| `icons`      | `((isActive: boolean) => React.ReactNode)[]`    | Não         | Array de funções que retornam ícones para cada aba            |
+| `activePage` | `string`                                         | Sim         | Controla qual é a rota ativa atual                            |
+| `onNavigate` | `(page: string) => void`                         | Não         | Função executada quando houver navegação entre páginas        |
 
 ## Uso Básico
 
@@ -24,54 +25,44 @@ import { View } from "react-native";
 import { NavigationBar } from "lavex-design-system";
 
 const MyApp = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [currentPage, setCurrentPage] = useState("Pedido");
+  const pages = ["Pedido", "Histórico", "Conta"];
 
   return (
     <View style={{ flex: 1 }}>
       {/* Conteúdo do app */}
       
       <NavigationBar 
-        options={['Home', 'Perfil', 'Configurações']}
-        onSelected={(index) => setSelectedTab(index)} 
+        pages={pages}
+        activePage={currentPage}
+        onNavigate={(page) => setCurrentPage(page)} 
       />
     </View>
   );
 };
 ```
 
-## Uso com Ícones
+## Exemplo com Ícones
 
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
 import { NavigationBar } from "lavex-design-system";
-import { Ionicons } from "@expo/vector-icons";
+import { IconMessage, IconHistory, IconProfile } from "lavex-design-system";
 
-const MyApp = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const tabs = ['Home', 'Pesquisa', 'Perfil'];
+const AppWithIcons = () => {
+  const [currentPage, setCurrentPage] = useState("Pedido");
+  
+  const pages = ["Pedido", "Histórico", "Conta"];
   const icons = [
-    (isSelected: boolean) => (
-      <Ionicons 
-        name="home" 
-        size={24} 
-        color={isSelected ? "#262627" : "#8F98AD"} 
-      />
+    (isActive: boolean) => (
+      <IconMessage fill={isActive ? "#262627" : "#8F98AD"} width={24} height={24} />
     ),
-    (isSelected: boolean) => (
-      <Ionicons 
-        name="search" 
-        size={24} 
-        color={isSelected ? "#262627" : "#8F98AD"} 
-      />
+    (isActive: boolean) => (
+      <IconHistory fill={isActive ? "#262627" : "#8F98AD"} width={24} height={24} />
     ),
-    (isSelected: boolean) => (
-      <Ionicons 
-        name="person" 
-        size={24} 
-        color={isSelected ? "#262627" : "#8F98AD"} 
-      />
+    (isActive: boolean) => (
+      <IconProfile fill={isActive ? "#262627" : "#8F98AD"} width={24} height={24} />
     ),
   ];
 
@@ -80,160 +71,48 @@ const MyApp = () => {
       {/* Conteúdo do app */}
       
       <NavigationBar 
-        options={tabs}
+        pages={pages}
         icons={icons}
-        onSelected={(index) => setSelectedTab(index)} 
-      />
-    </View>
-  );
-};
-```
-
-## Exemplo com Navegação de Conteúdo
-
-```tsx
-import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
-import { NavigationBar } from "lavex-design-system";
-import { Ionicons } from "@expo/vector-icons";
-
-const AppWithNavigation = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
-
-  const tabs = ['Home', 'Buscar', 'Notificações', 'Perfil'];
-  const icons = [
-    (isSelected: boolean) => (
-      <Ionicons name="home" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
-    ),
-    (isSelected: boolean) => (
-      <Ionicons name="search" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
-    ),
-    (isSelected: boolean) => (
-      <Ionicons name="notifications" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
-    ),
-    (isSelected: boolean) => (
-      <Ionicons name="person" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
-    ),
-  ];
-
-  const renderContent = () => {
-    switch (selectedTab) {
-      case 0:
-        return <Text>Conteúdo da Home</Text>;
-      case 1:
-        return <Text>Conteúdo de Busca</Text>;
-      case 2:
-        return <Text>Notificações</Text>;
-      case 3:
-        return <Text>Perfil do Usuário</Text>;
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <View style={{ flex: 1 }}>
-      <ScrollView 
-        style={{ flex: 1 }}
-        contentContainerStyle={{ 
-          padding: 16, 
-          paddingBottom: 100 // Espaço para o NavigationBar
-        }}
-      >
-        {renderContent()}
-      </ScrollView>
-
-      <NavigationBar 
-        options={tabs}
-        icons={icons}
-        onSelected={(index) => {
-          setSelectedTab(index);
-          console.log(`Navegou para: ${tabs[index]}`);
+        activePage={currentPage}
+        onNavigate={(page) => {
+          setCurrentPage(page);
+          console.log(`Navegou para: ${page}`);
         }} 
       />
     </View>
   );
 };
 
-export default AppWithNavigation;
+export default AppWithIcons;
 ```
 
-## Cores das Constantes
+## Páginas Disponíveis
 
-```typescript
-import Constants from "lavex-design-system/constants";
+O NavigationBar possui três páginas fixas:
 
-// Cores para uso nos ícones:
-// Constants.styles.textColor.DEFAULT   - #262627 (aba ativa)
-// Constants.styles.textColor.INFO      - #8F98AD (aba inativa)
-// Constants.styles.textColor.SUCCESS   - #059669
-// Constants.styles.textColor.DANGER    - #DC2626
-```
-
-## Boas Práticas
-
-1. **Use 3-5 abas**: O ideal é ter entre 3 e 5 abas para não sobrecarregar a interface
-2. **Ícones claros**: Use ícones que representem claramente a seção
-3. **Textos curtos**: Mantenha os textos das abas curtos (1-2 palavras)
-4. **Reserve espaço**: Lembre-se de adicionar padding-bottom ao conteúdo para não ser coberto pelo NavigationBar
-5. **Consistência**: Use o mesmo padrão de ícones em todo o aplicativo
-6. **Feedback visual**: O componente já fornece feedback visual automático ao selecionar
-
-## Casos de Uso Comuns
-
-### App de Redes Sociais
-
-```tsx
-const tabs = ['Feed', 'Explorar', 'Postar', 'Notificações', 'Perfil'];
-const icons = [
-  (isSelected) => <Ionicons name="home" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="compass" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="add-circle" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="heart" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="person" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-];
-```
-
-### App de E-commerce
-
-```tsx
-const tabs = ['Início', 'Categorias', 'Carrinho', 'Favoritos', 'Conta'];
-const icons = [
-  (isSelected) => <Ionicons name="home" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="grid" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="cart" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="heart" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="person" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-];
-```
-
-### App de Produtividade
-
-```tsx
-const tabs = ['Tarefas', 'Calendário', 'Projetos'];
-const icons = [
-  (isSelected) => <Ionicons name="checkmark-circle" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="calendar" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-  (isSelected) => <Ionicons name="folder" size={24} color={isSelected ? "#262627" : "#8F98AD"} />,
-];
-```
+- **"Pedido"**: Página de pedidos
+- **"Histórico"**: Página de histórico
+- **"Conta"**: Página de conta do usuário
 
 ## Características do Design
 
 - **Posição**: Fixo no rodapé da tela (`position: "absolute"`, `bottom: 0`)
-- **Layout**: Distribui as abas uniformemente (`flex: 1` em cada aba)
+- **Layout**: Distribui as três abas uniformemente (`flex: 1` em cada aba)
 - **Visual**: Sombra sutil para elevação e separação do conteúdo
 - **Texto ativo**: Negrito com cor escura (`#262627`)
 - **Texto inativo**: Regular com cor clara (`#8F98AD`)
-- **Ícones**: Tamanho recomendado de 24px
 - **Altura**: Ajustável automaticamente com base no conteúdo
+
+## Boas Práticas
+
+1. **Reserve espaço**: Lembre-se de adicionar padding-bottom ao conteúdo para não ser coberto pelo NavigationBar
+2. **Estado consistente**: Mantenha o estado `activePage` sincronizado com o conteúdo exibido
+3. **Feedback visual**: O componente fornece feedback visual automático ao selecionar uma página
+4. **Navegação suave**: Use transições suaves ao alternar entre páginas
 
 ## Observações Importantes
 
 - O NavigationBar é sempre renderizado no rodapé da tela, fixo
 - Certifique-se de que o conteúdo principal tenha padding-bottom suficiente
-- Os ícones devem ser funções que recebem `isSelected` para reagir ao estado
-- A primeira aba (índice 0) é selecionada por padrão
-- O componente gerencia internamente o estado de seleção
-
-
+- A primeira página ("Pedido") deve ser definida como padrão no estado inicial
+- O componente gerencia internamente o visual de seleção baseado na prop `activePage`
