@@ -85,6 +85,9 @@ const Constants = {
     maxWidth: {
       messageBubble: "70%"
     },
+    shadowColor: {
+      DEFAULT: "#000",
+    },
     stepper: {
       ICON_SIZE: 16,
     },
