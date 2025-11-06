@@ -14,7 +14,7 @@ export type OrderItem = {
   name: string,
 }
 
-export type Order = {
+type Order = {
   id: number,
   title: string,
   createdAt: Date,
