@@ -7,10 +7,17 @@ const Constants = {
       MEDIUM: 18,
       SMALL: 14,
     },
+    lineHeight: {
+      LARGEST: 30,
+      LARGER: 26,
+      LARGE: 22,
+      MEDIUM: 18,
+      SMALL: 14,
+    },
     fontWeight: {
-      BOLD: "700",
-      NORMAL: "400",
-      THIN: "100",
+      BOLD: "700" as any,
+      NORMAL: "400" as any,
+      THIN: "100" as any,
     },
     fontFamily: {
       REGULAR: "Roboto-Regular",
@@ -22,9 +29,11 @@ const Constants = {
     },
     textColor: {
       DEFAULT: "#262627",
+      PRIMARY: "#007AFF",
       SUCCESS: "#059669",
       DANGER: "#DC2626",
       INFO: "#8F98AD",
+      WARNING: "#F59E0B",
     },
     backgroundColor: {
       WHITE: "#FFFFFF",
@@ -52,7 +61,42 @@ const Constants = {
       REGULAR: 0.8,
       THICK: 1.2,
     },
-  },
+    componentSize: {
+      BUTTON_HEIGHT: 40,
+      BUTTON_WIDTH: 40,
+      INPUT_MIN_WIDTH: 50,
+    },
+    color: {
+      WHITE: "#FFFFFF",
+      BLACK: "#000000",
+      GOLD: "#FFD700",
+      GRAY: "#E0E0E0",
+      BLUE: "#007AFF",
+      MEDIUM_GRAY: "#6C757D",
+      SOFT_BLUE: "#D7E7FA",
+    },
+    opacity: {
+      LOW: 0.5,
+      MEDIUM: 0.7,
+      HIGH: 0.9,
+    },
+    icon: {
+      SMALL: 16,
+      MEDIUM: 20,
+    },
+    maxWidth: {
+      messageBubble: "70%"
+    },
+    shadowColor: {
+      DEFAULT: "#000",
+    },
+    stepper: {
+      ICON_SIZE: 16,
+    },
+    gallery: {
+      CONTAINER_GAP: 12
+    }
+  }
 };
 
 export default Constants;

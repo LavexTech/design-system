@@ -23,11 +23,12 @@
 - [ ] Button (text, type (danger, success), style(fullfiled, outline), onClick)
 - [ ] Accordion (text, children, onClick)
 - [ ] TabBar (options (string[]), onSelected)
+- [ ] NavigationBar (activeRoute, onNavigate(page))
 - [ ] Modal (title, text, buttonText, onClose)
 - [ ] Image (src: string, alt: string, onClick)
 - [ ] Gallery (images: string[], onClick)
 - [ ] OfferCard (offer: Offer, onClick)
-- [ ] Stepper (text, max, min, value, onChange(value))
+- [x] Stepper (text, max, min, value, onChange(value))
 - [ ] StarRating (rating, count, size, onRate(rating))
 - [ ] Alert (text, icon, type (danger, success, info), onClose)
 
@@ -48,5 +49,5 @@
 ## Chat
 
 - [ ] Message (text, onClick)
-- [ ] InputToolBar (value, placeholder, onChange(value), onSend)
+- [ ] InputChat (value, placeholder, onChange(value), onSend)
 
