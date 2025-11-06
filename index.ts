@@ -39,6 +39,7 @@ export { Gallery } from "./src/components/Gallery/Gallery";
 export { Divider } from "./src/components/Divider/Divider";
 export { Stepper } from "./src/components/Stepper/Stepper";
 export { NavigationBar } from "./src/components/NavigationBar/NavigationBar";
+export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";
 
 // ------------------------------------------------------------

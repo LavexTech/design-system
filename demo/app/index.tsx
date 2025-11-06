@@ -40,6 +40,7 @@ import { Alert } from "@src/components/Alert/Alert"
 import { Stars } from "@src/components/Stars/Stars"
 import { Modal } from "@src/components/Modal/Modal"
 import { Button } from "@src/components/Button/Button"
+import { Order } from "@src/components/Order/Order";
 import { Offer } from "@src/components/Offer/Offer"
 
 // Icons
@@ -583,6 +584,26 @@ export default function Index() {
             onUserClick={() => console.log("Usuário clicado:", sampleUser.id)}
           />
       </Card>
+
+{/* Order */}
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="Order" />
+      </View>
+
+      <Order 
+        order={{
+          id: 1,
+          title: "Pedido 1",
+          createdAt: new Date(),
+          itemList: [
+            { quantity: 1, name: "Camiseta" },
+            { quantity: 2, name: "Calça" },
+            { quantity: 3, name: "Camiseta" }
+          ],
+          images: ["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"]
+        }}
+      />
 
 {/* Offer */}
 
