@@ -27,6 +27,7 @@ import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVerti
 import { List } from "@src/components/List/List"
 import { TextList } from "@src/components/TextList/TextList"
 import { UserList } from "@src/components/UserList/UserList"
+import { OrderList } from "@src/components/OrderList/OrderList"
 
 // Others
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion"
@@ -585,12 +586,57 @@ export default function Index() {
           />
       </Card>
 
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="OrderList" />
+      </View>
+
+      <Card>
+        <OrderList
+          orders={[
+            {
+              id: 1,
+              title: "Pedido 1",
+              createdAt: new Date(),
+              itemList: [
+                { quantity: 1, name: "Camiseta" },
+                { quantity: 2, name: "Calça" },
+                { quantity: 3, name: "Camiseta" }
+              ],
+              images: ["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"],
+            },
+            {
+              id: 2,
+              title: "Pedido 2",
+              createdAt: new Date(),
+              itemList: [
+                { quantity: 1, name: "Camiseta" },
+                { quantity: 2, name: "Calça" },
+                { quantity: 3, name: "Camiseta" }
+              ],
+              images: ["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"],
+            },
+            {
+              id: 3,
+              title: "Pedido 3",
+              createdAt: new Date(),
+              itemList: [
+                { quantity: 1, name: "Camiseta" },
+                { quantity: 2, name: "Calça" },
+                { quantity: 3, name: "Camiseta" }
+              ],
+              images: ["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"],
+            }
+          ]}
+        />
+      </Card>
+
 {/* Order */}
 
       <View style={{ marginTop: 20, marginBottom: 10 }}>
         <Subtitle text="Order" />
       </View>
 
+      <Card>
       <Order 
         order={{
           id: 1,
@@ -603,7 +649,8 @@ export default function Index() {
           ],
           images: ["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"]
         }}
-      />
+        />
+      </Card>
 
 {/* Offer */}
 

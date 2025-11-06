@@ -24,6 +24,8 @@ export { UserCardBio } from "./src/components/UserCardBio/UserCardBio";
 export { List } from "./src/components/List/List";
 export { TextList } from "./src/components/TextList/TextList";
 export { UserList } from "./src/components/UserList/UserList";
+export { OrderList } from "./src/components/OrderList/OrderList";
+
 
 // Others
 export { Card } from "./src/components/Card/Card";
