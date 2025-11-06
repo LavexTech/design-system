@@ -24,44 +24,48 @@ type AccordionProps = {
 
 export const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children }) => {
   return (
-    <>
-      <GluestackAccordionItem value={id}>
-        <AccordionHeader>
-          <AccordionTrigger>
-            {({ isExpanded }: { isExpanded: boolean }) => {
-              return (
-                <>
-                  <AccordionTitleText>
-                    {title}
-                  </AccordionTitleText>
-                  {isExpanded ? (
-                    <AccordionIcon as={RemoveIcon} />
-                  ) : (
-                    <AccordionIcon as={AddIcon} />
-                  )}
-                </>
-              );
-            }}
-          </AccordionTrigger>
-        </AccordionHeader>
-        <AccordionContent>
-          {children}
-        </AccordionContent>
-      </GluestackAccordionItem>
-      <Divider />
-    </>
+    <GluestackAccordionItem value={id}>
+      <AccordionHeader>
+        <AccordionTrigger>
+          {({ isExpanded }: { isExpanded: boolean }) => {
+            return (
+              <>
+                <AccordionTitleText>
+                  {title}
+                </AccordionTitleText>
+                {isExpanded ? (
+                  <AccordionIcon as={RemoveIcon} />
+                ) : (
+                  <AccordionIcon as={AddIcon} />
+                )}
+              </>
+            );
+          }}
+        </AccordionTrigger>
+      </AccordionHeader>
+      <AccordionContent>
+        {children}
+      </AccordionContent>
+    </GluestackAccordionItem>
   )
 }
 
 export const Accordion: React.FC<AccordionProps> = ({ children }) => {
+  const childrenArray = React.Children.toArray(children);
+  
   return (
     <GluestackAccordion 
       variant="unfilled" 
       isCollapsible={true}
       style={{ backgroundColor: Constants.styles.backgroundColor.WHITE }}
     >
-      {children}
+      {childrenArray.map((child, index) => (
+        <React.Fragment key={index}>
+          {child}
+          {index < childrenArray.length - 1 && <Divider />}
+        </React.Fragment>
+      ))}
     </GluestackAccordion>
-)
+  )
 }
 
