@@ -27,6 +27,7 @@ import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVerti
 import { List } from "@src/components/List/List"
 import { TextList } from "@src/components/TextList/TextList"
 import { UserList } from "@src/components/UserList/UserList"
+import { OfferList } from "@src/components/OfferList/OfferList"
 
 // Others
 import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion"
@@ -583,6 +584,19 @@ export default function Index() {
           users={[sampleUser, sampleUser, sampleUser]}
             onUserClick={() => console.log("Usuário clicado:", sampleUser.id)}
           />
+      </Card>
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="OfferList" />
+      </View>
+      <Card>
+        <OfferList
+          offers={[
+            { id: 1, amount: 100, distance: 10, user: sampleUser, onClick: () => console.log("Oferta 1 clicada!") },
+            { id: 2, amount: 200, distance: 20, user: sampleUser, onClick: () => console.log("Oferta 2 clicada!") },
+            { id: 3, amount: 300, distance: 30, user: sampleUser, onClick: () => console.log("Oferta 3 clicada!") },
+          ]}
+        />
       </Card>
 
 {/* Order */}
