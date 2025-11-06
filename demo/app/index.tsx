@@ -226,10 +226,10 @@ export default function Index() {
           </KeyboardAvoidingView>
 
           <TextArea
-            label="Mensagem"
+            label="Textarea"
             value={contactMessage}
             onChange={setContactMessage}
-            placeholder="Digite sua mensagem aqui..."
+            placeholder="Digite seu texto aqui..."
             maxLength={100}
           />
         </Grid>
