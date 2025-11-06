@@ -69,7 +69,7 @@ import { NavigationBar } from "@src/components/NavigationBar/NavigationBar"
 export default function Index() {
   const [showModal, setShowModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [activePage, setActivePage] = useState("Pedido");
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -104,44 +104,56 @@ export default function Index() {
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
 
-  const tabs = ['Home', 'Perfil', 'Configurações'];
+  const tabs = ['Pedido', 'Histórico', 'Conta'];
   const icons = [
-    (isSelected: boolean) => (
-      <IconHome name="home" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
+    (isActive: boolean) => (
+      <IconMessage fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
     ),
-    (isSelected: boolean) => (
-      <IconProfile name="person" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
+    (isActive: boolean) => (
+      <IconHistory fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
     ),
-    (isSelected: boolean) => (
-      <IconSearch name="search" size={24} color={isSelected ? "#262627" : "#8F98AD"} />
+    (isActive: boolean) => (
+      <IconProfile fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
     ),
   ];
 
-  const renderContent = () => {
-    switch (selectedTab) {
-      case 0:
-        return (
-          <View style={{ gap: 24 }}>
-            <MainTitle text="Bem-vindo" />
-            <Text style={{ fontSize: 16 }}>Esta é a página inicial</Text>
-          </View>
-        );
-      case 1:
-        return (
-          <View style={{ gap: 24 }}>
-            <Title text="Perfil" />
-            <Text style={{ fontSize: 16 }}>Configurações do seu perfil</Text>
-          </View>
-        );
-      case 2:
-        return (
-          <View style={{ gap: 24 }}>
-            <Subtitle text="Configurações" />
-            <Text style={{ fontSize: 16 }}>Ajustes do aplicativo</Text>
-          </View>
-        );
+  const Pedido = () => (
+    <Card>
+      <View style={{ gap: 20, flex: 1, justifyContent: "flex-start" }}>
+        <Subtitle text="Pedidos" />
+        <Text text="Esta é a página de pedidos" />
+      </View>
+    </Card>
+  );
+
+  const Historico = () => (
+    <Card>
+      <View style={{ gap: 20, flex: 1, justifyContent: "flex-start" }}>
+        <Subtitle text="Histórico" />
+        <Text text="Histórico de pedidos anteriores" />
+      </View>
+    </Card>
+  );
+
+  const Conta = () => (
+    <Card>
+      <View style={{ gap: 20, flex: 1, justifyContent: "flex-start" }}>
+        <Subtitle text="Conta" />
+        <Text text="Configurações da sua conta" />
+      </View>
+    </Card>
+  );
+
+  const renderNavigationContent = () => {
+    switch (activePage) {
+      case "Pedido":
+        return <Pedido/>;
+      case "Histórico":
+        return <Historico/>
+      case "Conta":
+        return <Conta/>;
       default:
-        return null;
+        return <Pedido/>;
     }
   };
 
@@ -152,9 +164,15 @@ export default function Index() {
         contentContainerStyle={{ paddingBottom: 40, paddingTop: 40 }}
         showsVerticalScrollIndicator={true}
       >
-{/* TabBar */}
+{/* NavigationBar */}
 
-      {renderContent()}
+      <View style={{ marginTop: 20, marginBottom: 20 }}>
+        <Subtitle text="NavigationBar" />
+      </View>
+      
+      
+      {renderNavigationContent()}
+      
 
 {/* Inputs */}
 
@@ -609,11 +627,12 @@ export default function Index() {
       </Card>
     </ScrollView>
     <NavigationBar
-      options={tabs}
+      pages={tabs}
       icons={icons}
-      onSelected={(index: number) => {
-        setSelectedTab(index);
-        console.log('Tab selecionada:', tabs[index]);
+      activePage={activePage}
+      onNavigate={(page: string) => {
+        setActivePage(page);
+        console.log('Página navegada:', page);
       }}
     />
     {showModal && (
