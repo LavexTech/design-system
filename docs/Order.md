@@ -10,12 +10,21 @@ import { Order } from "lavex-design-system";
 
 ## Props
 
-| Prop        | Tipo          | Obrigatório | Descrição                                    |
-| ----------- | ------------- | ----------- | -------------------------------------------- |
-| `title`     | `string`      | Sim         | Título do pedido                             |
-| `createdAt` | `Date`        | Sim         | Data de criação do pedido                    |
-| `itemList`  | `OrderItem[]` | Sim         | Lista de itens do pedido                     |
-| `images`    | `string[]`    | Não         | Array de URLs das imagens do pedido          |
+| Prop    | Tipo    | Obrigatório | Descrição                        |
+| ------- | ------- | ----------- | -------------------------------- |
+| `order` | `Order` | Sim         | Objeto contendo dados do pedido  |
+
+### Interface Order
+
+```typescript
+interface Order {
+  id: number;           // Identificador único do pedido
+  title: string;        // Título do pedido
+  createdAt: Date;      // Data de criação do pedido
+  itemList: OrderItem[]; // Lista de itens do pedido
+  images?: string[];    // Array de URLs das imagens do pedido (opcional)
+}
+```
 
 ### Interface OrderItem
 
@@ -33,44 +42,44 @@ import React from "react";
 import { Order } from "lavex-design-system";
 
 const MyComponent = () => {
-  const items = [
-    { quantity: 2, name: "Lavagem de roupa" },
-    { quantity: 1, name: "Passagem de roupa" }
-  ];
+  const orderSample = {
+    id: "xpto1234",
+    title: "Serviço de Lavanderia",
+    createdAt: new Date("2024-03-15"),
+    itemList: [
+      { quantity: 2, name: "Lavagem de roupa" },
+      { quantity: 1, name: "Passagem de roupa" }
+    ],
+    images: [
+      "https://example.com/photo1.jpg",
+      "https://example.com/photo2.jpg"
+    ]
+  };
 
-  const images = [
-    "https://example.com/photo1.jpg",
-    "https://example.com/photo2.jpg"
-  ];
-
-  return (
-    <Order 
-      title="Serviço de Lavanderia"
-      createdAt={new Date("2024-03-15")}
-      itemList={items}
-      images={images}
-    />
-  );
+  return <Order order={orderSample} />;
 };
 ```
 
 ## Exemplo de Uso
 
 ```tsx
-<Order
-  title="Lavagem e Passagem"
-  createdAt={new Date()}
-  itemList={[
+const orderData = {
+  id: "order-5678",
+  title: "Lavagem e Passagem",
+  createdAt: new Date(),
+  itemList: [
     { quantity: 3, name: "Camisa social" },
     { quantity: 2, name: "Calça jeans" },
     { quantity: 1, name: "Edredom casal" }
-  ]}
-  images={[
+  ],
+  images: [
     "https://picsum.photos/id/10/400",
     "https://picsum.photos/id/20/400",
     "https://picsum.photos/id/30/400"
-  ]}
-/>
+  ]
+};
+
+<Order order={orderData} />
 ```
 
 ## Características
@@ -87,13 +96,15 @@ const MyComponent = () => {
 
 ## Regras de Uso
 
-1. O `title` deve ser uma string descritiva do pedido
-2. O `createdAt` deve ser um objeto Date válido (será formatado automaticamente)
-3. O `itemList` deve conter ao menos um item com `quantity` e `name`
-4. O array `images` pode estar vazio, mas deve ser fornecido
-5. A quantidade de cada item deve ser um número positivo
-6. As URLs das imagens devem ser válidas e acessíveis
-7. A data é automaticamente formatada para o padrão brasileiro (dd/MM/yyyy)
-8. Ideal para uso em telas de histórico de pedidos ou detalhes de pedido
+1. O objeto `order` deve conter todas as propriedades obrigatórias
+2. O `id` deve ser uma string única que identifica o pedido
+3. O `title` deve ser uma string descritiva do pedido
+4. O `createdAt` deve ser um objeto Date válido (será formatado automaticamente)
+5. O `itemList` deve conter ao menos um item com `quantity` e `name`
+6. O array `images` é opcional e pode ser omitido ou vazio
+7. A quantidade de cada item deve ser um número positivo
+8. As URLs das imagens devem ser válidas e acessíveis
+9. A data é automaticamente formatada para o padrão brasileiro (dd/MM/yyyy)
+10. Ideal para uso em telas de histórico de pedidos ou detalhes de pedido
 
 

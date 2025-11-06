@@ -528,10 +528,17 @@ export default function Index() {
       </View>
 
       <Order 
-        title="Pedido 1" 
-        createdAt={new Date()} 
-        itemList={[{ quantity: 1, name: "Camiseta" }, { quantity: 2, name: "Calça" }, { quantity: 3, name: "Camiseta" }]} 
-        images={["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"]} 
+        order={{
+          id: 1,
+          title: "Pedido 1",
+          createdAt: new Date(),
+          itemList: [
+            { quantity: 1, name: "Camiseta" },
+            { quantity: 2, name: "Calça" },
+            { quantity: 3, name: "Camiseta" }
+          ],
+          images: ["https://picsum.photos/id/1/200/200", "https://picsum.photos/id/2/200/200"]
+        }}
       />
 
 {/* Offer */}

@@ -9,19 +9,24 @@ import { Gallery } from '../Gallery/Gallery'
 import { TextList } from '../TextList/TextList'
 import Constants from '../../constants/constants'
 
-type OrderItem = {
+export type OrderItem = {
   quantity: number,
   name: string,
 }
 
-type OrderProps = {
+export type Order = {
+  id: number,
   title: string,
   createdAt: Date,
   itemList: OrderItem[],
   images?: string[],
 }
 
-export const Order: React.FC<OrderProps> = ({ title, createdAt, itemList, images }) => {
+type OrderProps = {
+  order: Order,
+}
+
+export const Order: React.FC<OrderProps> = ({ order }) => {
   const formatDate = (date: Date): string => {
     return `Criado em ${date.toLocaleDateString('pt-BR')}`;
   };
@@ -30,17 +35,17 @@ export const Order: React.FC<OrderProps> = ({ title, createdAt, itemList, images
     <Card>
       <Grid columns={1} gap={4}>
         <GridItem>
-          <Subtitle text={title} />
-          <Info text={formatDate(createdAt)} />
+          <Subtitle text={order.title} />
+          <Info text={formatDate(order.createdAt)} />
         </GridItem>
         
-        {images && (
-          <Gallery images={images} />
+        {order.images && (
+          <Gallery images={order.images} />
         )}
 
         <GridItem>
           <Text text={"Itens do pedido:"} size="small" />
-          <TextList texts={itemList.map((item) => `${item.quantity}x ${item.name}`)} />
+          <TextList texts={order.itemList.map((item) => `${item.quantity}x ${item.name}`)} />
         </GridItem>
       </Grid>
     </Card>
