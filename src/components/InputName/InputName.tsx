@@ -15,14 +15,31 @@ export const InputName: React.FC<InputNameProps> = ({
     onChange,
 }) => {
     const formatName = (inputValue: string): string => {
-        const words = inputValue.split(' ')
+        // Lista de preposições e artigos que devem permanecer em minúsculo,
+        // incluindo contrações comuns.
+        const excecoes = ["de", "di", "do", "da", "dos", "das", "del"]
 
-        return words.map(word => {
-            if (word.length === 0) return word
-            if (word.length < 3) return word.toLowerCase()
+        // Converte o nome inteiro para minúsculo para garantir consistência inicial
+        let nomeCompleto = inputValue.toLowerCase()
 
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        }).join(' ')
+        // Expressão regular para encontrar palavras (sequências de letras/apóstrofo)
+        // A flag /g garante que todas as ocorrências sejam substituídas
+        const nomeCapitalizado = nomeCompleto.replace(/\b([a-zA-Z']+)\b/g, (match, palavra) => {
+            // Verifica se a palavra está na lista de exceções
+            if (excecoes.includes(palavra)) {
+                return palavra // Mantém minúscula
+            } else if (palavra.includes("'") && palavra.length > 1) {
+                // Lida com casos como "d'Avila" ou "O'Malley"
+                // Capitaliza a primeira letra e o que vem depois do apóstrofo, se necessário
+                const partes = palavra.split("'")
+                return partes[0].toLowerCase() + "'" + partes[1].charAt(0).toUpperCase() + partes[1].slice(1)
+            } else {
+                // Capitaliza a primeira letra da palavra normal
+                return palavra.charAt(0).toUpperCase() + palavra.slice(1)
+            }
+        })
+
+        return nomeCapitalizado
     }
 
     const handleChange = (newValue: string) => {
