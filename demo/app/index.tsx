@@ -29,21 +29,6 @@ import { TextList } from "@src/components/TextList/TextList"
 import { UserList } from "@src/components/UserList/UserList"
 import { OfferList } from "@src/components/OfferList/OfferList"
 
-// Others
-import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion"
-import { Grid, GridItem } from "@src/components/Grid/Grid"
-import { Card } from "@src/components/Card/Card"
-import { Message } from "@src/components/Message/Message"
-import { InputPassword } from "@src/components/InputPassword/InputPassword"
-import { Image } from "@src/components/Image/Image"
-import { Stepper } from "@src/components/Stepper/Stepper"
-import { Alert } from "@src/components/Alert/Alert"
-import { Stars } from "@src/components/Stars/Stars"
-import { Modal } from "@src/components/Modal/Modal"
-import { Button } from "@src/components/Button/Button"
-import { Order } from "@src/components/Order/Order";
-import { Offer } from "@src/components/Offer/Offer"
-
 // Icons
 import { IconHome } from "@src/components/Icons/IconHome"
 import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft"
@@ -64,6 +49,22 @@ import { IconMessage } from "@src/components/Icons/IconMessage"
 import { IconHistory } from "@src/components/Icons/IconHistory"
 import { IconImage } from "@src/components/Icons/IconImage"
 import { IconExclamation } from "@src/components/Icons/IconExclamation"
+import { IconEdit } from "@src/components/Icons/IconEdit"
+
+// Others
+import { Accordion, AccordionItem } from "@src/components/Accordion/Accordion"
+import { Grid, GridItem } from "@src/components/Grid/Grid"
+import { Card } from "@src/components/Card/Card"
+import { Message } from "@src/components/Message/Message"
+import { InputPassword } from "@src/components/InputPassword/InputPassword"
+import { Image } from "@src/components/Image/Image"
+import { Stepper } from "@src/components/Stepper/Stepper"
+import { Alert } from "@src/components/Alert/Alert"
+import { Stars } from "@src/components/Stars/Stars"
+import { Modal } from "@src/components/Modal/Modal"
+import { Button } from "@src/components/Button/Button"
+import { Order } from "@src/components/Order/Order";
+import { Offer } from "@src/components/Offer/Offer"
 import { Gallery } from "@src/components/Gallery/Gallery"
 import { NavigationBar } from "@src/components/NavigationBar/NavigationBar"
 
@@ -431,6 +432,8 @@ export default function Index() {
             max={5}
             value={pantsCount}
             onChange={setPantsCount}
+            onDelete={() => console.log("Calça deletada!")}
+            onEdit={() => console.log("Calça editada!")}
           />
         </Grid>
       </Card>
@@ -658,6 +661,7 @@ export default function Index() {
           <IconHistory fill="#007AFF" width={32} height={32} />
           <IconImage fill="#AF52DE" width={32} height={32} />
           <IconExclamation fill="#FF9500" width={32} height={32} />
+          <IconEdit fill="#5856D6" width={32} height={32} />
         </View>
       </Card>
     </ScrollView>

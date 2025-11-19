@@ -5,6 +5,8 @@ import { Grid } from "../Grid/Grid"
 import { TextBox } from "../Text/Text"
 import { IconPlus } from "../Icons/IconPlus"
 import { IconMinus } from "../Icons/IconMinus"
+import { IconTrash } from "../Icons/IconTrash"
+import { IconEdit } from "../Icons/IconEdit"
 
 type StepperProps = {
   text: string,
@@ -12,6 +14,8 @@ type StepperProps = {
   min: number,
   value: number,
   onChange: (value: number) => void
+  onDelete?: () => void,
+  onEdit?: () => void,
 }
 
 export const Stepper: React.FC<StepperProps> = ({
@@ -20,6 +24,8 @@ export const Stepper: React.FC<StepperProps> = ({
   min,
   value,
   onChange,
+  onDelete,
+  onEdit,
 }) => {
   const handleIncrement = () => {
     if (value < max) {
@@ -67,6 +73,18 @@ export const Stepper: React.FC<StepperProps> = ({
         >
           <IconPlus width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
+        <View style={styles.buttonsContainer}>
+          {onDelete && (
+            <Pressable onPress={onDelete} style={[styles.button, styles.buttonLeft]}>
+              <IconTrash width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
+            </Pressable>
+          )}
+          {onEdit && (
+            <Pressable onPress={onEdit} style={[styles.button, styles.buttonLeft]}>
+              <IconEdit width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
+            </Pressable>
+          )}
+        </View>
       </View>
     </Grid>
   )
@@ -81,6 +99,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end",
     height: Constants.styles.componentSize.BUTTON_HEIGHT,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: Constants.styles.spacing.SMALL,
+    marginLeft: Constants.styles.spacing.SMALL,
   },
   button: {
     width: Constants.styles.componentSize.BUTTON_WIDTH,
