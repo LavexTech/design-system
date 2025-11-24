@@ -14,7 +14,7 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   onChange,
   label = "Telefone",
   placeholder = "(00) 00000-0000",
-  errorMessage = "Telefone deve ter formato válido",
+  errorMessage = "Telefone deve ter 11 dígitos",
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -30,7 +30,7 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   const validatePhone = (phone: string): boolean => {
     if (!phone) return true
     const digits = phone.replace(/\D/g, "")
-    return digits.length === 10 || digits.length === 11
+    return digits.length === 11
   };
 
   const handleChange = (text: string) => {
