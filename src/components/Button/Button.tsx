@@ -40,12 +40,16 @@ export const Button: React.FC<ButtonProps> = ({
   let tiroliro = {}
   let buttonSize: "sm" | "md" = "md"
 
-  if (variant === "primary") tiroliro = { backgroundColor: Constants.styles.color.SOFT_BLUE }
+  if (variant === "primary") tiroliro = { backgroundColor: Constants.styles.color.BLUE }
   if (variant === "secondary") {
-    tiroliro = { backgroundColor: Constants.styles.color.WHITE }
+    tiroliro = { backgroundColor: Constants.styles.color.WHITE, borderColor: Constants.styles.color.BLACK }
     buttonSize = "sm"
   }
-  if (variant === "secondary-outline") tiroliro = { backgroundColor: Constants.styles.color.WHITE, borderColor: Constants.styles.color.BLACK }
+  if (variant === "secondary-outline") {
+    tiroliro = { backgroundColor: Constants.styles.color.WHITE, borderColor: Constants.styles.color.BLACK }
+    buttonSize = "sm"
+  }
+
 
   return (
     <GluestackUIProvider>
