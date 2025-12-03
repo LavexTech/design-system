@@ -17,43 +17,17 @@ type ModalProps = {
     children: React.ReactNode,
     onClose: () => void,
     visible?: boolean,
-    modalStyle?: 'info' | 'confirm' | 'save',
-    onSave?: () => void,
-    onConfirm?: () => void,
+    buttonVariant?: 'primary' | 'secondary' | 'secondary-outline' | 'default' | 'success' | 'danger' | 'default-outline' | 'success-outline' | 'danger-outline',
 }
 
-const modalStyleMap = (
-        modalStyle: 'info' | 'confirm' | 'save',
-        onClose: () => void,
-        onSave: () => void,
-        onConfirm: () => void
-    ) => {
-    switch (modalStyle) {
-        case 'info':
-            return <Button text="OK" onClick={onClose} variant="default" />
-        case 'confirm':
-            return <>
-                <Button text="OK" onClick={onConfirm} variant="default" />
-                <Button text="Cancelar" onClick={onClose} variant="default-outline" />
-            </>
-        case 'save':
-            return <>
-                <Button text="Salvar" onClick={onSave} variant="default" />
-                <Button text="Cancelar" onClick={onClose} variant="default-outline" />
-            </>
-        default:
-            return null
-    }
-}
+
 
 export const Modal: React.FC<ModalProps> = ({
     title,
     children,
     onClose,
     visible = true,
-    modalStyle = 'info',
-    onSave,
-    onConfirm,
+    buttonVariant = 'default',
 }: ModalProps) => {
     return (
         <GluestackUIProvider>
@@ -66,14 +40,14 @@ export const Modal: React.FC<ModalProps> = ({
                 <ModalContent>
                     <ModalHeader>
                         <View style={{ flex: 1, alignItems: "center" }}>
-                            <Text text={title} position="flex-end" />
+                            <Text text={title} position="center" />
                         </View>
                     </ModalHeader>
                     <ModalBody>
                         {children}
                     </ModalBody>
                     <ModalFooter>
-                        {modalStyleMap(modalStyle, onClose, onSave || (() => {}), onConfirm || (() => {}))}
+                        <Button text="OK" onClick={onClose} variant={buttonVariant} />
                     </ModalFooter>
                 </ModalContent>
             </GluestackModal>
