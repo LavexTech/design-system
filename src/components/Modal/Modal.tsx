@@ -18,6 +18,7 @@ type ModalProps = {
     onClose: () => void,
     visible?: boolean,
     buttonVariant?: 'primary' | 'secondary' | 'secondary-outline' | 'default' | 'success' | 'danger' | 'default-outline' | 'success-outline' | 'danger-outline',
+    buttonText?: string,
 }
 
 
@@ -28,6 +29,7 @@ export const Modal: React.FC<ModalProps> = ({
     onClose,
     visible = true,
     buttonVariant = 'default',
+    buttonText = 'OK',
 }: ModalProps) => {
     return (
         <GluestackUIProvider>
@@ -47,7 +49,7 @@ export const Modal: React.FC<ModalProps> = ({
                         {children}
                     </ModalBody>
                     <ModalFooter>
-                        <Button text="OK" onClick={onClose} variant={buttonVariant} />
+                        <Button text={buttonText} onClick={onClose} variant={buttonVariant} />
                     </ModalFooter>
                 </ModalContent>
             </GluestackModal>
