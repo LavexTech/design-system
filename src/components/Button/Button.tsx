@@ -1,7 +1,7 @@
 import React from "react"
 import { Button as GluestackButton, ButtonText } from "../../ui/button"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
-import Constants from "@/src/constants/constants";
+import Constants from "../../constants/constants";
 
 type ButtonProps = {
   text: string;
