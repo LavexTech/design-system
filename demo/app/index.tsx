@@ -720,7 +720,7 @@ export default function Index() {
           visible={showCustomModal}
           buttonText="Confirmar"
           buttonVariant="success"
-          buttonSize="lg"
+          buttonSize="sm"
         >
           <Text
             size="small"

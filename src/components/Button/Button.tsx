@@ -41,7 +41,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   let buttonStyle: any = {}
   let textStyle: any = {}
-  let buttonSize: "xs" | "sm" | "md" | "lg" | "xl" = size || "md"
+  let buttonSize: "xs" | "sm" | "md" | "lg" | "xl" = (size !== undefined ? size : "md")
 
   if (variant === "primary") {
     buttonStyle = {
