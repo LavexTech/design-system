@@ -15,6 +15,7 @@ type ButtonProps = {
   | "primary"
   | "secondary"
   | "secondary-outline";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   onClick: () => void
 }
 
@@ -33,13 +34,14 @@ const variantMap = {
 export const Button: React.FC<ButtonProps> = ({
   text,
   variant = "default",
+  size,
   onClick,
 }) => {
   const { action, variant: gluestackVariant } = variantMap[variant]
 
   let buttonStyle: any = {}
   let textStyle: any = {}
-  let buttonSize: "sm" | "md" = "md"
+  let buttonSize: "xs" | "sm" | "md" | "lg" | "xl" = size || "md"
 
   if (variant === "primary") {
     buttonStyle = {
@@ -60,7 +62,6 @@ export const Button: React.FC<ButtonProps> = ({
     textStyle = {
       color: Constants.styles.color.BACKGROUND_LIGHT,
     }
-    buttonSize = "sm"
   }
   if (variant === "secondary-outline") {
     buttonStyle = {
@@ -71,7 +72,6 @@ export const Button: React.FC<ButtonProps> = ({
     textStyle = {
       color: Constants.styles.color.PRIMARY_DARK,
     }
-    buttonSize = "sm"
   }
 
 

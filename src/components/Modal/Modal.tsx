@@ -19,6 +19,7 @@ type ModalProps = {
     visible?: boolean,
     buttonVariant?: 'primary' | 'secondary' | 'secondary-outline' | 'default' | 'success' | 'danger' | 'default-outline' | 'success-outline' | 'danger-outline',
     buttonText?: string,
+    buttonSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl',
 }
 
 
@@ -30,6 +31,7 @@ export const Modal: React.FC<ModalProps> = ({
     visible = true,
     buttonVariant = 'default',
     buttonText = 'OK',
+    buttonSize = 'md',
 }: ModalProps) => {
     return (
         <GluestackUIProvider>
@@ -49,7 +51,12 @@ export const Modal: React.FC<ModalProps> = ({
                         {children}
                     </ModalBody>
                     <ModalFooter>
-                        <Button text={buttonText} onClick={onClose} variant={buttonVariant} />
+                        <Button 
+                            text={buttonText} 
+                            onClick={onClose} 
+                            variant={buttonVariant} 
+                            size={buttonSize}
+                        />
                     </ModalFooter>
                 </ModalContent>
             </GluestackModal>
