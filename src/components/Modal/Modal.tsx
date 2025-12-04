@@ -33,8 +33,6 @@ export const Modal: React.FC<ModalProps> = ({
     buttonText = 'OK',
     buttonSize,
 }: ModalProps) => {
-    const hasCustomSize = buttonSize !== undefined;
-    
     return (
         <GluestackUIProvider>
             <GluestackModal
@@ -52,18 +50,13 @@ export const Modal: React.FC<ModalProps> = ({
                     <ModalBody>
                         {children}
                     </ModalBody>
-                    <ModalFooter>
-                        <View style={{ 
-                            width: '100%', 
-                            alignItems: hasCustomSize ? "center" : "stretch" 
-                        }}>
+                    <ModalFooter style={{ width: '100%' }}>
                             <Button 
                                 text={buttonText} 
                                 onClick={onClose} 
                                 variant={buttonVariant} 
                                 size={buttonSize}
                             />
-                        </View>
                     </ModalFooter>
                 </ModalContent>
             </GluestackModal>

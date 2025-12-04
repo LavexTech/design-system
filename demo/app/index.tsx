@@ -745,7 +745,7 @@ export default function Index() {
           onClose={() => setShowCompareModal(false)}
           visible={showCompareModal}
           buttonText="Confirmar"
-          buttonVariant="success"
+          buttonVariant="secondary-outline"
         >
           <Text
             size="small"
