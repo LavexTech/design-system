@@ -74,6 +74,9 @@ const Constants = {
       BLUE: "#007AFF",
       MEDIUM_GRAY: "#6C757D",
       SOFT_BLUE: "#D7E7FA",
+      PRIMARY_LIGHT: "#3CDBC0",
+      PRIMARY_DARK: "#2D3B42",
+      BACKGROUND_LIGHT: "#E5E1E6",
     },
     opacity: {
       LOW: 0.5,
