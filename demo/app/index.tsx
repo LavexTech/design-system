@@ -91,6 +91,7 @@ export default function Index() {
   ];
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
+  const [socksCount, setSocksCount] = useState(0);
 
   const sampleUser = {
     name: "John Doe",
@@ -433,7 +434,14 @@ export default function Index() {
             value={pantsCount}
             onChange={setPantsCount}
             onDelete={() => console.log("Calça deletada!")}
-            onEdit={() => console.log("Calça editada!")}
+          />
+          <Stepper
+            text="Meias"
+            min={0}
+            max={5}
+            value={socksCount}
+            onChange={setSocksCount}
+            onDelete={() => console.log("Meias deletadas!")}
           />
         </Grid>
       </Card>
