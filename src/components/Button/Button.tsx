@@ -37,31 +37,39 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const { action, variant: gluestackVariant } = variantMap[variant]
 
-  let buttonStyle = {}
+  let buttonStyle: any = {}
+  let textStyle: any = {}
   let buttonSize: "sm" | "md" = "md"
 
   if (variant === "primary") {
-    buttonStyle = { 
+    buttonStyle = {
       backgroundColor: Constants.styles.color.PRIMARY_DARK, 
-      color: Constants.styles.color.PRIMARY_LIGHT,
       borderColor: Constants.styles.color.PRIMARY_DARK,
-      borderWidth: 1  
+      borderWidth: 1,
+    }
+    textStyle = {
+      color: Constants.styles.color.PRIMARY_LIGHT,
     }
   }
   if (variant === "secondary") {
-    buttonStyle = { 
+    buttonStyle = {
       backgroundColor: Constants.styles.color.PRIMARY_DARK,
-      color: Constants.styles.color.BACKGROUND_LIGHT,
       borderColor: Constants.styles.color.PRIMARY_DARK,
-      borderWidth: 1
+      borderWidth: 1,
+    }
+    textStyle = {
+      color: Constants.styles.color.BACKGROUND_LIGHT,
     }
     buttonSize = "sm"
   }
   if (variant === "secondary-outline") {
-    buttonStyle = { 
+    buttonStyle = {
       backgroundColor: Constants.styles.color.BACKGROUND_LIGHT,
+      borderColor: Constants.styles.color.PRIMARY_DARK,
+      borderWidth: 1,
+    }
+    textStyle = {
       color: Constants.styles.color.PRIMARY_DARK,
-      borderColor: Constants.styles.color.PRIMARY_DARK 
     }
     buttonSize = "sm"
   }
@@ -74,9 +82,11 @@ export const Button: React.FC<ButtonProps> = ({
       variant={gluestackVariant}
       size={buttonSize}
       onPress={onClick}
-      style={buttonStyle}
+      style={[buttonStyle]}
     >
-      <ButtonText>{text}</ButtonText>
+      <ButtonText style={[textStyle]}>
+        {text}
+      </ButtonText>
     </GluestackButton>
     </GluestackUIProvider>
   )
