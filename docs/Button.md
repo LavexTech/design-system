@@ -26,6 +26,9 @@ import { Button } from "lavex-design-system";
 | `success-outline`   | Borda             | Verde | Ação positiva secundária       |
 | `danger`            | Preenchido        | Vermelho | Excluir, Remover            |
 | `danger-outline`    | Borda             | Vermelho | Cancelar ação destrutiva    |
+| `primary`           | Preenchido        | Personalizado | Ação primária customizada      |
+| `secondary`         | Preenchido        | Personalizado | Ação secundária customizada    |
+| `secondary-outline` | Borda             | Personalizado | Ação secundária com borda      |
 
 ## Exemplos
 
@@ -54,6 +57,11 @@ import { Button } from "lavex-design-system";
 <Button text="Voltar" variant="default-outline" onClick={() => {}} />
 <Button text="Enviar" variant="success-outline" onClick={() => {}} />
 <Button text="Cancelar" variant="danger-outline" onClick={() => {}} />
+
+// Primary e Secondary (estilos customizados)
+<Button text="Ação Principal" variant="primary" onClick={() => {}} />
+<Button text="Ação Secundária" variant="secondary" onClick={() => {}} />
+<Button text="Secundária Outline" variant="secondary-outline" onClick={() => {}} />
 ```
 
 ## Regras de Uso
