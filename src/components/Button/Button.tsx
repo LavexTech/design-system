@@ -37,16 +37,32 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const { action, variant: gluestackVariant } = variantMap[variant]
 
-  let tiroliro = {}
+  let buttonStyle = {}
   let buttonSize: "sm" | "md" = "md"
 
-  if (variant === "primary") tiroliro = { backgroundColor: Constants.styles.color.BLUE }
+  if (variant === "primary") {
+    buttonStyle = { 
+      backgroundColor: Constants.styles.color.PRIMARY_DARK, 
+      color: Constants.styles.color.PRIMARY_LIGHT,
+      borderColor: Constants.styles.color.PRIMARY_DARK,
+      borderWidth: 1  
+    }
+  }
   if (variant === "secondary") {
-    tiroliro = { backgroundColor: Constants.styles.color.WHITE, borderColor: Constants.styles.color.BLACK }
+    buttonStyle = { 
+      backgroundColor: Constants.styles.color.PRIMARY_DARK,
+      color: Constants.styles.color.BACKGROUND_LIGHT,
+      borderColor: Constants.styles.color.PRIMARY_DARK,
+      borderWidth: 1
+    }
     buttonSize = "sm"
   }
   if (variant === "secondary-outline") {
-    tiroliro = { backgroundColor: Constants.styles.color.WHITE, borderColor: Constants.styles.color.BLACK }
+    buttonStyle = { 
+      backgroundColor: Constants.styles.color.BACKGROUND_LIGHT,
+      color: Constants.styles.color.PRIMARY_DARK,
+      borderColor: Constants.styles.color.PRIMARY_DARK 
+    }
     buttonSize = "sm"
   }
 
@@ -58,7 +74,7 @@ export const Button: React.FC<ButtonProps> = ({
       variant={gluestackVariant}
       size={buttonSize}
       onPress={onClick}
-      style={tiroliro}
+      style={buttonStyle}
     >
       <ButtonText>{text}</ButtonText>
     </GluestackButton>
