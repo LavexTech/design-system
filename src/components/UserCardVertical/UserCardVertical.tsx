@@ -6,6 +6,7 @@ import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
 import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
+import { getProfileImageUrl } from "../../utils/profileImage"
 
 type User = {
   id: string,
@@ -13,6 +14,7 @@ type User = {
   profileImage: string,
   ordersCount: number,
   rating: number,
+  userType: 'client' | 'provider',
 }
 
 type UserCardVerticalProps = {
@@ -31,7 +33,7 @@ export const UserCardVertical: React.FC<UserCardVerticalProps> = ({
             <View style={styles.centerImage}>
               <Image
                 size="md"
-                src={ user.profileImage }
+                src={getProfileImageUrl(user.profileImage, user.userType)}
                 type="circle"
                 alt={ user.name }
                 />

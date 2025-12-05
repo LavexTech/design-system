@@ -4,20 +4,24 @@ import { TextBox } from "../Text/Text"
 import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
+import { getProfileImageUrl } from "../../utils/profileImage"
 
 type MessageSentProps = {
     text: string
     timestamp?: string
     senderName?: string
     avatarUrl?: string
+    userType?: 'client' | 'provider'
 }
 
 export const MessageSent: React.FC<MessageSentProps> = ({ 
     text, 
     timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     senderName = "You",
-    avatarUrl = "https://picsum.photos/id/64/40/40"
+    avatarUrl,
+    userType = 'client'
 }: MessageSentProps) => {
+    const finalAvatarUrl = getProfileImageUrl(avatarUrl, userType);
     return (
         <View style={styles.container}>
             <Grid columns={12} gap={0}>
@@ -34,7 +38,7 @@ export const MessageSent: React.FC<MessageSentProps> = ({
                 <GridItem colSpan={2}>
                     <View style={styles.avatarContainer}>
                         <Image 
-                            src={avatarUrl} 
+                            src={finalAvatarUrl} 
                             alt={`${senderName} avatar`}
                             size="xs"
                             type="circle"
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
         borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
-        maxWidth: Constants.styles.maxWidth.messageBubble,
+        maxWidth: Constants.styles.maxWidth.messageBubble as any,
         alignSelf: 'flex-end',
     },
     messageInfo: {

@@ -7,6 +7,7 @@ import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
+import { getProfileImageUrl } from "../../utils/profileImage"
 
 export type User = {
   id: string,
@@ -14,6 +15,7 @@ export type User = {
   profileImage: string,
   ordersCount: number,
   rating: number,
+  userType: 'client' | 'provider',
 }
 
 type UserCardHorizontalProps = {
@@ -31,7 +33,7 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
       <Grid columns={12} gap={0}>
         <GridItem colSpan={4}>
           <Image
-            src={user.profileImage}
+            src={getProfileImageUrl(user.profileImage, user.userType)}
             alt={user.name}
             size="md"
             type="circle"

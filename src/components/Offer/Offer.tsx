@@ -13,6 +13,7 @@ type User = {
   profileImage: string,
   ordersCount: number,
   rating: number,
+  userType: 'client' | 'provider',
 }
 
 type OfferProps = {

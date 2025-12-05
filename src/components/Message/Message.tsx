@@ -11,6 +11,7 @@ type MessageProps = {
     timestamp?: string
     senderName?: string
     avatarUrl?: string
+    userType?: 'client' | 'provider'
 }
 
 export const Message: React.FC<MessageProps> = ({ 
@@ -19,7 +20,8 @@ export const Message: React.FC<MessageProps> = ({
     isOwn = false, 
     timestamp,
     senderName,
-    avatarUrl
+    avatarUrl,
+    userType = 'client'
 }: MessageProps) => {
     const messageComponent = isOwn ? (
         <MessageSent 
@@ -27,6 +29,7 @@ export const Message: React.FC<MessageProps> = ({
             timestamp={timestamp}
             senderName={senderName}
             avatarUrl={avatarUrl}
+            userType={userType}
         />
     ) : (
         <MessageReceived 
@@ -34,6 +37,7 @@ export const Message: React.FC<MessageProps> = ({
             timestamp={timestamp}
             senderName={senderName}
             avatarUrl={avatarUrl}
+            userType={userType}
         />
     )
 

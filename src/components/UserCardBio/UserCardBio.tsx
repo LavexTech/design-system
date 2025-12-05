@@ -6,6 +6,7 @@ import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
 import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
+import { getProfileImageUrl } from "../../utils/profileImage"
 
 type User = {
   id: string,
@@ -14,6 +15,7 @@ type User = {
   ordersCount: number,
   rating: number,
   bio: string,
+  userType: 'client' | 'provider',
 }
 
 type UserCardBioProps = {
@@ -34,7 +36,7 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
               <View style={styles.centerImage}>
                 <Image
                   size="md"
-                  src={ user.profileImage }
+                  src={getProfileImageUrl(user.profileImage, user.userType)}
                   type="circle"
                   alt={ user.name }
                   />

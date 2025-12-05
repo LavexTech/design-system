@@ -6,7 +6,7 @@ import Constants from "../../constants/constants";
 export interface TextProps {
   text: string;
   size?: "small" | "medium" | "large";
-  level? : "success" | "error" | "warning" | "default";
+  level? : "success" | "error" | "warning" | "default" | "primary";
   position? : "left" | "center" | "right";
 }
 
