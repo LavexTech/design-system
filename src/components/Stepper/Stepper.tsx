@@ -1,12 +1,10 @@
 import React from "react"
-import { View, Text, Pressable, StyleSheet } from "react-native"
+import { View, Pressable, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
-import { Grid } from "../Grid/Grid"
 import { TextBox } from "../Text/Text"
 import { IconPlus } from "../Icons/IconPlus"
 import { IconMinus } from "../Icons/IconMinus"
 import { IconTrash } from "../Icons/IconTrash"
-import { IconEdit } from "../Icons/IconEdit"
 
 type StepperProps = {
   text: string,
@@ -15,7 +13,6 @@ type StepperProps = {
   value: number,
   onChange: (value: number) => void
   onDelete?: () => void,
-  onEdit?: () => void,
 }
 
 export const Stepper: React.FC<StepperProps> = ({
@@ -25,7 +22,6 @@ export const Stepper: React.FC<StepperProps> = ({
   value,
   onChange,
   onDelete,
-  onEdit,
 }) => {
   const handleIncrement = () => {
     if (value < max) {
@@ -43,11 +39,19 @@ export const Stepper: React.FC<StepperProps> = ({
   const isMaxDisabled = value >= max
 
   return (
-    <Grid columns={2} gap={Constants.styles.spacing.SMALL}>
-      <View style={styles.labelContainer}>
-        <TextBox text={text} />
+    <View style={styles.container}>
+      {onDelete && (
+        <Pressable onPress={onDelete} style={[styles.button, styles.buttonAction, styles.buttonDelete]}>
+          <IconTrash width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
+        </Pressable>
+      )}
+      <View style={styles.valueContainer}>
+        <TextBox text={String(value)} size="medium" />
       </View>
-      <View style={styles.controlsContainer}>
+      <View style={styles.labelContainer}>
+        <TextBox text={text} size="medium" />
+      </View>
+      <View style={styles.stepperButtons}>
         <Pressable
           onPress={handleDecrement}
           disabled={isMinDisabled}
@@ -59,9 +63,6 @@ export const Stepper: React.FC<StepperProps> = ({
         >
           <IconMinus width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
-        <View style={styles.valueContainer}>
-          <Text style={styles.valueText}>{value}</Text>
-        </View>
         <Pressable
           onPress={handleIncrement}
           disabled={isMaxDisabled}
@@ -73,39 +74,36 @@ export const Stepper: React.FC<StepperProps> = ({
         >
           <IconPlus width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
-        <View style={styles.buttonsContainer}>
-          {onDelete && (
-            <Pressable onPress={onDelete} style={[styles.button, styles.buttonLeft]}>
-              <IconTrash width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
-            </Pressable>
-          )}
-          {onEdit && (
-            <Pressable onPress={onEdit} style={[styles.button, styles.buttonLeft]}>
-              <IconEdit width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
-            </Pressable>
-          )}
-        </View>
       </View>
-    </Grid>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+  },
+  buttonDelete: {
+    marginRight: Constants.styles.spacing.SMALL,
+  },
+  valueContainer: {
+    minWidth: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: Constants.styles.spacing.SMALL,
+  },
   labelContainer: {
-    marginTop: Constants.styles.spacing.SMALL,
+    flex: 1,
+    justifyContent: "center",
+    marginRight: Constants.styles.spacing.SMALL,
   },
-  controlsContainer: {
+  stepperButtons: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-end",
     height: Constants.styles.componentSize.BUTTON_HEIGHT,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    gap: Constants.styles.spacing.SMALL,
-    marginLeft: Constants.styles.spacing.SMALL,
+    marginLeft: "auto",
   },
   button: {
     width: Constants.styles.componentSize.BUTTON_WIDTH,
@@ -119,34 +117,20 @@ const styles = StyleSheet.create({
   buttonLeft: {
     borderTopLeftRadius: Constants.styles.borderRadius.MEDIUM,
     borderBottomLeftRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: Constants.styles.borderWidth.THIN,
     borderRightWidth: 0,
   },
   buttonRight: {
     borderTopRightRadius: Constants.styles.borderRadius.MEDIUM,
     borderBottomRightRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: Constants.styles.borderWidth.THIN,
     borderLeftWidth: 0,
+  },
+  buttonAction: {
+    borderRightWidth: Constants.styles.borderWidth.THIN,
+    borderRadius: Constants.styles.borderRadius.MEDIUM,
   },
   buttonDisabled: {
     backgroundColor: Constants.styles.backgroundColor.GRAY,
     opacity: Constants.styles.opacity.LOW,
-  },
-  valueContainer: {
-    minWidth: Constants.styles.componentSize.INPUT_MIN_WIDTH,
-    height: Constants.styles.componentSize.BUTTON_HEIGHT,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
-    borderTopWidth: Constants.styles.borderWidth.THIN,
-    borderBottomWidth: Constants.styles.borderWidth.THIN,
-    borderColor: Constants.styles.borderColor.MEDIUM,
-  },
-  valueText: {
-    fontSize: Constants.styles.fontSize.MEDIUM,
-    fontWeight: Constants.styles.fontWeight.BOLD as any,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
   },
 })
 
