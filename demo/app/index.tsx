@@ -20,7 +20,7 @@ import { InputChat } from "@src/components/InputChat/InputChat"
 
 // User Cards
 import { UserCardBio } from "@src/components/UserCardBio/UserCardBio"
-import { UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal"
+import { User, UserCardHorizontal } from "@src/components/UserCardHorizontal/UserCardHorizontal"
 import { UserCardVertical } from "@src/components/UserCardVertical/UserCardVertical"
 
 // Lists
@@ -93,6 +93,7 @@ export default function Index() {
   const [pantsCount, setPantsCount] = useState(1);
 
   const sampleUser = {
+    userType: "client",
     name: "John Doe",
     email: "john.doe@example.com",
     phone: "+1234567890",
@@ -102,7 +103,7 @@ export default function Index() {
     ordersCount: 32,
     rating: 3.5,
     id: "1",
-  };
+  } as User;
 
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
@@ -392,7 +393,7 @@ export default function Index() {
 
       <Grid columns={1} gap={1}>
         <UserCardBio
-          user={sampleUser}
+          user={{...sampleUser, bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}}
           onClick={() => console.log("Usuário clicado:", sampleUser.id)}
         />
       </Grid>
@@ -468,7 +469,8 @@ export default function Index() {
           isOwn={false}
           senderName="Maria"
           timestamp="14:30"
-          avatarUrl="https://picsum.photos/id/91/40/40"
+          avatarUrl=""
+          userType="provider"
         />
         <Message
           text="Blah?"
@@ -476,29 +478,33 @@ export default function Index() {
           isOwn={false}
           senderName="Maria"
           timestamp="14:30"
-          avatarUrl="https://picsum.photos/id/91/40/40"
+          avatarUrl=""
+          userType="provider"
         />
         <Message
           text="Blah blah blah  blah blah blah blah blah blah"
           onClick={() => console.log("Mensagem clicada!")}
           isOwn={true}
           timestamp="14:31"
-          avatarUrl="https://picsum.photos/id/64/40/40"
-        />
+          avatarUrl=""
+          userType="client"
+          />
         <Message
           text="Blah blah blah  blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah"
           onClick={() => console.log("Mensagem clicada!")}
           isOwn={false}
           senderName="Maria"
           timestamp="14:32"
-          avatarUrl="https://picsum.photos/id/91/40/40"
-        />
+          avatarUrl=""
+          userType="provider"
+          />
         <Message
           text="Blah."
           onClick={() => console.log("Mensagem clicada!")}
           isOwn={true}
           timestamp="14:33"
-          avatarUrl="https://picsum.photos/id/64/40/40"
+          avatarUrl=""
+          userType="client"
         />
       </View>
 
