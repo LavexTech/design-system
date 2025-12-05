@@ -12,7 +12,7 @@ export interface TextProps {
 
 export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "default", position = "left" }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
-  if (!fontLoaded) return null;
+  if (!fontLoaded) return null; 
 
   const sizes = {
     small: 15,
