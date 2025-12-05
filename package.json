@@ -1,6 +1,6 @@
 {
   "name": "lavex-design-system",
-  "version": "0.1.24",
+  "version": "0.1.26",
   "description": "Lavex Design System for React Native",
   "files": [
     "src/",

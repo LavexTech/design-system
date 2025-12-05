@@ -13,10 +13,12 @@ import { Modal } from "lavex-design-system";
 | Prop         | Tipo         | Obrigatório | Padrão | Descrição                                                                       |
 | ------------ | ------------ | ----------- | ------ | ------------------------------------------------------------------------------- |
 | `title`      | `string`     | Sim         | -      | Título grande que aparece no topo da janela (ex: "Atenção!")                    |
-| `text`       | `string`     | Sim         | -      | Mensagem ou descrição que explica o motivo da janela (ex: "Deseja mesmo sair?") |
+| `children`   | `ReactNode`  | Sim         | -      | Conteúdo do modal (pode ser texto, componentes, etc.)                            |
 | `onClose`    | `() => void` | Sim         | -      | Função executada quando o botão é clicado para esconder a janela                |
-| `visible`    | `boolean`    | Não         | `true` | Controla se o modal está visível          |
-| `modalStyle`    | `info \| save \| confirm`    | Não      | `info` | Info: Botão 'OK', Save: Botão 'Salvar' e 'Cancelar', Confirm: Botão 'OK' e 'Cancelar'                                               |
+| `visible`    | `boolean`    | Não         | `true` | Controla se o modal está visível                                                |
+| `buttonText` | `string`     | Não         | `'OK'` | Texto do botão                                                                  |
+| `buttonVariant` | `string`   | Não         | `'default'` | Variante do botão (veja variantes do Button)                                    |
+| `buttonSize` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Não | `'md'` | Tamanho do botão                                                                |
 
 ## O que faz
 
@@ -32,7 +34,7 @@ import { Modal } from "lavex-design-system";
 ```tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Modal, Button } from "lavex-design-system";
+import { Modal, Button, Text } from "lavex-design-system";
 
 const MyComponent = () => {
   const [showModal, setShowModal] = useState(false);
@@ -43,14 +45,43 @@ const MyComponent = () => {
       
       <Modal
         title="Confirmação"
-        text="Deseja realmente continuar com esta ação?"
         onClose={() => setShowModal(false)}
         visible={showModal}
-        modalStyle="confirm"
-      />
+        buttonText="Confirmar"
+        buttonVariant="success"
+      >
+        <Text text="Deseja realmente continuar com esta ação?" />
+      </Modal>
     </View>
   );
 };
+```
+
+## Exemplos com Diferentes Tamanhos de Botão
+
+```tsx
+// Botão pequeno
+<Modal
+  title="Atenção"
+  onClose={() => setShowModal(false)}
+  visible={showModal}
+  buttonText="OK"
+  buttonSize="sm"
+>
+  <Text text="Esta é uma mensagem importante." />
+</Modal>
+
+// Botão grande
+<Modal
+  title="Confirmação"
+  onClose={() => setShowModal(false)}
+  visible={showModal}
+  buttonText="Confirmar"
+  buttonVariant="success"
+  buttonSize="lg"
+>
+  <Text text="Deseja realmente continuar?" />
+</Modal>
 ```
 
 ## Implementação

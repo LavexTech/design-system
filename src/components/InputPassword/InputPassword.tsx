@@ -13,6 +13,7 @@ type InputPasswordProps = {
     showPasswordToggle?: boolean,
     validation?: (value: string) => boolean,
     errorMessage?: string,
+    minLength?: number,
 }
 
 export const InputPassword: React.FC<InputPasswordProps> = ({
@@ -22,6 +23,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
     onChange,
     showPasswordToggle = true,
     errorMessage,
+    minLength,
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
@@ -30,12 +32,31 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
     };
     
     const validatePassword = (password: string) => {
-        if (password.length < 8) return false
+        if (minLength !== undefined && password.length < minLength) return false
         if (!/[A-Z]/.test(password)) return false
         if (!/[a-z]/.test(password)) return false
         if (!/[0-9]/.test(password)) return false
         
         return true
+    }
+
+    const getErrorMessage = (): string => {
+        if (errorMessage) return errorMessage
+        
+        if (minLength !== undefined && value.length < minLength) {
+            return `A senha deve ter pelo menos ${minLength} caracteres`
+        }
+        if (value && !/[A-Z]/.test(value)) {
+            return "A senha deve conter pelo menos uma letra maiúscula"
+        }
+        if (value && !/[a-z]/.test(value)) {
+            return "A senha deve conter pelo menos uma letra minúscula"
+        }
+        if (value && !/[0-9]/.test(value)) {
+            return "A senha deve conter pelo menos um número"
+        }
+        
+        return ""
     }
 
     const rightElement = showPasswordToggle ? (
@@ -58,7 +79,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             placeholder={placeholder}
             onChange={onChange}
             validation={validatePassword}
-            errorMessage={errorMessage}
+            errorMessage={getErrorMessage()}
             secureTextEntry={!isPasswordVisible}
             rightElement={rightElement}
         />

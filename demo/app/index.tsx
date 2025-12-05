@@ -71,6 +71,8 @@ import { NavigationBar } from "@src/components/NavigationBar/NavigationBar"
 
 export default function Index() {
   const [showModal, setShowModal] = useState(false);
+  const [showCustomModal, setShowCustomModal] = useState(false);
+  const [showCompareModal, setShowCompareModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [activePage, setActivePage] = useState("Pedido");
   const [value, setValue] = useState("");
@@ -91,6 +93,7 @@ export default function Index() {
   ];
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
+  const [socksCount, setSocksCount] = useState(0);
 
   const sampleUser = {
     userType: "client",
@@ -192,7 +195,7 @@ export default function Index() {
             errorMessage="Por favor, insira um telefone válido"
           />
 
-          <InputName
+  <InputName
             label="Nome Completo"
             value={userName}
             placeholder="Digite seu nome completo"
@@ -269,7 +272,12 @@ export default function Index() {
           <Button text="Default Outline" onClick={() => console.log("Outline")} variant="default-outline" />
           <Button text="Success Outline" onClick={() => console.log("Success Outline")} variant="success-outline" />
           <Button text="Danger Outline" onClick={() => console.log("Danger Outline")} variant="danger-outline" />
+          <Button text="Primary" onClick={() => console.log("Primary")} variant="primary" />
+          <Button text="Secondary" onClick={() => console.log("Secondary")} variant="secondary" />
+          <Button text="Secondary Outline" onClick={() => console.log("Secondary Outline")} variant="secondary-outline" />
           <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
+          <Button text="Mostrar Modal Customizado" onClick={() => setShowCustomModal(true)} />
+          <Button text="Mostrar Modal Comparação" onClick={() => setShowCompareModal(true)} />
         </Grid>
       </Card>
 
@@ -434,7 +442,14 @@ export default function Index() {
             value={pantsCount}
             onChange={setPantsCount}
             onDelete={() => console.log("Calça deletada!")}
-            onEdit={() => console.log("Calça editada!")}
+          />
+          <Stepper
+            text="Meias"
+            min={0}
+            max={5}
+            value={socksCount}
+            onChange={setSocksCount}
+            onDelete={() => console.log("Meias deletadas!")}
           />
         </Grid>
       </Card>
@@ -692,7 +707,59 @@ export default function Index() {
           title="Exemplo de Modal"
           onClose={() => setShowModal(false)}
           visible={showModal}
-          modalStyle="confirm"
+          buttonText="OK"
+          buttonVariant="default"
+        >
+          <Text
+            size="small"
+            text="Este é um exemplo de como usar o componente Modal com suas propriedades. Você pode personalizar o título, texto e botão."
+            level="default"
+            position="center"
+          />
+        </Modal>
+      </View>
+      )
+    }
+    {showCustomModal && (
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}>
+        <Modal
+          title="Modal com Botão Customizado"
+          onClose={() => setShowCustomModal(false)}
+          visible={showCustomModal}
+          buttonText="Confirmar"
+          buttonVariant="success"
+          buttonSize="sm"
+        >
+          <Text
+            size="small"
+            text="Este é um exemplo de Modal com botão customizado. Você pode personalizar o texto, variante e tamanho do botão através das props buttonText, buttonVariant e buttonSize."
+            level="default"
+            position="center"
+          />
+        </Modal>
+      </View>
+      )
+    }
+    {showCompareModal && (
+      <View style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}>
+        <Modal
+          title="Exemplo de Modal"
+          onClose={() => setShowCompareModal(false)}
+          visible={showCompareModal}
+          buttonText="Confirmar"
+          buttonVariant="secondary-outline"
         >
           <Text
             size="small"
@@ -716,7 +783,8 @@ export default function Index() {
           title={`Imagem ${currentImageIndex + 1} de ${images.length}`}
           onClose={() => setShowGalleryModal(false)}
           visible={showGalleryModal}
-          modalStyle="info"
+          buttonText="Fechar"
+          buttonVariant="default"
         >
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Image
