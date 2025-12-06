@@ -10,6 +10,7 @@ type InputProps = {
   label: string
   value: string
   placeholder?: string
+  placeholderTextColor?: string
   onChange: (value: string) => void
   validation?: (value: string) => boolean
   errorMessage?: string
@@ -28,7 +29,7 @@ export const Input: React.FC<InputProps> = ({
   validation,
   errorMessage,
   mask,
-  isMultiline = false,
+  placeholderTextColor = Constants.styles.textColor.INFO,
   mobileKeyboard = "text",
   secureTextEntry = false,
   rightElement,
@@ -107,9 +108,11 @@ export const Input: React.FC<InputProps> = ({
   return (
     <GluestackUIProvider>
       <Grid columns={1} gap={2}>
-        <GridItem colSpan={4}>
-          <Text text={label} size="small" />
-        </GridItem>
+        {label && (
+          <GridItem colSpan={4}>
+            <Text text={label} size="small" />
+          </GridItem>
+        )}
         <GridItem colSpan={4}>
         <InputBase
           style={[styles.input, !isValid && styles.inputError]}
@@ -125,10 +128,9 @@ export const Input: React.FC<InputProps> = ({
             value={value} 
             onChangeText={handleTextChange} 
             keyboardType={getKeyboardType()} 
-            placeholderTextColor={Constants.styles.textColor.INFO}
+            placeholderTextColor={placeholderTextColor}
             secureTextEntry={secureTextEntry}
             onBlur={onBlur}
-            multiline={isMultiline}
           />
           {rightElement}
         </InputBase>

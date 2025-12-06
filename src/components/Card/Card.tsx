@@ -30,13 +30,13 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: Constants.styles.borderWidth.SMALL,
+    borderWidth: Constants.styles.borderWidth.THIN,
     borderColor: Constants.styles.borderColor.LIGHT,
     padding: Constants.styles.spacing.MEDIUM,
     marginBottom: Constants.styles.spacing.SMALL,
   },
   title: {
-    fontSize: Constants.styles.fontSize.NORMAL,
+    fontSize: Constants.styles.fontSize.SMALL,
     fontWeight: Constants.styles.fontWeight.BOLD,
     fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,

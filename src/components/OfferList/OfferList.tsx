@@ -1,6 +1,8 @@
 import React from "react"
 import { Offer } from "../Offer/Offer"
 import { List } from "../List/List"
+import { GridItem } from "../Grid/Grid"
+import { Grid } from "../Grid/Grid"
 
 type User = {
 	id: string,
@@ -25,18 +27,18 @@ type OfferListProps = {
 
 export const OfferList: React.FC<OfferListProps> = ({ offers }) => {
   return (
-    <>
-	<List title="Ofertas">
+	<Grid columns={1} gap={1}>
       {offers.map((offer) => (
-		  <Offer 
+        <GridItem colSpan={1}>
+          <Offer
 		  	key={offer.id} 
-			amount={offer.amount} 
-			distance={offer.distance} 
-			user={offer.user} 
-			onClick={offer.onClick} 
-			/>
-		))}
-	</List>
-    </>
+            amount={offer.amount}
+            distance={offer.distance}
+            user={offer.user}
+            onClick={offer.onClick}
+            />
+        </GridItem>
+      ))}
+      </Grid>
   )
 }

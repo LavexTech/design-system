@@ -28,6 +28,7 @@ export function InputChat({
     <Grid columns={12} gap={4}>
       <GridItem colSpan={11}>
         <Input
+          label=""
           value={value}
           onChange={onChange}
           placeholder={placeholder}

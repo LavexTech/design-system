@@ -7,9 +7,10 @@ import { Subtitle } from "../Subtitle/Subtitle"
 type ListProps ={
   title?: string
   children: React.ReactNode
+  divider?: boolean
 }
 
-export const List: React.FC<ListProps> = ({ title, children }) => {
+export const List: React.FC<ListProps> = ({ title, children, divider = true }) => {
   const childrenArray = React.Children.toArray(children)
 
   const renderItem = ({ item, index }: { item: React.ReactNode; index: number }) => (
@@ -18,7 +19,7 @@ export const List: React.FC<ListProps> = ({ title, children }) => {
     </View>
   )
 
-  const ItemSeparatorComponent = () => <View style={styles.separator} />
+  const ItemSeparatorComponent = () => divider ? <View style={styles.separator} /> : null
 
   return (
     <Grid columns={1} gap={4}>
