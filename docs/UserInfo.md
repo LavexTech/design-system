@@ -43,5 +43,6 @@ const user = {
 | `position` | CARGO         |
 | `address`    | ENDEREÇO      |
 | `age`        | IDADE         |
+| `cep`        | CEP           |
 
 Para outros tipos, a label será capitalizada automaticamente. Use a prop `label` para personalizar a exibição.

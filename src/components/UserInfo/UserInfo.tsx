@@ -21,6 +21,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user, type, label, onClick }
       age: "Idade",
       city: "Cidade",
       country: "País",
+      cep: "CEP",
     }
     return labels[type] || type.charAt(0).toUpperCase() + type.slice(1)
   }
