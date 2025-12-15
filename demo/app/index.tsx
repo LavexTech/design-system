@@ -67,6 +67,7 @@ import { Order } from "@src/components/Order/Order";
 import { Offer } from "@src/components/Offer/Offer"
 import { Gallery } from "@src/components/Gallery/Gallery"
 import { NavigationBar } from "@src/components/NavigationBar/NavigationBar"
+import { StarRating } from "@src/components/StarRating/StarRating"
 
 
 export default function Index() {
@@ -650,6 +651,16 @@ export default function Index() {
       </View>
 
       <Offer amount={100} distance={10} user={sampleUser} />
+
+  {/* StarRating */}
+
+      <View style={{ marginTop: 20, marginBottom: 10 }}>
+        <Subtitle text="StarRating" />
+      </View>
+
+      <Card>
+        <StarRating initialRating={3.5} />
+      </Card>
 
 {/* Icons */}
 

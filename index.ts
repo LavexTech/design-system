@@ -42,6 +42,7 @@ export { Stepper } from "./src/components/Stepper/Stepper";
 export { NavigationBar } from "./src/components/NavigationBar/NavigationBar";
 export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";
+export { StarRating } from "./src/components/StarRating/StarRating";
 
 // ------------------------------------------------------------
 
