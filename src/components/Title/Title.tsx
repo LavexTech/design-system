@@ -5,13 +5,14 @@ import Constants from "../../constants/constants";
 
 export interface TitleProps {
   text: string;
+  position?: 'left' | 'center' | 'right';
 }
 
-export const Title: React.FC<TitleProps> = ({ text }) => {
+export const Title: React.FC<TitleProps> = ({ text, position = 'left' }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
   if (!fontLoaded) return null;
 
-  return <Text style={styles.Title}>{text}</Text>;
+  return <Text style={[styles.Title, { textAlign: position }]}>{text}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -21,7 +22,6 @@ const styles = StyleSheet.create({
     lineHeight: Constants.styles.fontSize.LARGER,
     fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,
-    textAlign: "left",
     flexWrap: "wrap",
     flexShrink: 1,
   },
