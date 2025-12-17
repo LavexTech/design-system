@@ -5,13 +5,14 @@ import Constants from "../../constants/constants";
 
 export interface SubtitleProps {
   text: string;
+  position?: 'left' | 'center' | 'right';
 }
 
-export const Subtitle: React.FC<SubtitleProps> = ({ text }) => {
+export const Subtitle: React.FC<SubtitleProps> = ({ text, position = 'left' }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
   if (!fontLoaded) return null;
 
-  return <Text style={styles.Subtitle}>{text}</Text>;
+  return <Text style={[styles.Subtitle, { textAlign: position }]}>{text}</Text>;
 };
 
 const styles = StyleSheet.create({
@@ -21,7 +22,6 @@ const styles = StyleSheet.create({
     lineHeight: Constants.styles.fontSize.LARGE,
     fontFamily: Constants.styles.fontFamily.REGULAR,
     color: Constants.styles.textColor.DEFAULT,
-    textAlign: "left",
     flexWrap: "wrap",
     flexShrink: 1,
   },
