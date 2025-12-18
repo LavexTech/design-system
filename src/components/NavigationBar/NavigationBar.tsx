@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: Constants.styles.spacing.SMALL,
-    paddingBottom: Constants.styles.spacing.EXTRA_LARGE,
+    paddingVertical: Constants.styles.spacing.SMALL,
   },
   iconContainer: {
     alignItems: "center",
