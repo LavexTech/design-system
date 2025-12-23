@@ -80,12 +80,12 @@ import Constants from "lavex-design-system/constants";
 ```tsx
 import React from "react";
 import { View } from "react-native";
-import { Title2, Info } from "lavex-design-system";
+import { Subtitle, Info } from "lavex-design-system";
 
 const LoginForm = () => {
   return (
     <View style={{ padding: 20 }}>
-      <Title2 text="Fazer Login" />
+      <Subtitle text="Fazer Login" />
       <Info text="Digite suas credenciais para acessar sua conta" />
       {/* Campos do formulário */}
     </View>
@@ -98,12 +98,12 @@ const LoginForm = () => {
 ```tsx
 import React from "react";
 import { View } from "react-native";
-import { Title3, Info } from "lavex-design-system";
+import { Title, Info } from "lavex-design-system";
 
 const UserCard = () => {
   return (
     <View style={{ padding: 16 }}>
-      <Title3 text="João Silva" />
+      <Title text="João Silva" />
       <Info text="Membro desde janeiro de 2023" />
     </View>
   );
@@ -115,12 +115,12 @@ const UserCard = () => {
 ```tsx
 import React from "react";
 import { View } from "react-native";
-import { Title2, Info } from "lavex-design-system";
+import { Subtitle, Info } from "lavex-design-system";
 
 const LoadingState = () => {
   return (
     <View style={{ padding: 20 }}>
-      <Title2 text="Carregando..." />
+      <Subtitle text="Carregando..." />
       <Info text="Por favor, aguarde enquanto processamos sua solicitação" />
     </View>
   );
@@ -132,20 +132,20 @@ const LoadingState = () => {
 ```tsx
 import React from "react";
 import { View } from "react-native";
-import { Title1, Title2, Info } from "lavex-design-system";
+import { MainTitle, Subtitle, Info } from "lavex-design-system";
 
 const ProfileScreen = () => {
   return (
     <View style={{ padding: 20 }}>
-      <Title1 text="Meu Perfil" />
+      <MainTitle text="Meu Perfil" />
 
       <View style={{ marginTop: 20 }}>
-        <Title2 text="Informações Pessoais" />
+        <Subtitle text="Informações Pessoais" />
         <Info text="Mantenha suas informações sempre atualizadas" />
       </View>
 
       <View style={{ marginTop: 16 }}>
-        <Title2 text="Configurações de Privacidade" />
+        <Subtitle text="Configurações de Privacidade" />
         <Info text="Controle quem pode ver suas informações" />
       </View>
     </View>
