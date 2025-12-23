@@ -29,12 +29,12 @@ npm install lavex-design-system
 ```tsx
 import React from 'react';
 import { View } from 'react-native';
-import { Title1, Card, Text } from 'lavex-design-system';
+import { MainTitle, Card, Text } from 'lavex-design-system';
 
 export default function App() {
   return (
     <View style={{ flex: 1, padding: 20 }}>
-      <Title1 text="Meu App" />
+      <MainTitle text="Meu App" />
       <Card title="Bem-vindo">
         <Text text="Este é um exemplo usando o Lavex Design System" />
       </Card>
@@ -48,12 +48,12 @@ export default function App() {
 ```tsx
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Title1, List, Card, Text, Info } from 'lavex-design-system';
+import { MainTitle, List, Card, Text, Info } from 'lavex-design-system';
 
 export default function App() {
   return (
     <ScrollView style={{ flex: 1, padding: 20 }}>
-      <Title1 text="Dashboard" />
+      <MainTitle text="Dashboard" />
       
       <List title="Tarefas Pendentes">
         <Card title="Revisar código">
@@ -75,10 +75,10 @@ export default function App() {
 Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### Componentes de Texto
-- **Title1** - Títulos principais (Heading 1) - [Documentação](./docs/Title1.md)
-- **Title2** - Títulos secundários (Heading 2) - [Documentação](./docs/Title2.md)
-- **Title3** - Títulos terciários (Heading 3) - [Documentação](./docs/Title3.md)
-- **Text** - Texto padrão para conteúdo
+- **MainTitle** - Títulos principais (Heading 1) - [Documentação](./docs/MainTitle.md)
+- **Subtitle** - Títulos secundários (Heading 2) - [Documentação](./docs/Subtitle.md)
+- **Title** - Títulos terciários (Heading 3) - [Documentação](./docs/Title.md)
+- **Text** - Texto padrão para conteúdo - [Documentação](./docs/Text.md)
 - **Info** - Texto informativo secundário - [Documentação](./docs/Info.md)
 
 ### Componentes Estruturais
