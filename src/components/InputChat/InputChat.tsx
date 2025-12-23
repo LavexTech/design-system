@@ -43,7 +43,7 @@ export function InputChat({
             disabled={!value.trim()}
           >
             <IconSend
-              fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.GRAY}
+              fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.MEDIUM_GRAY}
               width={Constants.styles.icon.MEDIUM}
               height={Constants.styles.icon.MEDIUM}
             />
