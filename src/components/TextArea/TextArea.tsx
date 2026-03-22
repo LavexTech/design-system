@@ -12,6 +12,8 @@ type TextAreaProps = {
   placeholder?: string,
   onChange: (value: string) => void,
   maxLength?: number,
+  darkMode?: boolean,
+  fontScale?: number,
 }
 
 export const TextArea: React.FC<TextAreaProps> = ({
@@ -20,6 +22,8 @@ export const TextArea: React.FC<TextAreaProps> = ({
   placeholder,
   maxLength,
   onChange,
+  darkMode = false,
+  fontScale = 1,
 }: TextAreaProps) => {
   const handleChange = (text: string) => {
     if (maxLength && text.length > maxLength) {
@@ -31,20 +35,24 @@ export const TextArea: React.FC<TextAreaProps> = ({
   const currentLength = value?.length || 0
 
   return (
-    <GluestackUIProvider>
-      <Grid columns={1} gapY={2}>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+      <Grid columns={1} gapY={2} darkMode={darkMode}>
         <GridItem colSpan={1}>
-          <TextBox text={label} size="small" />
+          <TextBox text={label} size="small" darkMode={darkMode} fontScale={fontScale} />
         </GridItem>
         <GridItem colSpan={1}>
-          <Textarea style={styles.textarea} size="xl">
+          <Textarea style={[styles.textarea, darkMode ? styles.textareaDark : null]} size="xl">
             <TextareaInput
               {...({
                 value,
                 placeholder,
                 onChangeText: handleChange,
                 multiline: true,
-                placeholderTextColor: Constants.styles.textColor.INFO,
+                placeholderTextColor: darkMode ? Constants.styles.theme.dark.text.muted : Constants.styles.textColor.INFO,
+                style: {
+                  color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
+                  fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+                },
               } as any)}
             />
           </Textarea>
@@ -53,7 +61,9 @@ export const TextArea: React.FC<TextAreaProps> = ({
           <View style={styles.charCounterContainer}>
             <TextBox 
               text={`${currentLength}/${maxLength} caracteres`} 
-              size="small" 
+              size="small"
+              darkMode={darkMode}
+              fontScale={fontScale}
             />
           </View>
         )}
@@ -66,6 +76,10 @@ const styles = StyleSheet.create({
   textarea: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
+  },
+  textareaDark: {
+    backgroundColor: Constants.styles.theme.dark.background.subtle,
+    borderColor: Constants.styles.theme.dark.border.default,
   },
   charCounterContainer: {
     alignItems: 'flex-end',

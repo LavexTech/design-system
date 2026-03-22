@@ -6,7 +6,9 @@ type InputPhoneProps = {
   onChange: (value: string) => void,
   label?: string,
   placeholder?: string,
-  errorMessage?: string
+  errorMessage?: string,
+  darkMode?: boolean,
+  fontScale?: number,
 }
 
 export const InputPhone: React.FC<InputPhoneProps> = ({
@@ -15,6 +17,8 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
   label = "Telefone",
   placeholder = "(00) 00000-0000",
   errorMessage = "Telefone deve ter 11 dígitos",
+  darkMode = false,
+  fontScale = 1,
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -56,6 +60,8 @@ export const InputPhone: React.FC<InputPhoneProps> = ({
       validation={() => isValid}
       errorMessage={errorMessage}
       mobileKeyboard="phone"
+      darkMode={darkMode}
+      fontScale={fontScale}
     />
   );
 };

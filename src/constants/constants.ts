@@ -93,6 +93,36 @@ const Constants = {
     shadowColor: {
       DEFAULT: "#000",
     },
+    theme: {
+      light: {
+        text: {
+          default: "#262627",
+          muted: "#8F98AD",
+          primary: "#007AFF",
+        },
+        background: {
+          surface: "#FFFFFF",
+          subtle: "#F8F9FA",
+        },
+        border: {
+          default: "#DEE2E6",
+        },
+      },
+      dark: {
+        text: {
+          default: "#F3F7FF",
+          muted: "#B7C1D6",
+          primary: "#4EA8FF",
+        },
+        background: {
+          surface: "#121821",
+          subtle: "#1A2432",
+        },
+        border: {
+          default: "#2A364A",
+        },
+      },
+    },
     stepper: {
       ICON_SIZE: 16,
     },

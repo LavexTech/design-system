@@ -6,21 +6,32 @@ export interface CardProps {
   title?: string;
   children: React.ReactNode;
   onClick?: () => void;
+  darkMode?: boolean;
+  fontScale?: number;
 }
 
-export const Card: React.FC<CardProps> = ({ title, children, onClick }) => {
+export const Card: React.FC<CardProps> = ({ title, children, onClick, darkMode = false, fontScale = 1 }) => {
+  const dynamicCardStyle = {
+    backgroundColor: darkMode ? Constants.styles.theme.dark.background.surface : Constants.styles.theme.light.background.surface,
+    borderColor: darkMode ? Constants.styles.theme.dark.border.default : Constants.styles.theme.light.border.default,
+  };
+  const dynamicTitleStyle = {
+    color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
+    fontSize: Constants.styles.fontSize.SMALL * fontScale,
+  };
+
   if (onClick) {
     return (
-      <TouchableOpacity style={styles.card} onPress={onClick} activeOpacity={0.7}>
-        {title && <Text style={styles.title}>{title}</Text>}
+      <TouchableOpacity style={[styles.card, dynamicCardStyle]} onPress={onClick} activeOpacity={0.7}>
+        {title && <Text style={[styles.title, dynamicTitleStyle]}>{title}</Text>}
         <View style={styles.content}>{children}</View>
       </TouchableOpacity>
     );
   }
 
   return (
-    <View style={styles.card}>
-      {title && <Text style={styles.title}>{title}</Text>}
+    <View style={[styles.card, dynamicCardStyle]}>
+      {title && <Text style={[styles.title, dynamicTitleStyle]}>{title}</Text>}
       <View style={styles.content}>{children}</View>
     </View>
   );

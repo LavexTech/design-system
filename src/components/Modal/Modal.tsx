@@ -20,6 +20,8 @@ type ModalProps = {
     buttonVariant?: 'primary' | 'secondary' | 'secondary-outline' | 'default' | 'success' | 'danger' | 'default-outline' | 'success-outline' | 'danger-outline',
     buttonText?: string,
     buttonSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl',
+    darkMode?: boolean,
+    fontScale?: number,
 }
 
 
@@ -32,9 +34,11 @@ export const Modal: React.FC<ModalProps> = ({
     buttonVariant = 'default',
     buttonText = 'OK',
     buttonSize,
+    darkMode = false,
+    fontScale = 1,
 }: ModalProps) => {
     return (
-        <GluestackUIProvider>
+        <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
             <GluestackModal
                 isOpen={visible}
                 onClose={onClose}
@@ -44,7 +48,7 @@ export const Modal: React.FC<ModalProps> = ({
                 <ModalContent>
                     <ModalHeader>
                         <View style={{ flex: 1, alignItems: "center" }}>
-                            <Text text={title} position="center" />
+                            <Text text={title} position="center" darkMode={darkMode} fontScale={fontScale} />
                         </View>
                     </ModalHeader>
                     <ModalBody>
@@ -56,6 +60,8 @@ export const Modal: React.FC<ModalProps> = ({
                                 onClick={onClose} 
                                 variant={buttonVariant} 
                                 size={buttonSize}
+                                darkMode={darkMode}
+                                fontScale={fontScale}
                             />
                     </ModalFooter>
                 </ModalContent>

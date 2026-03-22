@@ -19,6 +19,8 @@ type InputProps = {
   secureTextEntry?: boolean
   rightElement?: React.ReactNode
   onBlur?: () => void
+  darkMode?: boolean
+  fontScale?: number
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -34,6 +36,8 @@ export const Input: React.FC<InputProps> = ({
   secureTextEntry = false,
   rightElement,
   onBlur,
+  darkMode = false,
+  fontScale = 1,
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -106,16 +110,20 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <GluestackUIProvider>
-      <Grid columns={1} gap={2}>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+      <Grid columns={1} gap={2} darkMode={darkMode}>
         {label && (
           <GridItem colSpan={4}>
-            <Text text={label} size="small" />
+            <Text text={label} size="small" darkMode={darkMode} fontScale={fontScale} />
           </GridItem>
         )}
         <GridItem colSpan={4}>
         <InputBase
-          style={[styles.input, !isValid && styles.inputError]}
+          style={[
+            styles.input,
+            darkMode ? styles.inputDark : null,
+            !isValid && styles.inputError,
+          ]}
           variant="outline"
           size="xl"
           isDisabled={false}
@@ -128,16 +136,20 @@ export const Input: React.FC<InputProps> = ({
             value={value} 
             onChangeText={handleTextChange} 
             keyboardType={getKeyboardType()} 
-            placeholderTextColor={placeholderTextColor}
+            placeholderTextColor={darkMode ? Constants.styles.theme.dark.text.muted : placeholderTextColor}
             secureTextEntry={secureTextEntry}
             onBlur={onBlur}
+            style={{
+              color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
+              fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+            }}
           />
           {rightElement}
         </InputBase>
         </GridItem>
         {!isValid && errorMessage && (
           <GridItem colSpan={4}>
-          <Text size="small" level="error" text={errorMessage} />
+          <Text size="small" level="error" text={errorMessage} darkMode={darkMode} fontScale={fontScale} />
           </GridItem>
         )}
       </Grid>
@@ -149,6 +161,10 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
+  },
+  inputDark: {
+    backgroundColor: Constants.styles.theme.dark.background.subtle,
+    borderColor: Constants.styles.theme.dark.border.default,
   },
   inputError: {
     borderColor: Constants.styles.textColor.DANGER,

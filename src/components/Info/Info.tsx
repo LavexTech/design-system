@@ -4,10 +4,12 @@ import Constants from "../../constants/constants";
 
 export interface InfoProps {
   text: string;
+  darkMode?: boolean;
+  fontScale?: number;
 }
 
-export const Info: React.FC<InfoProps> = ({ text }) => {
-  return <Text style={styles.info}>{text}</Text>;
+export const Info: React.FC<InfoProps> = ({ text, darkMode = false, fontScale = 1 }) => {
+  return <Text style={[styles.info, { color: darkMode ? Constants.styles.theme.dark.text.muted : Constants.styles.theme.light.text.muted, fontSize: Constants.styles.fontSize.SMALL * fontScale, lineHeight: Constants.styles.fontSize.SMALL * 1.4 * fontScale }]}>{text}</Text>;
 };
 
 const styles = StyleSheet.create({

@@ -6,7 +6,9 @@ type InputCPFProps = {
   onChange: (value: string) => void,
   label?: string,
   placeholder?: string,
-  errorMessage?: string
+  errorMessage?: string,
+  darkMode?: boolean,
+  fontScale?: number,
 }
 
 export const InputCPF: React.FC<InputCPFProps> = ({
@@ -15,6 +17,8 @@ export const InputCPF: React.FC<InputCPFProps> = ({
   label = "CPF",
   placeholder = "000.000.000-00",
   errorMessage = "CPF deve ter formato válido",
+  darkMode = false,
+  fontScale = 1,
 }) => {
   const validateCPF = (cpf: string): boolean => {
     if (!cpf) return true
@@ -49,6 +53,8 @@ export const InputCPF: React.FC<InputCPFProps> = ({
       errorMessage={errorMessage}
       mask="XXX.XXX.XXX-XX"
       mobileKeyboard="number"
+      darkMode={darkMode}
+      fontScale={fontScale}
     />
   );
 };

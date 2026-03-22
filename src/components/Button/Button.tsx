@@ -16,7 +16,10 @@ type ButtonProps = {
   | "secondary"
   | "secondary-outline";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  onClick: () => void
+  onClick: () => void;
+  disabled?: boolean;
+  darkMode?: boolean;
+  fontScale?: number;
 }
 
 const variantMap = {
@@ -36,6 +39,9 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "default",
   size,
   onClick,
+  disabled = false,
+  darkMode = false,
+  fontScale = 1,
 }) => {
   const { action, variant: gluestackVariant } = variantMap[variant]
 
@@ -74,14 +80,31 @@ export const Button: React.FC<ButtonProps> = ({
     }
   }
 
+  if (darkMode && (variant === "default" || variant === "default-outline")) {
+    buttonStyle = {
+      backgroundColor: variant === "default" ? Constants.styles.theme.dark.background.subtle : "transparent",
+      borderColor: Constants.styles.theme.dark.border.default,
+      borderWidth: 1,
+    };
+    textStyle = {
+      color: Constants.styles.theme.dark.text.default,
+      fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+    };
+  } else if (fontScale !== 1) {
+    textStyle = {
+      ...textStyle,
+      fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+    };
+  }
 
   return (
-    <GluestackUIProvider>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
     <GluestackButton
       action={action}
       variant={gluestackVariant}
       size={buttonSize}
       onPress={onClick}
+      isDisabled={disabled}
       style={[buttonStyle]}
     >
       <ButtonText style={[textStyle]}>

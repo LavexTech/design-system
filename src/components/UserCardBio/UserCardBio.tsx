@@ -21,15 +21,19 @@ type User = {
 type UserCardBioProps = {
   user: User,
   onClick?: () => void,
+  darkMode?: boolean,
+  fontScale?: number,
 }
 
 export const UserCardBio: React.FC<UserCardBioProps> = ({
   user,
   onClick,
+  darkMode = false,
+  fontScale = 1,
 }: UserCardBioProps) => {
   return (
-    <Card onClick={onClick}>
-      <Grid columns={2} gap={2}>
+    <Card onClick={onClick} darkMode={darkMode} fontScale={fontScale}>
+      <Grid columns={2} gap={2} darkMode={darkMode}>
         <GridItem colSpan={1}>
           <Grid columns={12} gap={2}>
             <GridItem colSpan={12}>
@@ -39,27 +43,28 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
                   src={getProfileImageUrl(user.profileImage, user.userType)}
                   type="circle"
                   alt={ user.name }
+                  darkMode={darkMode}
                   />
               </View>
             </GridItem>
             <GridItem colSpan={12}>
               <View style={styles.centerItem}>
-                <Text text={user.name} />
-                <Info text={`${user.ordersCount} pedidos feitos`} />
+                <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
+                <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
               </View>
             </GridItem>
             <GridItem colSpan={12}>
               <View style={styles.centerItem}>
                 <Stars rating={user.rating} size={16} />
-                <Info text={`${Math.round(user.rating)}/5`} />
+                <Info text={`${Math.round(user.rating)}/5`} darkMode={darkMode} fontScale={fontScale} />
               </View>
             </GridItem>
           </Grid>
         </GridItem>
         <GridItem colSpan={1}>
           <View>
-            <Info text="Bio" />
-            <Text size="small" text={user.bio} />
+            <Info text="Bio" darkMode={darkMode} fontScale={fontScale} />
+            <Text size="small" text={user.bio} darkMode={darkMode} fontScale={fontScale} />
           </View>
         </GridItem>
       </Grid>
