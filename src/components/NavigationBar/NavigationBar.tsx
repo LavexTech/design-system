@@ -8,13 +8,17 @@ type NavigationBarProps = {
   icons?: ((isActive: boolean) => React.ReactNode)[]
   activePage: string
   onNavigate?: (page: string) => void
+  darkMode?: boolean
+  fontScale?: number
 }
 
 export const NavigationBar: React.FC<NavigationBarProps> = ({
   pages,
   icons,
   activePage,
-  onNavigate
+  onNavigate,
+  darkMode = false,
+  fontScale = 1,
 }: NavigationBarProps) => {
   const handlePagePress = (page: string) => {
     if (onNavigate) {
@@ -23,7 +27,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, darkMode ? styles.containerDark : null]}>
       {pages.map((page, index) => {
         const isActive = activePage === page
 
@@ -43,6 +47,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               text={page}
               level={isActive ? "primary" : "default"}
               size="small"
+              darkMode={darkMode}
+              fontScale={fontScale}
             />
           </TouchableOpacity>
         )
@@ -62,6 +68,10 @@ const styles = StyleSheet.create({
     borderTopWidth: Constants.styles.borderWidth.THIN,
     borderTopColor: Constants.styles.borderColor.LIGHT,
     shadowColor: Constants.styles.shadowColor.DEFAULT,
+  },
+  containerDark: {
+    backgroundColor: Constants.styles.theme.dark.background.surface,
+    borderTopColor: Constants.styles.theme.dark.border.default,
   },
   tab: {
     flex: 1,

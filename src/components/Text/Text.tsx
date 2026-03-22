@@ -8,9 +8,18 @@ export interface TextProps {
   size?: "small" | "medium" | "large";
   level? : "success" | "error" | "warning" | "default" | "primary";
   position? : "left" | "center" | "right";
+  darkMode?: boolean;
+  fontScale?: number;
 }
 
-export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "default", position = "left" }) => {
+export const TextBox: React.FC<TextProps> = ({
+  text,
+  size = "medium",
+  level = "default",
+  position = "left",
+  darkMode = false,
+  fontScale = 1,
+}) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
   if (!fontLoaded) return null; 
 
@@ -24,11 +33,11 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
     success: Constants.styles.textColor.SUCCESS,
     error: Constants.styles.textColor.DANGER,
     warning: Constants.styles.textColor.WARNING,
-    default: Constants.styles.textColor.DEFAULT,
-    primary: Constants.styles.textColor.PRIMARY
+    default: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
+    primary: darkMode ? Constants.styles.theme.dark.text.primary : Constants.styles.theme.light.text.primary
   }
 
-  const fontSize = sizes[size];
+  const fontSize = sizes[size] * fontScale;
   const color = levels[level];
 
   const styles = StyleSheet.create({
@@ -46,6 +55,7 @@ export const TextBox: React.FC<TextProps> = ({ text, size = "medium", level = "d
     {
       ...styles.text,
       fontSize,
+      lineHeight: Constants.styles.lineHeight.LARGE * fontScale,
       color
     }}>
     {text}

@@ -8,6 +8,7 @@ type GridProps = {
   gap?: number;
   gapX?: number;
   gapY?: number;
+  darkMode?: boolean;
 }
 
 export const Grid: React.FC<GridProps> = ({
@@ -16,6 +17,7 @@ export const Grid: React.FC<GridProps> = ({
   gap,
   gapX,
   gapY,
+  darkMode = false,
 }) => {
   const childrenArray = React.Children.toArray(children)
 
@@ -59,7 +61,7 @@ export const Grid: React.FC<GridProps> = ({
   ].filter(Boolean).join(" ")
 
   return (
-    <GluestackUIProvider>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
       <GluestackGrid 
         className={gapClasses}
         _extra={{ 

@@ -11,10 +11,11 @@ type ImageProps = {
     alt: string,
     onClick?: () => void,
     size?: ImageSize,
-    type?: ImageType
+    type?: ImageType,
+    darkMode?: boolean,
 }
 
-export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 'md', type = 'default' }) => {
+export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 'md', type = 'default', darkMode = false }) => {
     const getBorderRadiusClass = () => {
         if (type === 'circle') {
             return 'rounded-full'
@@ -23,7 +24,7 @@ export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 'md', ty
     }
 
     const imageComponent = (
-        <GluestackUIProvider>
+        <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
             <GluestackImage
                 source={{ uri: src }}
                 size={size}
@@ -31,7 +32,7 @@ export const Image: React.FC<ImageProps> = ({ src, alt, onClick, size = 'md', ty
                 className={getBorderRadiusClass()}
             />
         </GluestackUIProvider>
-    )
+    );
 
     const handleClick = function(){
        if ( onClick !== undefined ) onClick( )

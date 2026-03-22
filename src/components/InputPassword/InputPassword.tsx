@@ -14,6 +14,8 @@ type InputPasswordProps = {
     validation?: (value: string) => boolean,
     errorMessage?: string,
     minLength?: number,
+    darkMode?: boolean,
+    fontScale?: number,
 }
 
 export const InputPassword: React.FC<InputPasswordProps> = ({
@@ -24,6 +26,8 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
     showPasswordToggle = true,
     errorMessage,
     minLength,
+    darkMode = false,
+    fontScale = 1,
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
@@ -82,6 +86,8 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             errorMessage={getErrorMessage()}
             secureTextEntry={!isPasswordVisible}
             rightElement={rightElement}
+            darkMode={darkMode}
+            fontScale={fontScale}
         />
     )
 }

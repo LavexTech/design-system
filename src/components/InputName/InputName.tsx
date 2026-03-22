@@ -6,6 +6,8 @@ type InputNameProps = {
     value: string
     placeholder?: string
     onChange: (value: string) => void
+    darkMode?: boolean
+    fontScale?: number
 }
 
 export const InputName: React.FC<InputNameProps> = ({
@@ -13,6 +15,8 @@ export const InputName: React.FC<InputNameProps> = ({
     value,
     placeholder = "Nome Sobrenome",
     onChange,
+    darkMode = false,
+    fontScale = 1,
 }) => {
     const formatName = (inputValue: string): string => {
         // Lista de preposições e artigos que devem permanecer em minúsculo,
@@ -74,6 +78,8 @@ export const InputName: React.FC<InputNameProps> = ({
             validation={validateName}
             errorMessage={getErrorMessage()}
             onBlur={handleBlur}
+            darkMode={darkMode}
+            fontScale={fontScale}
         />
     )
 }

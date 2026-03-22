@@ -11,18 +11,22 @@ import {
 import { Divider } from "../Divider/Divider"
 import { AddIcon, RemoveIcon } from '../../ui/icon'
 import Constants from "../../constants/constants"
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 
 type AccordionItemProps = {
   id: string,
   title: string,
-  children: React.ReactNode
+  children: React.ReactNode,
+  darkMode?: boolean,
+  fontScale?: number,
 }
 
 type AccordionProps = {
-  children: React.ReactNode
+  children: React.ReactNode,
+  darkMode?: boolean,
 }
 
-export const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children }) => {
+export const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, children, darkMode = false, fontScale = 1 }) => {
   return (
     <>
       <GluestackAccordionItem value={id}>
@@ -31,7 +35,12 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, childre
             {({ isExpanded }: { isExpanded: boolean }) => {
               return (
                 <>
-                  <AccordionTitleText>
+                  <AccordionTitleText
+                    style={{
+                      color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
+                      fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+                    }}
+                  >
                     {title}
                   </AccordionTitleText>
                   {isExpanded ? (
@@ -48,20 +57,22 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({ id, title, childre
           {children}
         </AccordionContent>
       </GluestackAccordionItem>
-      <Divider />
+      <Divider darkMode={darkMode} />
     </>
   )
 }
 
-export const Accordion: React.FC<AccordionProps> = ({ children }) => {
+export const Accordion: React.FC<AccordionProps> = ({ children, darkMode = false }) => {
   return (
-    <GluestackAccordion 
-      variant="unfilled" 
-      isCollapsible={true}
-      style={{ backgroundColor: Constants.styles.backgroundColor.WHITE }}
-    >
-      {children}
-    </GluestackAccordion>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+      <GluestackAccordion 
+        variant="unfilled" 
+        isCollapsible={true}
+        style={{ backgroundColor: darkMode ? Constants.styles.theme.dark.background.surface : Constants.styles.backgroundColor.WHITE }}
+      >
+        {children}
+      </GluestackAccordion>
+    </GluestackUIProvider>
 )
 }
 

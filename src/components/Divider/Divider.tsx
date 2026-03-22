@@ -2,8 +2,12 @@ import React from "react"
 import { View, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
 
-export const Divider: React.FC = () => {
-  return <View style={styles.divider} />
+type DividerProps = {
+  darkMode?: boolean;
+};
+
+export const Divider: React.FC<DividerProps> = ({ darkMode = false }) => {
+  return <View style={[styles.divider, darkMode ? styles.dividerDark : null]} />
 }
 
 const styles = StyleSheet.create({
@@ -11,5 +15,8 @@ const styles = StyleSheet.create({
     height: Constants.styles.borderWidth.THIN, 
 	backgroundColor: Constants.styles.borderColor.LIGHT, 
 	width: '100%',
+  },
+  dividerDark: {
+    backgroundColor: Constants.styles.theme.dark.border.default,
   },
 })
