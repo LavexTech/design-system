@@ -12,6 +12,7 @@ export { InputPhone } from "./src/components/InputPhone/InputPhone";
 export { InputEmail } from "./src/components/InputEmail/InputEmail";
 export { InputPassword } from "./src/components/InputPassword/InputPassword";
 export { InputCPF } from "./src/components/InputCPF/InputCPF";
+export { InputNumber } from "./src/components/InputNumber/InputNumber";
 export { InputChat } from "./src/components/InputChat/InputChat";
 export { TextArea } from "./src/components/TextArea/TextArea";
 
@@ -43,6 +44,7 @@ export { NavigationBar } from "./src/components/NavigationBar/NavigationBar";
 export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";
 export { StarRating } from "./src/components/StarRating/StarRating";
+export { Stars } from "./src/components/Stars/Stars";
 
 // ------------------------------------------------------------
 
@@ -71,3 +73,4 @@ export { IconArrowLeft } from "./src/components/Icons/IconArrowLeft";
 export { IconArrowRight } from "./src/components/Icons/IconArrowRight";
 export { IconChevronLeft } from "./src/components/Icons/IconChevronLeft";
 export { IconChevronRight } from "./src/components/Icons/IconChevronRight";
+export { IconEdit } from "./src/components/Icons/IconEdit";

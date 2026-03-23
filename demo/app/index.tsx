@@ -16,6 +16,7 @@ import { Info } from "@src/components/Info/Info"
 import { Input } from "@src/components/Input/Input"
 import { InputName } from "@src/components/InputName/InputName"
 import { InputPhone } from "@src/components/InputPhone/InputPhone"
+import { InputNumber } from "@src/components/InputNumber/InputNumber"
 import { InputChat } from "@src/components/InputChat/InputChat"
 
 // User Cards
@@ -111,6 +112,8 @@ export default function Index() {
 
   const [contactMessage, setContactMessage] = useState("");
   const [phone, setPhone] = useState('');
+  const [numberValue, setNumberValue] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
 
   const tabs = ['Pedido', 'Histórico', 'Conta'];
   const icons = [
@@ -201,6 +204,24 @@ export default function Index() {
             value={userName}
             placeholder="Digite seu nome completo"
             onChange={setUserName}
+          />
+
+          <InputNumber
+            label="Quantidade"
+            value={numberValue}
+            placeholder="Digite um número"
+            onChange={setNumberValue}
+            min={1}
+            max={100}
+            length={3}
+          />
+
+          <InputNumber
+            label="Número do Cartão (Exemplo de Máscara)"
+            value={cardNumber}
+            placeholder="0000 0000 0000 0000"
+            onChange={setCardNumber}
+            length={16}
           />
 
           <Input
