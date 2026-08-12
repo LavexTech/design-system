@@ -29,12 +29,16 @@ export const InputEmail: React.FC<InputEmailProps> = ({
     return atIndex > 0 && dotIndex > atIndex && dotIndex < email.length - 1;
   };
 
+  const handleChange = (email: string) => {
+    onChange(email.toLowerCase());
+  };
+
   return (
     <Input
       label={label}
       value={value}
       placeholder={placeholder}
-      onChange={onChange}
+      onChange={handleChange}
       validation={validateEmail}
       errorMessage={errorMessage}
       mobileKeyboard="email"

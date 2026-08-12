@@ -135,7 +135,9 @@ export const Input: React.FC<InputProps> = ({
             placeholder={placeholder}
             value={value} 
             onChangeText={handleTextChange} 
-            keyboardType={getKeyboardType()} 
+            keyboardType={getKeyboardType()}
+            autoCapitalize={mobileKeyboard === "email" ? "none" : undefined}
+            autoCorrect={mobileKeyboard === "email" ? false : undefined}
             placeholderTextColor={darkMode ? Constants.styles.theme.dark.text.muted : placeholderTextColor}
             secureTextEntry={secureTextEntry}
             onBlur={onBlur}
