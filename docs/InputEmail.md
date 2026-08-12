@@ -23,6 +23,8 @@ import { InputEmail } from "lavex-design-system";
 - Wrapper do componente Input configurado para email
 - Validação automática de formato de email
 - Teclado mobile otimizado para email (com @ fácil)
+- Sem capitalização automática (`autoCapitalize="none"`) e sem autocorreção
+- Valor sempre normalizado para minúsculas no `onChange` (digitação e colagem)
 - Label, placeholder e mensagem de erro pré-definidos
 - Campo vazio é considerado válido (não obrigatório)
 
