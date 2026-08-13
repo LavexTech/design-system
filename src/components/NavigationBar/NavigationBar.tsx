@@ -47,6 +47,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               text={page}
               level={isActive ? "primary" : "default"}
               size="small"
+              position="center"
               darkMode={darkMode}
               fontScale={fontScale}
             />
