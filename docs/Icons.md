@@ -1,6 +1,6 @@
 # Icons - Componentes de Ícones
 
-Os componentes de ícones do Lavex Design System são baseados em SVG do FontAwesome, oferecendo ícones vetoriais escaláveis e customizáveis. Cada ícone é um componente independente e totalmente funcional.
+Os componentes de ícones do Lavex Design System são wrappers outline baseados em [Lucide](https://lucide.dev/icons/) (`lucide-react-native`). Cada ícone é um componente independente; o app deve importar apenas estes wrappers — nunca `lucide-react-native` diretamente.
 
 ## Importação
 
@@ -8,7 +8,8 @@ Os componentes de ícones do Lavex Design System são baseados em SVG do FontAwe
 import { 
   IconStar, 
   IconHome, 
-  IconSend 
+  IconSend,
+  IconReceipt,
 } from "lavex-design-system";
 ```
 
@@ -16,47 +17,53 @@ import {
 
 Todos os componentes de ícones compartilham as mesmas props:
 
-| Prop     | Tipo     | Obrigatório | Padrão      | Descrição                                    |
-| -------- | -------- | ----------- | ----------- | -------------------------------------------- |
-| `fill`   | `string` | Não         | `'#262627'` | Cor de preenchimento do ícone                |
-| `stroke` | `string` | Não         | -           | Cor da borda do ícone (opcional)             |
-| `width`  | `number` | Não         | `24`        | Largura do ícone em pixels                   |
-| `height` | `number` | Não         | `24`        | Altura do ícone em pixels                    |
+| Prop          | Tipo     | Obrigatório | Padrão      | Descrição                                              |
+| ------------- | -------- | ----------- | ----------- | ------------------------------------------------------ |
+| `color`       | `string` | Não         | `#262627`   | Cor do stroke (preferida; default se `fill` omitido)   |
+| `fill`        | `string` | Não         | -           | Alias de compatibilidade para `color`                  |
+| `size`        | `number` | Não         | -           | Tamanho preferido (px); tem prioridade sobre width/height |
+| `width`       | `number` | Não         | `24`        | Usado como size se `size` omitido                      |
+| `height`      | `number` | Não         | `24`        | Usado como size se `size` e `width` omitidos           |
+| `strokeWidth` | `number` | Não         | `2`         | Espessura do outline                                   |
+
+Estilo padrão: **outline** (stroke). Em `IconStar` / `IconStarHalf`, passar `fill` também preenche o glyph (ratings).
 
 ## Ícones Disponíveis
 
-### ⭐ Avaliação e Favoritos
-- `IconStar` - Estrela cheia
+### Avaliação e Favoritos
+- `IconStar` - Estrela
 - `IconStarHalf` - Meia estrela
 
-### 🏠 Navegação
+### Navegação
 - `IconHome` - Casa/Início
+- `IconHistory` - Histórico
+- `IconReceipt` - Recibo/Pedidos
 - `IconArrowLeft` - Seta para esquerda
 - `IconArrowRight` - Seta para direita
 - `IconChevronLeft` - Chevron para esquerda
 - `IconChevronRight` - Chevron para direita
 
-### ✉️ Ações
+### Ações
 - `IconSend` - Enviar
 - `IconPlus` - Adicionar/Mais
 - `IconMinus` - Remover/Menos
 - `IconClose` - Fechar/X
 - `IconTrash` - Lixeira/Deletar
+- `IconEdit` - Editar
 
-### 🔍 Pesquisa e Filtro
+### Pesquisa e Filtro
 - `IconSearch` - Pesquisar/Lupa
 - `IconFilter` - Filtro
 
-### 👤 Usuário e Perfil
+### Usuário e Perfil
 - `IconProfile` - Perfil/Usuário
 - `IconEye` - Olho/Visualizar
 - `IconEyeClosed` - Olho fechado/Ocultar
 
-### 💬 Comunicação
+### Comunicação
 - `IconMessage` - Mensagem/Chat
-- `IconHistory` - Histórico/Relógio
 
-### 🖼️ Mídia e Alertas
+### Mídia e Alertas
 - `IconImage` - Imagem/Foto
 - `IconExclamation` - Alerta/Aviso
 
@@ -67,7 +74,7 @@ import React from "react";
 import { IconStar } from "lavex-design-system";
 
 const MyComponent = () => {
-  return <IconStar fill="#FFD700" width={32} height={32} />;
+  return <IconStar color="#FFD700" size={32} />;
 };
 ```
 
@@ -78,6 +85,14 @@ const MyComponent = () => {
 ```tsx
 import { IconHome } from "lavex-design-system";
 
+<IconHome color="#4A90E2" size={24} />
+```
+
+### Compatibilidade com `fill`
+
+Consumidores legados podem continuar passando `fill`; o valor é mapeado para `color`:
+
+```tsx
 <IconHome fill="#4A90E2" width={24} height={24} />
 ```
 
@@ -86,7 +101,7 @@ import { IconHome } from "lavex-design-system";
 ```tsx
 import { IconExclamation } from "lavex-design-system";
 
-<IconExclamation fill="#FF9500" width={48} height={48} />
+<IconExclamation color="#FF9500" size={48} />
 ```
 
 ### Ícone Pequeno para Botões
@@ -94,33 +109,7 @@ import { IconExclamation } from "lavex-design-system";
 ```tsx
 import { IconPlus } from "lavex-design-system";
 
-<IconPlus fill="#34C759" width={16} height={16} />
-```
-
-### Mensagem de Alerta com Ícone
-
-```tsx
-import React from "react";
-import { View, Text } from "react-native";
-import { IconExclamation } from "lavex-design-system";
-
-const AlertMessage = () => {
-  return (
-    <View style={{ 
-      flexDirection: 'row', 
-      alignItems: 'center',
-      backgroundColor: '#FFF3CD',
-      padding: 16,
-      borderRadius: 8,
-      gap: 12
-    }}>
-      <IconExclamation fill="#FF9500" width={24} height={24} />
-      <Text style={{ flex: 1, color: '#856404' }}>
-        Atenção: Verifique suas informações antes de continuar
-      </Text>
-    </View>
-  );
-};
+<IconPlus color="#34C759" size={16} />
 ```
 
 ## Cores Recomendadas
@@ -130,73 +119,32 @@ Use as cores do design system para manter consistência:
 ```typescript
 import Constants from "lavex-design-system/constants";
 
-// Cores de texto
-Constants.styles.textColor.DEFAULT   // #262627 - Texto padrão
-Constants.styles.textColor.SUCCESS   // #059669 - Sucesso/Positivo
-Constants.styles.textColor.DANGER    // #DC2626 - Erro/Negativo
-Constants.styles.textColor.INFO      // #8F98AD - Informação
-
-// Ou use cores personalizadas:
-fill="#FFD700"  // Ouro para estrelas
-fill="#4A90E2"  // Azul para navegação
-fill="#34C759"  // Verde para ações positivas
-fill="#FF3B30"  // Vermelho para ações destrutivas
-fill="#8E8E93"  // Cinza para ícones inativos
+Constants.styles.textColor.DEFAULT   // #262627
+Constants.styles.textColor.SUCCESS   // #059669
+Constants.styles.textColor.DANGER    // #DC2626
+Constants.styles.textColor.INFO      // #8F98AD
 ```
 
 ## Tamanhos Recomendados
 
-| Contexto              | Tamanho    | Uso                                      |
-| --------------------- | ---------- | ---------------------------------------- |
-| Ícone pequeno         | 16x16      | Dentro de botões pequenos ou badges      |
-| Ícone padrão          | 24x24      | Navegação, toolbars, actions             |
-| Ícone médio           | 32x32      | Cards, destaque em listas                |
-| Ícone grande          | 48x48      | Páginas vazias, onboarding, destaque     |
-| Ícone extra grande    | 64x64+     | Splash screens, estados vazios principais|
+| Contexto              | Tamanho | Uso                                      |
+| --------------------- | ------- | ---------------------------------------- |
+| Ícone pequeno         | 16      | Dentro de botões pequenos ou badges      |
+| Ícone padrão          | 24      | Navegação, toolbars, actions             |
+| Ícone médio           | 32      | Cards, destaque em listas                |
+| Ícone grande          | 48      | Páginas vazias, onboarding, destaque     |
+| Ícone extra grande    | 64+     | Splash screens, estados vazios principais|
 
 ## Boas Práticas
 
-1. **Consistência de Tamanho**: Use o mesmo tamanho de ícone para elementos do mesmo nível hierárquico
-2. **Contraste de Cor**: Certifique-se de que a cor do ícone tenha contraste adequado com o fundo
-3. **Significado Claro**: Use ícones que sejam universalmente reconhecidos
-4. **Acessibilidade**: Sempre acompanhe ícones importantes com texto ou labels
-5. **Toque/Clique**: Para ícones interativos, use área de toque mínima de 44x44px
-6. **Performance**: Os ícones SVG são leves, mas evite renderizar centenas simultaneamente
-7. **Estados Visuais**: Indique estados (ativo, inativo, hover) através de mudanças de cor
-
-## Diretrizes de Uso
-
-### ✅ Faça
-
-- Use ícones para reforçar ações e melhorar a compreensão
-- Mantenha cores consistentes para ações similares
-- Use tamanhos proporcionais ao contexto
-- Combine ícones com texto em ações importantes
-- Indique estados ativos/inativos com mudanças de cor
-
-### ❌ Evite
-
-- Usar ícones obscuros que confundam o usuário
-- Misturar estilos de ícones diferentes
-- Fazer ícones muito pequenos (< 16px) para ações importantes
-- Usar muitas cores diferentes sem consistência
-- Depender apenas de ícones sem contexto adicional
-
-## Casos de Uso Comuns
-
-- **Navegação**: Barras de navegação, menus, breadcrumbs
-- **Ações**: Botões de adicionar, editar, deletar, enviar
-- **Estados**: Indicadores de visibilidade, favoritos, status
-- **Busca e Filtro**: Campos de pesquisa, opções de filtro
-- **Feedback**: Alertas, notificações, mensagens de status
-- **Perfil**: Ícones de usuário, configurações, logout
-- **Mídia**: Upload de imagens, galeria, anexos
-- **Comunicação**: Chat, mensagens, notificações
+1. Importe ícones apenas de `lavex-design-system` (não de `lucide-react-native`)
+2. Prefira `color` e `size` em código novo
+3. Mantenha `strokeWidth` consistente (default 2)
+4. Indique estados ativo/inativo com mudança de `color`
+5. Para ícones interativos, use área de toque mínima de 44x44px
 
 ## Limitações
 
-- Os ícones são baseados em SVG e podem não funcionar em ambientes muito antigos
-- Cada ícone é um componente separado, então importações múltiplas aumentam o bundle size
-- A cor `stroke` é opcional e nem sempre produz o efeito esperado em todos os ícones
-- Ícones muito pequenos (< 12px) podem perder detalhes visuais
-
+- Dependem de `react-native-svg` (peer do design system)
+- Importar todos os ícones de uma vez aumenta o bundle; importe só os wrappers necessários
+- Ícones muito pequenos (< 12px) podem perder detalhes do outline

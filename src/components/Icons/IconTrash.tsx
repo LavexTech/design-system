@@ -1,31 +1,25 @@
 import React from 'react'
-import Svg, { Path } from 'react-native-svg'
+import { Trash2 } from 'lucide-react-native'
+import {
+  IconProps,
+  DEFAULT_STROKE_WIDTH,
+  resolveIconColor,
+  resolveIconSize,
+} from './iconProps'
 
-export type IconTrashProps = {
-  fill?: string
-  stroke?: string
-  width?: number
-  height?: number
-}
+export type IconTrashProps = IconProps
 
-export const IconTrash: React.FC<IconTrashProps> = ({ 
-  fill = '#262627',
-  stroke,
-  width = 24,
-  height = 24,
-}) => {
-  return (
-    <Svg 
-      width={width} 
-      height={height} 
-      viewBox="0 0 640 640"
-    >
-      <Path
-        d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z"
-        fill={fill}
-        stroke={stroke}
-      />
-    </Svg>
-  )
-}
-
+export const IconTrash: React.FC<IconTrashProps> = ({
+  color,
+  fill,
+  width,
+  height,
+  size,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
+}) => (
+  <Trash2
+    color={resolveIconColor(color, fill)}
+    size={resolveIconSize(size, width, height)}
+    strokeWidth={strokeWidth}
+  />
+)

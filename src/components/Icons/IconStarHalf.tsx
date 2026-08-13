@@ -1,31 +1,30 @@
 import React from 'react'
-import Svg, { Path } from 'react-native-svg'
+import { StarHalf } from 'lucide-react-native'
+import {
+  IconProps,
+  DEFAULT_STROKE_WIDTH,
+  resolveIconColor,
+  resolveIconSize,
+} from './iconProps'
 
-export type IconStarHalfProps = {
-  fill?: string
-  stroke?: string
-  width?: number
-  height?: number
-}
+export type IconStarHalfProps = IconProps
 
-export const IconStarHalf: React.FC<IconStarHalfProps> = ({ 
-  fill = '#262627',
-  stroke,
-  width = 24,
-  height = 24,
+/** Rating glyph: keeps solid fill when `fill` is passed (Stars/StarRating). */
+export const IconStarHalf: React.FC<IconStarHalfProps> = ({
+  color,
+  fill,
+  width,
+  height,
+  size,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => {
+  const resolved = resolveIconColor(color, fill)
   return (
-    <Svg 
-      width={width} 
-      height={height} 
-      viewBox="0 0 640 640"
-    >
-      <Path
-        d="M336.1 71.6C336.1 60.5 328.5 50.9 317.7 48.3C306.9 45.7 295.8 50.8 290.7 60.7L225.1 189.3L65.2 214.7C56.3 216.1 48.9 222.4 46.1 231C43.3 239.6 45.6 249 51.9 255.4L166.3 369.9L141.1 529.8C139.7 538.7 143.4 547.7 150.7 553C158 558.3 167.6 559.1 175.7 555L323 480.1C331 476 336.1 467.7 336.1 458.7L336.1 71.6z"
-        fill={fill}
-        stroke={stroke}
-      />
-    </Svg>
+    <StarHalf
+      color={resolved}
+      fill={fill != null ? resolved : 'none'}
+      size={resolveIconSize(size, width, height)}
+      strokeWidth={strokeWidth}
+    />
   )
 }
-

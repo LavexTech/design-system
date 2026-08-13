@@ -1,5 +1,5 @@
 import React from 'react'
-import { Send } from 'lucide-react-native'
+import { Receipt } from 'lucide-react-native'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
@@ -7,9 +7,9 @@ import {
   resolveIconSize,
 } from './iconProps'
 
-export type IconSendProps = IconProps
+export type IconReceiptProps = IconProps
 
-export const IconSend: React.FC<IconSendProps> = ({
+export const IconReceipt: React.FC<IconReceiptProps> = ({
   color,
   fill,
   width,
@@ -17,7 +17,7 @@ export const IconSend: React.FC<IconSendProps> = ({
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
-  <Send
+  <Receipt
     color={resolveIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}

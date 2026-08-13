@@ -1,31 +1,25 @@
 import React from 'react'
-import Svg, { Path } from 'react-native-svg'
+import { User } from 'lucide-react-native'
+import {
+  IconProps,
+  DEFAULT_STROKE_WIDTH,
+  resolveIconColor,
+  resolveIconSize,
+} from './iconProps'
 
-export type IconProfileProps = {
-  fill?: string
-  stroke?: string
-  width?: number
-  height?: number
-}
+export type IconProfileProps = IconProps
 
-export const IconProfile: React.FC<IconProfileProps> = ({ 
-  fill = '#262627',
-  stroke,
-  width = 24,
-  height = 24,
-}) => {
-  return (
-    <Svg 
-      width={width} 
-      height={height} 
-      viewBox="0 0 640 640"
-    >
-      <Path
-        d="M320 312C386.3 312 440 258.3 440 192C440 125.7 386.3 72 320 72C253.7 72 200 125.7 200 192C200 258.3 253.7 312 320 312zM290.3 368C191.8 368 112 447.8 112 546.3C112 562.7 125.3 576 141.7 576L498.3 576C514.7 576 528 562.7 528 546.3C528 447.8 448.2 368 349.7 368L290.3 368z"
-        fill={fill}
-        stroke={stroke}
-      />
-    </Svg>
-  )
-}
-
+export const IconProfile: React.FC<IconProfileProps> = ({
+  color,
+  fill,
+  width,
+  height,
+  size,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
+}) => (
+  <User
+    color={resolveIconColor(color, fill)}
+    size={resolveIconSize(size, width, height)}
+    strokeWidth={strokeWidth}
+  />
+)
