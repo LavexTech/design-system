@@ -15,7 +15,7 @@ import {
 import Constants from "../../constants/constants"
 
 type ModalProps = {
-    title: string,
+    title?: string,
     children: React.ReactNode,
     onClose: () => void,
     visible?: boolean,
@@ -55,11 +55,13 @@ export const Modal: React.FC<ModalProps> = ({
             >
                 <ModalBackdrop onPress={onClose} />
                 <ModalContent style={{ maxHeight }}>
-                    <ModalHeader>
-                        <View style={{ flex: 1, alignItems: "center", width: "100%" }}>
-                            <Text text={title} position="center" darkMode={darkMode} fontScale={fontScale} />
-                        </View>
-                    </ModalHeader>
+                    {title ? (
+                        <ModalHeader>
+                            <View style={{ flex: 1, alignItems: "center", width: "100%" }}>
+                                <Text text={title} position="center" darkMode={darkMode} fontScale={fontScale} />
+                            </View>
+                        </ModalHeader>
+                    ) : null}
                     <ModalBody style={{ maxHeight: maxHeight * 0.7 }}>
                         {children}
                     </ModalBody>
