@@ -65,6 +65,8 @@ const Constants = {
       BUTTON_HEIGHT: 40,
       BUTTON_WIDTH: 40,
       INPUT_MIN_WIDTH: 50,
+      // icon (~24) + margin + label + paddingVertical*2 — matches NavigationBar
+      NAVIGATION_BAR_HEIGHT: 64,
     },
     color: {
       WHITE: "#FFFFFF",

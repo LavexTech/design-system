@@ -1,5 +1,6 @@
 import React from "react"
-import { View } from "react-native"
+import { View, useWindowDimensions } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { GluestackUIProvider } from '../../ui/gluestack-ui-provider'
 import { TextBox as Text } from "../Text/Text"
 import { Button } from "../Button/Button"
@@ -11,6 +12,7 @@ import {
     ModalBody,
     ModalFooter,
 } from "../../ui/modal"
+import Constants from "../../constants/constants"
 
 type ModalProps = {
     title: string,
@@ -37,6 +39,13 @@ export const Modal: React.FC<ModalProps> = ({
     darkMode = false,
     fontScale = 1,
 }: ModalProps) => {
+    const { height: windowHeight } = useWindowDimensions()
+    const insets = useSafeAreaInsets()
+    const maxHeight =
+        windowHeight -
+        Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT -
+        insets.bottom
+
     return (
         <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
             <GluestackModal
@@ -45,13 +54,13 @@ export const Modal: React.FC<ModalProps> = ({
                 size="md"
             >
                 <ModalBackdrop onPress={onClose} />
-                <ModalContent>
+                <ModalContent style={{ maxHeight }}>
                     <ModalHeader>
-                        <View style={{ flex: 1, alignItems: "center" }}>
+                        <View style={{ flex: 1, alignItems: "center", width: "100%" }}>
                             <Text text={title} position="center" darkMode={darkMode} fontScale={fontScale} />
                         </View>
                     </ModalHeader>
-                    <ModalBody>
+                    <ModalBody style={{ maxHeight: maxHeight * 0.7 }}>
                         {children}
                     </ModalBody>
                     <ModalFooter style={{ width: '100%' }}>

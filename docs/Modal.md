@@ -23,6 +23,7 @@ import { Modal } from "lavex-design-system";
 ## O que faz
 
 - Exibe uma janela modal centralizada na tela
+- Limita a altura máxima a `altura da tela - altura do menu inferior - safe area`, com scroll no corpo quando o conteúdo for maior
 - Bloqueia interação com o conteúdo de fundo através de overlay
 - Fornece estrutura consistente com título, texto e botão de ação
 - Gerencia estado de visibilidade através da prop `visible`

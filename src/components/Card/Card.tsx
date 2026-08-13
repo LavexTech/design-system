@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   content: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
+    width: "100%",
+    alignSelf: "stretch",
+    overflow: "hidden",
   },
 });
