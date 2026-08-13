@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     flexWrap: "wrap",
     flexShrink: 1,
+    alignSelf: "stretch",
     opacity: 0.7,
   },
 });

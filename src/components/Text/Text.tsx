@@ -48,6 +48,7 @@ export const TextBox: React.FC<TextProps> = ({
       textAlign: position,
       flexWrap: "wrap",
       flexShrink: 1,
+      width: "100%",
     },
   });
 
