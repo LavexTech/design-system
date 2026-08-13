@@ -33,39 +33,33 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
 }: UserCardBioProps) => {
   return (
     <Card onClick={onClick} darkMode={darkMode} fontScale={fontScale}>
-      <Grid columns={2} gap={2} darkMode={darkMode}>
-        <GridItem colSpan={1}>
+      <Grid columns={12} gap={2} darkMode={darkMode}>
+        <GridItem colSpan={3}>
+          <View style={styles.centerImage}>
+            <Image
+              size="sm"
+              src={getProfileImageUrl(user.profileImage, user.userType)}
+              type="circle"
+              alt={user.name}
+              darkMode={darkMode}
+            />
+          </View>
+        </GridItem>
+        <GridItem colSpan={9}>
           <Grid columns={12} gap={2}>
             <GridItem colSpan={12}>
-              <View style={styles.centerImage}>
-                <Image
-                  size="md"
-                  src={getProfileImageUrl(user.profileImage, user.userType)}
-                  type="circle"
-                  alt={ user.name }
-                  darkMode={darkMode}
-                  />
-              </View>
+              <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
             </GridItem>
             <GridItem colSpan={12}>
-              <View style={styles.centerItem}>
-                <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
-                <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
-              </View>
+              <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
             </GridItem>
             <GridItem colSpan={12}>
-              <View style={styles.centerItem}>
+              <View style={styles.ratingRow}>
                 <Stars rating={user.rating} size={16} />
                 <Info text={`${Math.round(user.rating)}/5`} darkMode={darkMode} fontScale={fontScale} />
               </View>
             </GridItem>
           </Grid>
-        </GridItem>
-        <GridItem colSpan={1}>
-          <View>
-            <Info text="Bio" darkMode={darkMode} fontScale={fontScale} />
-            <Text size="small" text={user.bio} darkMode={darkMode} fontScale={fontScale} />
-          </View>
         </GridItem>
       </Grid>
     </Card>
@@ -73,13 +67,13 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
 };
 
 const styles = StyleSheet.create({
-  centerItem: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
   centerImage: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  ratingRow: {
     flexDirection: "row",
-  }
+    alignItems: "center",
+    gap: 8,
+  },
 });
