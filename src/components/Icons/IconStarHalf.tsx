@@ -9,6 +9,7 @@ import {
 
 export type IconStarHalfProps = IconProps
 
+/** Rating glyph: keeps solid fill when `fill` is passed (Stars/StarRating). */
 export const IconStarHalf: React.FC<IconStarHalfProps> = ({
   color,
   fill,
@@ -16,10 +17,14 @@ export const IconStarHalf: React.FC<IconStarHalfProps> = ({
   height,
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
-}) => (
-  <StarHalf
-    color={resolveIconColor(color, fill)}
-    size={resolveIconSize(size, width, height)}
-    strokeWidth={strokeWidth}
-  />
-)
+}) => {
+  const resolved = resolveIconColor(color, fill)
+  return (
+    <StarHalf
+      color={resolved}
+      fill={fill != null ? resolved : 'none'}
+      size={resolveIconSize(size, width, height)}
+      strokeWidth={strokeWidth}
+    />
+  )
+}

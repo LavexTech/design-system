@@ -19,14 +19,14 @@ Todos os componentes de ícones compartilham as mesmas props:
 
 | Prop          | Tipo     | Obrigatório | Padrão      | Descrição                                              |
 | ------------- | -------- | ----------- | ----------- | ------------------------------------------------------ |
-| `color`       | `string` | Não         | -           | Cor do stroke (preferida)                              |
-| `fill`        | `string` | Não         | `'#262627'` | Alias de compatibilidade para `color`                  |
+| `color`       | `string` | Não         | `#262627`   | Cor do stroke (preferida; default se `fill` omitido)   |
+| `fill`        | `string` | Não         | -           | Alias de compatibilidade para `color`                  |
 | `size`        | `number` | Não         | -           | Tamanho preferido (px); tem prioridade sobre width/height |
 | `width`       | `number` | Não         | `24`        | Usado como size se `size` omitido                      |
 | `height`      | `number` | Não         | `24`        | Usado como size se `size` e `width` omitidos           |
 | `strokeWidth` | `number` | Não         | `2`         | Espessura do outline                                   |
 
-Estilo padrão: **outline** (stroke). Não há fill sólido por padrão.
+Estilo padrão: **outline** (stroke). Em `IconStar` / `IconStarHalf`, passar `fill` também preenche o glyph (ratings).
 
 ## Ícones Disponíveis
 

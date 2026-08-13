@@ -9,6 +9,7 @@ import {
 
 export type IconStarProps = IconProps
 
+/** Rating glyph: keeps solid fill when `fill` is passed (Stars/StarRating). */
 export const IconStar: React.FC<IconStarProps> = ({
   color,
   fill,
@@ -16,10 +17,14 @@ export const IconStar: React.FC<IconStarProps> = ({
   height,
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
-}) => (
-  <Star
-    color={resolveIconColor(color, fill)}
-    size={resolveIconSize(size, width, height)}
-    strokeWidth={strokeWidth}
-  />
-)
+}) => {
+  const resolved = resolveIconColor(color, fill)
+  return (
+    <Star
+      color={resolved}
+      fill={fill != null ? resolved : 'none'}
+      size={resolveIconSize(size, width, height)}
+      strokeWidth={strokeWidth}
+    />
+  )
+}
