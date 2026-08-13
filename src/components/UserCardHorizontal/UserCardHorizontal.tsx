@@ -46,15 +46,18 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
         </GridItem>
 
         <GridItem colSpan={8}>
-          <View style={styles.textColumn}>
-            <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
-            <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
-          </View>
-
           <View style={styles.ratingContainer}>
             <Stars rating={user.rating} size={16} />
             <Info text={`${user.rating}/5`} darkMode={darkMode} fontScale={fontScale} />
           </View>
+        </GridItem>
+
+        <GridItem colSpan={12}>
+          <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
+        </GridItem>
+
+        <GridItem colSpan={12}>
+          <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
         </GridItem>
       </Grid>
     </Card>
@@ -62,15 +65,12 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
 }
 
 const styles = StyleSheet.create({
-  textColumn: {
-    width: "100%",
-    alignSelf: "stretch",
-  },
   ratingContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "flex-end",
     gap: Constants.styles.spacing.TINY,
-    marginTop: Constants.styles.spacing.SMALL,
     width: "100%",
+    minHeight: 48,
   },
 });
