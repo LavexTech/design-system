@@ -1,6 +1,6 @@
 {
     "name": "lavex-design-system",
-    "version": "0.1.39",
+    "version": "0.1.40",
     "description": "Lavex Design System for React Native",
     "files": [
         "src/",
@@ -27,13 +27,13 @@
     "author": "Lavex",
     "license": "MIT",
     "peerDependencies": {
-        "expo-font": ">=14.0.0",
-        "react": "19.1.0",
-        "react-native": "0.81.4",
         "@gluestack-ui/core": "^3.0.10",
         "@gluestack-ui/utils": "^3.0.7",
         "@legendapp/motion": "^2.4.0",
+        "expo-font": ">=14.0.0",
         "nativewind": "^4.2.1",
+        "react": "19.1.0",
+        "react-native": "0.81.4",
         "react-native-svg": "^15.13.0"
     },
     "devDependencies": {
@@ -58,6 +58,7 @@
         "expo": "^54.0.12",
         "gluestack-ui": "^3.0.7",
         "init": "^0.1.2",
+        "lucide-react-native": "^1.31.0",
         "npx": "^3.0.0",
         "react-aria": "^3.44.0",
         "react-native-reanimated": "~4.1.0",

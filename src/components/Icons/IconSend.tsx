@@ -1,31 +1,25 @@
 import React from 'react'
-import Svg, { Path } from 'react-native-svg'
+import { Send } from 'lucide-react-native'
+import {
+  IconProps,
+  DEFAULT_STROKE_WIDTH,
+  resolveIconColor,
+  resolveIconSize,
+} from './iconProps'
 
-export type IconSendProps = {
-  fill?: string
-  stroke?: string
-  width?: number
-  height?: number
-}
+export type IconSendProps = IconProps
 
-export const IconSend: React.FC<IconSendProps> = ({ 
-  fill = '#262627',
-  stroke,
-  width = 24,
-  height = 24,
-}) => {
-  return (
-    <Svg 
-      width={width} 
-      height={height} 
-      viewBox="0 0 640 640"
-    >
-      <Path
-        d="M568.4 37.7C578.2 34.2 589 36.7 596.4 44C603.8 51.3 606.2 62.2 602.7 72L424.7 568.9C419.7 582.8 406.6 592 391.9 592C377.7 592 364.9 583.4 359.6 570.3L295.4 412.3C290.9 401.3 292.9 388.7 300.6 379.7L395.1 267.3C400.2 261.2 399.8 252.3 394.2 246.7C388.6 241.1 379.6 240.7 373.6 245.8L261.2 340.1C252.1 347.7 239.6 349.7 228.6 345.3L70.1 280.8C57 275.5 48.4 262.7 48.4 248.5C48.4 233.8 57.6 220.7 71.5 215.7L568.4 37.7z"
-        fill={fill}
-        stroke={stroke}
-      />
-    </Svg>
-  )
-}
-
+export const IconSend: React.FC<IconSendProps> = ({
+  color,
+  fill,
+  width,
+  height,
+  size,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
+}) => (
+  <Send
+    color={resolveIconColor(color, fill)}
+    size={resolveIconSize(size, width, height)}
+    strokeWidth={strokeWidth}
+  />
+)
