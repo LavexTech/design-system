@@ -12,7 +12,7 @@ import { Modal } from "lavex-design-system";
 
 | Prop         | Tipo         | Obrigatório | Padrão | Descrição                                                                       |
 | ------------ | ------------ | ----------- | ------ | ------------------------------------------------------------------------------- |
-| `title`      | `string`     | Sim         | -      | Título grande que aparece no topo da janela (ex: "Atenção!")                    |
+| `title`      | `string`     | Não         | -      | Título no topo da janela. Se omitido, o header não é renderizado                |
 | `children`   | `ReactNode`  | Sim         | -      | Conteúdo do modal (pode ser texto, componentes, etc.)                            |
 | `onClose`    | `() => void` | Sim         | -      | Função executada quando o botão é clicado para esconder a janela                |
 | `visible`    | `boolean`    | Não         | `true` | Controla se o modal está visível                                                |
