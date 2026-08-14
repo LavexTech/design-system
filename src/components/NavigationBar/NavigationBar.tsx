@@ -1,7 +1,9 @@
 import React from "react"
-import { View, TouchableOpacity, StyleSheet } from "react-native"
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
-import { TextBox as Text } from "../Text/Text"
+
+const TAB_ACTIVE_COLOR = "#007DFF"
+const TAB_INACTIVE_COLOR = "#8F98AD"
 
 type NavigationBarProps = {
   pages: string[]
@@ -30,6 +32,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     <View style={[styles.container, darkMode ? styles.containerDark : null]}>
       {pages.map((page, index) => {
         const isActive = activePage === page
+        const color = isActive ? TAB_ACTIVE_COLOR : TAB_INACTIVE_COLOR
 
         return (
           <TouchableOpacity
@@ -44,13 +47,17 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
               </View>
             )}
             <Text
-              text={page}
-              level={isActive ? "primary" : "default"}
-              size="small"
-              position="center"
-              darkMode={darkMode}
-              fontScale={fontScale}
-            />
+              style={[
+                styles.tabText,
+                {
+                  color,
+                  fontSize: 15 * fontScale,
+                  lineHeight: Constants.styles.lineHeight.LARGE * fontScale,
+                },
+              ]}
+            >
+              {page}
+            </Text>
           </TouchableOpacity>
         )
       })}
@@ -86,16 +93,8 @@ const styles = StyleSheet.create({
     marginBottom: Constants.styles.spacing.TINY,
   },
   tabText: {
-    fontSize: Constants.styles.fontSize.SMALL,
     fontWeight: Constants.styles.fontWeight.NORMAL as any,
     fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.INFO,
     textAlign: "center",
   },
-  tabTextActive: {
-    fontWeight: Constants.styles.fontWeight.BOLD as any,
-    fontFamily: Constants.styles.fontFamily.BOLD,
-    color: Constants.styles.textColor.DEFAULT,
-  },
 })
-
