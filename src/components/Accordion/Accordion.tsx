@@ -10,8 +10,7 @@ import {
   AccordionIcon,
 } from "../../ui/accordion"
 import { Divider } from "../Divider/Divider"
-import { IconChevronDown } from "../Icons/IconChevronDown"
-import { IconChevronUp } from "../Icons/IconChevronUp"
+import { ChevronDownIcon, ChevronUpIcon } from "../../ui/icon"
 import Constants from "../../constants/constants"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 
@@ -64,9 +63,9 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
                     ) : null}
                   </View>
                   {isExpanded ? (
-                    <AccordionIcon as={IconChevronUp} />
+                    <AccordionIcon as={ChevronUpIcon} />
                   ) : (
-                    <AccordionIcon as={IconChevronDown} />
+                    <AccordionIcon as={ChevronDownIcon} />
                   )}
                 </>
               )
@@ -90,7 +89,7 @@ export const Accordion: React.FC<AccordionProps> = ({
       <GluestackAccordion
         variant="unfilled"
         isCollapsible={true}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ? [defaultValue] : undefined}
         style={{
           backgroundColor: darkMode
             ? Constants.styles.theme.dark.background.surface
