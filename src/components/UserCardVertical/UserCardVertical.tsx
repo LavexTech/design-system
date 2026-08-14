@@ -7,6 +7,7 @@ import { Info } from "../Info/Info"
 import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
 import { getProfileImageUrl } from "../../utils/profileImage"
+import { getOrdersCountLabel } from "../../utils/ordersCountLabel"
 
 type User = {
   id: string,
@@ -42,7 +43,7 @@ export const UserCardVertical: React.FC<UserCardVerticalProps> = ({
           <GridItem colSpan={12}>
             <View style={styles.centerItem}>
               <Text text={user.name} />
-              <Info text={`${user.ordersCount} pedidos feitos`} />
+              <Info text={getOrdersCountLabel(user.ordersCount, user.userType)} />
             </View>
           </GridItem>
           <GridItem colSpan={12}>

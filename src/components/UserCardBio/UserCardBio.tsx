@@ -7,6 +7,7 @@ import { Info } from "../Info/Info"
 import { Image } from "../Image/Image"
 import { Grid, GridItem } from "../Grid/Grid"
 import { getProfileImageUrl } from "../../utils/profileImage"
+import { getOrdersCountLabel } from "../../utils/ordersCountLabel"
 
 type User = {
   id: string,
@@ -51,7 +52,7 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
               <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
             </GridItem>
             <GridItem colSpan={12}>
-              <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
+              <Info text={getOrdersCountLabel(user.ordersCount, user.userType)} darkMode={darkMode} fontScale={fontScale} />
             </GridItem>
             <GridItem colSpan={12}>
               <View style={styles.ratingRow}>

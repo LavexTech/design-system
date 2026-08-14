@@ -5,6 +5,7 @@ import { TextBox as Text } from "../Text/Text"
 import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
 import Constants from "../../constants/constants"
+import { getOrdersCountLabel } from "../../utils/ordersCountLabel"
 
 export type User = {
   id: string,
@@ -20,6 +21,7 @@ type UserCardHorizontalProps = {
   onClick?: () => void,
   darkMode?: boolean,
   fontScale?: number,
+  infoTone?: "muted" | "default",
 }
 
 export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
@@ -27,13 +29,19 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
   onClick,
   darkMode = false,
   fontScale = 1,
+  infoTone = "muted",
 }: UserCardHorizontalProps) => {
 
   return (
     <Card onClick={onClick} darkMode={darkMode} fontScale={fontScale}>
       <View style={styles.container}>
         <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
-        <Info text={`${user.ordersCount} pedidos feitos`} darkMode={darkMode} fontScale={fontScale} />
+        <Info
+          text={getOrdersCountLabel(user.ordersCount, user.userType)}
+          darkMode={darkMode}
+          fontScale={fontScale}
+          tone={infoTone}
+        />
         <Stars rating={user.rating} size={16} />
       </View>
     </Card>
