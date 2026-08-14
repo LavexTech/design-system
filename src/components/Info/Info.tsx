@@ -6,10 +6,40 @@ export interface InfoProps {
   text: string;
   darkMode?: boolean;
   fontScale?: number;
+  bold?: boolean;
+  position?: "left" | "center" | "right";
 }
 
-export const Info: React.FC<InfoProps> = ({ text, darkMode = false, fontScale = 1 }) => {
-  return <Text style={[styles.info, { color: darkMode ? Constants.styles.theme.dark.text.muted : Constants.styles.theme.light.text.muted, fontSize: Constants.styles.fontSize.SMALL * fontScale, lineHeight: Constants.styles.fontSize.SMALL * 1.4 * fontScale }]}>{text}</Text>;
+export const Info: React.FC<InfoProps> = ({
+  text,
+  darkMode = false,
+  fontScale = 1,
+  bold = false,
+  position = "left",
+}) => {
+  return (
+    <Text
+      style={[
+        styles.info,
+        {
+          color: darkMode
+            ? Constants.styles.theme.dark.text.muted
+            : Constants.styles.theme.light.text.muted,
+          fontSize: Constants.styles.fontSize.SMALL * fontScale,
+          lineHeight: Constants.styles.fontSize.SMALL * 1.4 * fontScale,
+          fontFamily: bold
+            ? Constants.styles.fontFamily.BOLD
+            : Constants.styles.fontFamily.REGULAR,
+          fontWeight: bold
+            ? (Constants.styles.fontWeight.BOLD as any)
+            : (Constants.styles.fontWeight.NORMAL as any),
+          textAlign: position,
+        },
+      ]}
+    >
+      {text}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
