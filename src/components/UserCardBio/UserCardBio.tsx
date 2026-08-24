@@ -5,7 +5,6 @@ import { TextBox as Text } from "../Text/Text"
 import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
 import { Image } from "../Image/Image"
-import { Grid, GridItem } from "../Grid/Grid"
 import { getProfileImageUrl } from "../../utils/profileImage"
 import { getOrdersCountLabel } from "../../utils/ordersCountLabel"
 
@@ -34,43 +33,53 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
 }: UserCardBioProps) => {
   return (
     <Card onClick={onClick} darkMode={darkMode} fontScale={fontScale}>
-      <Grid columns={12} gap={2} darkMode={darkMode}>
-        <GridItem colSpan={3}>
-          <View style={styles.centerImage}>
-            <Image
-              size="sm"
-              src={getProfileImageUrl(user.profileImage, user.userType)}
-              type="circle"
-              alt={user.name}
+      <View style={styles.row}>
+        <View style={styles.avatar}>
+          <Image
+            size="sm"
+            src={getProfileImageUrl(user.profileImage, user.userType)}
+            type="circle"
+            alt={user.name}
+            darkMode={darkMode}
+          />
+        </View>
+        <View style={styles.meta}>
+          <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
+          <Info
+            text={getOrdersCountLabel(user.ordersCount, user.userType)}
+            darkMode={darkMode}
+            fontScale={fontScale}
+          />
+          <View style={styles.ratingRow}>
+            <Stars rating={user.rating} size={16} />
+            <Info
+              text={`${Math.round(user.rating)}/5`}
               darkMode={darkMode}
+              fontScale={fontScale}
             />
           </View>
-        </GridItem>
-        <GridItem colSpan={9}>
-          <Grid columns={12} gap={2}>
-            <GridItem colSpan={12}>
-              <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
-            </GridItem>
-            <GridItem colSpan={12}>
-              <Info text={getOrdersCountLabel(user.ordersCount, user.userType)} darkMode={darkMode} fontScale={fontScale} />
-            </GridItem>
-            <GridItem colSpan={12}>
-              <View style={styles.ratingRow}>
-                <Stars rating={user.rating} size={16} />
-                <Info text={`${Math.round(user.rating)}/5`} darkMode={darkMode} fontScale={fontScale} />
-              </View>
-            </GridItem>
-          </Grid>
-        </GridItem>
-      </Grid>
+        </View>
+      </View>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
-  centerImage: {
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    gap: 8,
+  },
+  avatar: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  meta: {
+    flex: 3,
+    minWidth: 0,
+    gap: 8,
   },
   ratingRow: {
     flexDirection: "row",

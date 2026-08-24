@@ -39,6 +39,8 @@ export const Card: React.FC<CardProps> = ({ title, children, onClick, darkMode =
 
 const styles = StyleSheet.create({
   card: {
+    width: "100%",
+    alignSelf: "stretch",
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
     borderWidth: Constants.styles.borderWidth.THIN,
