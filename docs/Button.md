@@ -10,11 +10,13 @@ import { Button } from "lavex-design-system";
 
 ## Props
 
-| Prop      | Tipo       | Obrigatório | Padrão      | Descrição                    |
-| --------- | ---------- | ----------- | ----------- | ---------------------------- |
-| `text`    | `string`   | Sim         | `""`        | Texto do botão               |
-| `variant` | `string`   | Não         | `"default"` | Estilo visual (veja abaixo)  |
-| `onClick` | `() => void` | Sim       | -           | Função ao clicar             |
+| Prop                 | Tipo         | Obrigatório | Padrão      | Descrição                                                                 |
+| -------------------- | ------------ | ----------- | ----------- | ------------------------------------------------------------------------- |
+| `text`               | `string`     | Sim         | `""`        | Texto do botão                                                            |
+| `variant`            | `string`     | Não         | `"default"` | Estilo visual (veja abaixo)                                               |
+| `onClick`            | `() => void` | Sim         | -           | Função ao clicar (só dispara após confirmação se `needsConfirmation`)     |
+| `needsConfirmation`  | `boolean`    | Não         | `false`     | Exige segundo clique para confirmar a ação                                |
+| `confirmationText`   | `string`     | Se `needsConfirmation` | - | Texto exibido no estado de confirmação (obrigatório quando a prop acima é `true`) |
 
 ## Variantes
 
@@ -64,9 +66,24 @@ import { Button } from "lavex-design-system";
 <Button text="Secundária Outline" variant="secondary-outline" onClick={() => {}} />
 ```
 
+## Confirmação em dois cliques
+
+Quando `needsConfirmation={true}`, o primeiro clique **não** chama `onClick`: o botão anima (300ms) para estilo danger (fundo vermelho, texto branco) e troca o rótulo por `confirmationText`. O segundo clique confirma e dispara `onClick`. Sem segundo clique, após 8 segundos o botão volta ao estado original.
+
+```tsx
+<Button
+  text="Excluir"
+  variant="danger-outline"
+  needsConfirmation
+  confirmationText="Clique novamente para confirmar"
+  onClick={() => console.log("Excluído")}
+/>
+```
+
 ## Regras de Uso
 
 1. **Preenchido** = ação primária | **Outline** = ação secundária
 2. **Success** = positivo | **Danger** = destrutivo | **Default** = neutro
 3. Use textos claros e descritivos
 4. Sempre passe uma função para `onClick`
+5. Se `needsConfirmation` for `true`, `confirmationText` é obrigatório
