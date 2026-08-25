@@ -59,8 +59,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
         borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
+        width: '100%',
         maxWidth: Constants.styles.maxWidth.messageBubble as any,
-        alignSelf: 'flex-end',
+        alignSelf: 'stretch',
+    },
+    messageWrapper: {
+        alignItems: 'stretch',
+        width: '100%',
     },
     messageInfo: {
         marginTop: Constants.styles.spacing.TINY,
