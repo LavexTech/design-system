@@ -1,5 +1,11 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import {
+  LayoutAnimation,
+  Platform,
+  UIManager,
+  View,
+  StyleSheet,
+} from "react-native"
 import {
   Accordion as GluestackAccordion,
   AccordionItem as GluestackAccordionItem,
@@ -13,6 +19,28 @@ import { Divider } from "../Divider/Divider"
 import { ChevronDownIcon, ChevronUpIcon } from "../../ui/icon"
 import Constants from "../../constants/constants"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true)
+}
+
+const ACCORDION_ANIMATION = {
+  duration: 300,
+  create: {
+    type: LayoutAnimation.Types.easeInEaseOut,
+    property: LayoutAnimation.Properties.opacity,
+  },
+  update: {
+    type: LayoutAnimation.Types.easeInEaseOut,
+  },
+  delete: {
+    type: LayoutAnimation.Types.easeInEaseOut,
+    property: LayoutAnimation.Properties.opacity,
+  },
+}
 
 type AccordionItemProps = {
   id: string
@@ -88,8 +116,12 @@ export const Accordion: React.FC<AccordionProps> = ({
     <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
       <GluestackAccordion
         variant="unfilled"
+        type="single"
         isCollapsible={true}
         defaultValue={defaultValue ? [defaultValue] : undefined}
+        onValueChange={() => {
+          LayoutAnimation.configureNext(ACCORDION_ANIMATION)
+        }}
         style={{
           backgroundColor: darkMode
             ? Constants.styles.theme.dark.background.surface
