@@ -10,9 +10,10 @@ import { Order } from "lavex-design-system";
 
 ## Props
 
-| Prop    | Tipo    | Obrigatório | Descrição                        |
-| ------- | ------- | ----------- | -------------------------------- |
-| `order` | `Order` | Sim         | Objeto contendo dados do pedido  |
+| Prop         | Tipo         | Obrigatório | Descrição                                                                 |
+| ------------ | ------------ | ----------- | ------------------------------------------------------------------------- |
+| `order`      | `Order`      | Sim         | Objeto contendo dados do pedido                                           |
+| `backTarget` | `() => void` | Não         | Destino/ação ao voltar. Se informado, exibe chevron-left e habilita swipe da borda esquerda (e back do Android). |
 
 ### Interface Order
 
@@ -56,7 +57,14 @@ const MyComponent = () => {
     ]
   };
 
-  return <Order order={orderSample} />;
+  return (
+    <Order
+      order={orderSample}
+      backTarget={() => {
+        // mesmo comportamento do botão voltar do Android
+      }}
+    />
+  );
 };
 ```
 
