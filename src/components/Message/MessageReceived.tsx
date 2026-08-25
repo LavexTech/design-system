@@ -52,6 +52,7 @@ export const MessageReceived: React.FC<MessageReceivedProps> = ({
 const styles = StyleSheet.create({
     container: {
         marginVertical: Constants.styles.spacing.TINY,
+        width: '100%',
     },
     avatarContainer: {
         alignItems: 'center',
@@ -59,7 +60,8 @@ const styles = StyleSheet.create({
         paddingTop: Constants.styles.spacing.LARGE,
     },
     messageWrapper: {
-        alignItems: 'flex-start',
+        alignItems: 'stretch',
+        width: '100%',
     },
     senderInfo: {
         marginBottom: Constants.styles.spacing.TINY,
@@ -73,7 +75,9 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: Constants.styles.borderRadius.SMALL,
         borderWidth: Constants.styles.borderWidth.THIN,
         borderColor: Constants.styles.borderColor.LIGHT,
+        width: '100%',
         maxWidth: Constants.styles.maxWidth.messageBubble as any,
+        alignSelf: 'stretch',
     },
     messageInfo: {
         marginTop: Constants.styles.spacing.TINY,

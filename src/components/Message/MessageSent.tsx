@@ -49,9 +49,11 @@ export const MessageSent: React.FC<MessageSentProps> = ({
 const styles = StyleSheet.create({
     container: {
         marginVertical: Constants.styles.spacing.TINY,
+        width: '100%',
     },
     messageWrapper: {
-        alignItems: 'flex-end',
+        alignItems: 'stretch',
+        width: '100%',
     },
     messageBubble: {
         backgroundColor: Constants.styles.color.SOFT_BLUE,
@@ -62,10 +64,6 @@ const styles = StyleSheet.create({
         width: '100%',
         maxWidth: Constants.styles.maxWidth.messageBubble as any,
         alignSelf: 'stretch',
-    },
-    messageWrapper: {
-        alignItems: 'stretch',
-        width: '100%',
     },
     messageInfo: {
         marginTop: Constants.styles.spacing.TINY,
