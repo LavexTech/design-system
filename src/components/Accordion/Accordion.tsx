@@ -45,7 +45,10 @@ const ACCORDION_ANIMATION = {
 type AccordionItemProps = {
   id: string
   title: string
+  /** Renders immediately after the title (e.g. status Tag). */
   titleAccessory?: React.ReactNode
+  /** Renders before the title inside the header (e.g. back chevron). */
+  leading?: React.ReactNode
   children: React.ReactNode
   darkMode?: boolean
   fontScale?: number
@@ -62,6 +65,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
   id,
   title,
   titleAccessory,
+  leading,
   children,
   darkMode = false,
   fontScale = 1,
@@ -73,29 +77,38 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
           <AccordionTrigger>
             {({ isExpanded }: { isExpanded: boolean }) => {
               return (
-                <>
+                <View style={styles.triggerRow}>
                   <View style={styles.titleRow}>
-                    <AccordionTitleText
-                      style={{
-                        color: darkMode
-                          ? Constants.styles.theme.dark.text.default
-                          : Constants.styles.theme.light.text.default,
-                        fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
-                        flexShrink: 1,
-                      }}
-                    >
-                      {title}
-                    </AccordionTitleText>
-                    {titleAccessory ? (
-                      <View style={styles.titleAccessory}>{titleAccessory}</View>
+                    {leading ? (
+                      <View style={styles.leading}>{leading}</View>
                     ) : null}
+                    <View style={styles.titleCluster}>
+                      <AccordionTitleText
+                        style={{
+                          color: darkMode
+                            ? Constants.styles.theme.dark.text.default
+                            : Constants.styles.theme.light.text.default,
+                          fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+                          flexShrink: 1,
+                        }}
+                      >
+                        {title}
+                      </AccordionTitleText>
+                      {titleAccessory ? (
+                        <View style={styles.titleAccessory}>
+                          {titleAccessory}
+                        </View>
+                      ) : null}
+                    </View>
                   </View>
-                  {isExpanded ? (
-                    <AccordionIcon as={ChevronUpIcon} />
-                  ) : (
-                    <AccordionIcon as={ChevronDownIcon} />
-                  )}
-                </>
+                  <View style={styles.chevron}>
+                    {isExpanded ? (
+                      <AccordionIcon as={ChevronUpIcon} />
+                    ) : (
+                      <AccordionIcon as={ChevronDownIcon} />
+                    )}
+                  </View>
+                </View>
               )
             }}
           </AccordionTrigger>
@@ -135,15 +148,38 @@ export const Accordion: React.FC<AccordionProps> = ({
 }
 
 const styles = StyleSheet.create({
+  triggerRow: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+  },
   titleRow: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    minWidth: 0,
+    marginRight: Constants.styles.spacing.MEDIUM,
+  },
+  leading: {
     marginRight: Constants.styles.spacing.SMALL,
+    flexShrink: 0,
+  },
+  titleCluster: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexShrink: 1,
+    flexGrow: 0,
+    maxWidth: "100%",
+    gap: Constants.styles.spacing.SMALL,
   },
   titleAccessory: {
-    marginLeft: Constants.styles.spacing.SMALL,
     justifyContent: "center",
     alignItems: "center",
+    flexShrink: 0,
+  },
+  chevron: {
+    flexShrink: 0,
+    marginLeft: Constants.styles.spacing.SMALL,
   },
 })
