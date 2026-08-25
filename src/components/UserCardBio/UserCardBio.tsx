@@ -4,30 +4,31 @@ import { Card } from "../Card/Card"
 import { TextBox as Text } from "../Text/Text"
 import { Stars } from "../Stars/Stars"
 import { Info } from "../Info/Info"
-import { Image } from "../Image/Image"
-import { getProfileImageUrl } from "../../utils/profileImage"
+import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar"
 import { getOrdersCountLabel } from "../../utils/ordersCountLabel"
 
 type User = {
-  id: string,
-  name: string,
-  profileImage: string,
-  ordersCount: number,
-  rating: number,
-  bio: string,
-  userType: 'client' | 'provider',
+  id: string
+  name: string
+  profileImage: string
+  ordersCount: number
+  rating: number
+  bio: string
+  userType: "client" | "provider"
 }
 
 type UserCardBioProps = {
-  user: User,
-  onClick?: () => void,
-  darkMode?: boolean,
-  fontScale?: number,
+  user: User
+  onClick?: () => void
+  onAvatarPress?: () => void
+  darkMode?: boolean
+  fontScale?: number
 }
 
 export const UserCardBio: React.FC<UserCardBioProps> = ({
   user,
   onClick,
+  onAvatarPress,
   darkMode = false,
   fontScale = 1,
 }: UserCardBioProps) => {
@@ -35,11 +36,11 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
     <Card onClick={onClick} darkMode={darkMode} fontScale={fontScale}>
       <View style={styles.row}>
         <View style={styles.avatar}>
-          <Image
-            size="sm"
-            src={getProfileImageUrl(user.profileImage, user.userType)}
-            type="circle"
+          <ProfileAvatar
+            profileImage={user.profileImage}
             alt={user.name}
+            size="sm"
+            onPress={onAvatarPress}
             darkMode={darkMode}
           />
         </View>
@@ -61,8 +62,8 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
         </View>
       </View>
     </Card>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   row: {
@@ -86,4 +87,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
-});
+})

@@ -1,10 +1,9 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import { TextBox } from "../Text/Text"
-import { Image } from "../Image/Image"
+import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
-import { getProfileImageUrl } from "../../utils/profileImage"
 
 type MessageSentProps = {
     text: string
@@ -19,9 +18,7 @@ export const MessageSent: React.FC<MessageSentProps> = ({
     timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     senderName = "You",
     avatarUrl,
-    userType = 'client'
 }: MessageSentProps) => {
-    const finalAvatarUrl = getProfileImageUrl(avatarUrl, userType);
     return (
         <View style={styles.container}>
             <Grid columns={12} gap={0}>
@@ -37,11 +34,10 @@ export const MessageSent: React.FC<MessageSentProps> = ({
                 </GridItem>
                 <GridItem colSpan={2}>
                     <View style={styles.avatarContainer}>
-                        <Image 
-                            src={finalAvatarUrl} 
+                        <ProfileAvatar
+                            profileImage={avatarUrl}
                             alt={`${senderName} avatar`}
                             size="xs"
-                            type="circle"
                         />
                     </View>
                 </GridItem>
