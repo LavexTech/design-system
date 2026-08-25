@@ -90,7 +90,7 @@ const Constants = {
       MEDIUM: 20,
     },
     maxWidth: {
-      messageBubble: "100%"
+      messageBubble: "75%"
     },
     shadowColor: {
       DEFAULT: "#000",

@@ -22,7 +22,10 @@ export const MessageSent: React.FC<MessageSentProps> = ({
     return (
         <View style={styles.container}>
             <Grid columns={12} gap={0}>
-                <GridItem colSpan={10}>
+                <GridItem colSpan={1}>
+                    <View />
+                </GridItem>
+                <GridItem colSpan={9}>
                     <View style={styles.messageWrapper}>
                         <View style={styles.messageBubble}>
                             <TextBox text={text} />
@@ -52,7 +55,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     messageWrapper: {
-        alignItems: 'stretch',
+        alignItems: 'flex-end',
         width: '100%',
     },
     messageBubble: {
@@ -61,13 +64,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
         borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
-        width: '100%',
-        maxWidth: Constants.styles.maxWidth.messageBubble as any,
-        alignSelf: 'stretch',
+        maxWidth: '100%',
+        alignSelf: 'flex-end',
     },
     messageInfo: {
         marginTop: Constants.styles.spacing.TINY,
         paddingHorizontal: Constants.styles.spacing.TINY,
+        alignSelf: 'flex-end',
     },
     avatarContainer: {
         alignItems: 'center',

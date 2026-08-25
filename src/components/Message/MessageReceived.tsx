@@ -31,7 +31,7 @@ export const MessageReceived: React.FC<MessageReceivedProps> = ({
                         />
                     </View>
                 </GridItem>
-                <GridItem colSpan={10}>
+                <GridItem colSpan={9}>
                     <View style={styles.messageWrapper}>
                         <View style={styles.senderInfo}>
                             <TextBox text={senderName} size="small" level="default" />
@@ -43,6 +43,9 @@ export const MessageReceived: React.FC<MessageReceivedProps> = ({
                             <TextBox text={timestamp} size="small" level="default" />
                         </View>
                     </View>
+                </GridItem>
+                <GridItem colSpan={1}>
+                    <View />
                 </GridItem>
             </Grid>
         </View>
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
         paddingTop: Constants.styles.spacing.LARGE,
     },
     messageWrapper: {
-        alignItems: 'stretch',
+        alignItems: 'flex-start',
         width: '100%',
     },
     senderInfo: {
@@ -75,9 +78,8 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: Constants.styles.borderRadius.SMALL,
         borderWidth: Constants.styles.borderWidth.THIN,
         borderColor: Constants.styles.borderColor.LIGHT,
-        width: '100%',
-        maxWidth: Constants.styles.maxWidth.messageBubble as any,
-        alignSelf: 'stretch',
+        maxWidth: '100%',
+        alignSelf: 'flex-start',
     },
     messageInfo: {
         marginTop: Constants.styles.spacing.TINY,
