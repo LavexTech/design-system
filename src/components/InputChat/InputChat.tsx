@@ -32,6 +32,8 @@ export function InputChat({
           onChange={onChange}
           placeholder={placeholder}
           placeholderTextColor={Constants.styles.color.GRAY}
+          returnKeyType="send"
+          onSubmitEditing={handleSend}
         />
       </View>
       <View style={styles.buttonContainer}>
