@@ -76,12 +76,10 @@ export const Order: React.FC<OrderProps> = ({ order, backTarget }) => {
   const panResponder = useMemo(
     () =>
       PanResponder.create({
-        onStartShouldSetPanResponder: (evt: GestureResponderEvent) => {
-          if (!backTarget) {
-            return false
-          }
-          return evt.nativeEvent.locationX <= EDGE_WIDTH
-        },
+        // Do not claim the touch on start — that steals taps from the back
+        // chevron (inside the left edge). Only capture once a horizontal swipe
+        // from the edge is clearly underway.
+        onStartShouldSetPanResponder: () => false,
         onMoveShouldSetPanResponder: (
           evt: GestureResponderEvent,
           gestureState: PanResponderGestureState,
