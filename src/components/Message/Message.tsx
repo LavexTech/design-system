@@ -11,7 +11,15 @@ type MessageProps = {
     timestamp?: string
     senderName?: string
     avatarUrl?: string
-    userType?: 'client' | 'provider'
+    userType?: 'client' | 'provider' | 'support'
+    /** When false, keeps avatar column empty (consecutive messages). Default true. */
+    showAvatar?: boolean
+    /** Hide sender name on received consecutive messages. Default true. */
+    showSenderName?: boolean
+    /** Tighter vertical spacing for consecutive same-sender messages. */
+    isGrouped?: boolean
+    /** Use headset icon instead of profile image (support sender). */
+    avatarVariant?: 'image' | 'headset'
 }
 
 export const Message: React.FC<MessageProps> = ({ 
@@ -21,7 +29,11 @@ export const Message: React.FC<MessageProps> = ({
     timestamp,
     senderName,
     avatarUrl,
-    userType = 'client'
+    userType = 'client',
+    showAvatar = true,
+    showSenderName = true,
+    isGrouped = false,
+    avatarVariant = 'image',
 }: MessageProps) => {
     const messageComponent = isOwn ? (
         <MessageSent 
@@ -30,6 +42,9 @@ export const Message: React.FC<MessageProps> = ({
             senderName={senderName}
             avatarUrl={avatarUrl}
             userType={userType}
+            showAvatar={showAvatar}
+            isGrouped={isGrouped}
+            avatarVariant={avatarVariant}
         />
     ) : (
         <MessageReceived 
@@ -38,6 +53,10 @@ export const Message: React.FC<MessageProps> = ({
             senderName={senderName}
             avatarUrl={avatarUrl}
             userType={userType}
+            showAvatar={showAvatar}
+            showSenderName={showSenderName}
+            isGrouped={isGrouped}
+            avatarVariant={avatarVariant}
         />
     )
 

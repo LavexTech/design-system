@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
-import { TextBox } from "../Text/Text"
 import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar"
+import { IconHeadset } from "../Icons/IconHeadset"
 import Constants from "../../constants/constants"
 
 type MessageSentProps = {
@@ -9,7 +9,10 @@ type MessageSentProps = {
     timestamp?: string
     senderName?: string
     avatarUrl?: string
-    userType?: 'client' | 'provider'
+    userType?: 'client' | 'provider' | 'support'
+    showAvatar?: boolean
+    isGrouped?: boolean
+    avatarVariant?: 'image' | 'headset'
 }
 
 export const MessageSent: React.FC<MessageSentProps> = ({ 
@@ -17,24 +20,36 @@ export const MessageSent: React.FC<MessageSentProps> = ({
     timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     senderName = "You",
     avatarUrl,
+    showAvatar = true,
+    isGrouped = false,
+    avatarVariant = 'image',
 }: MessageSentProps) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, isGrouped && styles.containerGrouped]}>
             <View style={styles.row}>
-                <View style={styles.bubbleColumn}>
-                    <View style={styles.messageBubble}>
-                        <Text style={styles.bubbleText}>{text}</Text>
-                    </View>
-                    <View style={styles.messageInfo}>
-                        <TextBox text={timestamp} size="small" level="default" />
-                    </View>
+                {timestamp ? (
+                    <Text style={styles.timestamp}>{timestamp}</Text>
+                ) : null}
+                <View style={styles.messageBubble}>
+                    <Text style={styles.bubbleText}>{text}</Text>
                 </View>
                 <View style={styles.avatarContainer}>
-                    <ProfileAvatar
-                        profileImage={avatarUrl}
-                        alt={`${senderName} avatar`}
-                        size="xs"
-                    />
+                    {showAvatar ? (
+                        avatarVariant === 'headset' ? (
+                            <View style={styles.headsetAvatar}>
+                                <IconHeadset
+                                    size={22}
+                                    color={Constants.styles.textColor.INFO}
+                                />
+                            </View>
+                        ) : (
+                            <ProfileAvatar
+                                profileImage={avatarUrl}
+                                alt={`${senderName} avatar`}
+                                size="xs"
+                            />
+                        )
+                    ) : null}
                 </View>
             </View>
         </View>
@@ -43,20 +58,18 @@ export const MessageSent: React.FC<MessageSentProps> = ({
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: Constants.styles.spacing.TINY,
+        marginTop: Constants.styles.spacing.SMALL,
         width: '100%',
+    },
+    containerGrouped: {
+        marginTop: 2,
     },
     row: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'flex-start',
-    },
-    bubbleColumn: {
-        maxWidth: '75%',
-        flexShrink: 1,
         alignItems: 'flex-end',
-        marginRight: Constants.styles.spacing.SMALL,
+        gap: Constants.styles.spacing.TINY,
     },
     messageBubble: {
         backgroundColor: Constants.styles.color.SOFT_BLUE,
@@ -64,8 +77,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
         borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
-        alignSelf: 'flex-end',
-        maxWidth: '100%',
+        flexShrink: 1,
+        maxWidth: '75%',
     },
     bubbleText: {
         fontWeight: Constants.styles.fontWeight.NORMAL,
@@ -75,15 +88,29 @@ const styles = StyleSheet.create({
         color: Constants.styles.theme.light.text.default,
         flexShrink: 1,
     },
-    messageInfo: {
-        marginTop: Constants.styles.spacing.TINY,
-        paddingHorizontal: Constants.styles.spacing.TINY,
-        alignSelf: 'flex-end',
+    timestamp: {
+        fontFamily: Constants.styles.fontFamily.REGULAR,
+        fontSize: 12,
+        lineHeight: 14,
+        color: Constants.styles.textColor.INFO,
+        flexShrink: 0,
+        marginBottom: 2,
+        marginRight: Constants.styles.spacing.TINY,
     },
     avatarContainer: {
         width: 40,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
         flexShrink: 0,
+        minHeight: 32,
+        marginLeft: Constants.styles.spacing.SMALL,
+    },
+    headsetAvatar: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        backgroundColor: Constants.styles.backgroundColor.GRAY,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })

@@ -61,6 +61,7 @@ export { IconHome } from "./src/components/Icons/IconHome";
 export { IconHistory } from "./src/components/Icons/IconHistory";
 export { IconReceipt } from "./src/components/Icons/IconReceipt";
 export { IconProfile } from "./src/components/Icons/IconProfile";
+export { IconHeadset } from "./src/components/Icons/IconHeadset";
 export { IconLoader } from "./src/components/Icons/IconLoader";
 export { IconEye } from "./src/components/Icons/IconEye";
 export { IconEyeClosed } from "./src/components/Icons/IconEyeClosed";
