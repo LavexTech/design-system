@@ -45,11 +45,11 @@ export const Stepper: React.FC<StepperProps> = ({
           <IconTrash width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
       )}
-      <View style={styles.valueContainer}>
-        <TextBox text={String(value)} size="medium" />
-      </View>
       <View style={styles.labelContainer}>
         <TextBox text={text} size="medium" />
+      </View>
+      <View style={styles.valueContainer}>
+        <TextBox text={String(value)} size="medium" />
       </View>
       <View style={styles.stepperButtons}>
         <Pressable
@@ -88,22 +88,24 @@ const styles = StyleSheet.create({
   buttonDelete: {
     marginRight: Constants.styles.spacing.SMALL,
   },
-  valueContainer: {
-    minWidth: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: Constants.styles.spacing.SMALL,
-  },
   labelContainer: {
     flex: 1,
     justifyContent: "center",
     marginRight: Constants.styles.spacing.SMALL,
+    minWidth: 0,
+  },
+  valueContainer: {
+    minWidth: 30,
+    justifyContent: "center",
+    alignItems: "flex-end",
+    marginRight: Constants.styles.spacing.SMALL,
+    flexShrink: 0,
   },
   stepperButtons: {
     flexDirection: "row",
     alignItems: "center",
     height: Constants.styles.componentSize.BUTTON_HEIGHT,
-    marginLeft: "auto",
+    flexShrink: 0,
   },
   button: {
     width: Constants.styles.componentSize.BUTTON_WIDTH,

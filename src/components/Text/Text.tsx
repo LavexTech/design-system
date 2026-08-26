@@ -10,6 +10,8 @@ export interface TextProps {
   position? : "left" | "center" | "right";
   darkMode?: boolean;
   fontScale?: number;
+  /** When false, text sizes to content (for use inside row layouts). Default true. */
+  fill?: boolean;
 }
 
 export const TextBox: React.FC<TextProps> = ({
@@ -19,6 +21,7 @@ export const TextBox: React.FC<TextProps> = ({
   position = "left",
   darkMode = false,
   fontScale = 1,
+  fill = true,
 }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
   if (!fontLoaded) return null; 
@@ -48,7 +51,7 @@ export const TextBox: React.FC<TextProps> = ({
       textAlign: position,
       flexWrap: "wrap",
       flexShrink: 1,
-      width: "100%",
+      ...(fill ? { width: "100%" as const } : null),
     },
   });
 
