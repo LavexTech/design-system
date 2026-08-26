@@ -1,6 +1,7 @@
 import React from "react"
 import { Pressable, StyleSheet, Text } from "react-native"
 import Constants from "../../constants/constants"
+import { useFonts } from "../../fontSetup"
 
 type FABProps = {
   text: string
@@ -15,8 +16,8 @@ export const FAB: React.FC<FABProps> = ({
   disabled = false,
   darkMode = false,
 }) => {
-  // darkMode reserved for consumer theme parity with other DS buttons
   void darkMode
+  const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR])
 
   return (
     <Pressable
@@ -34,7 +35,7 @@ export const FAB: React.FC<FABProps> = ({
         },
       ]}
     >
-      <Text style={styles.label}>{text}</Text>
+      {fontLoaded ? <Text style={styles.label}>{text}</Text> : null}
     </Pressable>
   )
 }
@@ -57,9 +58,9 @@ const styles = StyleSheet.create({
   },
   label: {
     color: Constants.styles.color.WHITE,
-    fontFamily: Constants.styles.fontFamily.BOLD,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    fontSize: Constants.styles.fontSize.SMALL,
-    lineHeight: Constants.styles.lineHeight.MEDIUM,
+    fontFamily: Constants.styles.fontFamily.REGULAR,
+    fontWeight: Constants.styles.fontWeight.NORMAL as any,
+    fontSize: Constants.styles.fontSize.MEDIUM,
+    lineHeight: Constants.styles.lineHeight.LARGE,
   },
 })

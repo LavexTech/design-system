@@ -2,7 +2,11 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
 
-export type TagVariant = "primary-outline" | "success-outline" | "danger-outline"
+export type TagVariant =
+  | "primary-outline"
+  | "success-outline"
+  | "danger-outline"
+  | "warning-outline"
 export type TagSize = "default" | "sm"
 
 type TagProps = {
@@ -28,6 +32,10 @@ const variantStyles: Record<
   "danger-outline": {
     borderColor: Constants.styles.textColor.DANGER,
     color: Constants.styles.textColor.DANGER,
+  },
+  "warning-outline": {
+    borderColor: Constants.styles.textColor.WARNING,
+    color: Constants.styles.textColor.WARNING,
   },
 }
 
