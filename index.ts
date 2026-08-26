@@ -32,6 +32,7 @@ export { OfferList } from "./src/components/OfferList/OfferList";
 export { Card } from "./src/components/Card/Card";
 export { Alert } from "./src/components/Alert/Alert";
 export { Button } from "./src/components/Button/Button";
+export { FAB } from "./src/components/FAB/FAB";
 export { Tag } from "./src/components/Tag/Tag";
 export { Grid, GridItem } from "./src/components/Grid/Grid";
 export { Modal } from "./src/components/Modal/Modal";
