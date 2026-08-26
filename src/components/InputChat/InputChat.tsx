@@ -3,7 +3,6 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { IconSend } from '../Icons/IconSend'
 import { Input } from '../Input/Input'
 import Constants from '../../constants/constants'
-import { Grid, GridItem } from '../Grid/Grid'
 
 type InputChatProps = {
   value: string,
@@ -25,40 +24,49 @@ export function InputChat({
   }
 
   return (
-    <Grid columns={12} gap={4}>
-      <GridItem colSpan={11}>
+    <View style={styles.row}>
+      <View style={styles.inputContainer}>
         <Input
           label=""
           value={value}
           onChange={onChange}
           placeholder={placeholder}
           placeholderTextColor={Constants.styles.color.GRAY}
+          returnKeyType="send"
+          onSubmitEditing={handleSend}
         />
-      </GridItem>
-      <GridItem colSpan={1}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[styles.button, !value.trim() && styles.disabledButton]}
-            onPress={handleSend}
-            disabled={!value.trim()}
-          >
-            <IconSend
-              fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.MEDIUM_GRAY}
-              width={Constants.styles.icon.MEDIUM}
-              height={Constants.styles.icon.MEDIUM}
-            />
-          </TouchableOpacity>
-        </View>
-      </GridItem>
-    </Grid>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, !value.trim() && styles.disabledButton]}
+          onPress={handleSend}
+          disabled={!value.trim()}
+        >
+          <IconSend
+            fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.MEDIUM_GRAY}
+            width={Constants.styles.icon.MEDIUM}
+            height={Constants.styles.icon.MEDIUM}
+          />
+        </TouchableOpacity>
+      </View>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  row: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: Constants.styles.spacing.SMALL,
+  },
+  inputContainer: {
+    flex: 1,
+    minWidth: 0,
+  },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'flex-end',
-    height: '100%',
     paddingBottom: Constants.styles.spacing.TINY,
   },
   button: {

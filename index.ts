@@ -20,6 +20,7 @@ export { TextArea } from "./src/components/TextArea/TextArea";
 export { UserCardVertical } from "./src/components/UserCardVertical/UserCardVertical";
 export { UserCardHorizontal } from "./src/components/UserCardHorizontal/UserCardHorizontal";
 export { UserCardBio } from "./src/components/UserCardBio/UserCardBio";
+export { ProfileAvatar } from "./src/components/ProfileAvatar/ProfileAvatar";
 
 // Lists
 export { List } from "./src/components/List/List";
@@ -60,6 +61,8 @@ export { IconHome } from "./src/components/Icons/IconHome";
 export { IconHistory } from "./src/components/Icons/IconHistory";
 export { IconReceipt } from "./src/components/Icons/IconReceipt";
 export { IconProfile } from "./src/components/Icons/IconProfile";
+export { IconHeadset } from "./src/components/Icons/IconHeadset";
+export { IconLoader } from "./src/components/Icons/IconLoader";
 export { IconEye } from "./src/components/Icons/IconEye";
 export { IconEyeClosed } from "./src/components/Icons/IconEyeClosed";
 export { IconExclamation } from "./src/components/Icons/IconExclamation";

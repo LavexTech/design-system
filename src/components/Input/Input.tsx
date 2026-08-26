@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import { TextBox as Text } from "../Text/Text"
 import { Input as InputBase, InputField } from '../../ui/input'
@@ -19,6 +19,8 @@ type InputProps = {
   secureTextEntry?: boolean
   rightElement?: React.ReactNode
   onBlur?: () => void
+  onSubmitEditing?: () => void
+  returnKeyType?: "done" | "go" | "next" | "search" | "send" | "default"
   darkMode?: boolean
   fontScale?: number
 }
@@ -36,6 +38,8 @@ export const Input: React.FC<InputProps> = ({
   secureTextEntry = false,
   rightElement,
   onBlur,
+  onSubmitEditing,
+  returnKeyType,
   darkMode = false,
   fontScale = 1,
 }) => {
@@ -141,6 +145,19 @@ export const Input: React.FC<InputProps> = ({
             placeholderTextColor={darkMode ? Constants.styles.theme.dark.text.muted : placeholderTextColor}
             secureTextEntry={secureTextEntry}
             onBlur={onBlur}
+            onSubmitEditing={Platform.OS === "web" ? undefined : onSubmitEditing}
+            returnKeyType={returnKeyType}
+            blurOnSubmit={!!onSubmitEditing}
+            onKeyPress={
+              Platform.OS === "web" && onSubmitEditing
+                ? (event) => {
+                    if (event.nativeEvent.key === "Enter") {
+                      event.preventDefault?.()
+                      onSubmitEditing()
+                    }
+                  }
+                : undefined
+            }
             style={{
               color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
               fontSize: Constants.styles.fontSize.MEDIUM * fontScale,

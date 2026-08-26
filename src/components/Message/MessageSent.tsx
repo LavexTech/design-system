@@ -1,17 +1,18 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
-import { TextBox } from "../Text/Text"
-import { Image } from "../Image/Image"
-import { Grid, GridItem } from "../Grid/Grid"
+import { View, StyleSheet, Text } from "react-native"
+import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar"
+import { IconHeadset } from "../Icons/IconHeadset"
 import Constants from "../../constants/constants"
-import { getProfileImageUrl } from "../../utils/profileImage"
 
 type MessageSentProps = {
     text: string
     timestamp?: string
     senderName?: string
     avatarUrl?: string
-    userType?: 'client' | 'provider'
+    userType?: 'client' | 'provider' | 'support'
+    showAvatar?: boolean
+    isGrouped?: boolean
+    avatarVariant?: 'image' | 'headset'
 }
 
 export const MessageSent: React.FC<MessageSentProps> = ({ 
@@ -19,43 +20,56 @@ export const MessageSent: React.FC<MessageSentProps> = ({
     timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     senderName = "You",
     avatarUrl,
-    userType = 'client'
+    showAvatar = true,
+    isGrouped = false,
+    avatarVariant = 'image',
 }: MessageSentProps) => {
-    const finalAvatarUrl = getProfileImageUrl(avatarUrl, userType);
     return (
-        <View style={styles.container}>
-            <Grid columns={12} gap={0}>
-                <GridItem colSpan={10}>
-                    <View style={styles.messageWrapper}>
-                        <View style={styles.messageBubble}>
-                            <TextBox text={text} />
-                        </View>
-                        <View style={styles.messageInfo}>
-                            <TextBox text={timestamp} size="small" level="default" />
-                        </View>
-                    </View>
-                </GridItem>
-                <GridItem colSpan={2}>
-                    <View style={styles.avatarContainer}>
-                        <Image 
-                            src={finalAvatarUrl} 
-                            alt={`${senderName} avatar`}
-                            size="xs"
-                            type="circle"
-                        />
-                    </View>
-                </GridItem>
-            </Grid>
+        <View style={[styles.container, isGrouped && styles.containerGrouped]}>
+            <View style={styles.row}>
+                {timestamp ? (
+                    <Text style={styles.timestamp}>{timestamp}</Text>
+                ) : null}
+                <View style={styles.messageBubble}>
+                    <Text style={styles.bubbleText}>{text}</Text>
+                </View>
+                <View style={styles.avatarContainer}>
+                    {showAvatar ? (
+                        avatarVariant === 'headset' ? (
+                            <View style={styles.headsetAvatar}>
+                                <IconHeadset
+                                    size={22}
+                                    color={Constants.styles.textColor.INFO}
+                                />
+                            </View>
+                        ) : (
+                            <ProfileAvatar
+                                profileImage={avatarUrl}
+                                alt={`${senderName} avatar`}
+                                size="xs"
+                            />
+                        )
+                    ) : null}
+                </View>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginVertical: Constants.styles.spacing.TINY,
+        marginTop: Constants.styles.spacing.SMALL,
+        width: '100%',
     },
-    messageWrapper: {
+    containerGrouped: {
+        marginTop: 2,
+    },
+    row: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
         alignItems: 'flex-end',
+        gap: Constants.styles.spacing.TINY,
     },
     messageBubble: {
         backgroundColor: Constants.styles.color.SOFT_BLUE,
@@ -63,15 +77,40 @@ const styles = StyleSheet.create({
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
         borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
-        maxWidth: Constants.styles.maxWidth.messageBubble as any,
-        alignSelf: 'flex-end',
+        flexShrink: 1,
+        maxWidth: '75%',
     },
-    messageInfo: {
-        marginTop: Constants.styles.spacing.TINY,
-        paddingHorizontal: Constants.styles.spacing.TINY,
+    bubbleText: {
+        fontWeight: Constants.styles.fontWeight.NORMAL,
+        fontFamily: Constants.styles.fontFamily.REGULAR,
+        fontSize: Constants.styles.fontSize.MEDIUM,
+        lineHeight: Constants.styles.lineHeight.LARGE,
+        color: Constants.styles.theme.light.text.default,
+        flexShrink: 1,
+    },
+    timestamp: {
+        fontFamily: Constants.styles.fontFamily.REGULAR,
+        fontSize: 12,
+        lineHeight: 14,
+        color: Constants.styles.textColor.INFO,
+        flexShrink: 0,
+        marginBottom: 2,
+        marginRight: Constants.styles.spacing.TINY,
     },
     avatarContainer: {
+        width: 40,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'flex-end',
+        flexShrink: 0,
+        minHeight: 32,
+        marginLeft: Constants.styles.spacing.SMALL,
+    },
+    headsetAvatar: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
+        backgroundColor: Constants.styles.backgroundColor.GRAY,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 })
