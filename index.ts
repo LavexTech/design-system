@@ -27,6 +27,7 @@ export { List } from "./src/components/List/List";
 export { TextList } from "./src/components/TextList/TextList";
 export { UserList } from "./src/components/UserList/UserList";
 export { OfferList } from "./src/components/OfferList/OfferList";
+export { SwipeableListItem } from "./src/components/SwipeableListItem/SwipeableListItem";
 
 // Others
 export { Card } from "./src/components/Card/Card";
