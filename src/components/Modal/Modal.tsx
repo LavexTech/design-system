@@ -38,6 +38,8 @@ type ModalProps = {
     onConfirm?: () => void,
     confirmVariant?: ButtonVariant,
     confirmDisabled?: boolean,
+    /** When true (default), calling confirm also invokes onClose. */
+    closeOnConfirm?: boolean,
     darkMode?: boolean,
     fontScale?: number,
 }
@@ -56,6 +58,7 @@ export const Modal: React.FC<ModalProps> = ({
     onConfirm,
     confirmVariant = 'success',
     confirmDisabled = false,
+    closeOnConfirm = true,
     darkMode = false,
     fontScale = 1,
 }: ModalProps) => {
@@ -66,6 +69,13 @@ export const Modal: React.FC<ModalProps> = ({
         Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT -
         insets.bottom
     const hasConfirm = typeof onConfirm === 'function'
+
+    function handleConfirm() {
+        onConfirm?.()
+        if (closeOnConfirm) {
+            onClose()
+        }
+    }
 
     return (
         <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
@@ -98,7 +108,7 @@ export const Modal: React.FC<ModalProps> = ({
                             {hasConfirm ? (
                                 <Button
                                     text={confirmText || 'OK'}
-                                    onClick={onConfirm}
+                                    onClick={handleConfirm}
                                     variant={confirmVariant}
                                     size={buttonSize}
                                     disabled={confirmDisabled}

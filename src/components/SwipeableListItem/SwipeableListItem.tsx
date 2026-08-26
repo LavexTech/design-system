@@ -37,6 +37,7 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
   const translateX = useRef(new Animated.Value(0)).current
   const openRef = useRef(false)
   const dragStartX = useRef(0)
+  const isHorizontalSwipe = useRef(false)
   const controlled = isOpen !== undefined
 
   const animateTo = useCallback(
@@ -57,7 +58,9 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
       animateTo(open ? -deleteWidth : 0, open)
       if (!controlled) {
         onOpenChange?.(open)
-      } else if (open !== isOpen) {
+        return
+      }
+      if (open !== isOpen) {
         onOpenChange?.(open)
       }
     },
@@ -80,12 +83,27 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
           gestureState: PanResponderGestureState,
         ) => {
           const { dx, dy } = gestureState
-          // activeOffsetX / failOffsetY equivalents — prefer horizontal swipe
           if (Math.abs(dy) > FAIL_OFFSET_Y && Math.abs(dy) > Math.abs(dx)) {
+            isHorizontalSwipe.current = false
             return false
           }
-          return Math.abs(dx) > ACTIVE_OFFSET_X && Math.abs(dx) > Math.abs(dy)
+          const claim =
+            Math.abs(dx) > ACTIVE_OFFSET_X && Math.abs(dx) > Math.abs(dy)
+          isHorizontalSwipe.current = claim
+          return claim
         },
+        onMoveShouldSetPanResponderCapture: (
+          _evt: GestureResponderEvent,
+          gestureState: PanResponderGestureState,
+        ) => {
+          const { dx, dy } = gestureState
+          return (
+            Math.abs(dx) > ACTIVE_OFFSET_X &&
+            Math.abs(dx) > Math.abs(dy) &&
+            Math.abs(dy) <= FAIL_OFFSET_Y
+          )
+        },
+        onPanResponderTerminationRequest: () => !isHorizontalSwipe.current,
         onPanResponderGrant: () => {
           translateX.stopAnimation((value) => {
             dragStartX.current = typeof value === "number" ? value : 0
@@ -105,16 +123,21 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
           _evt: GestureResponderEvent,
           gestureState: PanResponderGestureState,
         ) => {
+          isHorizontalSwipe.current = false
           const current = Math.min(
             0,
             Math.max(-deleteWidth, dragStartX.current + gestureState.dx),
           )
           const shouldOpen =
-            current < -deleteWidth * OPEN_THRESHOLD_RATIO ||
             gestureState.vx < -OPEN_VELOCITY
+              ? true
+              : gestureState.vx > OPEN_VELOCITY
+                ? false
+                : current < -deleteWidth * OPEN_THRESHOLD_RATIO
           setOpen(shouldOpen)
         },
         onPanResponderTerminate: () => {
+          isHorizontalSwipe.current = false
           setOpen(openRef.current)
         },
       }),
