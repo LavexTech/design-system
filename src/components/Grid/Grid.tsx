@@ -1,6 +1,7 @@
 import React from "react";
 import { Grid as GluestackGrid, GridItem as GluestackGridItem } from "../../ui/grid";
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
+import { StyleSheet } from "react-native";
 
 type GridProps = {
   children: React.ReactNode;
@@ -61,7 +62,10 @@ export const Grid: React.FC<GridProps> = ({
   ].filter(Boolean).join(" ")
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+    <GluestackUIProvider
+      mode={darkMode ? "dark" : "light"}
+      style={styles.gridProvider}
+    >
       <GluestackGrid 
         className={gapClasses}
         _extra={{ 
@@ -119,3 +123,12 @@ export const GridItem: React.FC<GridItemProps> = ({
     </GluestackGridItem>
   )
 }
+
+const styles = StyleSheet.create({
+  gridProvider: {
+    flexGrow: 0,
+    flexShrink: 0,
+    alignSelf: "stretch",
+    width: "100%",
+  },
+})

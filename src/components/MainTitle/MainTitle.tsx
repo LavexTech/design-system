@@ -10,9 +10,22 @@ export interface MainTitleProps {
 
 export const MainTitle: React.FC<MainTitleProps> = ({ text, position = 'left' }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
-  if (!fontLoaded) return null;
 
-  return <Text style={[styles.MainTitle, { textAlign: position }]}>{text}</Text>;
+  return (
+    <Text
+      style={[
+        styles.MainTitle,
+        {
+          textAlign: position,
+          fontFamily: fontLoaded
+            ? Constants.styles.fontFamily.REGULAR
+            : undefined,
+        },
+      ]}
+    >
+      {text}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({

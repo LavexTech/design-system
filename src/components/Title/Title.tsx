@@ -12,9 +12,8 @@ export interface TitleProps {
 
 export const Title: React.FC<TitleProps> = ({ text, position = 'left', darkMode = false, fontScale = 1 }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
-  if (!fontLoaded) return null;
 
-  return <Text style={[styles.Title, { textAlign: position, color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default, fontSize: Constants.styles.fontSize.LARGER * fontScale, lineHeight: Constants.styles.fontSize.LARGER * fontScale }]}>{text}</Text>;
+  return <Text style={[styles.Title, { textAlign: position, color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default, fontSize: Constants.styles.fontSize.LARGER * fontScale, lineHeight: Constants.styles.fontSize.LARGER * fontScale, fontFamily: fontLoaded ? Constants.styles.fontFamily.REGULAR : undefined }]}>{text}</Text>;
 };
 
 const styles = StyleSheet.create({
