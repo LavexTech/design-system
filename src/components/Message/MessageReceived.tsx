@@ -84,11 +84,12 @@ const styles = StyleSheet.create({
     },
     avatarContainer: {
         width: 40,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'flex-end',
         marginRight: Constants.styles.spacing.SMALL,
         flexShrink: 0,
-        minHeight: 32,
+        overflow: 'hidden',
     },
     headsetAvatar: {
         width: 32,

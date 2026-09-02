@@ -70,7 +70,7 @@ const AVATAR_SIZE_PX = 64
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     width: "100%",
     gap: 8,
   },
