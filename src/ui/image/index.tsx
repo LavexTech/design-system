@@ -21,6 +21,51 @@ const imageStyle = tva({
   },
 });
 
+/** Pixel sizes aligned with Tailwind classes (native needs explicit dimensions). */
+export const NATIVE_IMAGE_SIZE_PX = {
+  '2xs': 24,
+  xs: 40,
+  sm: 64,
+  md: 80,
+  lg: 96,
+  xl: 128,
+  '2xl': 256,
+} as const;
+
+type ImageSizeKey = keyof typeof NATIVE_IMAGE_SIZE_PX;
+
+type ImageSize = VariantProps<typeof imageStyle>['size'];
+
+function getNativeImageStyle(
+  size: ImageSize,
+  className?: string
+): React.ComponentProps<typeof RNImage>['style'] | undefined {
+  if (Platform.OS === 'web') {
+    // @ts-expect-error web-only CSS value
+    return { height: 'revert-layer', width: 'revert-layer' };
+  }
+
+  if (!size || size === 'full' || size === 'none') {
+    return undefined;
+  }
+
+  const px = NATIVE_IMAGE_SIZE_PX[size as ImageSizeKey];
+  if (!px) {
+    return undefined;
+  }
+
+  const isCircle = className?.includes('rounded-full');
+
+  return {
+    width: px,
+    height: px,
+    maxWidth: px,
+    maxHeight: px,
+    resizeMode: 'cover',
+    ...(isCircle ? { borderRadius: px / 2, overflow: 'hidden' as const } : {}),
+  };
+}
+
 const UIImage = createImage({ Root: RNImage });
 
 type ImageProps = VariantProps<typeof imageStyle> &
@@ -28,18 +73,13 @@ type ImageProps = VariantProps<typeof imageStyle> &
 const Image = React.forwardRef<
   React.ComponentRef<typeof UIImage>,
   ImageProps & { className?: string }
->(function Image({ size = 'md', className, ...props }, ref) {
+>(function Image({ size = 'md', className, style, ...props }, ref) {
   return (
     <UIImage
       className={imageStyle({ size, class: className })}
       {...props}
       ref={ref}
-      // @ts-expect-error : web only
-      style={
-        Platform.OS === 'web'
-          ? { height: 'revert-layer', width: 'revert-layer' }
-          : undefined
-      }
+      style={[getNativeImageStyle(size, className), style]}
     />
   );
 });
