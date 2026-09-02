@@ -67,10 +67,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    width: "100%",
     flexDirection: "row",
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderTopWidth: Constants.styles.borderWidth.THIN,
