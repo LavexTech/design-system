@@ -1,5 +1,5 @@
 import React from "react"
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
+import { View, TouchableOpacity, Text, StyleSheet, Platform } from "react-native"
 import Constants from "../../constants/constants"
 
 const TAB_ACTIVE_COLOR = "#007DFF"
@@ -37,7 +37,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         return (
           <TouchableOpacity
             key={page}
-            style={styles.tab}
+            style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
             onPress={() => handlePagePress(page)}
             activeOpacity={0.7}
           >
@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: Constants.styles.spacing.TINY,
     paddingBottom: Constants.styles.spacing.TINY,
+  },
+  tabIos: {
+    paddingTop: Constants.styles.spacing.TINY + 6,
+    paddingBottom: Constants.styles.spacing.TINY + 10,
   },
   iconContainer: {
     alignItems: "center",
