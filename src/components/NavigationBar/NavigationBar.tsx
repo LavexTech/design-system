@@ -52,7 +52,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 {
                   color,
                   fontSize: 15 * fontScale,
-                  lineHeight: Constants.styles.lineHeight.LARGE * fontScale,
+                  lineHeight: 18 * fontScale,
                 },
               ]}
             >
@@ -82,12 +82,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: Constants.styles.spacing.SMALL,
+    paddingTop: Constants.styles.spacing.TINY,
+    paddingBottom: Constants.styles.spacing.TINY,
   },
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: Constants.styles.spacing.TINY,
+    marginBottom: 2,
   },
   tabText: {
     fontWeight: Constants.styles.fontWeight.NORMAL as any,
