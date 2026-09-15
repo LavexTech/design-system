@@ -48,6 +48,6 @@ const [deliveryForm, setDeliveryForm] = useState("");
 2. Ao tocar, abre um modal em tela cheia (sem título), ~50% mais alto que o conteúdo compacto, com as opções como botões outline
 3. Tocar numa opção chama `onChange` e fecha o modal
 4. A opção selecionada usa `success-outline`; as demais usam `default-outline`
-5. O texto das opções fica centralizado no botão
+5. O texto das opções fica centralizado no botão, sem padding extra (o botão já tem)
 6. A opção já selecionada mostra um ícone de check à esquerda
 7. Os botões das opções têm padding vertical extra para o texto não encostar nas bordas

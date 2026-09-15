@@ -194,6 +194,6 @@ const styles = StyleSheet.create({
   optionButtonText: {
     textAlign: "center",
     width: "100%",
-    paddingHorizontal: Constants.styles.spacing.EXTRA_LARGE,
+    padding: 0,
   },
 })
