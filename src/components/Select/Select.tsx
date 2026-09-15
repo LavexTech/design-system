@@ -6,7 +6,12 @@ import { Grid, GridItem } from "../Grid/Grid"
 import { Modal } from "../Modal/Modal"
 import { Button } from "../Button/Button"
 import { IconChevronDown } from "../Icons/IconChevronDown"
+import { IconCheck } from "../Icons/IconCheck"
 import Constants from "../../constants/constants"
+
+const OPTION_BUTTON_MIN_HEIGHT =
+  Constants.styles.componentSize.BUTTON_HEIGHT +
+  Constants.styles.spacing.MEDIUM * 2
 
 export type SelectOption = {
   label: string
@@ -38,6 +43,15 @@ export const Select: React.FC<SelectProps> = ({
   const selectedOption = options.find((option) => option.value === value)
   const displayText = selectedOption?.label ?? placeholder
   const hasError = Boolean(errorMessage)
+  const optionRowHeight = OPTION_BUTTON_MIN_HEIGHT
+  const optionGap = Constants.styles.spacing.SMALL
+  const optionsHeight =
+    options.length * optionRowHeight +
+    Math.max(0, options.length - 1) * optionGap
+  const chromeHeight =
+    Constants.styles.componentSize.BUTTON_HEIGHT +
+    Constants.styles.spacing.LARGE * 2
+  const contentMinHeight = Math.round((optionsHeight + chromeHeight) * 1.5)
 
   function handleSelect(optionValue: string) {
     onChange(optionValue)
@@ -103,8 +117,9 @@ export const Select: React.FC<SelectProps> = ({
           buttonVariant="default-outline"
           darkMode={darkMode}
           fontScale={fontScale}
+          contentMinHeight={contentMinHeight}
         >
-          <View style={styles.options}>
+          <View style={[styles.options, { minHeight: Math.round(optionsHeight * 1.5) }]}>
             {options.map((option) => {
               const isSelected = option.value === value
               return (
@@ -115,6 +130,16 @@ export const Select: React.FC<SelectProps> = ({
                     onClick={() => handleSelect(option.value)}
                     darkMode={darkMode}
                     fontScale={fontScale}
+                    style={styles.optionButtonInner}
+                    textStyle={styles.optionButtonText}
+                    icon={
+                      isSelected ? (
+                        <IconCheck
+                          size={20}
+                          color={Constants.styles.textColor.SUCCESS}
+                        />
+                      ) : undefined
+                    }
                   />
                 </View>
               )
@@ -155,8 +180,20 @@ const styles = StyleSheet.create({
   options: {
     gap: Constants.styles.spacing.SMALL,
     width: "100%",
+    justifyContent: "center",
   },
   optionButton: {
     width: "100%",
+  },
+  optionButtonInner: {
+    width: "100%",
+    minHeight: OPTION_BUTTON_MIN_HEIGHT,
+    height: "auto",
+    paddingVertical: Constants.styles.spacing.MEDIUM,
+  },
+  optionButtonText: {
+    textAlign: "center",
+    width: "100%",
+    paddingHorizontal: Constants.styles.spacing.EXTRA_LARGE,
   },
 })

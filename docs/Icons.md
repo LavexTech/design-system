@@ -10,6 +10,7 @@ import {
   IconHome, 
   IconSend,
   IconReceipt,
+  IconCheck,
 } from "lavex-design-system";
 ```
 
@@ -49,6 +50,7 @@ Estilo padrão: **outline** (stroke). Em `IconStar` / `IconStarHalf`, passar `fi
 - `IconPlus` - Adicionar/Mais
 - `IconMinus` - Remover/Menos
 - `IconClose` - Fechar/X
+- `IconCheck` - Confirmar/selecionado
 - `IconTrash` - Lixeira/Deletar
 - `IconEdit` - Editar
 

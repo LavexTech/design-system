@@ -74,6 +74,7 @@ export { IconTrash } from "./src/components/Icons/IconTrash";
 export { IconPlus } from "./src/components/Icons/IconPlus";
 export { IconMinus } from "./src/components/Icons/IconMinus";
 export { IconClose } from "./src/components/Icons/IconClose";
+export { IconCheck } from "./src/components/Icons/IconCheck";
 export { IconSearch } from "./src/components/Icons/IconSearch";
 export { IconFilter } from "./src/components/Icons/IconFilter";
 export { IconMessage } from "./src/components/Icons/IconMessage";
