@@ -87,23 +87,22 @@ const ReviewsList = () => {
 ## Como Funciona
 
 1. **Normalização**: O componente garante que o rating esteja sempre entre 0 e 5
-2. **Cálculo**: Determina quantas estrelas cheias e se há meia estrela (≥ 0.5)
+2. **Cálculo**: Arredonda para o múltiplo de 0,5 mais próximo e determina estrelas cheias e meia estrela
 3. **Camada de Fundo**: Renderiza 5 estrelas cinzas (#E0E0E0) como base
 4. **Camada de Rating**: Sobrepõe estrelas douradas (#FFD700) conforme o rating
 5. **Meia Estrela**: Usa IconStarHalf quando há decimal ≥ 0.5
 
 ## Regras de Arredondamento
 
-O componente segue estas regras para exibição:
+A nota é arredondada para o múltiplo de 0,5 mais próximo antes de desenhar as estrelas:
 
 ```tsx
-// Sem arredondamento - meia estrela aparece com 0.5 ou mais
 rating = 0.0  → 0 estrelas
-rating = 0.4  → 0 estrelas
-rating = 0.5  → 0 estrelas cheias + 1 meia estrela
+rating = 0.2  → 0 estrelas
+rating = 0.3  → 0 estrelas + 1 meia estrela
 rating = 1.0  → 1 estrela
-rating = 3.3  → 3 estrelas
-rating = 3.5  → 3 estrelas cheias + 1 meia estrela
+rating = 3.2  → 3 estrelas
+rating = 3.4  → 3 estrelas cheias + 1 meia estrela
 rating = 4.7  → 4 estrelas cheias + 1 meia estrela
 rating = 5.0  → 5 estrelas
 ```
