@@ -25,8 +25,9 @@ interface User {
   name: string;         // Nome do prestador
   profileImage: string; // URL da foto de perfil
   ordersCount: number;  // Quantidade de pedidos realizados
-  rating: number;       // Avaliação de 1 a 5
-}
+  rating: number;       // Avaliação de 0 a 5
+  totalRatings?: number; // Quantidade de avaliações; 0 mostra "Sem avaliações"
+  userType: 'client' | 'provider';
 ```
 
 ## Uso Básico
@@ -77,7 +78,7 @@ const MyComponent = () => {
 - Valor em destaque com cor verde (success)
 - Distância exibida no formato "Xkm"
 - Nome do prestador de serviço
-- Sistema de avaliação com estrelas visuais
+- Sistema de avaliação com estrelas visuais, ou a label "Sem avaliações" quando não houver notas
 - Exibição numérica da avaliação no formato "X/5"
 - Organização hierárquica de informações (valor/distância no topo, usuário/avaliação abaixo)
 - Suporte a interação por clique

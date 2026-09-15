@@ -14,6 +14,7 @@ type User = {
   profileImage: string
   ordersCount: number
   rating: number
+  totalRatings?: number
   userType: "client" | "provider"
 }
 
@@ -30,6 +31,11 @@ export const UserCardVertical: React.FC<UserCardVerticalProps> = ({
   onAvatarPress,
   darkMode = false,
 }: UserCardVerticalProps) => {
+  const showStars =
+    typeof user.totalRatings === "number"
+      ? user.totalRatings > 0
+      : user.rating > 0
+
   return (
     <Card onClick={onClick} darkMode={darkMode}>
       <Grid columns={12} gap={2} darkMode={darkMode}>
@@ -55,8 +61,14 @@ export const UserCardVertical: React.FC<UserCardVerticalProps> = ({
         </GridItem>
         <GridItem colSpan={12}>
           <View style={styles.centerItem}>
-            <Stars rating={user.rating} size={16} />
-            <Info text={`${Math.round(user.rating)}/5`} darkMode={darkMode} />
+            {showStars ? (
+              <>
+                <Stars rating={user.rating} size={16} />
+                <Info text={`${user.rating.toFixed(1)}/5`} darkMode={darkMode} />
+              </>
+            ) : (
+              <Info text="Sem avaliações" darkMode={darkMode} />
+            )}
           </View>
         </GridItem>
       </Grid>
