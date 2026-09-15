@@ -20,6 +20,8 @@ import { Input } from "lavex-design-system";
 | `errorMessage`   | `string`                                   | Não         | Mensagem exibida quando validação falha         |
 | `mask`           | `string`                                   | Não         | Padrão de máscara (use X ou x para caracteres)  |
 | `mobileKeyboard` | `"text" \| "email" \| "phone" \| "number"` | Não         | Tipo de teclado mobile (padrão: "text")         |
+| `autoCapitalize` | `"none" \| "sentences" \| "words" \| "characters"` | Não | Capitalização do teclado. Email usa `"none"` por padrão. |
+| `autoCorrect`    | `boolean`                                 | Não         | Correção automática. Email desliga por padrão.  |
 
 ## O que faz
 

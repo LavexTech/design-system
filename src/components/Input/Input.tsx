@@ -23,6 +23,8 @@ type InputProps = {
   returnKeyType?: "done" | "go" | "next" | "search" | "send" | "default"
   darkMode?: boolean
   fontScale?: number
+  autoCapitalize?: "none" | "sentences" | "words" | "characters"
+  autoCorrect?: boolean
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -42,6 +44,8 @@ export const Input: React.FC<InputProps> = ({
   returnKeyType,
   darkMode = false,
   fontScale = 1,
+  autoCapitalize,
+  autoCorrect,
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true)
 
@@ -140,8 +144,15 @@ export const Input: React.FC<InputProps> = ({
             value={value} 
             onChangeText={handleTextChange} 
             keyboardType={getKeyboardType()}
-            autoCapitalize={mobileKeyboard === "email" ? "none" : undefined}
-            autoCorrect={mobileKeyboard === "email" ? false : undefined}
+            autoCapitalize={
+              autoCapitalize ?? (mobileKeyboard === "email" ? "none" : undefined)
+            }
+            autoCorrect={
+              autoCorrect ?? (mobileKeyboard === "email" ? false : undefined)
+            }
+            spellCheck={
+              autoCorrect === false || mobileKeyboard === "email" ? false : undefined
+            }
             placeholderTextColor={darkMode ? Constants.styles.theme.dark.text.muted : placeholderTextColor}
             secureTextEntry={secureTextEntry}
             onBlur={onBlur}
