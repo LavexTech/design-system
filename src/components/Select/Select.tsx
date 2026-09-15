@@ -1,0 +1,176 @@
+import React, { useState } from "react"
+import { Pressable, StyleSheet, View } from "react-native"
+import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { TextBox as Text } from "../Text/Text"
+import { Grid, GridItem } from "../Grid/Grid"
+import { Modal } from "../Modal/Modal"
+import { IconChevronDown } from "../Icons/IconChevronDown"
+import Constants from "../../constants/constants"
+
+export type SelectOption = {
+  label: string
+  value: string
+}
+
+type SelectProps = {
+  label: string
+  value?: string
+  placeholder?: string
+  options: SelectOption[]
+  onChange: (value: string) => void
+  errorMessage?: string
+  darkMode?: boolean
+  fontScale?: number
+}
+
+export const Select: React.FC<SelectProps> = ({
+  label,
+  value,
+  placeholder = "Selecione",
+  options,
+  onChange,
+  errorMessage,
+  darkMode = false,
+  fontScale = 1,
+}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const selectedOption = options.find((option) => option.value === value)
+  const displayText = selectedOption?.label ?? placeholder
+  const hasError = Boolean(errorMessage)
+
+  function handleSelect(optionValue: string) {
+    onChange(optionValue)
+    setIsOpen(false)
+  }
+
+  return (
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={{ width: "100%" }}>
+      <Grid columns={1} gap={2} darkMode={darkMode}>
+        {label ? (
+          <GridItem colSpan={4}>
+            <Text text={label} size="small" darkMode={darkMode} fontScale={fontScale} />
+          </GridItem>
+        ) : null}
+        <GridItem colSpan={4}>
+          <Pressable
+            onPress={() => setIsOpen(true)}
+            style={[
+              styles.trigger,
+              darkMode ? styles.triggerDark : null,
+              hasError ? styles.triggerError : null,
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={label}
+          >
+            <View style={styles.triggerText}>
+              <Text
+                text={displayText}
+                size="medium"
+                darkMode={darkMode}
+                fontScale={fontScale}
+                fill={false}
+              />
+            </View>
+            <View style={styles.chevron}>
+              <IconChevronDown
+                size={Constants.styles.fontSize.MEDIUM * fontScale}
+                color={
+                  darkMode
+                    ? Constants.styles.theme.dark.text.muted
+                    : Constants.styles.textColor.INFO
+                }
+              />
+            </View>
+          </Pressable>
+        </GridItem>
+        {errorMessage ? (
+          <GridItem colSpan={4}>
+            <Text
+              size="small"
+              level="error"
+              text={errorMessage}
+              darkMode={darkMode}
+              fontScale={fontScale}
+            />
+          </GridItem>
+        ) : null}
+      </Grid>
+      {isOpen ? (
+        <Modal
+          title={label}
+          onClose={() => setIsOpen(false)}
+          buttonText="Voltar"
+          buttonVariant="default-outline"
+          darkMode={darkMode}
+          fontScale={fontScale}
+        >
+          <View style={styles.options}>
+            {options.map((option) => {
+              const isSelected = option.value === value
+              return (
+                <Pressable
+                  key={option.value}
+                  onPress={() => handleSelect(option.value)}
+                  style={[
+                    styles.option,
+                    isSelected ? styles.optionSelected : null,
+                  ]}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: isSelected }}
+                >
+                  <Text
+                    text={option.label}
+                    size="medium"
+                    darkMode={darkMode}
+                    fontScale={fontScale}
+                    level={isSelected ? "primary" : "default"}
+                  />
+                </Pressable>
+              )
+            })}
+          </View>
+        </Modal>
+      ) : null}
+    </GluestackUIProvider>
+  )
+}
+
+const styles = StyleSheet.create({
+  trigger: {
+    minHeight: 48,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: Constants.styles.spacing.MEDIUM,
+    backgroundColor: Constants.styles.backgroundColor.WHITE,
+    borderRadius: Constants.styles.borderRadius.MEDIUM,
+    borderWidth: Constants.styles.borderWidth.REGULAR,
+    borderColor: Constants.styles.borderColor.MEDIUM,
+  },
+  triggerDark: {
+    backgroundColor: Constants.styles.theme.dark.background.subtle,
+    borderColor: Constants.styles.theme.dark.border.default,
+  },
+  triggerError: {
+    borderColor: Constants.styles.textColor.DANGER,
+  },
+  chevron: {
+    marginLeft: Constants.styles.spacing.SMALL,
+  },
+  triggerText: {
+    flex: 1,
+    marginRight: Constants.styles.spacing.SMALL,
+  },
+  options: {
+    gap: Constants.styles.spacing.SMALL,
+    width: "100%",
+  },
+  option: {
+    paddingVertical: Constants.styles.spacing.MEDIUM,
+    paddingHorizontal: Constants.styles.spacing.SMALL,
+    borderRadius: Constants.styles.borderRadius.MEDIUM,
+  },
+  optionSelected: {
+    backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
+  },
+})

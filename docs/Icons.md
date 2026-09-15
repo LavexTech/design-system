@@ -42,6 +42,7 @@ Estilo padrão: **outline** (stroke). Em `IconStar` / `IconStarHalf`, passar `fi
 - `IconArrowRight` - Seta para direita
 - `IconChevronLeft` - Chevron para esquerda
 - `IconChevronRight` - Chevron para direita
+- `IconChevronDown` - Chevron para baixo
 
 ### Ações
 - `IconSend` - Enviar
