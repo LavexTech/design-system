@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Animated, Pressable, StyleSheet } from "react-native"
+import { Animated, Pressable, StyleSheet, TextStyle, ViewStyle } from "react-native"
 import { Button as GluestackButton, ButtonText } from "../../ui/button"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import Constants from "../../constants/constants";
@@ -23,6 +23,8 @@ type ButtonBaseProps = {
   disabled?: boolean;
   darkMode?: boolean;
   fontScale?: number;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
 }
 
 type ButtonProps =
@@ -141,6 +143,8 @@ export const Button: React.FC<ButtonProps> = ({
   fontScale = 1,
   needsConfirmation = false,
   confirmationText,
+  style,
+  textStyle: textStyleOverride,
 }) => {
   const { action, variant: gluestackVariant } = variantMap[variant]
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false)
@@ -269,9 +273,9 @@ export const Button: React.FC<ButtonProps> = ({
       size={buttonSize}
       onPress={onClick}
       isDisabled={disabled}
-      style={[buttonStyle]}
+      style={[buttonStyle, style]}
     >
-      <ButtonText style={[textStyle]}>
+      <ButtonText style={[textStyle, textStyleOverride]}>
         {text}
       </ButtonText>
     </GluestackButton>

@@ -125,6 +125,8 @@ export const Select: React.FC<SelectProps> = ({
                     onClick={() => handleSelect(option.value)}
                     darkMode={darkMode}
                     fontScale={fontScale}
+                    style={styles.optionButtonInner}
+                    textStyle={styles.optionButtonText}
                   />
                 </View>
               )
@@ -168,6 +170,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   optionButton: {
+    width: "100%",
+  },
+  optionButtonInner: {
+    width: "100%",
+  },
+  optionButtonText: {
+    textAlign: "center",
     width: "100%",
   },
 })
