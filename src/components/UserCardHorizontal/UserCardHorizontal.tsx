@@ -13,6 +13,7 @@ export type User = {
   profileImage: string,
   ordersCount: number,
   rating: number,
+  totalRatings?: number,
   userType: 'client' | 'provider',
 }
 
@@ -22,6 +23,13 @@ type UserCardHorizontalProps = {
   darkMode?: boolean,
   fontScale?: number,
   infoTone?: "muted" | "default",
+}
+
+function hasRatings(user: User): boolean {
+  if (typeof user.totalRatings === "number") {
+    return user.totalRatings > 0
+  }
+  return user.rating > 0
 }
 
 export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
@@ -42,7 +50,16 @@ export const UserCardHorizontal: React.FC<UserCardHorizontalProps> = ({
           fontScale={fontScale}
           tone={infoTone}
         />
-        <Stars rating={user.rating} size={16} />
+        {hasRatings(user) ? (
+          <Stars rating={user.rating} size={16} />
+        ) : (
+          <Info
+            text="Sem avaliações"
+            darkMode={darkMode}
+            fontScale={fontScale}
+            tone={infoTone}
+          />
+        )}
       </View>
     </Card>
   )

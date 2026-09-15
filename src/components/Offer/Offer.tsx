@@ -13,6 +13,7 @@ type User = {
   profileImage: string,
   ordersCount: number,
   rating: number,
+  totalRatings?: number,
   userType: 'client' | 'provider',
 }
 
@@ -21,6 +22,13 @@ type OfferProps = {
   distance: number,
   user: User,
   onClick?: () => void,
+}
+
+function hasRatings(user: User): boolean {
+  if (typeof user.totalRatings === "number") {
+    return user.totalRatings > 0
+  }
+  return user.rating > 0
 }
 
 export const Offer: React.FC<OfferProps> = ({ amount, distance, user, onClick }) => {
@@ -35,10 +43,14 @@ export const Offer: React.FC<OfferProps> = ({ amount, distance, user, onClick })
         
         <View style={styles.userInfo}>
           <Text text={user.name} />
-          <View style={styles.ratingContainer}>
-            <Stars rating={user.rating} size={16} />
-            <Info text={String(user.rating) + "/5"} />
-          </View>
+          {hasRatings(user) ? (
+            <View style={styles.ratingContainer}>
+              <Stars rating={user.rating} size={16} />
+              <Info text={`${user.rating.toFixed(1)}/5`} />
+            </View>
+          ) : (
+            <Info text="Sem avaliações" />
+          )}
         </View>
       </Grid>
     </Card>
