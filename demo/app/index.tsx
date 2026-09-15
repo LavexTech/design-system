@@ -36,6 +36,7 @@ import { IconArrowLeft } from "@src/components/Icons/IconArrowLeft"
 import { IconArrowRight } from "@src/components/Icons/IconArrowRight"
 import { IconChevronLeft } from "@src/components/Icons/IconChevronLeft"
 import { IconChevronRight } from "@src/components/Icons/IconChevronRight"
+import { IconChevronDown } from "@src/components/Icons/IconChevronDown"
 import { IconSend } from "@src/components/Icons/IconSend"
 import { IconPlus } from "@src/components/Icons/IconPlus"
 import { IconMinus } from "@src/components/Icons/IconMinus"
@@ -58,6 +59,7 @@ import { Grid, GridItem } from "@src/components/Grid/Grid"
 import { Card } from "@src/components/Card/Card"
 import { Message } from "@src/components/Message/Message"
 import { InputPassword } from "@src/components/InputPassword/InputPassword"
+import { Select } from "@src/components/Select/Select"
 import { Image } from "@src/components/Image/Image"
 import { Stepper } from "@src/components/Stepper/Stepper"
 import { Alert } from "@src/components/Alert/Alert"
@@ -80,6 +82,7 @@ export default function Index() {
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [deliveryForm, setDeliveryForm] = useState("");
   const [inputValue, setInputValue] = useState("");
 
   const handleSend = () => {
@@ -240,6 +243,18 @@ export default function Index() {
             onChange={setPassword}
             showPasswordToggle={true}
             errorMessage="Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula e número"
+          />
+
+          <Select
+            label="Forma da entrega"
+            value={deliveryForm}
+            placeholder="Selecione a forma da entrega"
+            onChange={setDeliveryForm}
+            options={[
+              { label: "Preciso que o lavexer busque/traga as peças", value: "LAVEXER" },
+              { label: "Eu posso levar/buscar as peças ao lavexer", value: "FLEX" },
+              { label: "Eu prefiro levar/buscar as peças ao lavexer", value: "CLIENT" },
+            ]}
           />
 
           <KeyboardAvoidingView
@@ -700,6 +715,7 @@ export default function Index() {
           <IconArrowRight fill="#4A90E2" width={32} height={32} />
           <IconChevronLeft fill="#4A90E2" width={32} height={32} />
           <IconChevronRight fill="#4A90E2" width={32} height={32} />
+          <IconChevronDown fill="#4A90E2" width={32} height={32} />
           <IconSend fill="#34C759" width={32} height={32} />
           <IconPlus fill="#34C759" width={32} height={32} />
           <IconMinus fill="#FF9500" width={32} height={32} />

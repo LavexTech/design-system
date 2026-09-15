@@ -25,6 +25,7 @@ import { InputPassword } from "lavex-design-system";
 - Validação automática de senha forte
 - Botão para mostrar/ocultar senha (ícone de olho)
 - Campo com `secureTextEntry` (caracteres mascarados)
+- Teclado sem capitalização automática (`autoCapitalize="none"`), inclusive com a senha visível
 - Validação: mínimo 8 caracteres, com maiúscula, minúscula e número
 
 ## Exemplo Básico
@@ -100,3 +101,4 @@ A senha deve atender aos seguintes critérios:
 - Usa `Ionicons` para ícone do olho (eye/eye-off)
 - Toggle fica à direita do campo (como `rightElement`)
 - Validação é obrigatória (sempre ativa)
+- O teclado nunca força maiúscula no primeiro caractere (`autoCapitalize="none"` e `autoCorrect={false}`)
