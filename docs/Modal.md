@@ -19,6 +19,7 @@ import { Modal } from "lavex-design-system";
 | `buttonText` | `string`     | Não         | `'OK'` | Texto do botão                                                                  |
 | `buttonVariant` | `string`   | Não         | `'default'` | Variante do botão (veja variantes do Button)                                    |
 | `buttonSize` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Não | `'md'` | Tamanho do botão                                                                |
+| `contentMinHeight` | `number` | Não | - | Altura mínima do card da modal |
 
 ## O que faz
 

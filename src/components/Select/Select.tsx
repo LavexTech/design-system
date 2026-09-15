@@ -38,6 +38,15 @@ export const Select: React.FC<SelectProps> = ({
   const selectedOption = options.find((option) => option.value === value)
   const displayText = selectedOption?.label ?? placeholder
   const hasError = Boolean(errorMessage)
+  const optionRowHeight = Constants.styles.componentSize.BUTTON_HEIGHT
+  const optionGap = Constants.styles.spacing.SMALL
+  const optionsHeight =
+    options.length * optionRowHeight +
+    Math.max(0, options.length - 1) * optionGap
+  const chromeHeight =
+    Constants.styles.componentSize.BUTTON_HEIGHT +
+    Constants.styles.spacing.LARGE * 2
+  const contentMinHeight = Math.round((optionsHeight + chromeHeight) * 1.5)
 
   function handleSelect(optionValue: string) {
     onChange(optionValue)
@@ -103,8 +112,9 @@ export const Select: React.FC<SelectProps> = ({
           buttonVariant="default-outline"
           darkMode={darkMode}
           fontScale={fontScale}
+          contentMinHeight={contentMinHeight}
         >
-          <View style={styles.options}>
+          <View style={[styles.options, { minHeight: Math.round(optionsHeight * 1.5) }]}>
             {options.map((option) => {
               const isSelected = option.value === value
               return (
@@ -155,6 +165,7 @@ const styles = StyleSheet.create({
   options: {
     gap: Constants.styles.spacing.SMALL,
     width: "100%",
+    justifyContent: "center",
   },
   optionButton: {
     width: "100%",

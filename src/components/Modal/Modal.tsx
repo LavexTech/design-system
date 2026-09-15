@@ -42,6 +42,8 @@ type ModalProps = {
     closeOnConfirm?: boolean,
     darkMode?: boolean,
     fontScale?: number,
+    /** Minimum height of the modal card (content + chrome). */
+    contentMinHeight?: number,
 }
 
 
@@ -61,6 +63,7 @@ export const Modal: React.FC<ModalProps> = ({
     closeOnConfirm = true,
     darkMode = false,
     fontScale = 1,
+    contentMinHeight,
 }: ModalProps) => {
     const { height: windowHeight } = useWindowDimensions()
     const insets = useSafeAreaInsets()
@@ -87,7 +90,12 @@ export const Modal: React.FC<ModalProps> = ({
                 style={{ flex: 1, width: "100%", height: "100%" }}
             >
                 <ModalBackdrop onPress={onClose} />
-                <ModalContent style={{ maxHeight }}>
+                <ModalContent
+                    style={{
+                        maxHeight,
+                        ...(contentMinHeight ? { minHeight: contentMinHeight } : {}),
+                    }}
+                >
                     {title ? (
                         <ModalHeader>
                             <View style={{ flex: 1, alignItems: "center", width: "100%" }}>

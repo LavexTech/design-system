@@ -45,6 +45,6 @@ const [deliveryForm, setDeliveryForm] = useState("");
 ## Como funciona
 
 1. O campo fechado mostra o label da opção selecionada ou o placeholder
-2. Ao tocar, abre um modal em tela cheia (sem título), com as opções como botões outline
+2. Ao tocar, abre um modal em tela cheia (sem título), ~50% mais alto que o conteúdo compacto, com as opções como botões outline
 3. Tocar numa opção chama `onChange` e fecha o modal
 4. A opção selecionada usa `success-outline`; as demais usam `default-outline`
