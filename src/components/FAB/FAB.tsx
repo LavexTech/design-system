@@ -35,7 +35,14 @@ export const FAB: React.FC<FABProps> = ({
         },
       ]}
     >
-      {fontLoaded ? <Text style={styles.label}>{text}</Text> : null}
+      <Text
+        style={[
+          styles.label,
+          !fontLoaded ? styles.labelFallback : null,
+        ]}
+      >
+        {text}
+      </Text>
     </Pressable>
   )
 }
@@ -62,5 +69,8 @@ const styles = StyleSheet.create({
     fontWeight: Constants.styles.fontWeight.NORMAL as any,
     fontSize: Constants.styles.fontSize.MEDIUM,
     lineHeight: Constants.styles.lineHeight.LARGE,
+  },
+  labelFallback: {
+    fontFamily: undefined,
   },
 })

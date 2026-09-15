@@ -65,20 +65,23 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
   )
 }
 
+const AVATAR_SIZE_PX = 64
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     width: "100%",
     gap: 8,
   },
   avatar: {
-    flex: 1,
+    width: AVATAR_SIZE_PX,
+    flexShrink: 0,
     alignItems: "center",
     justifyContent: "center",
   },
   meta: {
-    flex: 3,
+    flex: 1,
     minWidth: 0,
     gap: 8,
   },

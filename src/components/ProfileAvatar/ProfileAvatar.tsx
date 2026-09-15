@@ -33,14 +33,25 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
   const showPhoto = hasProfileImage(profileImage)
 
   const content = showPhoto ? (
-    <Image
-      size={size}
-      src={profileImage!.trim()}
-      type="circle"
-      alt={alt}
-      darkMode={darkMode}
-      onClick={onPress}
-    />
+    <View
+      style={[
+        styles.photoFrame,
+        {
+          width: px,
+          height: px,
+          borderRadius: px / 2,
+        },
+      ]}
+    >
+      <Image
+        size={size}
+        src={profileImage!.trim()}
+        type="circle"
+        alt={alt}
+        darkMode={darkMode}
+        onClick={onPress}
+      />
+    </View>
   ) : (
     <View
       style={[
@@ -78,8 +89,17 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
 }
 
 const styles = StyleSheet.create({
+  photoFrame: {
+    flexGrow: 0,
+    flexShrink: 0,
+    overflow: "hidden",
+    alignSelf: "flex-start",
+  },
   placeholder: {
     alignItems: "center",
     justifyContent: "center",
+    flexGrow: 0,
+    flexShrink: 0,
+    alignSelf: "flex-start",
   },
 })

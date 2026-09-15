@@ -24,7 +24,6 @@ export const TextBox: React.FC<TextProps> = ({
   fill = true,
 }) => {
   const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
-  if (!fontLoaded) return null; 
 
   const sizes = {
     small: 15,
@@ -47,7 +46,9 @@ export const TextBox: React.FC<TextProps> = ({
     text: {
       fontWeight: Constants.styles.fontWeight.NORMAL,
       lineHeight: Constants.styles.lineHeight.LARGE,
-      fontFamily: Constants.styles.fontFamily.REGULAR,
+      fontFamily: fontLoaded
+        ? Constants.styles.fontFamily.REGULAR
+        : undefined,
       textAlign: position,
       flexWrap: "wrap",
       flexShrink: 1,

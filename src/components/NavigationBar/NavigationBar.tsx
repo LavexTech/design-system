@@ -1,5 +1,5 @@
 import React from "react"
-import { View, TouchableOpacity, Text, StyleSheet } from "react-native"
+import { View, TouchableOpacity, Text, StyleSheet, Platform } from "react-native"
 import Constants from "../../constants/constants"
 
 const TAB_ACTIVE_COLOR = "#007DFF"
@@ -37,7 +37,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         return (
           <TouchableOpacity
             key={page}
-            style={styles.tab}
+            style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
             onPress={() => handlePagePress(page)}
             activeOpacity={0.7}
           >
@@ -52,7 +52,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 {
                   color,
                   fontSize: 15 * fontScale,
-                  lineHeight: Constants.styles.lineHeight.LARGE * fontScale,
+                  lineHeight: 18 * fontScale,
                 },
               ]}
             >
@@ -67,10 +67,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
+    width: "100%",
     flexDirection: "row",
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderTopWidth: Constants.styles.borderWidth.THIN,
@@ -85,12 +82,17 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: Constants.styles.spacing.SMALL,
+    paddingTop: Constants.styles.spacing.TINY,
+    paddingBottom: Constants.styles.spacing.TINY,
+  },
+  tabIos: {
+    paddingTop: Constants.styles.spacing.TINY + 6,
+    paddingBottom: Constants.styles.spacing.TINY + 10,
   },
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: Constants.styles.spacing.TINY,
+    marginBottom: 2,
   },
   tabText: {
     fontWeight: Constants.styles.fontWeight.NORMAL as any,

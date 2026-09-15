@@ -99,10 +99,11 @@ const styles = StyleSheet.create({
     },
     avatarContainer: {
         width: 40,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'flex-end',
         flexShrink: 0,
-        minHeight: 32,
+        overflow: 'hidden',
         marginLeft: Constants.styles.spacing.SMALL,
     },
     headsetAvatar: {

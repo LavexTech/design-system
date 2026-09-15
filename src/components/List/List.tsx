@@ -1,46 +1,39 @@
 import React from "react"
-import { View, FlatList, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
-import { Grid, GridItem } from "../Grid/Grid"
 import { Subtitle } from "../Subtitle/Subtitle"
 
-type ListProps ={
+type ListProps = {
   title?: string
   children: React.ReactNode
   divider?: boolean
 }
 
-export const List: React.FC<ListProps> = ({ title, children, divider = true }) => {
+export const List: React.FC<ListProps> = ({
+  title,
+  children,
+  divider = true,
+}) => {
   const childrenArray = React.Children.toArray(children)
 
-  const renderItem = ({ item, index }: { item: React.ReactNode; index: number }) => (
-    <View style={styles.itemContainer}>
-      {item}
-    </View>
-  )
-
-  const ItemSeparatorComponent = () => divider ? <View style={styles.separator} /> : null
-
   return (
-    <Grid columns={1} gap={4}>
-      <GridItem>
-        {title && <Subtitle text={title} />}
-      </GridItem>
-      <GridItem>
-        <FlatList
-          data={childrenArray}
-          renderItem={renderItem}
-          ItemSeparatorComponent={ItemSeparatorComponent}
-          keyExtractor={(item: any, index: number) => index.toString()}
-          scrollEnabled={false}
-          showsVerticalScrollIndicator={false}
-        />
-      </GridItem>
-    </Grid>
+    <View style={styles.root}>
+      {title ? <Subtitle text={title} /> : null}
+      {childrenArray.map((child, index) => (
+        <React.Fragment key={index}>
+          {index > 0 && divider ? <View style={styles.separator} /> : null}
+          <View style={styles.itemContainer}>{child}</View>
+        </React.Fragment>
+      ))}
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  root: {
+    width: "100%",
+    alignSelf: "stretch",
+  },
   itemContainer: {
     width: "100%",
   },
