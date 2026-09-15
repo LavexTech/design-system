@@ -49,7 +49,9 @@ export const Offer: React.FC<OfferProps> = ({ amount, distance, user, onClick })
               <Info text={`${user.rating.toFixed(1)}/5`} />
             </View>
           ) : (
-            <Info text="Sem avaliações" />
+            <View style={styles.emptyRating}>
+              <Info text="Sem avaliações" />
+            </View>
           )}
         </View>
       </Grid>
@@ -72,6 +74,10 @@ const styles = StyleSheet.create({
   ratingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flexShrink: 0,
     gap: Constants.styles.spacing.TINY,
+  },
+  emptyRating: {
+    flexShrink: 0,
   },
 });
