@@ -97,34 +97,19 @@ O Modal utiliza:
 
 ## Posicionamento
 
-Para garantir que o modal apareça sobre todo o conteúdo da tela:
+O overlay usa o `Modal` nativo (`useRNModal`) e cobre a tela toda, com o conteúdo centralizado — inclusive quando o componente é renderizado dentro de um `ScrollView`.
+
+Ainda é válido (e recomendado em telas longas) renderizar o `Modal` como irmão do conteúdo, fora do scroll:
 
 ```tsx
-// ✅ Correto - Modal fora do ScrollView
+// Recomendado em telas longas
 <View style={{ flex: 1 }}>
   <ScrollView>
     {/* Conteúdo da tela */}
   </ScrollView>
   
-  {showModal && (
-    <View style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      zIndex: 1000,
-    }}>
-      <Modal {...props} />
-    </View>
-  )}
+  {showModal && <Modal {...props} />}
 </View>
-
-// ❌ Incorreto - Modal dentro do ScrollView
-<ScrollView>
-  <Modal {...props} />
-  {/* Conteúdo */}
-</ScrollView>
 ```
 
 ## Limitações
