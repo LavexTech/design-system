@@ -49,3 +49,4 @@ const [deliveryForm, setDeliveryForm] = useState("");
 3. Tocar numa opção chama `onChange` e fecha o modal
 4. A opção selecionada usa `success-outline`; as demais usam `default-outline`
 5. O texto das opções fica centralizado no botão
+6. A opção já selecionada mostra um ícone de check à esquerda

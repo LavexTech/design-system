@@ -19,6 +19,7 @@ import { Button } from "lavex-design-system";
 | `confirmationText`   | `string`     | Se `needsConfirmation` | - | Texto exibido no estado de confirmação (obrigatório quando a prop acima é `true`) |
 | `style`              | `ViewStyle`  | Não         | -           | Estilo extra no container do botão                                        |
 | `textStyle`          | `TextStyle`  | Não         | -           | Estilo extra no texto                                                     |
+| `icon`               | `ReactNode`  | Não         | -           | Ícone à esquerda; o texto permanece centralizado                          |
 
 ## Variantes
 

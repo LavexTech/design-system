@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Animated, Pressable, StyleSheet, TextStyle, ViewStyle } from "react-native"
+import { Animated, Pressable, StyleSheet, TextStyle, View, ViewStyle } from "react-native"
 import { Button as GluestackButton, ButtonText } from "../../ui/button"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import Constants from "../../constants/constants";
@@ -25,6 +25,7 @@ type ButtonBaseProps = {
   fontScale?: number;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  icon?: React.ReactNode;
 }
 
 type ButtonProps =
@@ -145,6 +146,7 @@ export const Button: React.FC<ButtonProps> = ({
   confirmationText,
   style,
   textStyle: textStyleOverride,
+  icon,
 }) => {
   const { action, variant: gluestackVariant } = variantMap[variant]
   const [awaitingConfirmation, setAwaitingConfirmation] = useState(false)
@@ -273,8 +275,9 @@ export const Button: React.FC<ButtonProps> = ({
       size={buttonSize}
       onPress={onClick}
       isDisabled={disabled}
-      style={[buttonStyle, style]}
+      style={[buttonStyle, style, icon ? styles.withIcon : null]}
     >
+      {icon ? <View style={styles.iconSlot}>{icon}</View> : null}
       <ButtonText style={[textStyle, textStyleOverride]}>
         {text}
       </ButtonText>
@@ -295,5 +298,13 @@ const styles = StyleSheet.create({
   confirmLabel: {
     fontWeight: Constants.styles.fontWeight.BOLD,
     textAlign: "center",
+  },
+  withIcon: {
+    position: "relative",
+  },
+  iconSlot: {
+    position: "absolute",
+    left: Constants.styles.spacing.MEDIUM,
+    zIndex: 1,
   },
 })

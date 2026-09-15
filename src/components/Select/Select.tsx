@@ -6,6 +6,7 @@ import { Grid, GridItem } from "../Grid/Grid"
 import { Modal } from "../Modal/Modal"
 import { Button } from "../Button/Button"
 import { IconChevronDown } from "../Icons/IconChevronDown"
+import { IconCheck } from "../Icons/IconCheck"
 import Constants from "../../constants/constants"
 
 export type SelectOption = {
@@ -127,6 +128,14 @@ export const Select: React.FC<SelectProps> = ({
                     fontScale={fontScale}
                     style={styles.optionButtonInner}
                     textStyle={styles.optionButtonText}
+                    icon={
+                      isSelected ? (
+                        <IconCheck
+                          size={20}
+                          color={Constants.styles.textColor.SUCCESS}
+                        />
+                      ) : undefined
+                    }
                   />
                 </View>
               )

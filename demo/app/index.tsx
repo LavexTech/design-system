@@ -41,6 +41,7 @@ import { IconSend } from "@src/components/Icons/IconSend"
 import { IconPlus } from "@src/components/Icons/IconPlus"
 import { IconMinus } from "@src/components/Icons/IconMinus"
 import { IconClose } from "@src/components/Icons/IconClose"
+import { IconCheck } from "@src/components/Icons/IconCheck"
 import { IconTrash } from "@src/components/Icons/IconTrash"
 import { IconSearch } from "@src/components/Icons/IconSearch"
 import { IconFilter } from "@src/components/Icons/IconFilter"
@@ -720,6 +721,7 @@ export default function Index() {
           <IconPlus fill="#34C759" width={32} height={32} />
           <IconMinus fill="#FF9500" width={32} height={32} />
           <IconClose fill="#FF3B30" width={32} height={32} />
+          <IconCheck fill="#059669" width={32} height={32} />
           <IconTrash fill="#FF3B30" width={32} height={32} />
           <IconSearch fill="#8E8E93" width={32} height={32} />
           <IconFilter fill="#8E8E93" width={32} height={32} />
