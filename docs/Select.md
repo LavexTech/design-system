@@ -50,3 +50,4 @@ const [deliveryForm, setDeliveryForm] = useState("");
 4. A opção selecionada usa `success-outline`; as demais usam `default-outline`
 5. O texto das opções fica centralizado no botão
 6. A opção já selecionada mostra um ícone de check à esquerda
+7. Os botões das opções têm padding vertical extra para o texto não encostar nas bordas

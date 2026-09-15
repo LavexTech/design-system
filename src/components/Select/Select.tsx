@@ -9,6 +9,10 @@ import { IconChevronDown } from "../Icons/IconChevronDown"
 import { IconCheck } from "../Icons/IconCheck"
 import Constants from "../../constants/constants"
 
+const OPTION_BUTTON_MIN_HEIGHT =
+  Constants.styles.componentSize.BUTTON_HEIGHT +
+  Constants.styles.spacing.MEDIUM * 2
+
 export type SelectOption = {
   label: string
   value: string
@@ -39,7 +43,7 @@ export const Select: React.FC<SelectProps> = ({
   const selectedOption = options.find((option) => option.value === value)
   const displayText = selectedOption?.label ?? placeholder
   const hasError = Boolean(errorMessage)
-  const optionRowHeight = Constants.styles.componentSize.BUTTON_HEIGHT
+  const optionRowHeight = OPTION_BUTTON_MIN_HEIGHT
   const optionGap = Constants.styles.spacing.SMALL
   const optionsHeight =
     options.length * optionRowHeight +
@@ -183,9 +187,13 @@ const styles = StyleSheet.create({
   },
   optionButtonInner: {
     width: "100%",
+    minHeight: OPTION_BUTTON_MIN_HEIGHT,
+    height: "auto",
+    paddingVertical: Constants.styles.spacing.MEDIUM,
   },
   optionButtonText: {
     textAlign: "center",
     width: "100%",
+    paddingHorizontal: Constants.styles.spacing.EXTRA_LARGE,
   },
 })
