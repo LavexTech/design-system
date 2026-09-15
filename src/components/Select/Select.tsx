@@ -4,6 +4,7 @@ import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import { TextBox as Text } from "../Text/Text"
 import { Grid, GridItem } from "../Grid/Grid"
 import { Modal } from "../Modal/Modal"
+import { Button } from "../Button/Button"
 import { IconChevronDown } from "../Icons/IconChevronDown"
 import Constants from "../../constants/constants"
 
@@ -97,7 +98,6 @@ export const Select: React.FC<SelectProps> = ({
       </Grid>
       {isOpen ? (
         <Modal
-          title={label}
           onClose={() => setIsOpen(false)}
           buttonText="Voltar"
           buttonVariant="default-outline"
@@ -108,24 +108,15 @@ export const Select: React.FC<SelectProps> = ({
             {options.map((option) => {
               const isSelected = option.value === value
               return (
-                <Pressable
-                  key={option.value}
-                  onPress={() => handleSelect(option.value)}
-                  style={[
-                    styles.option,
-                    isSelected ? styles.optionSelected : null,
-                  ]}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected: isSelected }}
-                >
-                  <Text
+                <View key={option.value} style={styles.optionButton}>
+                  <Button
                     text={option.label}
-                    size="medium"
+                    variant={isSelected ? "success-outline" : "default-outline"}
+                    onClick={() => handleSelect(option.value)}
                     darkMode={darkMode}
                     fontScale={fontScale}
-                    level={isSelected ? "primary" : "default"}
                   />
-                </Pressable>
+                </View>
               )
             })}
           </View>
@@ -165,12 +156,7 @@ const styles = StyleSheet.create({
     gap: Constants.styles.spacing.SMALL,
     width: "100%",
   },
-  option: {
-    paddingVertical: Constants.styles.spacing.MEDIUM,
-    paddingHorizontal: Constants.styles.spacing.SMALL,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-  },
-  optionSelected: {
-    backgroundColor: Constants.styles.backgroundColor.LIGHT_GRAY,
+  optionButton: {
+    width: "100%",
   },
 })
