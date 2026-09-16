@@ -16,6 +16,7 @@ export { InputNumber } from "./src/components/InputNumber/InputNumber";
 export { InputChat } from "./src/components/InputChat/InputChat";
 export { TextArea } from "./src/components/TextArea/TextArea";
 export { Select } from "./src/components/Select/Select";
+export { Toggle } from "./src/components/Toggle/Toggle";
 
 // User Cards
 export { UserCardVertical } from "./src/components/UserCardVertical/UserCardVertical";

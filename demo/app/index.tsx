@@ -61,6 +61,7 @@ import { Card } from "@src/components/Card/Card"
 import { Message } from "@src/components/Message/Message"
 import { InputPassword } from "@src/components/InputPassword/InputPassword"
 import { Select } from "@src/components/Select/Select"
+import { Toggle } from "@src/components/Toggle/Toggle"
 import { Image } from "@src/components/Image/Image"
 import { Stepper } from "@src/components/Stepper/Stepper"
 import { Alert } from "@src/components/Alert/Alert"
@@ -85,6 +86,7 @@ export default function Index() {
   const [password, setPassword] = useState("");
   const [deliveryForm, setDeliveryForm] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [canPickUp, setCanPickUp] = useState(true);
 
   const handleSend = () => {
     console.log("Mensagem enviada:", inputValue);
@@ -256,6 +258,12 @@ export default function Index() {
               { label: "Eu posso levar/buscar as peças ao lavexer", value: "FLEX" },
               { label: "Eu prefiro levar/buscar as peças ao lavexer", value: "CLIENT" },
             ]}
+          />
+
+          <Toggle
+            label="Tenho disponibilidade para buscar as peças dos clientes"
+            value={canPickUp}
+            onChange={setCanPickUp}
           />
 
           <KeyboardAvoidingView

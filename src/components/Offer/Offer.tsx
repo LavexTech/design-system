@@ -19,6 +19,7 @@ type User = {
 
 type OfferProps = {
   amount: number,
+  amountLabel?: string,
   distance: number,
   user: User,
   onClick?: () => void,
@@ -31,13 +32,13 @@ function hasRatings(user: User): boolean {
   return user.rating > 0
 }
 
-export const Offer: React.FC<OfferProps> = ({ amount, distance, user, onClick }) => {
+export const Offer: React.FC<OfferProps> = ({ amount, amountLabel, distance, user, onClick }) => {
 
   return (
     <Card onClick={onClick}>
       <Grid columns={1} gap={2}>
         <View style={styles.header}>
-          <Text text={"R$ " + String(amount)} level="success" size="large" />
+          <Text text={amountLabel ?? ("R$ " + String(amount))} level="success" size="large" />
           <Info text={String(distance) + "km"} />
         </View>
         
