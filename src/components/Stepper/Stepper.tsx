@@ -7,7 +7,7 @@ import { IconMinus } from "../Icons/IconMinus"
 import { IconTrash } from "../Icons/IconTrash"
 
 type StepperProps = {
-  text: string,
+  text?: string,
   max: number,
   min: number,
   value: number,
@@ -45,9 +45,11 @@ export const Stepper: React.FC<StepperProps> = ({
           <IconTrash width={Constants.styles.icon.SMALL} height={Constants.styles.icon.SMALL} />
         </Pressable>
       )}
-      <View style={styles.labelContainer}>
-        <TextBox text={text} size="medium" />
-      </View>
+      {text ? (
+        <View style={styles.labelContainer}>
+          <TextBox text={text} size="medium" />
+        </View>
+      ) : null}
       <View style={styles.valueContainer}>
         <TextBox text={String(value)} size="medium" />
       </View>

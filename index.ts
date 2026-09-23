@@ -35,6 +35,7 @@ export { SwipeableListItem } from "./src/components/SwipeableListItem/SwipeableL
 export { Card } from "./src/components/Card/Card";
 export { Alert } from "./src/components/Alert/Alert";
 export { Button } from "./src/components/Button/Button";
+export { CheckButton } from "./src/components/CheckButton/CheckButton";
 export { FAB } from "./src/components/FAB/FAB";
 export { Tag } from "./src/components/Tag/Tag";
 export { Grid, GridItem } from "./src/components/Grid/Grid";
@@ -76,6 +77,8 @@ export { IconPlus } from "./src/components/Icons/IconPlus";
 export { IconMinus } from "./src/components/Icons/IconMinus";
 export { IconClose } from "./src/components/Icons/IconClose";
 export { IconCheck } from "./src/components/Icons/IconCheck";
+export { IconCircle } from "./src/components/Icons/IconCircle";
+export { IconCircleCheck } from "./src/components/Icons/IconCircleCheck";
 export { IconSearch } from "./src/components/Icons/IconSearch";
 export { IconFilter } from "./src/components/Icons/IconFilter";
 export { IconMessage } from "./src/components/Icons/IconMessage";

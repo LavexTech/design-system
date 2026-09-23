@@ -4,9 +4,8 @@ import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import { TextBox as Text } from "../Text/Text"
 import { Grid, GridItem } from "../Grid/Grid"
 import { Modal } from "../Modal/Modal"
-import { Button } from "../Button/Button"
+import { CheckButton } from "../CheckButton/CheckButton"
 import { IconChevronDown } from "../Icons/IconChevronDown"
-import { IconCheck } from "../Icons/IconCheck"
 import Constants from "../../constants/constants"
 
 const OPTION_BUTTON_MIN_HEIGHT =
@@ -124,22 +123,17 @@ export const Select: React.FC<SelectProps> = ({
               const isSelected = option.value === value
               return (
                 <View key={option.value} style={styles.optionButton}>
-                  <Button
+                  <CheckButton
                     text={option.label}
-                    variant={isSelected ? "success-outline" : "default-outline"}
-                    onClick={() => handleSelect(option.value)}
-                    darkMode={darkMode}
-                    fontScale={fontScale}
+                    checked={isSelected}
+                    lockedColor={Constants.styles.color.BLACK}
+                    onClick={(next) => {
+                      if (!next) {
+                        return
+                      }
+                      handleSelect(option.value)
+                    }}
                     style={styles.optionButtonInner}
-                    textStyle={styles.optionButtonText}
-                    icon={
-                      isSelected ? (
-                        <IconCheck
-                          size={20}
-                          color={Constants.styles.textColor.SUCCESS}
-                        />
-                      ) : undefined
-                    }
                   />
                 </View>
               )
@@ -187,13 +181,7 @@ const styles = StyleSheet.create({
   },
   optionButtonInner: {
     width: "100%",
+    alignSelf: "stretch",
     minHeight: OPTION_BUTTON_MIN_HEIGHT,
-    height: "auto",
-    paddingVertical: Constants.styles.spacing.MEDIUM,
-  },
-  optionButtonText: {
-    textAlign: "center",
-    width: "100%",
-    padding: 0,
   },
 })
