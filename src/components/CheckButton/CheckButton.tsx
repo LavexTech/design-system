@@ -11,6 +11,10 @@ const UNLOCKED_PADDING_LEFT = 36
 const UNLOCKED_PADDING_RIGHT = 14
 const UNLOCKED_PADDING_VERTICAL = 10
 const LOCKED_PADDING = 6
+const LOCKED_LABEL_SCALE = 0.7
+const LOCKED_PADDING_VERTICAL = UNLOCKED_PADDING_VERTICAL / 2
+const LABEL_FONT_SIZE = Constants.styles.fontSize.MEDIUM
+const LABEL_LINE_HEIGHT = Constants.styles.lineHeight.MEDIUM
 
 type CheckButtonProps = {
   text: string
@@ -53,7 +57,19 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
   })
   const paddingVertical = lockProgress.interpolate({
     inputRange: [0, 1],
-    outputRange: [UNLOCKED_PADDING_VERTICAL, LOCKED_PADDING],
+    outputRange: [UNLOCKED_PADDING_VERTICAL, LOCKED_PADDING_VERTICAL],
+  })
+  const minHeight = lockProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [Constants.styles.componentSize.BUTTON_HEIGHT, 0],
+  })
+  const fontSize = lockProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [LABEL_FONT_SIZE, LABEL_FONT_SIZE * LOCKED_LABEL_SCALE],
+  })
+  const lineHeight = lockProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [LABEL_LINE_HEIGHT, LABEL_LINE_HEIGHT * LOCKED_LABEL_SCALE],
   })
   const borderColor = lockProgress.interpolate({
     inputRange: [0, 1],
@@ -107,6 +123,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
             paddingLeft,
             paddingRight,
             paddingVertical,
+            minHeight,
             borderColor,
           },
         ]}
@@ -135,7 +152,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
             {icon}
           </Animated.View>
         </Animated.View>
-        <Animated.Text style={[styles.label, { color: textColor }]}>
+        <Animated.Text style={[styles.label, { color: textColor, fontSize, lineHeight }]}>
           {text}
         </Animated.Text>
       </Animated.View>
@@ -160,7 +177,6 @@ const styles = StyleSheet.create({
     backgroundColor: Constants.styles.backgroundColor.WHITE,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: Constants.styles.componentSize.BUTTON_HEIGHT,
   },
   iconSlot: {
     position: "absolute",
