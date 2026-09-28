@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react"
-import { Animated, Pressable, StyleSheet, ViewStyle } from "react-native"
+import { Animated, Easing, Pressable, StyleSheet, ViewStyle } from "react-native"
 import Constants from "../../constants/constants"
 import { IconCircle } from "../Icons/IconCircle"
 import { IconCircleCheck } from "../Icons/IconCircleCheck"
@@ -40,11 +40,14 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
   const lockProgress = useRef(new Animated.Value(isLocked ? 1 : 0)).current
 
   useEffect(() => {
-    Animated.timing(lockProgress, {
+    const animation = Animated.timing(lockProgress, {
       toValue: isLocked ? 1 : 0,
       duration: ANIMATION_MS,
+      easing: Easing.inOut(Easing.cubic),
       useNativeDriver: false,
-    }).start()
+    })
+    animation.start()
+    return () => animation.stop()
   }, [isLocked, lockProgress])
 
   const paddingLeft = lockProgress.interpolate({
