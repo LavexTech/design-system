@@ -16,6 +16,9 @@ const LOCKED_PADDING_VERTICAL = (10 / 2) * 0.8 * PADDING_SCALE
 const ITEM_NAME_FONT_SIZE = Constants.styles.fontSize.MEDIUM
 const LABEL_FONT_SIZE = ITEM_NAME_FONT_SIZE * 0.8
 const LABEL_LINE_HEIGHT = Constants.styles.lineHeight.MEDIUM * 0.8
+const LOCKED_LABEL_SCALE = 0.8
+const LOCKED_FONT_SIZE = LABEL_FONT_SIZE * LOCKED_LABEL_SCALE
+const LOCKED_LINE_HEIGHT = LABEL_LINE_HEIGHT * LOCKED_LABEL_SCALE
 
 type CheckButtonProps = {
   text: string
@@ -62,6 +65,14 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
   const paddingVertical = lockProgress.interpolate({
     inputRange: [0, 1],
     outputRange: [UNLOCKED_PADDING_VERTICAL, LOCKED_PADDING_VERTICAL],
+  })
+  const fontSize = lockProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [LABEL_FONT_SIZE, LOCKED_FONT_SIZE],
+  })
+  const lineHeight = lockProgress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [LABEL_LINE_HEIGHT, LOCKED_LINE_HEIGHT],
   })
   const borderColor = lockProgress.interpolate({
     inputRange: [0, 1],
@@ -146,7 +157,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
         <Animated.Text
           style={[
             styles.label,
-            { color: textColor, fontSize: LABEL_FONT_SIZE, lineHeight: LABEL_LINE_HEIGHT },
+            { color: textColor, fontSize, lineHeight },
           ]}
         >
           {text}

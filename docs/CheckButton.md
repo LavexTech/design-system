@@ -25,7 +25,7 @@ import { CheckButton } from "lavex-design-system";
 
 - Marcado: ícone `circle-check-big`, fundo verde redondo, traço branco.
 - Desmarcado: ícone `circle`, fundo cinza, traço preto.
-- A fonte da label é 20% menor que o nome do item (`MEDIUM`). Todos os paddings valem metade do original. No estado travado, esses paddings ainda ficam 20% menores.
+- A fonte da label é 20% menor que o nome do item (`MEDIUM`). Com `isLocked`, a fonte fica mais 20% menor. Todos os paddings valem metade do original. No estado travado, esses paddings ainda ficam 20% menores.
 - Travado: ícone some, padding reduz, borda e fonte usam `lockedColor`.
 - Destravado: padding maior (left extra para o ícone), borda e fonte pretas.
 
