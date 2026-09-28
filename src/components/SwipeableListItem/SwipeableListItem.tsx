@@ -24,6 +24,7 @@ type SwipeableListItemProps = {
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
   deleteWidth?: number
+  swipeEnabled?: boolean
 }
 
 export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
@@ -33,6 +34,7 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
   isOpen,
   onOpenChange,
   deleteWidth = DEFAULT_DELETE_WIDTH,
+  swipeEnabled = true,
 }) => {
   const translateX = useRef(new Animated.Value(0)).current
   const openRef = useRef(false)
@@ -68,11 +70,15 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
   )
 
   useEffect(() => {
+    if (!swipeEnabled) {
+      setOpen(false)
+      return
+    }
     if (!controlled) {
       return
     }
     animateTo(isOpen ? -deleteWidth : 0, !!isOpen)
-  }, [animateTo, controlled, deleteWidth, isOpen])
+  }, [animateTo, controlled, deleteWidth, isOpen, setOpen, swipeEnabled])
 
   const panResponder = useMemo(
     () =>
@@ -82,6 +88,9 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
           _evt: GestureResponderEvent,
           gestureState: PanResponderGestureState,
         ) => {
+          if (!swipeEnabled) {
+            return false
+          }
           const { dx, dy } = gestureState
           if (Math.abs(dy) > FAIL_OFFSET_Y && Math.abs(dy) > Math.abs(dx)) {
             isHorizontalSwipe.current = false
@@ -96,6 +105,9 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
           _evt: GestureResponderEvent,
           gestureState: PanResponderGestureState,
         ) => {
+          if (!swipeEnabled) {
+            return false
+          }
           const { dx, dy } = gestureState
           return (
             Math.abs(dx) > ACTIVE_OFFSET_X &&
@@ -141,7 +153,7 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
           setOpen(openRef.current)
         },
       }),
-    [deleteWidth, setOpen, translateX],
+    [deleteWidth, setOpen, swipeEnabled, translateX],
   )
 
   const handleContentPress = () => {
