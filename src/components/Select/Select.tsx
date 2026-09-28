@@ -24,6 +24,7 @@ type SelectProps = {
   errorMessage?: string
   darkMode?: boolean
   fontScale?: number
+  triggerFontScale?: number
 }
 
 export const Select: React.FC<SelectProps> = ({
@@ -35,6 +36,7 @@ export const Select: React.FC<SelectProps> = ({
   errorMessage,
   darkMode = false,
   fontScale = 1,
+  triggerFontScale = 1,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const selectedOption = options.find((option) => option.value === value)
@@ -70,7 +72,7 @@ export const Select: React.FC<SelectProps> = ({
                 text={displayText}
                 size="medium"
                 darkMode={darkMode}
-                fontScale={fontScale}
+                fontScale={fontScale * triggerFontScale}
                 fill={false}
               />
             </View>

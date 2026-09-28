@@ -19,7 +19,8 @@ import { Select } from "lavex-design-system";
 | `placeholder`  | `string`                      | Não         | Texto quando nenhuma opção está selecionada (padrão: "Selecione") |
 | `errorMessage` | `string`                      | Não         | Mensagem de erro abaixo do campo                       |
 | `darkMode`     | `boolean`                     | Não         | Tema escuro                                            |
-| `fontScale`    | `number`                      | Não         | Escala de fonte                                        |
+| `fontScale`    | `number`                      | Não         | Escala de fonte do campo, da label e da modal          |
+| `triggerFontScale` | `number`                  | Não         | Escala extra só do texto do campo que abre a modal. Não altera label nem opções |
 
 ## Exemplo
 

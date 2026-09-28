@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react"
-import { Animated, Easing, Pressable, StyleSheet, ViewStyle } from "react-native"
+import { Animated, Pressable, StyleSheet, ViewStyle } from "react-native"
 import Constants from "../../constants/constants"
 import { IconCircle } from "../Icons/IconCircle"
 import { IconCircleCheck } from "../Icons/IconCircleCheck"
 
-const ANIMATION_MS = 300
-const ICON_BOX = 22
-const ICON_SIZE = 16
+const ICON_SCALE = 0.7
+const ICON_BOX = 22 * ICON_SCALE
+const ICON_SIZE = 16 * ICON_SCALE
 const PADDING_SCALE = 0.5
 const ICON_LEFT = 5
 const ICON_TEXT_GAP = 8
@@ -46,14 +46,7 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
   const lockProgress = useRef(new Animated.Value(isLocked ? 1 : 0)).current
 
   useEffect(() => {
-    const animation = Animated.timing(lockProgress, {
-      toValue: isLocked ? 1 : 0,
-      duration: ANIMATION_MS,
-      easing: Easing.inOut(Easing.cubic),
-      useNativeDriver: false,
-    })
-    animation.start()
-    return () => animation.stop()
+    lockProgress.setValue(isLocked ? 1 : 0)
   }, [isLocked, lockProgress])
 
   const paddingLeft = lockProgress.interpolate({
