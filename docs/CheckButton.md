@@ -29,4 +29,4 @@ import { CheckButton } from "lavex-design-system";
 - Travado: ícone some, padding reduz, borda e fonte usam `lockedColor`.
 - Destravado: padding maior, com padding-left que cobre o ícone e um respiro para o texto não sobrepor o ícone. Borda e fonte pretas.
 
-A troca entre travado e destravado anima em 300 ms, com easing cúbico, em padding, fonte, cor, ícone e altura. Com `isLocked` false, `lockedColor` não pinta o botão.
+A troca entre travado e destravado é instantânea, em padding, fonte, cor, ícone e altura. Com `isLocked` false, `lockedColor` não pinta o botão.
