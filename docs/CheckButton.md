@@ -27,6 +27,6 @@ import { CheckButton } from "lavex-design-system";
 - Desmarcado: ícone `circle`, fundo cinza, traço preto.
 - A fonte da label é 20% menor que o nome do item (`MEDIUM`). Com `isLocked`, a fonte fica mais 20% menor. Todos os paddings valem metade do original. No estado travado, o padding vale o dobro do valor anterior.
 - Travado: ícone some, padding reduz, borda e fonte usam `lockedColor`.
-- Destravado: padding maior (left extra para o ícone), borda e fonte pretas.
+- Destravado: padding maior, com padding-left que cobre o ícone e um respiro para o texto não sobrepor o ícone. Borda e fonte pretas.
 
 A troca entre travado e destravado anima em 300 ms, com easing cúbico, em padding, fonte, cor, ícone e altura. Com `isLocked` false, `lockedColor` não pinta o botão.

@@ -8,7 +8,9 @@ const ANIMATION_MS = 300
 const ICON_BOX = 22
 const ICON_SIZE = 16
 const PADDING_SCALE = 0.5
-const UNLOCKED_PADDING_LEFT = 36 * PADDING_SCALE
+const ICON_LEFT = 5
+const ICON_TEXT_GAP = 8
+const UNLOCKED_PADDING_LEFT = ICON_LEFT + ICON_BOX + ICON_TEXT_GAP
 const UNLOCKED_PADDING_RIGHT = 14 * PADDING_SCALE
 const UNLOCKED_PADDING_VERTICAL = 10 * PADDING_SCALE
 const LOCKED_PADDING = 6 * 0.8 * PADDING_SCALE * 2
@@ -187,7 +189,7 @@ const styles = StyleSheet.create({
   },
   iconSlot: {
     position: "absolute",
-    left: 5,
+    left: ICON_LEFT,
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
