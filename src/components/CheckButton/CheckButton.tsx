@@ -5,8 +5,9 @@ import { IconCircle } from "../Icons/IconCircle"
 import { IconCircleCheck } from "../Icons/IconCircleCheck"
 
 const ANIMATION_MS = 300
-const ICON_BOX = 22
-const ICON_SIZE = 16
+const ICON_SCALE = 0.7
+const ICON_BOX = 22 * ICON_SCALE
+const ICON_SIZE = 16 * ICON_SCALE
 const PADDING_SCALE = 0.5
 const ICON_LEFT = 5
 const ICON_TEXT_GAP = 8
