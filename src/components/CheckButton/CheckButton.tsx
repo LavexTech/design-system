@@ -7,14 +7,15 @@ import { IconCircleCheck } from "../Icons/IconCircleCheck"
 const ANIMATION_MS = 300
 const ICON_BOX = 22
 const ICON_SIZE = 16
-const UNLOCKED_PADDING_LEFT = 36
-const UNLOCKED_PADDING_RIGHT = 14
-const UNLOCKED_PADDING_VERTICAL = 10
-const LOCKED_PADDING = 6 * 0.8
-const LOCKED_LABEL_SCALE = 0.7
-const LOCKED_PADDING_VERTICAL = (UNLOCKED_PADDING_VERTICAL / 2) * 0.8
-const LABEL_FONT_SIZE = Constants.styles.fontSize.MEDIUM
-const LABEL_LINE_HEIGHT = Constants.styles.lineHeight.MEDIUM
+const PADDING_SCALE = 0.5
+const UNLOCKED_PADDING_LEFT = 36 * PADDING_SCALE
+const UNLOCKED_PADDING_RIGHT = 14 * PADDING_SCALE
+const UNLOCKED_PADDING_VERTICAL = 10 * PADDING_SCALE
+const LOCKED_PADDING = 6 * 0.8 * PADDING_SCALE
+const LOCKED_PADDING_VERTICAL = (10 / 2) * 0.8 * PADDING_SCALE
+const ITEM_NAME_FONT_SIZE = Constants.styles.fontSize.MEDIUM
+const LABEL_FONT_SIZE = ITEM_NAME_FONT_SIZE * 0.8
+const LABEL_LINE_HEIGHT = Constants.styles.lineHeight.MEDIUM * 0.8
 
 type CheckButtonProps = {
   text: string
@@ -61,18 +62,6 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
   const paddingVertical = lockProgress.interpolate({
     inputRange: [0, 1],
     outputRange: [UNLOCKED_PADDING_VERTICAL, LOCKED_PADDING_VERTICAL],
-  })
-  const minHeight = lockProgress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [Constants.styles.componentSize.BUTTON_HEIGHT, 0],
-  })
-  const fontSize = lockProgress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [LABEL_FONT_SIZE, LABEL_FONT_SIZE * LOCKED_LABEL_SCALE],
-  })
-  const lineHeight = lockProgress.interpolate({
-    inputRange: [0, 1],
-    outputRange: [LABEL_LINE_HEIGHT, LABEL_LINE_HEIGHT * LOCKED_LABEL_SCALE],
   })
   const borderColor = lockProgress.interpolate({
     inputRange: [0, 1],
@@ -126,7 +115,6 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
             paddingLeft,
             paddingRight,
             paddingVertical,
-            minHeight,
             borderColor,
           },
         ]}
@@ -155,7 +143,12 @@ export const CheckButton: React.FC<CheckButtonProps> = ({
             {icon}
           </Animated.View>
         </Animated.View>
-        <Animated.Text style={[styles.label, { color: textColor, fontSize, lineHeight }]}>
+        <Animated.Text
+          style={[
+            styles.label,
+            { color: textColor, fontSize: LABEL_FONT_SIZE, lineHeight: LABEL_LINE_HEIGHT },
+          ]}
+        >
           {text}
         </Animated.Text>
       </Animated.View>
@@ -183,7 +176,7 @@ const styles = StyleSheet.create({
   },
   iconSlot: {
     position: "absolute",
-    left: 10,
+    left: 5,
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
