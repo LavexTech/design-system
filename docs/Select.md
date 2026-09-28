@@ -45,9 +45,9 @@ const [deliveryForm, setDeliveryForm] = useState("");
 ## Como funciona
 
 1. O campo fechado mostra o label da opção selecionada ou o placeholder
-2. Ao tocar, abre um modal em tela cheia (sem título), ~50% mais alto que o conteúdo compacto, com as opções como botões outline
+2. Ao tocar, abre um modal em tela cheia (sem título), com as opções como `CheckButton`. O vão entre os botões é fixo, e a altura de cada um acompanha as linhas do texto
 3. Tocar numa opção chama `onChange` e fecha o modal
 4. A opção selecionada usa `success-outline`; as demais usam `default-outline`
 5. O texto das opções fica centralizado no botão, sem padding extra (o botão já tem)
 6. A opção já selecionada mostra um ícone de check à esquerda
-7. Os botões das opções têm padding vertical extra para o texto não encostar nas bordas
+7. O espaço entre as bordas dos botões não muda quando um rótulo quebra em mais linhas
