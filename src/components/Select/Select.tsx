@@ -8,9 +8,7 @@ import { CheckButton } from "../CheckButton/CheckButton"
 import { IconChevronDown } from "../Icons/IconChevronDown"
 import Constants from "../../constants/constants"
 
-const OPTION_BUTTON_MIN_HEIGHT =
-  Constants.styles.componentSize.BUTTON_HEIGHT +
-  Constants.styles.spacing.MEDIUM * 2
+const OPTION_GAP = Constants.styles.spacing.MEDIUM
 
 export type SelectOption = {
   label: string
@@ -42,15 +40,6 @@ export const Select: React.FC<SelectProps> = ({
   const selectedOption = options.find((option) => option.value === value)
   const displayText = selectedOption?.label ?? placeholder
   const hasError = Boolean(errorMessage)
-  const optionRowHeight = OPTION_BUTTON_MIN_HEIGHT
-  const optionGap = Constants.styles.spacing.SMALL
-  const optionsHeight =
-    options.length * optionRowHeight +
-    Math.max(0, options.length - 1) * optionGap
-  const chromeHeight =
-    Constants.styles.componentSize.BUTTON_HEIGHT +
-    Constants.styles.spacing.LARGE * 2
-  const contentMinHeight = Math.round((optionsHeight + chromeHeight) * 1.5)
 
   function handleSelect(optionValue: string) {
     onChange(optionValue)
@@ -116,9 +105,8 @@ export const Select: React.FC<SelectProps> = ({
           buttonVariant="default-outline"
           darkMode={darkMode}
           fontScale={fontScale}
-          contentMinHeight={contentMinHeight}
         >
-          <View style={[styles.options, { minHeight: Math.round(optionsHeight * 1.5) }]}>
+          <View style={styles.options}>
             {options.map((option) => {
               const isSelected = option.value === value
               return (
@@ -172,16 +160,16 @@ const styles = StyleSheet.create({
     marginRight: Constants.styles.spacing.SMALL,
   },
   options: {
-    gap: Constants.styles.spacing.SMALL,
+    gap: OPTION_GAP,
     width: "100%",
-    justifyContent: "center",
+    alignItems: "stretch",
   },
   optionButton: {
     width: "100%",
+    alignSelf: "stretch",
   },
   optionButtonInner: {
     width: "100%",
     alignSelf: "stretch",
-    minHeight: OPTION_BUTTON_MIN_HEIGHT,
   },
 })
