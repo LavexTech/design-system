@@ -13,6 +13,7 @@ type StepperProps = {
   value: number,
   onChange: (value: number) => void
   onDelete?: () => void,
+  valueSuffix?: string,
 }
 
 export const Stepper: React.FC<StepperProps> = ({
@@ -22,6 +23,7 @@ export const Stepper: React.FC<StepperProps> = ({
   value,
   onChange,
   onDelete,
+  valueSuffix = "",
 }) => {
   const handleIncrement = () => {
     if (value < max) {
@@ -50,8 +52,8 @@ export const Stepper: React.FC<StepperProps> = ({
           <TextBox text={text} size="medium" />
         </View>
       ) : null}
-      <View style={styles.valueContainer}>
-        <TextBox text={String(value)} size="medium" />
+      <View style={[styles.valueContainer, valueSuffix ? styles.valueWithSuffix : null]}>
+        <TextBox text={`${value}${valueSuffix}`} size="medium" fill={false} />
       </View>
       <View style={styles.stepperButtons}>
         <Pressable
@@ -102,6 +104,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     marginRight: Constants.styles.spacing.SMALL,
     flexShrink: 0,
+  },
+  valueWithSuffix: {
+    minWidth: 52,
   },
   stepperButtons: {
     flexDirection: "row",

@@ -17,6 +17,7 @@ import { Stepper } from "lavex-design-system";
 | `max`     | `number`                  | Sim          | Valor máximo permitido                       |
 | `value`   | `number`                  | Sim          | Valor atual do stepper                       |
 | `onChange`| `(value: number) => void` | Sim          | Função chamada quando o valor muda           |
+| `valueSuffix` | `string`            | Não         | Texto colado no número, como `x` (`2x`)      |
 
 ## Uso Básico
 
