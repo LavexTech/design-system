@@ -150,6 +150,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     alignSelf: "stretch",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   titleRow: {
     flex: 1,

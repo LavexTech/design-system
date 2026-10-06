@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.0.1`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.0.2`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -417,7 +417,7 @@ Barra de envio de mensagem no chat.
 |---|---|---|
 | `value` / `onChange` | — | obrigatórias |
 | `onSend` | `() => void` | — (obrigatória) |
-| `placeholder` | `string` | `"Enviar mensagem..."` |
+| `placeholder` | `string` | `"Escreva sua mensagem"` |
 
 ```
 ┌──────────────────────────────────┐  ┌────┐
@@ -426,7 +426,7 @@ Barra de envio de mensagem no chat.
   flex: 1                        gap 8   ícone 20 + padding 8
 ```
 
-**Aparência:** linha de largura total alinhada pela base, com gap 8: à esquerda o `Input` sem label ocupando o espaço restante (placeholder em `#E0E0E0`); à direita um botão quadrado de padding 8 e raio 12 com `IconSend` 20×20. O ícone fica azul `#007AFF` quando há texto e cinza `#6C757D` quando vazio; o botão inteiro cai para `opacity 0.5` quando desabilitado.
+**Aparência:** linha de largura total, gap 10, alinhada pela base. Campo de 48 px, raio 24, borda 1,5 px `#869199`, padding horizontal 18, texto 16. Botão circular de 48 px: `#3CDBC0` com ícone `#2D3B42` quando há texto; `#F4F2F5` com ícone `#5A6A72` quando vazio. Vazio, o botão fica desabilitado.
 
 **Comportamento:** `onSend` só dispara com `value.trim()` não vazio; `returnKeyType="send"` e Enter também enviam. O componente não limpa o campo — isso é responsabilidade do app.
 
@@ -806,7 +806,7 @@ Diálogo centralizado com rodapé de ações.
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ```
 
-**Aparência:** `Modal` nativo transparente. Backdrop `rgba(0,0,0,0.5)` cobre a tela e o toque chama `onClose`. O cartão fica centralizado, com 80% da largura (máximo 510), raio 6, borda 1 px, padding 24 e fundo da superfície do tema (`#FFFFFF` no claro, `#121821` no escuro). Altura máxima = altura da janela − `NAVIGATION_BAR_HEIGHT` (76) − safe area inferior. O corpo rola e fica limitado a 70% desse máximo. Com `title`, o texto fica centralizado. Rodapé em linha com gap 8.
+**Aparência:** `Modal` nativo transparente. Backdrop `rgba(0,0,0,0.5)` cobre a tela e o toque chama `onClose`. O cartão fica centralizado, com 80% da largura (máximo 510), raio 6, borda 1 px, padding 24 e fundo da superfície do tema (`#FFFFFF` no claro, `#121821` no escuro). Altura máxima = altura da janela − `NAVIGATION_BAR_HEIGHT` (76) − safe area inferior. O corpo rola e fica limitado a 70% desse máximo. Com `title`, o texto fica centralizado. Rodapé em linha com gap 8. Com dois botões, cada um cresce para dividir a largura do cartão.
 
 **Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. O modal nativo cobre a stack de navegação. `onRequestClose` (botão voltar do Android) chama `onClose`.
 
@@ -839,7 +839,7 @@ Seções expansíveis, uma por vez.
 ───────────────────────────────────────────────  Divider após cada item
 ```
 
-**Aparência:** lista de cabeçalhos. Fundo branco no claro e `#121821` no escuro. Cada cabeçalho é uma linha: `leading` opcional (margem direita 8), título `18 × fontScale` na cor do tema e em negrito (Plus Jakarta Bold), `titleAccessory` ao lado do título com gap 8, `trailingAccessory` antes do chevron, e um `IconChevronDown` que gira 180° quando o item está aberto. Conteúdo com `contentBackground` ganha esse fundo e padding 16. Abaixo de cada item, um `Divider`.
+**Aparência:** lista de cabeçalhos com padding 16 horizontal e 12 vertical. Fundo branco no claro e `#121821` no escuro. Cada cabeçalho é uma linha: `leading` opcional (margem direita 8), título `18 × fontScale` na cor do tema e em negrito (Plus Jakarta Bold), `titleAccessory` ao lado do título com gap 8, `trailingAccessory` antes do chevron, e um `IconChevronDown` que gira 180° quando o item está aberto. Conteúdo com `contentBackground` ganha esse fundo e padding 16. Abaixo de cada item, um `Divider`.
 
 **Comportamento:** um item por vez, e o aberto pode ser fechado. A troca usa `LayoutAnimation` easeInEaseOut de 300 ms (habilitada no Android).
 
@@ -972,7 +972,7 @@ Barra de abas inferior.
 ```
 ──────────────────────────────────────  borda superior 0,4px
 │   [ic]   │   [ic]   │   [ic]   │
-│  Início  │  Pedido  │   Conta  │      ativo #007DFF, inativo #8F98AD
+│  Início  │  Pedido  │   Conta  │      ativo #0B7566, inativo #5A6A72
 └──────────┴──────────┴──────────┘
     1/3         1/3        1/3           cada aba com flex igual
 ```

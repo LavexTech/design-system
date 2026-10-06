@@ -121,6 +121,7 @@ export const Modal: React.FC<ModalProps> = ({
                             size={buttonSize}
                             darkMode={darkMode}
                             fontScale={fontScale}
+                            style={hasConfirm ? styles.footerButton : undefined}
                         />
                         {hasConfirm ? (
                             <Button
@@ -131,6 +132,7 @@ export const Modal: React.FC<ModalProps> = ({
                                 disabled={confirmDisabled}
                                 darkMode={darkMode}
                                 fontScale={fontScale}
+                                style={styles.footerButton}
                             />
                         ) : null}
                     </View>
@@ -178,5 +180,9 @@ const styles = StyleSheet.create({
     },
     footerSingle: {
         justifyContent: "flex-end",
+    },
+    footerButton: {
+        flexGrow: 1,
+        flexShrink: 1,
     },
 })
