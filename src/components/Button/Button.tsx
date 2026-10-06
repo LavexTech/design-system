@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Animated, Pressable, StyleSheet, TextStyle, View, ViewStyle } from "react-native"
 import { Button as GluestackButton, ButtonText } from "../../ui/button"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
 import Constants from "../../constants/constants";
 import { useResolvedFontFamily } from "../../fontSetup";
 
@@ -247,7 +248,7 @@ export const Button: React.FC<ButtonProps> = ({
       awaitingConfirmation && confirmationText ? confirmationText : text
 
     return (
-      <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+      <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
         <Pressable
           onPress={handlePress}
           disabled={disabled}
@@ -274,7 +275,7 @@ export const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
     <GluestackButton
       action={action}
       variant={gluestackVariant}
