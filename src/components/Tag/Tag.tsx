@@ -1,6 +1,7 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 
 export type TagVariant =
   | "primary-outline"
@@ -51,6 +52,7 @@ export const Tag: React.FC<TagProps> = ({
     (isSm
       ? Constants.styles.fontSize.SMALL * 0.85
       : Constants.styles.fontSize.SMALL) * fontScale
+  const labelFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD)
 
   return (
     <View
@@ -66,6 +68,8 @@ export const Tag: React.FC<TagProps> = ({
         style={[
           styles.text,
           {
+            fontFamily: labelFont,
+            fontWeight: "normal",
             color: colors.color,
             fontSize,
             lineHeight: fontSize * 1.3,
@@ -90,8 +94,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: Constants.styles.spacing.TINY + 2,
     paddingVertical: 2,
   },
-  text: {
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    fontWeight: "700",
-  },
+  text: {},
 })

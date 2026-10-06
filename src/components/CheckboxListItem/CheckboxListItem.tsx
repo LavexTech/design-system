@@ -1,6 +1,7 @@
 import React from "react"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCheck } from "../Icons/IconCheck"
 
 type CheckboxListItemProps = {
@@ -23,7 +24,9 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
   disabled = false,
   divider = true,
   fontScale = 1,
-}) => (
+}) => {
+  const labelFont = useResolvedFontFamily(C.fontFamily.REGULAR)
+  return (
   <Pressable
     accessibilityRole="checkbox"
     accessibilityState={{ checked, disabled }}
@@ -39,12 +42,13 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
     <View style={[styles.box, checked ? styles.boxOn : null]}>
       {checked ? <IconCheck size={14} color={C.color.WHITE} /> : null}
     </View>
-    <Text style={[styles.label, { fontSize: C.fontSize.BODY * fontScale, color: disabled ? C.text.MUTED : C.text.DEFAULT }]}>
+    <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale, color: disabled ? C.text.MUTED : C.text.DEFAULT }]}>
       {label}
     </Text>
     {trailing}
   </Pressable>
-)
+  )
+}
 
 const styles = StyleSheet.create({
   row: { alignSelf: "stretch", minHeight: 52, flexDirection: "row", alignItems: "center", gap: 14 },

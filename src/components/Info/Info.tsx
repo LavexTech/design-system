@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
+import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
 
 export interface InfoProps {
@@ -20,6 +21,9 @@ export const Info: React.FC<InfoProps> = ({
   position = "left",
   tone = "muted",
 }) => {
+  const regular = useResolvedFontFamily(Constants.styles.fontFamily.REGULAR);
+  const boldFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD);
+  const fontFamily = bold ? boldFont : regular;
   const mutedColor = darkMode
     ? Constants.styles.theme.dark.text.muted
     : Constants.styles.text.MUTED;
@@ -35,10 +39,8 @@ export const Info: React.FC<InfoProps> = ({
           color: tone === "default" ? defaultColor : mutedColor,
           fontSize: Constants.styles.fontSize.CAPTION * fontScale,
           lineHeight: Constants.styles.lineHeight.CAPTION * fontScale,
-          fontFamily: Constants.styles.fontFamily.REGULAR,
-          fontWeight: bold
-            ? (Constants.styles.fontWeight.BOLD as any)
-            : (Constants.styles.fontWeight.NORMAL as any),
+          fontFamily,
+          fontWeight: "normal",
           textAlign: position,
         },
       ]}
@@ -52,9 +54,8 @@ const styles = StyleSheet.create({
   info: {
     fontSize: Constants.styles.fontSize.SMALL,
     fontWeight: Constants.styles.fontWeight.NORMAL,
-    lineHeight: Constants.styles.fontSize.SMALL * 1.4,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.INFO,
+    lineHeight: Constants.styles.lineHeight.CAPTION,
+    color: Constants.styles.text.MUTED,
     textAlign: "left",
     flexWrap: "wrap",
     flexShrink: 1,

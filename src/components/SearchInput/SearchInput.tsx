@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 import { IconClose } from "../Icons/IconClose"
 import { IconSearch } from "../Icons/IconSearch"
 
@@ -26,6 +27,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   fontScale = 1,
 }) => {
   const [focused, setFocused] = useState(false)
+  const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   return (
     <View
       accessibilityRole="search"
@@ -51,7 +53,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         onSubmitEditing={onSubmit}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        style={[styles.input, { fontSize: C.fontSize.BODY * fontScale }]}
+        style={[styles.input, { fontFamily: fieldFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale }]}
       />
       {onClear ? (
         <Pressable

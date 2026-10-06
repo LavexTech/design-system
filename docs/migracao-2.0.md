@@ -2,7 +2,9 @@
 
 Documento de acompanhamento do épico [#205](https://github.com/LavexTech/design-system/issues/205). Destinado a quem mantém o `app-client-lavex` e o `app-provider-lavex`.
 
-A migração leva o design system da linguagem visual atual (Roboto, paleta azul/grafite herdada do gluestack-ui) para a **linguagem 2.0** dos protótipos em `docs/prototipos/`: Plus Jakarta Sans, verde-água `#3CDBC0` e verde escuro `#0B7566` sobre grafite `#2D3B42`, cantos de 12 a 16 px, campos de 52 px e botões de 48 a 56 px.
+A linguagem 2.0 está na `main` desde a PR de integração. Este guia descreve o que os apps já receberam e o que ainda é decisão deles.
+
+A linguagem é a dos protótipos em `docs/prototipos/`: Plus Jakarta Sans, verde-água `#3CDBC0` e verde escuro `#0B7566` sobre grafite `#2D3B42`, cantos de 12 a 16 px, campos de 52 px e botões de 48 a 56 px. Não há alias `Roboto-*`. O `tailwind.config.js` grava essa paleta em hexadecimal.
 
 > Este documento é atualizado por **toda** sub-issue do épico que gerar impacto novo. Se você encontrou um impacto que não está aqui, ele é um bug de documentação — abra a correção junto com o achado.
 
@@ -10,29 +12,16 @@ A migração leva o design system da linguagem visual atual (Roboto, paleta azul
 
 ## 1. Como a mudança chega nos apps
 
-Os dois apps consomem o design system por pin de GitHub:
+Os dois apps consomem o design system por pin de GitHub na `main`:
 
 ```json
 "lavex-design-system": "github:LavexTech/design-system#main"
 ```
 
-Não há tag nem versão congelada: **toda PR mergeada na `main` do design system chega no app no próximo `npm install`.**
+Não há tag: o próximo `npm install` resolve o commit atual da `main`. O lock do app pode continuar num commit anterior até esse install.
 
-Por isso a migração 2.0 não é desenvolvida direto na `main`. As 16 tarefas são integradas na branch **`feat/205-ds-2.0`** — cada sub-issue abre uma PR pequena contra ela — e só no fim uma única PR leva tudo de `feat/205-ds-2.0` para a `main`. Até esse momento, **nada do 2.0 aparece nos apps**: eles continuam recebendo a linguagem 1.0 normalmente.
-
-Consequência para quem mantém os apps: existe **um** momento de impacto, não dezoito. As issues de adaptação ([app-client-lavex#145](https://github.com/LavexTech/app-client-lavex/issues/145), [app-client-lavex#146](https://github.com/LavexTech/app-client-lavex/issues/146) e [app-provider-lavex#7](https://github.com/LavexTech/app-provider-lavex/issues/7)) só começam depois desse merge. Quem quiser antecipar a validação pode apontar o pin para a branch de integração em ambiente local:
-
-```json
-"lavex-design-system": "github:LavexTech/design-system#feat/205-ds-2.0"
-```
-
-Isso é para teste local — não comite esse pin.
-
-Consequências práticas:
-
-- Rode `npm install github:LavexTech/design-system#main` para forçar a atualização; o pin de branch não revalida sozinho.
-- **Depois de qualquer `npm install` com o Metro aberto, pare o Metro e suba com `npm run dev -- --clear`.** Instalar dependência com o bundler rodando deixa o cache inconsistente; o sintoma é tela branca ou `Unable to resolve module lavex-design-system`.
-- Se precisar travar temporariamente numa versão conhecida, troque o pin para um commit: `github:LavexTech/design-system#<sha>`.
+- Rode `npm install github:LavexTech/design-system#main` com o Metro parado e suba com `npm run dev -- --clear`.
+- Se precisar travar numa versão conhecida, troque o pin para um commit: `github:LavexTech/design-system#<sha>`.
 
 ---
 
@@ -42,8 +31,8 @@ Estes itens trocam a aparência sem tocar em nome de componente, prop, variante 
 
 | O que | Detalhe |
 |---|---|
-| **Tipografia** | Roboto sai, Plus Jakarta Sans entra, nos pesos 400/500/600/700. Nenhum app carrega fonte por conta própria — `useFonts` e `useGlobalFonts` não aparecem no código de nenhum dos dois apps, todo o carregamento acontece dentro dos componentes do DS. `useFonts(["Roboto-Regular"])` continua funcionando por alias durante a migração. |
-| **Tokens e paleta** | `src/constants/constants.ts` e `tailwind.config.js` ganham a paleta 2.0. `Constants` **não é exportado** no `index.ts` e nunca foi acessível aos apps. |
+| **Tipografia** | A única família é Plus Jakarta Sans, pesos 400/500/600/700. `useFonts(["Roboto-Regular"])` não carrega mais nada. Texto sem `fontFamily` no design system passou a usar o corte correspondente. |
+| **Tokens e paleta** | `src/constants/constants.ts` e `tailwind.config.js` usam a paleta 2.0 em hexadecimal. `Constants` **não é exportado** no `index.ts`. |
 | **Saída do gluestack-ui** | `Button`, `Input`, `TextArea`, `Select`, `Modal`, `Grid` e `Accordion` deixam de embrulhar primitivos do gluestack. `src/ui/*` sempre foi interno e nunca esteve no `index.ts`. Efeito colateral bom: somem as `View` extras do `GluestackUIProvider` aninhado. |
 | **Componentes repintados** | `Button`, `Input` e família, `TextArea`, `Select`, `Tag`, `Accordion`, `NavigationBar`, `Message`, `InputChat` e `Gallery` mudam de cor, raio, altura e tipografia mantendo a API. |
 | **Componentes novos** | `SearchInput`, `TopHeader`, `RadioCard`, `CheckboxListItem`, `QuantityStepper`, `StatusBanner`, `EmptyState`, `Timeline`, `ImageUploader` e `AnimatedStatusIndicator` entram sem afetar nada que já existe. |
@@ -133,7 +122,7 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 
 **O que muda:** o `Stepper` atual é uma linha completa com botões quadrados de 40 px colados por uma borda compartilhada. O 2.0 usa dois círculos independentes de 44 px com o número entre eles. A diferença de layout é grande demais para repintar o componente existente sem bagunçar quem já o usa, então entra um componente novo.
 
-**Quebra compilação?** Não — os dois coexistem. O `Stepper` só sai depois que os apps migrarem, em issue própria.
+**Quebra compilação?** Não — os dois coexistem. O app do cliente já usa `QuantityStepper` na edição de itens. O `Stepper` antigo continua exportado.
 
 **O que fazer no app:** trocar na tela de edição de itens do pedido. As props equivalem quase 1:1: `text` vira `label`; `value`, `min`, `max`, `onChange`, `valueSuffix` e `onDelete` são iguais.
 
@@ -160,7 +149,7 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 
 **O que muda:** a seleção de peças de roupa deixa de ser `CheckButton` em chips e passa a ser lista com checkbox agrupada por categoria, dentro de `AccordionItem` com a contagem no `trailingAccessory` e `contentBackground="#FAF9FA"`.
 
-**Quebra compilação?** Não — o `CheckButton` continua existindo (ele também é usado internamente pelo `Select`).
+**Quebra compilação?** Não — o `CheckButton` continua exportado. O `Select` lista opções com `CheckboxListItem`. No app do cliente, a lista de peças usa `CheckboxListItem` e o liga/desliga de serviço usa `Tag` (recolhido) e `Button` (aberto). Não existe um único componente com o desenho de chip travado.
 
 **O que fazer no app:** migrar a tela de seleção de itens. Protótipo: `docs/prototipos/app-client-11-selecao-itens.html`.
 
@@ -197,7 +186,7 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 | Grid de fotos com adicionar/remover | montagem manual | `ImageUploader` |
 | Indicador de espera animado | montagem manual | `AnimatedStatusIndicator` |
 
-`Alert`, `Select`, `CheckButton`, `Stepper` e `Gallery` continuam existindo e funcionando. A remoção de qualquer um deles exige issue própria, depois de os apps migrarem.
+`Alert`, `Select`, `CheckButton`, `Stepper` e `Gallery` continuam exportados. O app do cliente já adotou os equivalentes novos e não importa `CheckButton` nem `Stepper`. A remoção desses exports exige issue própria.
 
 ---
 
@@ -221,6 +210,8 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 ---
 
 ## 7. Checklist rápido antes de dar o app por migrado
+
+O app do cliente já adotou os componentes novos (issue #146, PR #150). Esta lista continua valendo para hexadecimais locais e para o lock acompanhar a `main`.
 
 - [ ] `npm install github:LavexTech/design-system#main` feito com o Metro parado, e `npm run dev -- --clear` depois.
 - [ ] Nenhuma constante local de altura do menu com 64.

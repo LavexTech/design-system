@@ -1,6 +1,7 @@
 import React from "react"
 import { Pressable, StyleSheet, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 import { IconSend } from "../Icons/IconSend"
 
 type InputChatProps = {
@@ -18,6 +19,7 @@ export function InputChat({
   onChange,
   onSend,
 }: InputChatProps) {
+  const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const canSend = value.trim().length > 0
   const handleSend = () => {
     if (canSend) onSend()
@@ -33,7 +35,7 @@ export function InputChat({
         placeholderTextColor={C.text.PLACEHOLDER}
         returnKeyType="send"
         onSubmitEditing={handleSend}
-        style={styles.field}
+        style={[styles.field, { fontFamily: fieldFont, fontWeight: "normal" }]}
       />
       <Pressable
         accessibilityRole="button"
