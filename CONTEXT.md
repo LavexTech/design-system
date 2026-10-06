@@ -112,7 +112,7 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `Heading` |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
 | **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
@@ -243,7 +243,7 @@ Título semântico da hierarquia da marca (`h1`, `h2`, `h4`). O `h4` sai em caix
 - `h2`: Plus Jakarta Bold, 28 px / 34 px (`DISPLAY`), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
 - `h4`: Plus Jakarta Bold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
 
-**Comportamento:** estático. `accessibilityRole="header"`. Não aceita `darkMode` nem `fontScale`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
+**Comportamento:** estático. `accessibilityRole="header"`. Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
 
 #### `MainTitle`
 
