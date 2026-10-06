@@ -3,6 +3,7 @@ import { Animated, Pressable, StyleSheet, TextStyle, View, ViewStyle } from "rea
 import { Button as GluestackButton, ButtonText } from "../../ui/button"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import Constants from "../../constants/constants";
+import { useResolvedFontFamily } from "../../fontSetup";
 
 type ButtonVariant =
   | "default"
@@ -154,6 +155,11 @@ export const Button: React.FC<ButtonProps> = ({
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const buttonSize: "xs" | "sm" | "md" | "lg" | "xl" = size !== undefined ? size : "md"
   const { buttonStyle, textStyle } = resolveStaticStyles(variant, darkMode, fontScale)
+  const labelFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD)
+  const labelFontStyle: TextStyle = {
+    fontFamily: labelFont,
+    fontWeight: labelFont ? "normal" : undefined,
+  }
 
   const clearResetTimer = useCallback(() => {
     if (resetTimerRef.current) {
@@ -258,7 +264,7 @@ export const Button: React.FC<ButtonProps> = ({
               animatedContainerStyle,
             ]}
           >
-            <Animated.Text style={[styles.confirmLabel, animatedLabelStyle]}>
+            <Animated.Text style={[styles.confirmLabel, labelFontStyle, animatedLabelStyle]}>
               {displayText}
             </Animated.Text>
           </Animated.View>
@@ -278,7 +284,7 @@ export const Button: React.FC<ButtonProps> = ({
       style={[buttonStyle, style, icon ? styles.withIcon : null]}
     >
       {icon ? <View style={styles.iconSlot}>{icon}</View> : null}
-      <ButtonText style={[textStyle, textStyleOverride]}>
+      <ButtonText style={[textStyle, labelFontStyle, textStyleOverride]}>
         {text}
       </ButtonText>
     </GluestackButton>
