@@ -26,7 +26,7 @@ Instalação nos apps (pin de branch, não de tag):
 
 Entrypoint: `index.ts` na raiz (`main` e `react-native` apontam para ele). Tudo que o app consome **precisa estar exportado lá**. Arquivos publicados (`files`): `src/`, `docs/`, `babel.config.js`, `tailwind.config.js`, `nativewind-env.d.ts`, `react-native.config.js`, `metro.config.js`, `README.md`, `index.ts`.
 
-Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. O `tsc` existe (`npm run build`, saída em `dist/`) mas não é o que os apps consomem — o Metro do app compila `src/` diretamente. Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`.
+Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. Existe um script `npm run build` (`tsc`, saída em `dist/`), mas ele **falha hoje** com 52 erros `TS2307` e, de qualquer forma, não é o que os apps consomem — o Metro do app compila `src/` diretamente (ver dívida 19). Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`.
 
 ---
 
@@ -1315,6 +1315,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 16. **Tipografia inconsistente.** `Button`, `Input`, `TextArea` e `Accordion` herdam a fonte do sistema porque os primitivos em `src/ui/*` definem peso mas não `fontFamily`. No iOS e na web, a mesma tela mistura Roboto (componentes próprios) com SF Pro / fonte do navegador (esses quatro).
 17. **Wrapper `flex: 1` do `GluestackUIProvider`.** `Button`, `Input`, `TextArea`, `Accordion` e `Modal` não passam `style` ao provider, que cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de colunas flexíveis o wrapper absorve espaço livre e distorce o layout, obrigando os apps a envolver o componente em uma `View` com altura fixa ou `flexGrow: 0`.
 18. **Hover/active mortos em cinco variantes do `Button`.** `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` inline, que vence o `className`; os estados `data-[hover]`/`data-[active]` do gluestack não têm efeito nelas.
+19. **`npm run build` falha.** O `tsc` acusa 52 erros `TS2307` ("Cannot find module") em `src/ui/*` e em `src/components/Input/Input.tsx`, porque o `tsconfig.json` usa `moduleResolution: "node"`, que não entende os subpath exports dos pacotes `@gluestack-ui/*` (`@gluestack-ui/utils/nativewind-utils`, `@gluestack-ui/core/*/creator`). Passa despercebido porque nada no repositório roda o build e os apps compilam `src/` pelo Metro. Correção provável: `moduleResolution: "bundler"`.
 
 ---
 
