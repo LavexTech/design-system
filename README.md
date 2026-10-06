@@ -81,7 +81,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   <MainTitle text="Minha Aplicação" />
   ```
 
-- **Title** - Títulos de seção - [Documentação](./docs/Title1.md)
+- **Title** - Títulos de seção - [Documentação](./CONTEXT.md)
   ```tsx
   <Title text="Seção Principal" />
   ```
@@ -96,14 +96,14 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   <Text text="Conteúdo do parágrafo" />
   ```
 
-- **Info** - Texto informativo secundário - [Documentação](./docs/Info.md)
+- **Info** - Texto informativo secundário - [Documentação](./CONTEXT.md)
   ```tsx
   <Info text="Informação adicional" />
   ```
 
 ### 📱 Componentes de Input
 
-- **Input** - Campo de texto genérico - [Documentação](./docs/Input.md)
+- **Input** - Campo de texto genérico - [Documentação](./CONTEXT.md)
   ```tsx
   <Input 
     label="Nome" 
@@ -113,7 +113,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **InputNumber** - Campo numérico com máscara automática e validação - [Documentação](./docs/InputNumber.md)
+- **InputNumber** - Campo numérico com máscara automática e validação - [Documentação](./CONTEXT.md)
   ```tsx
   // Exemplo para cartão de crédito (máscara automática)
   <InputNumber 
@@ -145,7 +145,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **InputEmail** - Campo de email com validação - [Documentação](./docs/InputEmail.md)
+- **InputEmail** - Campo de email com validação - [Documentação](./CONTEXT.md)
   ```tsx
   <InputEmail 
     value={email} 
@@ -153,7 +153,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **InputPassword** - Campo de senha - [Documentação](./docs/InputPassword.md)
+- **InputPassword** - Campo de senha - [Documentação](./CONTEXT.md)
   ```tsx
   <InputPassword 
     value={password} 
@@ -161,7 +161,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **InputPhone** - Campo de telefone com máscara - [Documentação](./docs/InputPhone.md)
+- **InputPhone** - Campo de telefone com máscara - [Documentação](./CONTEXT.md)
   ```tsx
   <InputPhone 
     value={phone} 
@@ -169,7 +169,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **InputName** - Campo de nome - [Documentação](./docs/InputName.md)
+- **InputName** - Campo de nome - [Documentação](./CONTEXT.md)
   ```tsx
   <InputName 
     value={fullName} 
@@ -177,7 +177,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **InputCPF** - Campo de CPF com máscara - [Documentação](./docs/InputCPF.md)
+- **InputCPF** - Campo de CPF com máscara - [Documentação](./CONTEXT.md)
   ```tsx
   <InputCPF 
     value={cpf} 
@@ -194,7 +194,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **TextArea** - Campo de texto multilinha - [Documentação](./docs/TextArea.md)
+- **TextArea** - Campo de texto multilinha - [Documentação](./CONTEXT.md)
   ```tsx
   <TextArea 
     label="Comentário" 
@@ -246,7 +246,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### 👤 Componentes de Usuário
 
-- **UserCardVertical** - Card de usuário vertical - [Documentação](./docs/UserCardVertical.md)
+- **UserCardVertical** - Card de usuário vertical - [Documentação](./CONTEXT.md)
   ```tsx
   <UserCardVertical 
     name="João Silva" 
@@ -255,14 +255,14 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **UserCardHorizontal** - Card de usuário horizontal - [Documentação](./docs/UserCardHorizontal.md)
+- **UserCardHorizontal** - Card de usuário horizontal - [Documentação](./CONTEXT.md)
   ```tsx
   <UserCardHorizontal 
     user={{ name: "Maria", avatar: "https://..." }} 
   />
   ```
 
-- **UserCardBio** - Card de usuário com biografia - [Documentação](./docs/UserCardBio.md)
+- **UserCardBio** - Card de usuário com biografia - [Documentação](./CONTEXT.md)
   ```tsx
   <UserCardBio 
     name="Ana Costa" 
@@ -271,7 +271,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **UserInfo** - Informações do usuário - [Documentação](./docs/UserInfo.md)
+- **UserInfo** - Informações do usuário - [Documentação](./CONTEXT.md)
   ```tsx
   <UserInfo 
     name="Carlos" 
@@ -281,7 +281,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### 📋 Componentes de Lista
 
-- **List** - Lista organizada com separadores - [Documentação](./docs/List.md)
+- **List** - Lista organizada com separadores - [Documentação](./CONTEXT.md)
   ```tsx
   <List title="Itens">
     <Text text="Item 1" />
@@ -289,24 +289,24 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   </List>
   ```
 
-- **TextList** - Lista de textos - [Documentação](./docs/TextList.md)
+- **TextList** - Lista de textos - [Documentação](./CONTEXT.md)
   ```tsx
   <TextList items={["Item 1", "Item 2", "Item 3"]} />
   ```
 
-- **UserList** - Lista de usuários - [Documentação](./docs/UserList.md)
+- **UserList** - Lista de usuários - [Documentação](./CONTEXT.md)
   ```tsx
   <UserList users={userArray} />
   ```
 
-- **OfferList** - Lista de ofertas - [Documentação](./docs/OfferList.md)
+- **OfferList** - Lista de ofertas - [Documentação](./CONTEXT.md)
   ```tsx
   <OfferList offers={offerArray} />
   ```
 
 ### 🎛️ Componentes de Interface
 
-- **Button** - Botão com variantes - [Documentação](./docs/Button.md)
+- **Button** - Botão com variantes - [Documentação](./CONTEXT.md)
   ```tsx
   <Button 
     text="Salvar" 
@@ -315,12 +315,12 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **Alert** - Alerta de notificação - [Documentação](./docs/Alert.md)
+- **Alert** - Alerta de notificação - [Documentação](./CONTEXT.md)
   ```tsx
   <Alert text="Operação realizada com sucesso!" />
   ```
 
-- **Modal** - Modal/Dialog - [Documentação](./docs/Modal.md)
+- **Modal** - Modal/Dialog - [Documentação](./CONTEXT.md)
   ```tsx
   <Modal 
     isVisible={showModal} 
@@ -329,7 +329,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **Accordion** - Painel expansível - [Documentação](./docs/Accordion.md)
+- **Accordion** - Painel expansível - [Documentação](./CONTEXT.md)
   ```tsx
   <Accordion>
     <AccordionItem title="Seção 1">
@@ -338,7 +338,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   </Accordion>
   ```
 
-- **Stepper** - Indicador de passos - [Documentação](./docs/Stepper.md)
+- **Stepper** - Indicador de passos - [Documentação](./CONTEXT.md)
   ```tsx
   <Stepper 
     currentStep={2} 
@@ -346,7 +346,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **NavigationBar** - Barra de navegação - [Documentação](./docs/NavigationBar.md)
+- **NavigationBar** - Barra de navegação - [Documentação](./CONTEXT.md)
   ```tsx
   <NavigationBar 
     activePage="Home" 
@@ -363,7 +363,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   </Card>
   ```
 
-- **Grid** - Sistema de grid responsivo - [Documentação](./docs/Grid.md)
+- **Grid** - Sistema de grid responsivo - [Documentação](./CONTEXT.md)
   ```tsx
   <Grid columns={2} gap={4}>
     <GridItem><Text text="Item 1" /></GridItem>
@@ -378,7 +378,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### 🖼️ Componentes de Mídia
 
-- **Image** - Componente de imagem - [Documentação](./docs/Image.md)
+- **Image** - Componente de imagem - [Documentação](./CONTEXT.md)
   ```tsx
   <Image 
     source="https://..." 
@@ -386,14 +386,14 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **Gallery** - Galeria de imagens - [Documentação](./docs/Gallery.md)
+- **Gallery** - Galeria de imagens - [Documentação](./CONTEXT.md)
   ```tsx
   <Gallery images={imageArray} />
   ```
 
 ### 💬 Componentes de Mensagem
 
-- **Message** - Mensagem de chat - [Documentação](./docs/Message.md)
+- **Message** - Mensagem de chat - [Documentação](./CONTEXT.md)
   ```tsx
   <Message 
     text="Olá, como vai?" 
@@ -404,7 +404,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### ⭐ Componentes de Avaliação
 
-- **StarRating** - Avaliação com estrelas interativa - [Documentação](./docs/StarRating.md)
+- **StarRating** - Avaliação com estrelas interativa - [Documentação](./CONTEXT.md)
   ```tsx
   <StarRating 
     rating={4.5} 
@@ -412,7 +412,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **Stars** - Exibição de estrelas (somente leitura) - [Documentação](./docs/Stars.md)
+- **Stars** - Exibição de estrelas (somente leitura) - [Documentação](./CONTEXT.md)
   ```tsx
   <Stars 
     rating={4.5} 
@@ -422,7 +422,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### 🛒 Componentes de E-commerce
 
-- **Order** - Componente de pedido - [Documentação](./docs/Order.md)
+- **Order** - Componente de pedido - [Documentação](./CONTEXT.md)
   ```tsx
   <Order 
     orderNumber="12345" 
@@ -431,7 +431,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
   />
   ```
 
-- **Offer** - Componente de oferta - [Documentação](./docs/Offer.md)
+- **Offer** - Componente de oferta - [Documentação](./CONTEXT.md)
   ```tsx
   <Offer 
     title="Produto em Oferta" 
@@ -442,7 +442,7 @@ Para documentação detalhada de cada componente, consulte a pasta `/docs`.
 
 ### 🎨 Ícones
 
-Todos os ícones disponíveis - [Documentação](./docs/Icons.md):
+Todos os ícones disponíveis - [Documentação](./CONTEXT.md):
 
 ```tsx
 import { 

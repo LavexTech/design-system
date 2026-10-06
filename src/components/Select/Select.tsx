@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import { TextBox as Text } from "../Text/Text"
 import { Grid, GridItem } from "../Grid/Grid"
 import { Modal } from "../Modal/Modal"
-import { CheckButton } from "../CheckButton/CheckButton"
+import { CheckboxListItem } from "../CheckboxListItem/CheckboxListItem"
 import { IconChevronDown } from "../Icons/IconChevronDown"
 import Constants from "../../constants/constants"
 
@@ -111,20 +111,19 @@ export const Select: React.FC<SelectProps> = ({
             {options.map((option) => {
               const isSelected = option.value === value
               return (
-                <View key={option.value} style={styles.optionButton}>
-                  <CheckButton
-                    text={option.label}
-                    checked={isSelected}
-                    lockedColor={Constants.styles.color.BLACK}
-                    onClick={(next) => {
-                      if (!next) {
-                        return
-                      }
-                      handleSelect(option.value)
-                    }}
-                    style={styles.optionButtonInner}
-                  />
-                </View>
+                <CheckboxListItem
+                  key={option.value}
+                  label={option.label}
+                  checked={isSelected}
+                  divider
+                  fontScale={fontScale}
+                  onChange={(next) => {
+                    if (!next) {
+                      return
+                    }
+                    handleSelect(option.value)
+                  }}
+                />
               )
             })}
           </View>
@@ -168,13 +167,5 @@ const styles = StyleSheet.create({
     gap: OPTION_GAP,
     width: "100%",
     alignItems: "stretch",
-  },
-  optionButton: {
-    width: "100%",
-    alignSelf: "stretch",
-  },
-  optionButtonInner: {
-    width: "100%",
-    alignSelf: "stretch",
   },
 })

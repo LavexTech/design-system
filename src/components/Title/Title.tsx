@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
-import { useFonts } from "../../fontSetup";
+import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
 
 export interface TitleProps {
@@ -10,19 +10,33 @@ export interface TitleProps {
   fontScale?: number;
 }
 
-export const Title: React.FC<TitleProps> = ({ text, position = 'left', darkMode = false, fontScale = 1 }) => {
-  const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
+const C = Constants.styles
 
-  return <Text style={[styles.Title, { textAlign: position, color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default, fontSize: Constants.styles.fontSize.LARGER * fontScale, lineHeight: Constants.styles.fontSize.LARGER * fontScale, fontFamily: fontLoaded ? Constants.styles.fontFamily.REGULAR : undefined }]}>{text}</Text>;
+export const Title: React.FC<TitleProps> = ({ text, position = 'left', darkMode = false, fontScale = 1 }) => {
+  const fontFamily = useResolvedFontFamily(C.fontFamily.BOLD)
+  const color = darkMode ? C.theme.dark.text.default : C.text.DEFAULT
+
+  return (
+    <Text
+      style={[
+        styles.title,
+        {
+          textAlign: position,
+          color,
+          fontFamily,
+          fontWeight: fontFamily ? "normal" : "700",
+          fontSize: C.fontSize.TITLE * fontScale,
+          lineHeight: C.lineHeight.TITLE * fontScale,
+        },
+      ]}
+    >
+      {text}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
-  Title: {
-    fontSize: Constants.styles.fontSize.LARGER,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    lineHeight: Constants.styles.fontSize.LARGER,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
+  title: {
     flexWrap: "wrap",
     flexShrink: 1,
   },
