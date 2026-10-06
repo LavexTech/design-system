@@ -26,7 +26,7 @@ Instalação nos apps (pin de branch, não de tag):
 
 Entrypoint: `index.ts` na raiz (`main` e `react-native` apontam para ele). Tudo que o app consome **precisa estar exportado lá**. Arquivos publicados (`files`): `src/`, `docs/`, `babel.config.js`, `tailwind.config.js`, `nativewind-env.d.ts`, `react-native.config.js`, `metro.config.js`, `README.md`, `index.ts`.
 
-Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. Existe um script `npm run build` (`tsc`, saída em `dist/`), mas ele **falha hoje** com 52 erros `TS2307` e, de qualquer forma, não é o que os apps consomem — o Metro do app compila `src/` diretamente (ver dívida 19). Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`.
+Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. `npm run build` (`tsc`) gera `dist/` com `.d.ts` e sourcemaps, e `npm run typecheck` roda `tsc --noEmit`. O `tsconfig` usa `module: esnext` e `moduleResolution: bundler` para resolver os subpath exports de `@gluestack-ui/*`, e inclui `nativewind-env.d.ts` para o tipo de `className`. Os apps não consomem `dist/`: o Metro compila `src/` diretamente. Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`. Para o `tsc` deste repositório enxergar os peers (`react`, `react-native`, `@gluestack-ui/core`, `@gluestack-ui/utils`, `@legendapp/motion`, `expo-font`, `react-native-svg`), eles também estão em `devDependencies`.
 
 ---
 
@@ -1306,7 +1306,6 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
-19. **`npm run build` falha.** O `tsc` acusa 52 erros `TS2307` ("Cannot find module") em `src/ui/*` e em `src/components/Input/Input.tsx`, porque o `tsconfig.json` usa `moduleResolution: "node"`, que não entende os subpath exports dos pacotes `@gluestack-ui/*` (`@gluestack-ui/utils/nativewind-utils`, `@gluestack-ui/core/*/creator`). Passa despercebido porque nada no repositório roda o build e os apps compilam `src/` pelo Metro. Correção provável: `moduleResolution: "bundler"`.
 
 ---
 
