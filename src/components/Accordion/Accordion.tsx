@@ -51,6 +51,8 @@ type AccordionItemProps = {
   titleAccessory?: React.ReactNode
   /** Renders before the title inside the header (e.g. back chevron). */
   leading?: React.ReactNode
+  trailingAccessory?: React.ReactNode
+  contentBackground?: string
   children: React.ReactNode
   darkMode?: boolean
   fontScale?: number
@@ -68,6 +70,8 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
   title,
   titleAccessory,
   leading,
+  trailingAccessory,
+  contentBackground,
   children,
   darkMode = false,
   fontScale = 1,
@@ -106,6 +110,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
                       ) : null}
                     </View>
                   </View>
+                  {trailingAccessory ? <View style={styles.trailing}>{trailingAccessory}</View> : null}
                   <View style={styles.chevron}>
                     {isExpanded ? (
                       <AccordionIcon as={ChevronUpIcon} />
@@ -118,7 +123,11 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
             }}
           </AccordionTrigger>
         </AccordionHeader>
-        <AccordionContent>{children}</AccordionContent>
+        <AccordionContent>
+          <View style={contentBackground ? { backgroundColor: contentBackground, padding: 16 } : undefined}>
+            {children}
+          </View>
+        </AccordionContent>
       </GluestackAccordionItem>
       <Divider darkMode={darkMode} />
     </>
@@ -178,6 +187,7 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     gap: Constants.styles.spacing.SMALL,
   },
+  trailing: { marginRight: 8 },
   titleAccessory: {
     justifyContent: "center",
     alignItems: "center",
