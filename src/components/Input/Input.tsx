@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Platform, StyleSheet } from "react-native"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
 import { TextBox as Text } from "../Text/Text"
 import { Input as InputBase, InputField } from '../../ui/input'
 import { Grid, GridItem } from "../Grid/Grid"
@@ -120,7 +121,7 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
       <Grid columns={1} gap={2} darkMode={darkMode}>
         {label && (
           <GridItem colSpan={4}>

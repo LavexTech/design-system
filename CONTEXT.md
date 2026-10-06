@@ -89,7 +89,7 @@ design-system/
 
 4. A fonte de verdade de estilo é `src/constants/constants.ts` (importado como `Constants`). Valores numéricos/cores crus no `StyleSheet` são exceção; o padrão é `Constants.styles.*`.
 5. A maioria dos componentes usa `StyleSheet.create` + `Constants`. NativeWind/Tailwind aparece apenas dentro de `src/ui/*` (primitivos gluestack) e em classes de grid/raio passadas por `className`.
-6. Componentes que embrulham primitivos gluestack renderizam um `GluestackUIProvider` próprio (`Button`, `Input`, `TextArea`, `Select`, `Grid`, `Modal`, `Accordion`). Esse provider é uma `View` extra na árvore — relevante para layout: sem `style` explícito ele aplica `{ flex: 1, height: '100%', width: '100%' }`.
+6. Componentes que embrulham primitivos gluestack renderizam um `GluestackUIProvider` próprio (`Button`, `Input`, `TextArea`, `Select`, `Grid`, `Modal`, `Accordion`). Esse provider é uma `View` extra na árvore. Sem `style`, o default é `{ flex: 1, height: '100%', width: '100%' }`. `Button`, `Input`, `TextArea` e `Accordion` passam `hugContentStyle` (`flexGrow: 0`, `flexShrink: 0`, `alignSelf: 'stretch'`, `width: '100%'`). `Modal` passa `{ flex: 1, width: '100%', height: '100%' }` de propósito, para o overlay cobrir a tela.
 
 ### Texto e dimensão (regras transversais)
 
@@ -116,9 +116,10 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 |---|---|
 | **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default) |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
-| **Largura total + wrapper `flex: 1`** | `Button`, `Input`, `TextArea`, `Accordion`, `Modal` |
+| **Largura total, altura do conteúdo** (`hugContentStyle`) | `Button`, `Input`, `TextArea`, `Accordion`, `Grid`, `Select` |
+| **Cobre a tela** (`flex: 1`) | `Modal` |
 
-A terceira linha é a pegadinha: esses cinco não passam `style` para o `GluestackUIProvider`, então o wrapper cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de uma coluna flexível, esse wrapper **absorve o espaço livre** — dois `Button` empilhados numa `View` com `flex: 1` dividem a altura disponível em vez de ficarem com 40 px cada. Na prática, os apps contornam envolvendo cada um em uma `View` de altura fixa ou `flexGrow: 0`. `Select` (passa `width: 100%`) e `Grid` (passa `flexGrow/flexShrink: 0`) escapam do problema.
+`Button`, `Input`, `TextArea` e `Accordion` passam `hugContentStyle` ao provider, no mesmo espírito do `Grid`. Dois `Button` empilhados numa coluna flexível ficam com a altura do próprio botão. `Modal` mantém `flex: 1` no wrapper porque o overlay precisa ocupar a tela; o `GluestackModal` interno também recebe `flex: 1`. O default do provider não foi invertido: um consumidor sem `style` ainda estica, e o `Modal` depende disso.
 
 ---
 
@@ -832,7 +833,7 @@ Diálogo centralizado com rodapé de ações.
 
 **Aparência:** backdrop escurecido cobrindo a tela (toque fecha) e um cartão centralizado `size="md"` do gluestack. Altura máxima = altura da janela − 64 (altura da navigation bar) − safe area inferior; o corpo rola e é limitado a 70% desse máximo. Com `title`, cabeçalho com o texto centralizado (`Text`). Rodapé em linha com gap 8: só um botão alinhado à direita no modo simples; dois botões com `space-between` quando há `onConfirm` (cancelar à esquerda, confirmar à direita).
 
-**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. Usa `useRNModal`, então funciona sobre qualquer stack de navegação.
+**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. Usa `useRNModal`, então funciona sobre qualquer stack de navegação. O `GluestackUIProvider` do modal recebe `flex: 1` de propósito para o backdrop cobrir a tela.
 
 #### `Accordion` / `AccordionItem`
 
@@ -1303,7 +1304,6 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
-17. **Wrapper `flex: 1` do `GluestackUIProvider`.** `Button`, `Input`, `TextArea`, `Accordion` e `Modal` não passam `style` ao provider, que cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de colunas flexíveis o wrapper absorve espaço livre e distorce o layout, obrigando os apps a envolver o componente em uma `View` com altura fixa ou `flexGrow: 0`.
 18. **Hover/active mortos em cinco variantes do `Button`.** `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` inline, que vence o `className`; os estados `data-[hover]`/`data-[active]` do gluestack não têm efeito nelas.
 19. **`npm run build` falha.** O `tsc` acusa 52 erros `TS2307` ("Cannot find module") em `src/ui/*` e em `src/components/Input/Input.tsx`, porque o `tsconfig.json` usa `moduleResolution: "node"`, que não entende os subpath exports dos pacotes `@gluestack-ui/*` (`@gluestack-ui/utils/nativewind-utils`, `@gluestack-ui/core/*/creator`). Passa despercebido porque nada no repositório roda o build e os apps compilam `src/` pelo Metro. Correção provável: `moduleResolution: "bundler"`.
 
