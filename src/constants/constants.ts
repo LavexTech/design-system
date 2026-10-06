@@ -20,12 +20,10 @@ const Constants = {
       THIN: "100" as any,
     },
     fontFamily: {
-      REGULAR: "Roboto-Regular",
-      REGULAR_ITALIC: "Roboto-Italic",
-      EXTRA_LIGHT: "Roboto-ExtraLight",
-      EXTRA_LIGHT_ITALIC: "Roboto-ExtraLightItalic",
-      BOLD: "Roboto-Bold",
-      BOLD_ITALIC: "Roboto-BoldItalic",
+      REGULAR: "PlusJakartaSans-Regular",
+      MEDIUM: "PlusJakartaSans-Medium",
+      SEMIBOLD: "PlusJakartaSans-SemiBold",
+      BOLD: "PlusJakartaSans-Bold",
     },
     textColor: {
       DEFAULT: "#262627",

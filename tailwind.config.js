@@ -175,6 +175,7 @@ module.exports = {
         },
       },
       fontFamily: {
+        sans: ["PlusJakartaSans-Regular", "system-ui", "sans-serif"],
         heading: undefined,
         body: undefined,
         mono: undefined,

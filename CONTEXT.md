@@ -138,7 +138,7 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | `fontSize` | `LARGEST` / `LARGER` / `LARGE` / `MEDIUM` / `SMALL` | 36 / 24 / 20 / 18 / 14 |
 | `lineHeight` | `LARGEST` / `LARGER` / `LARGE` / `MEDIUM` / `SMALL` | 30 / 26 / 22 / 18 / 14 |
 | `fontWeight` | `BOLD` / `NORMAL` / `THIN` | `"700"` / `"400"` / `"100"` |
-| `fontFamily` | `REGULAR`, `REGULAR_ITALIC`, `EXTRA_LIGHT`, `EXTRA_LIGHT_ITALIC`, `BOLD`, `BOLD_ITALIC` | `Roboto-Regular`, `Roboto-Italic`, `Roboto-ExtraLight`, `Roboto-ExtraLightItalic`, `Roboto-Bold`, `Roboto-BoldItalic` |
+| `fontFamily` | `REGULAR`, `MEDIUM`, `SEMIBOLD`, `BOLD` | `PlusJakartaSans-Regular`, `PlusJakartaSans-Medium`, `PlusJakartaSans-SemiBold`, `PlusJakartaSans-Bold` |
 
 ### Cores
 
@@ -223,7 +223,7 @@ Sombras nomeadas do Tailwind: `hard-1..hard-5` e `soft-1..soft-4` (todas em `rgb
 
 ## 7. Tipografia e carregamento de fontes
 
-Família única: **Roboto**, embarcada em `src/assets/fonts/Roboto/static/` nos cortes Regular, Italic, Bold, BoldItalic, ExtraLight e ExtraLightItalic.
+Família única: **Plus Jakarta Sans**, embarcada em `src/assets/fonts/PlusJakartaSans/static/` nos cortes Regular (400), Medium (500), SemiBold (600) e Bold (700). Nomes antigos `Roboto-*` ainda são aceitos em `useFonts` e `useResolvedFontFamily` e resolvem para o corte equivalente da família nova.
 
 `src/fontSetup.ts` exporta:
 
