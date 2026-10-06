@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `0.2.20`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `0.2.16`. Data de referência do código: outubro de 2026.
 
 > **Migração 2.0 em andamento.** O repositório está migrando para a linguagem visual 2.0 (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps consumidores, em `docs/migracao-2.0.md`. Este documento continua descrevendo o **código atual**: cada sub-issue da migração atualiza a seção correspondente quando entra.
 
