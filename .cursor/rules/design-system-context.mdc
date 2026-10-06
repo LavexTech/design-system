@@ -27,6 +27,9 @@ Atualize o `CONTEXT.md` na **mesma branch e no mesmo commit** (ou no commit de f
 2. **Contrato** — tabela de props com nome, tipo, default e obrigatoriedade.
 3. **Aparência** — descrição concreta do que se vê, com valores reais (ex.: "pílula de raio 999, fundo `#059669`, texto branco Roboto-Regular 18 centralizado, padding 16/12, sombra 2 px").
 4. **Comportamento e variantes** — estados, interação e o que muda visualmente em cada variante.
+5. **Esqueleto de layout em ASCII** — obrigatório em componente composto (mais de um elemento visual). Prosa descreve valores bem, arranjo mal: o diagrama mostra a posição relativa dos elementos, alinhamentos, quem estica e quem mede pelo conteúdo. Mantenha curto (3–8 linhas) e em ASCII puro.
+
+Se o componente usa um primitivo de `src/ui/*`, verifique antes de descrever: fonte (os primitivos não definem `fontFamily` e caem na fonte do sistema), estados `data-[hover]`/`data-[active]`, e se algum `style` inline do componente sobrescreve o `className`.
 
 ## Cuidados
 
