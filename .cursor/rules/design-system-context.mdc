@@ -1,0 +1,42 @@
+---
+description: Alterações em componentes do design system exigem atualizar o CONTEXT.md
+alwaysApply: true
+---
+
+# Design system — `CONTEXT.md` sempre atualizado
+
+`CONTEXT.md` na raiz deste repositório é o **resumo completo** do design system: tokens, padrões, bibliotecas, catálogo de componentes, contrato de props, descrição visual, comportamento, variantes e dívidas técnicas. Ele precisa ser suficiente, sozinho, para alguém (ou uma IA) entender **para que serve**, **como se parece renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
+
+## Obrigatório no mesmo conjunto de mudanças
+
+Atualize o `CONTEXT.md` na **mesma branch e no mesmo commit** (ou no commit de fechamento da issue) sempre que:
+
+- criar, renomear ou remover um componente ou ícone;
+- adicionar, remover ou alterar prop, tipo de prop ou valor default;
+- mudar aparência: cor, background, borda, arredondamento, espaçamento, alinhamento, tipografia, tamanho, sombra;
+- mudar comportamento: estados, interação, gesto, animação, foco, validação, loading, disabled;
+- criar, remover ou renomear variante;
+- alterar `src/constants/constants.ts`, `tailwind.config.js` ou `src/ui/gluestack-ui-provider/config.ts`;
+- alterar `index.ts` (export público), `src/ui/*` ou `src/utils/*`;
+- adicionar ou remover dependência;
+- criar ou quitar dívida técnica.
+
+## O que cada componente precisa ter no documento
+
+1. **Para que serve** — uma linha.
+2. **Contrato** — tabela de props com nome, tipo, default e obrigatoriedade.
+3. **Aparência** — descrição concreta do que se vê, com valores reais (ex.: "pílula de raio 999, fundo `#059669`, texto branco Roboto-Regular 18 centralizado, padding 16/12, sombra 2 px").
+4. **Comportamento e variantes** — estados, interação e o que muda visualmente em cada variante.
+
+## Cuidados
+
+- Documentar o **código atual**, não a intenção. Comportamento divergente do desejado entra como está e é registrado na seção de dívidas técnicas.
+- Valores devem bater com o código: resolva os tokens (`Constants.styles.*`, CSS vars do gluestack) para o valor final ao descrever a aparência.
+- Texto em pt-BR; identificadores de código em inglês.
+- Componente novo também precisa de export em `index.ts` — documentar sem exportar deixa o componente inacessível para os apps.
+- Mudança consumida por outro repositório (`app-client-lavex`, `app-provider-lavex`) exige atualizar o `CONTEXT.md` **daquele** repositório também.
+- Toda alteração exige bump de `version` no `package.json` (regra `version-bump`).
+
+## Review de PR
+
+`CONTEXT.md` desatualizado em PR que toca componente, token, ícone ou export é achado **bloqueante**.

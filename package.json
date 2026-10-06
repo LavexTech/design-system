@@ -1,6 +1,6 @@
 {
     "name": "lavex-design-system",
-    "version": "0.2.13",
+    "version": "0.2.14",
     "description": "Lavex Design System for React Native",
     "files": [
         "src/",
@@ -11,6 +11,7 @@
         "react-native.config.js",
         "metro.config.js",
         "README.md",
+        "CONTEXT.md",
         "index.ts"
     ],
     "scripts": {
