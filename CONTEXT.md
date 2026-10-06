@@ -243,7 +243,7 @@ Título semântico da hierarquia da marca (`h1`, `h2`, `h4`). O `h4` sai em caix
 - `h2`: Plus Jakarta Bold, 28 px / 34 px (`DISPLAY`), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
 - `h4`: Plus Jakarta Bold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
 
-**Comportamento:** estático. `accessibilityRole="header"`. Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
+**Comportamento:** estático. `accessibilityRole="header"` e `aria-level` 1, 2 ou 4. Na web o react-native-web usa esse nível para a tag (`h1`, `h2`, `h4`). Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
 
 #### `MainTitle`
 
