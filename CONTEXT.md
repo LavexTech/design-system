@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `0.2.14`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `0.2.15`. Data de referência do código: outubro de 2026.
 
 ---
 
@@ -91,17 +91,34 @@ design-system/
 5. A maioria dos componentes usa `StyleSheet.create` + `Constants`. NativeWind/Tailwind aparece apenas dentro de `src/ui/*` (primitivos gluestack) e em classes de grid/raio passadas por `className`.
 6. Componentes que embrulham primitivos gluestack renderizam um `GluestackUIProvider` próprio (`Button`, `Input`, `TextArea`, `Select`, `Grid`, `Modal`, `Accordion`). Esse provider é uma `View` extra na árvore — relevante para layout: sem `style` explícito ele aplica `{ flex: 1, height: '100%', width: '100%' }`.
 
+### Texto e dimensão (regras transversais)
+
+7. **Nada trunca.** Não existe um único `numberOfLines` ou `ellipsizeMode` em todo o `src/`. Todo texto longo **quebra linha** e faz o componente crescer em altura — nunca aparece reticência. Vale para nomes em cards de usuário, títulos de `Order`/`AccordionItem`, rótulos de `CheckButton`, opções de `Select` e balões de `Message`. Ao imaginar o layout, suponha sempre multi-linha, não corte.
+8. **Fonte do texto não é uniforme.** Componentes próprios usam o Roboto embarcado; os que delegam para primitivos gluestack (`Button`, `Input`, `TextArea`, `Accordion`) renderizam na **fonte do sistema** — ver seção 7.
+
 ### Props
 
-7. Texto entra como prop `text: string`, não como `children`. `children` é reservado para composição (`Card`, `List`, `Modal`, `Accordion`, `SwipeableListItem`, `Grid`).
-8. Callback de interação principal é `onClick` (não `onPress`), exceto em primitivos de baixo nível (`ProfileAvatar.onPress`, `Image.onClick`).
-9. Props de tema/escala são opcionais e com default: `darkMode?: boolean = false`, `fontScale?: number = 1`. `fontScale` multiplica `fontSize`/`lineHeight`.
-10. Identificadores de código em inglês; textos visíveis padrão e comentários voltados a humanos em pt-BR.
+9. Texto entra como prop `text: string`, não como `children`. `children` é reservado para composição (`Card`, `List`, `Modal`, `Accordion`, `SwipeableListItem`, `Grid`).
+10. Callback de interação principal é `onClick` (não `onPress`), exceto em primitivos de baixo nível (`ProfileAvatar.onPress`, `Image.onClick`).
+11. Props de tema/escala são opcionais e com default: `darkMode?: boolean = false`, `fontScale?: number = 1`. `fontScale` multiplica `fontSize`/`lineHeight`.
+12. Identificadores de código em inglês; textos visíveis padrão e comentários voltados a humanos em pt-BR.
 
 ### Manutenção obrigatória
 
-11. **Toda alteração em componente, prop, variante, token ou ícone deve atualizar este `CONTEXT.md` no mesmo conjunto de mudanças** (regra `.cursor/rules/context-md.mdc`). Em review de PR, `CONTEXT.md` desatualizado é achado bloqueante.
-12. Toda alteração também exige bump de `version` no `package.json` (regra `.cursor/rules/version-bump.mdc`).
+13. **Toda alteração em componente, prop, variante, token ou ícone deve atualizar este `CONTEXT.md` no mesmo conjunto de mudanças** (regra `.cursor/rules/context-md.mdc`). Em review de PR, `CONTEXT.md` desatualizado é achado bloqueante.
+14. Toda alteração também exige bump de `version` no `package.json` (regra `.cursor/rules/version-bump.mdc`).
+
+### Largura natural
+
+Determina se dois componentes cabem lado a lado e se um bloco estica até as bordas do container.
+
+| Comportamento | Componentes |
+|---|---|
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default) |
+| **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
+| **Largura total + wrapper `flex: 1`** | `Button`, `Input`, `TextArea`, `Accordion`, `Modal` |
+
+A terceira linha é a pegadinha: esses cinco não passam `style` para o `GluestackUIProvider`, então o wrapper cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de uma coluna flexível, esse wrapper **absorve o espaço livre** — dois `Button` empilhados numa `View` com `flex: 1` dividem a altura disponível em vez de ficarem com 40 px cada. Na prática, os apps contornam envolvendo cada um em uma `View` de altura fixa ou `flexGrow: 0`. `Select` (passa `width: 100%`) e `Grid` (passa `flexGrow/flexShrink: 0`) escapam do problema.
 
 ---
 
@@ -210,6 +227,18 @@ Família única: **Roboto**, embarcada em `src/assets/fonts/Roboto/static/` nos 
 
 Componentes de texto (`MainTitle`, `Title`, `Subtitle`, `Text`, `FAB`) chamam `useFonts` internamente e aplicam `fontFamily: undefined` enquanto a fonte não carregou, evitando o erro de família inexistente. `Info`, `Tag`, `NavigationBar` e os balões de `Message` aplicam `Roboto-Regular` direto, sem esperar o load.
 
+### Quem **não** usa o Roboto embarcado
+
+`src/ui/button`, `src/ui/input`, `src/ui/textarea` e `src/ui/accordion` definem apenas o peso por classe Tailwind (`font-semibold`, `font-bold`, `font-normal`) e **nunca** `fontFamily`. Consequência: o texto de **`Button`, `Input`, `TextArea` e `Accordion` renderiza na fonte do sistema**, não no Roboto do pacote.
+
+| Plataforma | Fonte do sistema | Diferença visível |
+|---|---|---|
+| Android | Roboto | nenhuma — coincide com o Roboto embarcado |
+| iOS | SF Pro | sim — letras mais estreitas e `g`/`a` de desenho diferente |
+| Web | fonte padrão do navegador/SO | sim |
+
+Na prática, uma tela com `Title` (Roboto embarcado) sobre um `Input` (fonte do sistema) mostra **duas tipografias** no iOS e na web. Ao imaginar o render, assuma Roboto em tudo **exceto** nesses quatro componentes. Registrado como dívida técnica (item 16).
+
 ---
 
 ## 8. Catálogo de componentes
@@ -313,7 +342,15 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
 | `darkMode` | `boolean` | `false` |
 | `fontScale` | `number` | `1` |
 
-**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12. Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
+```
+  Nome completo                             ← label (Text size=small, 15px)
+┌────────────────────────────────┬────────┐
+│ ←12→ valor digitado            │ [right]│ 48
+└────────────────────────────────┴────────┘
+  Email deve ter formato válido             ← só quando inválido (14px, vermelho)
+```
+
+**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12, na **fonte do sistema** (não no Roboto embarcado — ver seção 7). Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
 
 **Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` é renderizado dentro da caixa, à direita.
 
@@ -380,6 +417,14 @@ Nome completo com capitalização automática.
 | `minLength` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
+```
+  Senha
+┌────────────────────────────────┬───────┐
+│ ←12→ ••••••••                  │  👁    │ 48   ← olho dentro da caixa
+└────────────────────────────────┴───────┘
+  A senha deve conter pelo menos um número  ← mensagem da 1ª regra violada
+```
+
 **Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta) e padding de 16 horizontal / 8 vertical.
 
 **Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência).
@@ -407,6 +452,13 @@ Barra de envio de mensagem no chat.
 | `onSend` | `() => void` | — (obrigatória) |
 | `placeholder` | `string` | `"Enviar mensagem..."` |
 
+```
+┌──────────────────────────────────┐  ┌────┐
+│ Enviar mensagem...               │  │ ➤  │  ← alinhados pela BASE
+└──────────────────────────────────┘  └────┘
+  flex: 1                        gap 8   ícone 20 + padding 8
+```
+
 **Aparência:** linha de largura total alinhada pela base, com gap 8: à esquerda o `Input` sem label ocupando o espaço restante (placeholder em `#E0E0E0`); à direita um botão quadrado de padding 8 e raio 12 com `IconSend` 20×20. O ícone fica azul `#007AFF` quando há texto e cinza `#6C757D` quando vazio; o botão inteiro cai para `opacity 0.5` quando desabilitado.
 
 **Comportamento:** `onSend` só dispara com `value.trim()` não vazio; `returnKeyType="send"` e Enter também enviam. O componente não limpa o campo — isso é responsabilidade do app.
@@ -424,7 +476,16 @@ Campo multilinha com contador opcional.
 | `maxLength` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
-**Aparência:** label (`Text size="small"`) acima, caixa multilinha `size="xl"` com fundo branco, raio 8 e borda padrão do gluestack; texto `18 × fontScale` em `#262627`. Com `maxLength`, abaixo e alinhado à direita aparece `"{n}/{max} caracteres"` em `Text size="small"`. Dark mode: fundo `#1A2432`, borda `#2A364A`.
+```
+  Bio                                       ← label
+┌──────────────────────────────────────────┐
+│ ←12→ texto multilinha, cresce conforme   │
+│ o conteúdo…                              │
+└──────────────────────────────────────────┘
+                        120/300 caracteres  ← alinhado à direita, só com maxLength
+```
+
+**Aparência:** label (`Text size="small"`) acima, caixa multilinha `size="xl"` com fundo branco, raio 8 e borda padrão do gluestack; texto `18 × fontScale` em `#262627`, na **fonte do sistema** (ver seção 7). Com `maxLength`, abaixo e alinhado à direita aparece `"{n}/{max} caracteres"` em `Text size="small"`. Dark mode: fundo `#1A2432`, borda `#2A364A`.
 
 **Comportamento:** digitação acima de `maxLength` é **ignorada** (não trunca, simplesmente não aplica).
 
@@ -443,6 +504,14 @@ Seleção de uma opção via modal.
 | `darkMode` | `boolean` | `false` |
 | `fontScale` | `number` | `1` |
 | `triggerFontScale` | `number` | `1` |
+
+```
+  Forma de pagamento                      ← label
+┌──────────────────────────────────┬─────┐
+│ ←16→ Selecione                   │  ⌄  │ ≥48
+└──────────────────────────────────┴─────┘
+  ao tocar → Modal com os CheckButton empilhados (gap 16) + botão "Voltar"
+```
 
 **Aparência:** label acima; gatilho em linha de altura mínima 48, fundo branco, raio 8, borda 0,8 px `#CED4DA`, padding horizontal 16, com o texto selecionado (ou o placeholder) à esquerda e um `IconChevronDown` à direita em `#8F98AD`, separado por 8. Com `errorMessage`, a borda vira `#DC2626` e a mensagem aparece embaixo em vermelho. Dark mode: fundo `#1A2432`, borda `#2A364A`, chevron `#B7C1D6`.
 
@@ -488,6 +557,18 @@ Card centralizado com foto grande — perfil em destaque.
 | `onAvatarPress` | `() => void` | — |
 | `darkMode` | `boolean` | `false` |
 
+```
+┌─ Card ────────────────────┐
+│          ╭────╮           │  avatar md (80px), circular
+│          │ 👤 │           │
+│          ╰────╯           │
+│        João Silva         │
+│    12 pedidos feitos      │
+│      ★★★★☆  4.5/5         │
+└───────────────────────────┘
+  tudo centralizado na horizontal
+```
+
 **Aparência:** `Card` com três linhas centralizadas: avatar `md` (80 px, circular), nome (`Text`) com a legenda de pedidos (`Info`) logo abaixo, e a linha de avaliação — 5 estrelas de 16 px seguidas de `"4.5/5"`. Sem avaliações (`totalRatings === 0`, ou `rating === 0` quando `totalRatings` é indefinido), mostra só `"Sem avaliações"`.
 
 #### `UserCardHorizontal`
@@ -502,6 +583,14 @@ Card compacto para listas.
 | `fontScale` | `number` | `1` |
 | `infoTone` | `'muted' \| 'default'` | `'muted'` |
 
+```
+┌─ Card ────────────────────┐
+│ João Silva                │  coluna, alinhada à esquerda, gap 8
+│ 12 pedidos feitos         │  SEM avatar, apesar do nome do componente
+│ ★★★★☆                     │
+└───────────────────────────┘
+```
+
 **Aparência:** `Card` com coluna alinhada à esquerda e gap 8 — nome, legenda de pedidos e estrelas de 16 px (ou `"Sem avaliações"`). Apesar do nome, **não** renderiza avatar nem dispõe os elementos em linha. `infoTone="default"` tira o cinza apagado da legenda.
 
 #### `UserCardBio`
@@ -513,6 +602,15 @@ Card com avatar à esquerda e bloco de dados à direita.
 | `user` | `User & { bio: string }` | — (obrigatória) |
 | `onClick` / `onAvatarPress` | `() => void` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
+
+```
+┌─ Card ────────────────────────┐
+│ ╭────╮  João Silva            │  avatar sm (64px) em coluna fixa de 64
+│ │ 👤 │  12 pedidos feitos     │  texto alinhado ao TOPO, não ao centro
+│ ╰────╯  ★★★★☆ 4/5             │  a bio NÃO aparece
+└───────────────────────────────┘
+   64      ←── flex: 1 ──→
+```
 
 **Aparência:** `Card` com linha alinhada ao topo e gap 8: coluna fixa de 64 px com o avatar `sm` (64 px) e, à direita, coluna flexível com nome, legenda de pedidos e linha de estrelas 16 px + `"{rating arredondado}/5"`. **O campo `bio` não é renderizado** apesar de obrigatório no tipo (ver dívidas).
 
@@ -527,6 +625,13 @@ Avatar circular com fallback para ícone.
 | `size` | `'2xs' \| 'xs' \| 'sm' \| 'md'` | `'sm'` |
 | `onPress` | `() => void` | — |
 | `darkMode` | `boolean` | `false` |
+
+```
+com foto:        sem foto (ou só espaços):
+ ╭──────╮         ╭──────╮
+ │ foto │         │  👤  │   fundo #E9ECEF
+ ╰──────╯         ╰──────╯   ícone a 45% do diâmetro, cor #8F98AD
+```
 
 **Aparência:** círculo de 32 (`2xs`), 40 (`xs`), 64 (`sm`) ou 80 px (`md`), com `overflow: hidden` e `alignSelf: flex-start`. Com imagem: a foto recortada em círculo. Sem imagem (nulo ou só espaços): fundo `#E9ECEF` (ou `#1A2432` no dark) com `IconProfile` centralizado em 45% do diâmetro, cor `#8F98AD` (ou `#B7C1D6`).
 
@@ -544,6 +649,11 @@ Par rótulo/valor de um campo do usuário.
 | `onClick` | `() => void` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
+```
+E-mail                ← Info, cinza 14px
+joao@email.com        ← Text, 18px
+```
+
 **Aparência:** duas linhas empilhadas com `gap-y-2`: rótulo em `Info` (cinza pequeno) e valor em `Text` (18 px). Sem borda, fundo ou padding próprios.
 
 **Comportamento:** o rótulo sai do dicionário interno (`name` → "Nome", `email` → "E-mail", `phone` → "Telefone", `address` → "Endereço", `bio` → "Bio", `age` → "Idade", `city` → "Cidade", `country` → "País", `cep` → "CEP"); tipo desconhecido vira o próprio `type` capitalizado. Valor ausente renderiza string vazia. Com `onClick`, tudo vira área tocável.
@@ -559,6 +669,15 @@ Empilha filhos com separador opcional.
 | `children` | `ReactNode` | — (obrigatória) |
 | `title` | `string` | — |
 | `divider` | `boolean` | `true` |
+
+```
+Tarefas pendentes          ← Subtitle 20px, só com title
+item 1
+──────────────────────     ← 1px #DEE2E6, margem vertical 8
+item 2
+──────────────────────     ← nunca antes do primeiro item
+item 3
+```
 
 **Aparência:** coluna de largura total; se houver `title`, um `Subtitle` no topo. Entre itens (nunca antes do primeiro), uma linha de 1 px `#DEE2E6` com margem vertical 8.
 
@@ -603,6 +722,14 @@ Item de lista com ação de excluir revelada por arraste para a esquerda.
 | `deleteWidth` | `number` | `72` |
 | `swipeEnabled` | `boolean` | `true` |
 
+```
+fechado:                        aberto (arrastado para ←):
+┌──────────────────────────┐    ┌────────────────────┬─────┐
+│ children                 │    │ children           │  🗑 │  faixa #DC2626
+└──────────────────────────┘    └────────────────────┴─────┘  72px (deleteWidth)
+                                 ← o conteúdo desliza; a faixa estava embaixo
+```
+
 **Aparência:** container de largura total com `overflow: hidden`. Atrás do conteúdo, encostada à direita e ocupando toda a altura, uma faixa vermelha `#DC2626` de `deleteWidth` px com `IconTrash` branco de 20 px centralizado. O conteúdo fica por cima, fundo branco, com hairlines `#DEE2E6` no topo e na base, e desliza horizontalmente.
 
 **Comportamento:** `PanResponder` só assume o gesto depois de 10 px horizontais predominando sobre o vertical (rolagem da lista continua funcionando). O arraste é limitado ao intervalo `[-deleteWidth, 0]`. No soltar, abre se a velocidade for menor que −0,45, fecha se maior que +0,45, e caso contrário decide pela posição (abre além de 45% da faixa). A animação é `Animated.spring` sem bounce. Tocar no conteúdo aberto **fecha** em vez de disparar `onPress`. Com `swipeEnabled: false`, o item fecha e o gesto é ignorado — o toque continua funcionando. Suporta uso controlado (`isOpen` + `onOpenChange`) para manter só um item aberto na lista.
@@ -620,6 +747,15 @@ Superfície padrão para agrupar conteúdo.
 | `onClick` | `() => void` | — |
 | `darkMode` | `boolean` | `false` |
 | `fontScale` | `number` | `1` |
+
+```
+┌───────────────────────────────────────┐
+│ ←16→ Título (14px bold)               │  padding 16 nos quatro lados
+│      ↓ 8                              │
+│      children                         │
+└───────────────────────────────────────┘
+   ↓ margem inferior 8 (empilha cards com respiro)
+```
 
 **Aparência:** retângulo de largura total, fundo branco (`#121821` no dark), raio 8, borda 0,4 px `#DEE2E6` (`#2A364A` no dark), padding 16 e margem inferior 8. Com `title`, um texto Roboto 700 de `14 × fontScale` em `#262627`, alinhado à esquerda, com 8 px abaixo. O conteúdo fica em uma `View` de largura total com `overflow: hidden`.
 
@@ -690,6 +826,19 @@ Diálogo centralizado com rodapé de ações.
 | `contentMinHeight` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
+```
+▒▒▒▒▒▒▒▒▒ backdrop (toque fecha) ▒▒▒▒▒▒▒▒▒
+   ┌─────────────────────────────────┐
+   │            Título               │  header (só com title), centralizado
+   ├─────────────────────────────────┤
+   │ children — rola, limitado a     │
+   │ 70% da altura máxima            │
+   ├─────────────────────────────────┤
+   │ [Cancelar]         [Confirmar]  │  space-between (só com onConfirm)
+   └─────────────────────────────────┘  senão: botão único à direita
+▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+```
+
 **Aparência:** backdrop escurecido cobrindo a tela (toque fecha) e um cartão centralizado `size="md"` do gluestack. Altura máxima = altura da janela − 64 (altura da navigation bar) − safe area inferior; o corpo rola e é limitado a 70% desse máximo. Com `title`, cabeçalho com o texto centralizado (`Text`). Rodapé em linha com gap 8: só um botão alinhado à direita no modo simples; dois botões com `space-between` quando há `onConfirm` (cancelar à esquerda, confirmar à direita).
 
 **Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. Usa `useRNModal`, então funciona sobre qualquer stack de navegação.
@@ -713,7 +862,15 @@ Seções expansíveis, uma por vez.
 | `leading` | `ReactNode` | — (ex.: chevron de voltar, antes do título) |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
-**Aparência:** lista de cabeçalhos sobre fundo branco (`#121821` no dark). Cada cabeçalho é uma linha de largura total: opcional `leading` (margem direita 8), título `18 × fontScale` em `#262627`, `titleAccessory` colado ao título com gap 8, e na extremidade direita um chevron (para cima quando aberto, para baixo quando fechado). Abaixo de cada item, um `Divider`.
+```
+┌──────────────────────────────────────────────┐
+│ [leading] Título  [titleAccessory]      ⌄    │  chevron colado na direita
+└──────────────────────────────────────────────┘
+  children (quando expandido)
+───────────────────────────────────────────────  Divider após cada item
+```
+
+**Aparência:** lista de cabeçalhos sobre fundo branco (`#121821` no dark). Cada cabeçalho é uma linha de largura total: opcional `leading` (margem direita 8), título `18 × fontScale` em `#262627` e em negrito (`font-bold`), na **fonte do sistema** (ver seção 7), `titleAccessory` colado ao título com gap 8, e na extremidade direita um chevron (para cima quando aberto, para baixo quando fechado). Abaixo de cada item, um `Divider`.
 
 **Comportamento:** `type="single"` e colapsável — abrir um item fecha o outro, e o aberto pode ser fechado. A transição usa `LayoutAnimation` easeInEaseOut de 300 ms (habilitada explicitamente no Android).
 
@@ -736,7 +893,16 @@ Botão principal do sistema, com modo de confirmação em duas etapas.
 | `needsConfirmation` | `boolean` | `false` |
 | `confirmationText` | `string` | — (**obrigatória** quando `needsConfirmation` é `true`) |
 
-**Aparência base:** retângulo de cantos levemente arredondados (raio 4), conteúdo em linha centralizado com gap 8. Altura e padding por `size`: `xs` 32/14, `sm` 36/16, `md` 40/20, `lg` 44/24, `xl` 48/28 px. Texto semibold, tamanho `text-base` (16) no `md`. Desabilitado: `opacity 40%`.
+```
+sem icon:                        com icon:
+┌──────────────────────────┐     ┌──────────────────────────┐
+│ ←20→   Confirmar   ←20→  │ 40  │ ←16→[ic]   Confirmar     │ 40
+└──────────────────────────┘     └──────────────────────────┘
+         ↑ centralizado                ↑ ícone absoluto a 16px da esquerda;
+                                         texto segue centralizado no botão
+```
+
+**Aparência base:** retângulo de cantos levemente arredondados (raio 4), conteúdo em linha centralizado com gap 8. Altura e padding por `size`: `xs` 32/14, `sm` 36/16, `md` 40/20, `lg` 44/24, `xl` 48/28 px. Texto semibold, tamanho `text-base` (16) no `md`, na **fonte do sistema** (não no Roboto embarcado — ver seção 7). Desabilitado: `opacity 40%`.
 
 **Variantes:**
 
@@ -756,6 +922,16 @@ Botão principal do sistema, com modo de confirmação em duas etapas.
 
 Em dark mode, `default` e `default-outline` passam a fundo `#1A2432`/transparente, borda `#2A364A` e texto `#F3F7FF`. `fontScale` ≠ 1 ajusta o texto para `18 × fontScale`.
 
+**Estados `hover` e `active`** (relevantes na web; no mobile só o `active` aparece, durante o toque):
+
+| Variante | Normal | Hover | Active |
+|---|---|---|---|
+| `default` | `#333333` | `#292929` | `#1F1F1F` |
+| `success` | `#348352` | `#2A7948` | `#206F3E` |
+| `default-outline` / `success-outline` | transparente | fundo `#F6F6F6` (`background-50`) | volta a transparente |
+
+Ressalva importante: as variantes `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` **inline**, que vence o `className` do NativeWind. Nessas cinco **não há** mudança nenhuma de hover/active — o botão fica visualmente estático até o toque ser solto.
+
 **Comportamento:** com `icon`, o nó é posicionado em `position: absolute` a 16 px da esquerda, e o texto continua centralizado. Com `needsConfirmation`, o botão deixa de usar o primitivo gluestack e vira um `Pressable` próprio (altura mínima 40, raio 8, padding 16/8, texto bold centralizado): o primeiro toque troca o rótulo para `confirmationText` e anima fundo, borda e texto para vermelho `#DC2626`/branco em 300 ms; o segundo toque dispara `onClick`. Sem o segundo toque, volta ao estado original após **8 segundos**. Pressionado reduz a opacidade para 0,85; desabilitado, 0,5.
 
 #### `CheckButton`
@@ -772,6 +948,16 @@ Chip selecionável, com modo "travado" compacto.
 | `isLocked` | `boolean` | `false` |
 | `disabled` | `boolean` | `false` |
 | `style` | `ViewStyle` | — |
+
+```
+isLocked: false                  isLocked: true
+┌──────────────────────┐         ┌──────────┐
+│ (✓) Camisa social    │         │ Camisa   │  badge some, texto encolhe
+└──────────────────────┘         └──────────┘
+ ↑5px ↑badge 15,4                 padding 4,8
+ padding-left 28,4                fonte 11,5 na cor lockedColor
+ fonte 14,4 preta
+```
 
 **Aparência:** pílula retangular de raio 8, borda 1,2 px, fundo branco, que mede pelo conteúdo (`alignSelf: flex-start`). No estado normal (`isLocked: false`): borda e texto pretos, padding esquerdo ~28 px para acomodar um badge circular de 15,4 px a 5 px da borda esquerda — verde `#059669` com `IconCircleCheck` branco quando `checked`, cinza `#E0E0E0` com `IconCircle` preto quando não. Texto Roboto 14,4 px centralizado. No estado travado (`isLocked: true`): o badge some, o padding encolhe para ~4,8 px, a fonte cai para 11,5 px e borda e texto assumem `lockedColor`.
 
@@ -804,6 +990,14 @@ Contador de quantidade com botões − / + e exclusão opcional.
 | `onDelete` | `() => void` | — |
 | `valueSuffix` | `string` | `""` |
 
+```
+┌──┐                                      ┌──┬──┐
+│🗑 │  Camisa social              12un    │ −│ +│  40
+└──┘  ←───── flex: 1 ─────→   →alinhado   └──┴──┘
+ 40×40                          à direita  colados, sem borda entre eles
+ (só com onDelete)              30px (52 com valueSuffix)
+```
+
 **Aparência:** linha de largura total: botão de lixeira opcional de 40×40 (borda 0,4 px, raio 8, margem direita 8), rótulo flexível (`Text` 18 px), valor alinhado à direita em uma coluna de 30 px (52 px quando há `valueSuffix`) e, encostado na direita, o par de botões de 40×40 unidos — o esquerdo com `IconMinus` e cantos arredondados só à esquerda, o direito com `IconPlus` e cantos só à direita, sem borda entre eles. Ícones de 16 px, fundo branco, borda `#CED4DA`. Botão no limite: fundo `#E9ECEF` e `opacity 0.5`.
 
 **Comportamento:** `+` só incrementa abaixo de `max`, `−` só decrementa acima de `min`; o componente é controlado.
@@ -819,6 +1013,14 @@ Barra de abas inferior.
 | `icons` | `((isActive: boolean) => ReactNode)[]` | — |
 | `onNavigate` | `(page: string) => void` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
+
+```
+──────────────────────────────────────  borda superior 0,4px
+│   [ic]   │   [ic]   │   [ic]   │
+│  Início  │  Pedido  │   Conta  │      ativo #007DFF, inativo #8F98AD
+└──────────┴──────────┴──────────┘
+    1/3         1/3        1/3           cada aba com flex igual
+```
 
 **Aparência:** linha de largura total com fundo branco (`#121821` no dark) e borda superior de 0,4 px `#DEE2E6` (`#2A364A`). Cada aba ocupa fração igual, centralizada, com ícone opcional acima (margem inferior 2) e rótulo Roboto-Regular de `15 × fontScale` (`lineHeight` `18 × fontScale`). Ativa em azul `#007DFF`, inativa em `#8F98AD`. Padding vertical 4 px, exceto no iOS: 10 px no topo e 14 px na base (acomoda o home indicator). Altura de referência para cálculos de layout: `Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT` = 64.
 
@@ -837,6 +1039,21 @@ Resumo de um pedido.
 
 `OrderItem = { quantity: number, name: string }`.
 
+```
+┌─ Card ────────────────────────────────┐
+│ ‹  Lavagem de 5 peças                 │  chevron 24px só com backTarget
+│    Criado em 05/10/2026               │  Info, cinza
+│ ↓ 16                                  │
+│ ┌────┐┌────┐┌────┐  →                 │  Gallery, rola na horizontal
+│ └────┘└────┘└────┘                    │
+│ ↓ 16                                  │
+│ Itens do pedido:                      │
+│ 2x Camisa social                      │
+│ ─────────────────                     │  separador do TextList
+│ 1x Calça jeans                        │
+└───────────────────────────────────────┘
+```
+
 **Aparência:** `Card` com três blocos separados por `gap-4` (16 px): cabeçalho com `Subtitle` do título — precedido por um `IconChevronLeft` de 24 px quando há `backTarget` — e, abaixo, `Criado em dd/mm/aaaa` em `Info`; a `Gallery` horizontal de imagens, quando houver; e o bloco de itens com `Text size="small"` "Itens do pedido:" seguido de um `TextList` no formato `"{quantidade}x {nome}"`.
 
 **Comportamento:** com `backTarget`, o card passa a responder ao botão físico de voltar do Android e a um swipe da borda esquerda (origem até 48 px da borda, mais de 80 px de deslocamento ou velocidade acima de 0,6, com desvio vertical menor que 20 px). O `PanResponder` não captura o toque inicial, para não roubar o clique do chevron.
@@ -853,6 +1070,15 @@ Card de oferta de um lavexer.
 | `amountLabel` | `string` | — (substitui o valor formatado) |
 | `onClick` | `() => void` | — |
 
+```
+┌─ Card ────────────────────────────────┐
+│ R$ 45                            3km  │  verde 20px ↔ Info cinza
+│ ↓ 8                                   │
+│ João Silva            ★★★★☆  4.5/5    │  nome ↔ estrelas 16px + nota
+└───────────────────────────────────────┘
+  ambas as linhas em space-between
+```
+
 **Aparência:** `Card` clicável com duas linhas. No topo, em `space-between`: o valor em verde `#059669`, `Text size="large"` (20 px), no formato `"R$ {amount}"` ou o `amountLabel` recebido; à direita, a distância `"{n}km"` em `Info`. Abaixo (margem 8), outra linha em `space-between` com o nome do usuário à esquerda e, à direita, estrelas de 16 px + `"4.5/5"` — ou `"Sem avaliações"` quando `totalRatings` é 0 (ou `rating` é 0, sem `totalRatings`).
 
 #### `Stars`
@@ -863,6 +1089,11 @@ Exibição somente leitura de uma nota.
 |---|---|---|
 | `rating` | `number` | — (obrigatória) |
 | `size` | `number` | `24` |
+
+```
+★ ★ ★ ★ ☆     sem gap entre as estrelas; altura da linha = size
+↑ douradas    ↑ cinza #E0E0E0 (a base aparece sempre, por baixo)
+```
 
 **Aparência:** linha de 5 estrelas de `size` px. Fundo sempre em cinza `#E0E0E0`; por cima, estrela cheia dourada `#FFD700` ou meia estrela dourada, conforme a nota. Altura da linha = `size`, sem gap entre as estrelas.
 
@@ -878,6 +1109,12 @@ Avaliação interativa com meia estrela.
 | `initialRating` | `number` | `0` |
 | `onRatingChange` | `(rating: number) => void` | — |
 | `disabled` | `boolean` | `false` |
+
+```
+★   ★   ★   ◐   ☆      gap 4 entre as estrelas (Grid de 5 colunas)
+│ │                     cada estrela tem 2 áreas de toque:
+└─┴─ metade esquerda = .5   |   metade direita = inteiro
+```
 
 **Aparência:** `Grid` de 5 colunas com `gap-1` (4 px), cada célula com uma estrela de `size` px — cinza `#E0E0E0` de base, com sobreposição dourada cheia ou meia conforme a seleção.
 
@@ -900,6 +1137,23 @@ Bolha de mensagem do chat; delega para `MessageSent` ou `MessageReceived`.
 | `isGrouped` | `boolean` | `false` |
 | `avatarVariant` | `'image' \| 'headset'` | `'image'` |
 | `onClick` | `() => void` | — |
+
+```
+enviada (isOwn: true) — alinhada à direita:
+                  ┌────────────────────┐ ┌────┐
+           14:32  │ Texto da mensagem  │ │ 👤 │   tudo alinhado pela BASE
+                  └────────────────────┘ └────┘
+                   #D7E7FA, ≤75%          40×40
+                   canto inf. direito reto
+
+recebida — espelhada:
+┌────┐  João Silva
+│ 👤 │  ┌────────────────────┐
+└────┘  │ Texto da mensagem  │  14:32
+  40×40 └────────────────────┘
+         branco + borda, ≤75%
+         canto inf. esquerdo reto
+```
 
 **Aparência — enviada (`isOwn: true`):** linha alinhada à direita e pela base, com gap 4: horário em cinza `#8F98AD` de 12 px, balão azul claro `#D7E7FA` com raio 12 (canto inferior direito reto, raio 4), padding 16/8, texto `#262627` de 18 px, largura máxima 75%; e, à direita, coluna de avatar de 40×40 com margem esquerda 8.
 
@@ -930,6 +1184,13 @@ Bolha de mensagem do chat; delega para `MessageSent` ou `MessageReceived`.
 | `images` | `string[]` (obrigatória) |
 | `onClick` | `(imageUrl: string, index: number) => void` |
 
+```
+┌────┐ ┌────┐ ┌────┐ ┌───
+│ 80 │ │ 80 │ │ 80 │ │     →  rola na horizontal, sem barra
+└────┘ └────┘ └────┘ └───
+   gap 12        padding horizontal 4
+```
+
 **Aparência:** `ScrollView` horizontal sem barra de rolagem, padding horizontal 4 e gap 12 entre itens, cada um uma `Image` `md` (80×80) com raio 8.
 
 #### `Alert`
@@ -939,6 +1200,15 @@ Aviso em destaque dentro de um card.
 | Prop | Tipo |
 |---|---|
 | `text` | `string` (obrigatória) |
+
+```
+┌─ Card ────────────────────┐
+│           (!)             │  IconExclamation 48×48, centralizado
+│ ↓ 16                      │
+│   Texto do aviso em 18px, │  centralizado, quebra linha
+│   centralizado            │
+└───────────────────────────┘
+```
 
 **Aparência:** `Card` com duas linhas separadas por `gap-4`: `IconExclamation` (círculo com `!`) de 48×48 centralizado no topo, e abaixo o texto em `Text size="medium"` (18 px) centralizado. Não tem variantes de cor nem botão de fechar.
 
@@ -1042,6 +1312,9 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
+16. **Tipografia inconsistente.** `Button`, `Input`, `TextArea` e `Accordion` herdam a fonte do sistema porque os primitivos em `src/ui/*` definem peso mas não `fontFamily`. No iOS e na web, a mesma tela mistura Roboto (componentes próprios) com SF Pro / fonte do navegador (esses quatro).
+17. **Wrapper `flex: 1` do `GluestackUIProvider`.** `Button`, `Input`, `TextArea`, `Accordion` e `Modal` não passam `style` ao provider, que cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de colunas flexíveis o wrapper absorve espaço livre e distorce o layout, obrigando os apps a envolver o componente em uma `View` com altura fixa ou `flexGrow: 0`.
+18. **Hover/active mortos em cinco variantes do `Button`.** `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` inline, que vence o `className`; os estados `data-[hover]`/`data-[active]` do gluestack não têm efeito nelas.
 
 ---
 
