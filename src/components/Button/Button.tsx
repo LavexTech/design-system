@@ -52,6 +52,21 @@ const variantMap = {
   "secondary-outline": { action: "secondary" as const, variant: "outline" as const },
 }
 
+const PRESS_OPACITY = 0.85
+const HOVER_FILL = "#F6F6F6"
+
+function darkenHex(color: string): string {
+  const match = /^#([0-9a-fA-F]{6})$/.exec(color)
+  if (!match) {
+    return color
+  }
+  const num = parseInt(match[1], 16)
+  const channel = (shift: number) =>
+    Math.max(0, Math.round(((num >> shift) & 0xff) * 0.88))
+  const parts = [channel(16), channel(8), channel(0)]
+  return `#${parts.map((part) => part.toString(16).padStart(2, "0")).join("")}`
+}
+
 const CONFIRM_RESET_MS = 8000
 const CONFIRM_ANIM_MS = 300
 const DANGER_BG = Constants.styles.textColor.DANGER
@@ -156,6 +171,8 @@ export const Button: React.FC<ButtonProps> = ({
   const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const buttonSize: "xs" | "sm" | "md" | "lg" | "xl" = size !== undefined ? size : "md"
   const { buttonStyle, textStyle } = resolveStaticStyles(variant, darkMode, fontScale)
+  const [pressed, setPressed] = useState(false)
+  const [hovered, setHovered] = useState(false)
   const labelFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD)
   const labelFontStyle: TextStyle = {
     fontFamily: labelFont,
@@ -274,6 +291,24 @@ export const Button: React.FC<ButtonProps> = ({
     )
   }
 
+  const inlineBackground =
+    typeof buttonStyle.backgroundColor === "string"
+      ? buttonStyle.backgroundColor
+      : undefined
+  const feedbackStyle =
+    inlineBackground && !disabled
+      ? {
+          ...buttonStyle,
+          backgroundColor:
+            hovered && !pressed
+              ? inlineBackground === "transparent"
+                ? HOVER_FILL
+                : darkenHex(inlineBackground)
+              : inlineBackground,
+          opacity: pressed ? PRESS_OPACITY : buttonStyle.opacity,
+        }
+      : buttonStyle
+
   return (
     <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
     <GluestackButton
@@ -281,8 +316,12 @@ export const Button: React.FC<ButtonProps> = ({
       variant={gluestackVariant}
       size={buttonSize}
       onPress={onClick}
+      onPressIn={() => setPressed(true)}
+      onPressOut={() => setPressed(false)}
+      onHoverIn={() => setHovered(true)}
+      onHoverOut={() => setHovered(false)}
       isDisabled={disabled}
-      style={[buttonStyle, style, icon ? styles.withIcon : null]}
+      style={[feedbackStyle, style, icon ? styles.withIcon : null]}
     >
       {icon ? <View style={styles.iconSlot}>{icon}</View> : null}
       <ButtonText style={[textStyle, labelFontStyle, textStyleOverride]}>

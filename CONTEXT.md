@@ -921,8 +921,10 @@ Em dark mode, `default` e `default-outline` passam a fundo `#1A2432`/transparent
 | `default` | `#333333` | `#292929` | `#1F1F1F` |
 | `success` | `#348352` | `#2A7948` | `#206F3E` |
 | `default-outline` / `success-outline` | transparente | fundo `#F6F6F6` (`background-50`) | volta a transparente |
+| `primary` / `secondary` / `danger` | cor de repouso | fundo ~12% mais escuro | opacidade 0,85 |
+| `secondary-outline` / `danger-outline` | cor de repouso | `#F6F6F6` se o fundo é transparente; senão ~12% mais escuro | opacidade 0,85 |
 
-Ressalva importante: as variantes `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` **inline**, que vence o `className` do NativeWind. Nessas cinco **não há** mudança nenhuma de hover/active — o botão fica visualmente estático até o toque ser solto.
+`default`, `default-outline`, `success` e `success-outline` usam as classes `data-[hover]`/`data-[active]` do gluestack. As outras cinco (e `default`/`default-outline` em dark mode, que também pintam o fundo por `style` inline) usam `onHoverIn`/`onPressIn`: o hover escurece o hex em 12% (ou aplica `#F6F6F6` quando o fundo é transparente) e o toque aplica opacidade 0,85. A cor de repouso não muda. `needsConfirmation` continua no `Pressable` próprio, com opacidade 0,85 no pressed.
 
 **Comportamento:** com `icon`, o nó é posicionado em `position: absolute` a 16 px da esquerda, e o texto continua centralizado. Com `needsConfirmation`, o botão deixa de usar o primitivo gluestack e vira um `Pressable` próprio (altura mínima 40, raio 8, padding 16/8, texto bold centralizado): o primeiro toque troca o rótulo para `confirmationText` e anima fundo, borda e texto para vermelho `#DC2626`/branco em 300 ms; o segundo toque dispara `onClick`. Sem o segundo toque, volta ao estado original após **8 segundos**. Pressionado reduz a opacidade para 0,85; desabilitado, 0,5.
 
@@ -1304,7 +1306,6 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
-18. **Hover/active mortos em cinco variantes do `Button`.** `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` inline, que vence o `className`; os estados `data-[hover]`/`data-[active]` do gluestack não têm efeito nelas.
 19. **`npm run build` falha.** O `tsc` acusa 52 erros `TS2307` ("Cannot find module") em `src/ui/*` e em `src/components/Input/Input.tsx`, porque o `tsconfig.json` usa `moduleResolution: "node"`, que não entende os subpath exports dos pacotes `@gluestack-ui/*` (`@gluestack-ui/utils/nativewind-utils`, `@gluestack-ui/core/*/creator`). Passa despercebido porque nada no repositório roda o build e os apps compilam `src/` pelo Metro. Correção provável: `moduleResolution: "bundler"`.
 
 ---
