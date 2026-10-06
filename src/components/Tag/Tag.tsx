@@ -19,23 +19,23 @@ type TagProps = {
 
 const variantStyles: Record<
   TagVariant,
-  { borderColor: string; color: string }
+  { backgroundColor: string; color: string }
 > = {
   "primary-outline": {
-    borderColor: Constants.styles.textColor.PRIMARY,
-    color: Constants.styles.textColor.PRIMARY,
+    backgroundColor: Constants.styles.surface.ACCENT,
+    color: Constants.styles.brand.DARK,
   },
   "success-outline": {
-    borderColor: Constants.styles.textColor.SUCCESS,
-    color: Constants.styles.textColor.SUCCESS,
+    backgroundColor: Constants.styles.surface.ACCENT,
+    color: Constants.styles.brand.DARK,
   },
   "danger-outline": {
-    borderColor: Constants.styles.textColor.DANGER,
-    color: Constants.styles.textColor.DANGER,
+    backgroundColor: Constants.styles.feedback.DANGER_SURFACE,
+    color: Constants.styles.text.DANGER,
   },
   "warning-outline": {
-    borderColor: Constants.styles.textColor.WARNING,
-    color: Constants.styles.textColor.WARNING,
+    backgroundColor: Constants.styles.feedback.WARNING_SURFACE,
+    color: Constants.styles.feedback.WARNING_TEXT,
   },
 }
 
@@ -58,7 +58,7 @@ export const Tag: React.FC<TagProps> = ({
         styles.tag,
         isSm && styles.tagSm,
         {
-          borderColor: colors.borderColor,
+          backgroundColor: colors.backgroundColor,
         },
       ]}
     >
@@ -81,8 +81,7 @@ export const Tag: React.FC<TagProps> = ({
 const styles = StyleSheet.create({
   tag: {
     alignSelf: "flex-start",
-    borderWidth: 1,
-    borderRadius: Constants.styles.borderRadius.SMALL,
+    borderRadius: Constants.styles.borderRadius.LARGE,
     paddingHorizontal: Constants.styles.spacing.SMALL,
     paddingVertical: Constants.styles.spacing.TINY,
     backgroundColor: "transparent",
@@ -93,6 +92,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: Constants.styles.fontFamily.REGULAR,
-    fontWeight: Constants.styles.fontWeight.NORMAL as any,
+    fontWeight: "700",
   },
 })
