@@ -61,7 +61,7 @@ export const Select: React.FC<SelectProps> = ({
             onPress={() => setIsOpen(true)}
             style={[
               styles.trigger,
-              darkMode ? styles.triggerDark : null,
+              null,
               hasError ? styles.triggerError : null,
             ]}
             accessibilityRole="button"
@@ -137,22 +137,22 @@ export const Select: React.FC<SelectProps> = ({
 
 const styles = StyleSheet.create({
   trigger: {
-    minHeight: 48,
+    minHeight: Constants.styles.componentSize.INPUT_HEIGHT,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: Constants.styles.spacing.MEDIUM,
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    borderWidth: Constants.styles.borderWidth.REGULAR,
-    borderColor: Constants.styles.borderColor.MEDIUM,
+    backgroundColor: Constants.styles.surface.DEFAULT,
+    borderRadius: Constants.styles.borderRadius.LARGE,
+    borderWidth: Constants.styles.borderWidth.INTERACTIVE,
+    borderColor: Constants.styles.border.INTERACTIVE,
   },
   triggerDark: {
     backgroundColor: Constants.styles.theme.dark.background.subtle,
     borderColor: Constants.styles.theme.dark.border.default,
   },
   triggerError: {
-    borderColor: Constants.styles.textColor.DANGER,
+    borderColor: Constants.styles.text.DANGER,
   },
   chevron: {
     marginLeft: Constants.styles.spacing.SMALL,

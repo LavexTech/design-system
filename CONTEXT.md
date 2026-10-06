@@ -1218,6 +1218,36 @@ Componente de exemplo que renderiza o texto `"Hello World"`. **Não é exportado
 
 ---
 
+### 8.10 Linguagem 2.0 — o que o código faz agora
+
+Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. `darkMode` continua aceita e é ignorada nos componentes reescritos.
+
+**Tipografia.** Plus Jakarta Sans (400/500/600/700). Alias `Roboto-*` ainda carrega o corte equivalente.
+
+**`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#F4F2F5`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
+
+**`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566` (outline na web). Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max} caracteres"`.
+
+**`Select`.** O gatilho usa a mesma caixa do `Input` (52 px, raio 12, borda 1.5). O modal de opções não mudou.
+
+**`InputChat`.** Campo de 48 px com raio 24 e botão circular de 48 px em `#3CDBC0`. Vazio, o botão fica `#F4F2F5`. Não limpa o campo.
+
+**`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#F4F2F5`, sem borda, canto inferior esquerdo 4.
+
+**`NavigationBar`.** Altura mínima 76. Aba ativa com pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa em `#5A6A72`. `NAVIGATION_BAR_HEIGHT` vale 76.
+
+**`Tag`.** Preenchida, raio 12, texto 13 peso 700. Nomes `*-outline` permanecem. `primary`/`success`: fundo `#E2FAF6`, texto `#0B7566`. `danger`: `#FDECEC` / `#C62828`. `warning`: `#FFF4E5` / `#8A5A00`.
+
+**`ProfileAvatar`.** `size` aceita os nomes antigos ou um número (diâmetro). Abaixo de 24, cai para 24.
+
+**`Gallery`.** Itens de 80 px com raio 14.
+
+**`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
+
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento).
+
+**Ainda no gluestack.** `Modal`, `Grid`, `Accordion`, `Image` e o provider do `Select`. Por isso essas dependências continuam no `package.json`.
+
 ## 9. Ícones
 
 Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` (SVG via `react-native-svg`). Contrato comum (`iconProps.ts`):

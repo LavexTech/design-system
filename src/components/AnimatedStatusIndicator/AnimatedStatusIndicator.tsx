@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { StyleSheet, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { AccessibilityInfo, StyleSheet, View } from "react-native"
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated"
 import Constants from "../../constants/constants"
 
@@ -36,13 +36,28 @@ export const AnimatedStatusIndicator: React.FC<AnimatedStatusIndicatorProps> = (
   active = true,
   icon,
   accessibilityLabel,
-}) => (
+}) => {
+  const [reduceMotion, setReduceMotion] = useState(false)
+  useEffect(() => {
+    let mounted = true
+    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      if (mounted) setReduceMotion(enabled)
+    })
+    const subscription = AccessibilityInfo.addEventListener("reduceMotionChanged", setReduceMotion)
+    return () => {
+      mounted = false
+      subscription.remove()
+    }
+  }, [])
+  const animate = active && !reduceMotion
+  return (
   <View accessibilityRole="progressbar" accessibilityLabel={accessibilityLabel} style={[styles.wrap, { width: size * 2.4, height: size * 2.4 }]}>
-    <Ring size={size} delay={0} active={active} />
-    <Ring size={size} delay={1000} active={active} />
+    <Ring size={size} delay={0} active={animate} />
+    <Ring size={size} delay={1000} active={animate} />
     <View style={[styles.core, { width: size, height: size, borderRadius: size / 2 }]}>{icon}</View>
   </View>
-)
+  )
+}
 
 const styles = StyleSheet.create({
   wrap: { alignItems: "center", justifyContent: "center" },
