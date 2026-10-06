@@ -28,6 +28,8 @@ type InputProps = {
   returnKeyType?: "done" | "go" | "next" | "search" | "send" | "default"
   darkMode?: boolean
   fontScale?: number
+  /** Altura da caixa do campo. Padrão: 52. */
+  fieldHeight?: number
   autoCapitalize?: "none" | "sentences" | "words" | "characters"
   autoCorrect?: boolean
 }
@@ -50,6 +52,7 @@ export const Input: React.FC<InputProps> = ({
   onSubmitEditing,
   returnKeyType,
   fontScale = 1,
+  fieldHeight,
   autoCapitalize,
   autoCorrect,
   darkMode,
@@ -58,7 +61,7 @@ export const Input: React.FC<InputProps> = ({
   const [isValid, setIsValid] = useState(true)
   const [focused, setFocused] = useState(false)
   const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
-  const labelFont = useResolvedFontFamily(C.fontFamily.SEMIBOLD)
+  const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
 
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue
@@ -118,7 +121,7 @@ export const Input: React.FC<InputProps> = ({
               fontSize: C.fontSize.LABEL * fontScale,
               lineHeight: C.lineHeight.LABEL * fontScale,
               fontFamily: labelFont,
-              fontWeight: labelFont ? "normal" : "600",
+              fontWeight: labelFont ? "normal" : "700",
             },
           ]}
         >
@@ -128,7 +131,7 @@ export const Input: React.FC<InputProps> = ({
       <View
         style={[
           styles.field,
-          { borderColor },
+          { borderColor, height: fieldHeight ?? C.componentSize.INPUT_HEIGHT },
           Platform.OS === "web" && focused
             ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
             : null,

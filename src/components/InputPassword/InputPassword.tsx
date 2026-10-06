@@ -16,6 +16,7 @@ type InputPasswordProps = {
     minLength?: number,
     darkMode?: boolean,
     fontScale?: number,
+    fieldHeight?: number,
 }
 
 export const InputPassword: React.FC<InputPasswordProps> = ({
@@ -28,6 +29,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
     minLength,
     darkMode = false,
     fontScale = 1,
+    fieldHeight,
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
@@ -90,6 +92,7 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             rightElement={rightElement}
             darkMode={darkMode}
             fontScale={fontScale}
+            fieldHeight={fieldHeight}
         />
     )
 }
