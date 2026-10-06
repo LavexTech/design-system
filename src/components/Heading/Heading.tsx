@@ -23,6 +23,12 @@ type HeadingSpec = {
 
 const C = Constants.styles;
 
+const ARIA_LEVEL: Record<HeadingLevel, number> = {
+  h1: 1,
+  h2: 2,
+  h4: 4,
+};
+
 const LEVELS: Record<HeadingLevel, HeadingSpec> = {
   h1: {
     fontSize: C.fontSize.WORDMARK,
@@ -60,6 +66,7 @@ export const Heading: React.FC<HeadingProps> = ({ text, level, position = "left"
   return (
     <Text
       accessibilityRole="header"
+      aria-level={ARIA_LEVEL[level]}
       style={[
         styles.heading,
         {
