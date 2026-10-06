@@ -40,6 +40,7 @@ const Constants = {
       MEDIUM: "PlusJakartaSans-Medium",
       SEMIBOLD: "PlusJakartaSans-SemiBold",
       BOLD: "PlusJakartaSans-Bold",
+      EXTRABOLD: "PlusJakartaSans-ExtraBold",
     },
     textColor: {
       DEFAULT: "#2D3B42",

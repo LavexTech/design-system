@@ -6,6 +6,7 @@ const AVAILABLE_FONTS = {
   "PlusJakartaSans-Medium": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-Medium.ttf"),
   "PlusJakartaSans-SemiBold": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-SemiBold.ttf"),
   "PlusJakartaSans-Bold": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-Bold.ttf"),
+  "PlusJakartaSans-ExtraBold": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-ExtraBold.ttf"),
 };
 
 const loadedFonts = new Set<string>();
