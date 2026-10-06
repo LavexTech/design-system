@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react"
-import { NativeSyntheticEvent, Platform, StyleSheet, TextInputKeyPressEventData } from "react-native"
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
-import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
-import { TextBox as Text } from "../Text/Text"
-import { Input as InputBase, InputField } from '../../ui/input'
-import { Grid, GridItem } from "../Grid/Grid"
+import React, { useEffect, useState } from "react"
+import {
+  NativeSyntheticEvent,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TextInputKeyPressEventData,
+  View,
+} from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 
@@ -29,6 +32,8 @@ type InputProps = {
   autoCorrect?: boolean
 }
 
+const C = Constants.styles
+
 export const Input: React.FC<InputProps> = ({
   label,
   value,
@@ -37,170 +42,163 @@ export const Input: React.FC<InputProps> = ({
   validation,
   errorMessage,
   mask,
-  placeholderTextColor = Constants.styles.textColor.INFO,
+  placeholderTextColor = C.text.PLACEHOLDER,
   mobileKeyboard = "text",
   secureTextEntry = false,
   rightElement,
   onBlur,
   onSubmitEditing,
   returnKeyType,
-  darkMode = false,
   fontScale = 1,
   autoCapitalize,
   autoCorrect,
+  darkMode,
 }) => {
-  const [isValid, setIsValid] = useState<boolean>(true)
-  const fieldFont = useResolvedFontFamily(Constants.styles.fontFamily.REGULAR)
+  void darkMode
+  const [isValid, setIsValid] = useState(true)
+  const [focused, setFocused] = useState(false)
+  const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
+  const labelFont = useResolvedFontFamily(C.fontFamily.SEMIBOLD)
 
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue
-    
-    const invalidChars = /[A-WYZa-wyz0-9]/;
+    const invalidChars = /[A-WYZa-wyz0-9]/
     if (invalidChars.test(maskPattern)) {
       console.warn(`Máscara inválida: "${maskPattern}".`)
       return inputValue
     }
-
     const cleanValue = inputValue.replace(/[^a-zA-Z0-9]/g, "")
     let maskedValue = ""
     let valueIndex = 0
-
     for (let i = 0; i < maskPattern.length; i++) {
       if (valueIndex >= cleanValue.length) break
-
       const maskChar = maskPattern[i]
-
-      if (maskChar === 'X' || maskChar === 'x') {
+      if (maskChar === "X" || maskChar === "x") {
         maskedValue += cleanValue[valueIndex]
         valueIndex++
       } else {
         maskedValue += maskChar
       }
     }
-
     return maskedValue
-  };
+  }
 
   const handleTextChange = (text: string) => {
-    let processedValue = text
-
-    if (mask) {
-      processedValue = applyMask(text, mask)
-    }
-
+    const processedValue = mask ? applyMask(text, mask) : text
     onChange(processedValue)
-
-    if (validation) {
-      const valid = validation(processedValue)
-      setIsValid(valid)
-    }
-  };
+    if (validation) setIsValid(validation(processedValue))
+  }
 
   useEffect(() => {
-    if (validation && value) {
-      const valid = validation(value)
-      setIsValid(valid)
-    }
+    if (validation && value) setIsValid(validation(value))
   }, [value, validation])
 
-  const getKeyboardType = ():
-    | "default"
-    | "email-address"
-    | "numeric"
-    | "phone-pad" => {
-    switch (mobileKeyboard) {
-      case "email":
-        return "email-address"
-      case "phone":
-        return "phone-pad"
-      case "number":
-        return "numeric"
-      default:
-        return "default"
-    }
-  };
+  const keyboardType =
+    mobileKeyboard === "email"
+      ? "email-address"
+      : mobileKeyboard === "phone"
+        ? "phone-pad"
+        : mobileKeyboard === "number"
+          ? "numeric"
+          : "default"
+
+  const borderColor = !isValid
+    ? C.text.DANGER
+    : focused
+      ? C.brand.DARK
+      : C.border.INTERACTIVE
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
-      <Grid columns={1} gap={2} darkMode={darkMode}>
-        {label && (
-          <GridItem colSpan={4}>
-            <Text text={label} size="small" darkMode={darkMode} fontScale={fontScale} />
-          </GridItem>
-        )}
-        <GridItem colSpan={4}>
-        <InputBase
+    <View style={styles.wrap}>
+      {label ? (
+        <Text
+          style={[
+            styles.label,
+            {
+              fontSize: C.fontSize.LABEL * fontScale,
+              lineHeight: C.lineHeight.LABEL * fontScale,
+              fontFamily: labelFont,
+              fontWeight: labelFont ? "normal" : "600",
+            },
+          ]}
+        >
+          {label}
+        </Text>
+      ) : null}
+      <View
+        style={[
+          styles.field,
+          { borderColor },
+          Platform.OS === "web" && focused
+            ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
+            : null,
+        ]}
+      >
+        <TextInput
+          accessibilityLabel={label}
+          placeholder={placeholder}
+          value={value}
+          onChangeText={handleTextChange}
+          keyboardType={keyboardType}
+          autoCapitalize={autoCapitalize ?? (mobileKeyboard === "email" ? "none" : undefined)}
+          autoCorrect={autoCorrect ?? (mobileKeyboard === "email" ? false : undefined)}
+          placeholderTextColor={placeholderTextColor}
+          secureTextEntry={secureTextEntry}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false)
+            onBlur?.()
+          }}
+          onSubmitEditing={Platform.OS === "web" ? undefined : onSubmitEditing}
+          returnKeyType={returnKeyType}
+          blurOnSubmit={!!onSubmitEditing}
+          onKeyPress={
+            Platform.OS === "web" && onSubmitEditing
+              ? (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+                  if (event.nativeEvent.key === "Enter") {
+                    event.preventDefault?.()
+                    onSubmitEditing()
+                  }
+                }
+              : undefined
+          }
           style={[
             styles.input,
-            darkMode ? styles.inputDark : null,
-            !isValid && styles.inputError,
-          ]}
-          variant="outline"
-          size="xl"
-          isDisabled={false}
-          isInvalid={!isValid}
-          isReadOnly={false}
-        >
-          
-          <InputField
-            placeholder={placeholder}
-            value={value} 
-            onChangeText={handleTextChange} 
-            keyboardType={getKeyboardType()}
-            autoCapitalize={
-              autoCapitalize ?? (mobileKeyboard === "email" ? "none" : undefined)
-            }
-            autoCorrect={
-              autoCorrect ?? (mobileKeyboard === "email" ? false : undefined)
-            }
-            spellCheck={
-              autoCorrect === false || mobileKeyboard === "email" ? false : undefined
-            }
-            placeholderTextColor={darkMode ? Constants.styles.theme.dark.text.muted : placeholderTextColor}
-            secureTextEntry={secureTextEntry}
-            onBlur={onBlur}
-            onSubmitEditing={Platform.OS === "web" ? undefined : onSubmitEditing}
-            returnKeyType={returnKeyType}
-            blurOnSubmit={!!onSubmitEditing}
-            onKeyPress={
-              Platform.OS === "web" && onSubmitEditing
-                ? (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-                    if (event.nativeEvent.key === "Enter") {
-                      event.preventDefault?.()
-                      onSubmitEditing()
-                    }
-                  }
-                : undefined
-            }
-            style={{
-              color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
-              fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+            {
+              fontSize: C.fontSize.BODY * fontScale,
               fontFamily: fieldFont,
-            }}
-          />
-          {rightElement}
-        </InputBase>
-        </GridItem>
-        {!isValid && errorMessage && (
-          <GridItem colSpan={4}>
-          <Text size="small" level="error" text={errorMessage} darkMode={darkMode} fontScale={fontScale} />
-          </GridItem>
-        )}
-      </Grid>
-    </GluestackUIProvider>
+              paddingRight: rightElement ? 4 : 16,
+            },
+          ]}
+        />
+        {rightElement}
+      </View>
+      {!isValid && errorMessage ? (
+        <Text style={[styles.error, { fontSize: C.fontSize.CAPTION * fontScale }]}>
+          {errorMessage}
+        </Text>
+      ) : null}
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  wrap: { alignSelf: "stretch", gap: 6 },
+  label: { color: C.text.DEFAULT },
+  field: {
+    height: C.componentSize.INPUT_HEIGHT,
+    borderWidth: C.borderWidth.INTERACTIVE,
+    borderRadius: C.borderRadius.LARGE,
+    backgroundColor: C.surface.DEFAULT,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 16,
+  },
   input: {
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
+    flex: 1,
+    height: 44,
+    color: C.text.DEFAULT,
+    padding: 0,
   },
-  inputDark: {
-    backgroundColor: Constants.styles.theme.dark.background.subtle,
-    borderColor: Constants.styles.theme.dark.border.default,
-  },
-  inputError: {
-    borderColor: Constants.styles.textColor.DANGER,
-  },
+  error: { color: C.text.DANGER },
 })
