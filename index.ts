@@ -1,5 +1,7 @@
 // Texts
 export { MainTitle } from "./src/components/MainTitle/MainTitle";
+export { Heading } from "./src/components/Heading/Heading";
+export type { HeadingLevel, HeadingProps } from "./src/components/Heading/Heading";
 export { Title } from "./src/components/Title/Title";
 export { Subtitle } from "./src/components/Subtitle/Subtitle";
 export { TextBox as Text } from "./src/components/Text/Text";
