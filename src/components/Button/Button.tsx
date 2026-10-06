@@ -1,10 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Animated, Pressable, StyleSheet, TextStyle, View, ViewStyle } from "react-native"
-import { Button as GluestackButton, ButtonText } from "../../ui/button"
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
-import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
-import Constants from "../../constants/constants";
-import { useResolvedFontFamily } from "../../fontSetup";
+import React, { useEffect, useState } from "react"
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native"
+import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 
 type ButtonVariant =
   | "default"
@@ -15,342 +20,224 @@ type ButtonVariant =
   | "danger-outline"
   | "primary"
   | "secondary"
-  | "secondary-outline";
+  | "secondary-outline"
+  | "ghost"
+  | "ghost-danger"
 
 type ButtonBaseProps = {
-  text: string;
-  variant?: ButtonVariant;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  onClick: () => void;
-  disabled?: boolean;
-  darkMode?: boolean;
-  fontScale?: number;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
-  icon?: React.ReactNode;
+  text: string
+  variant?: ButtonVariant
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
+  onClick: () => void
+  disabled?: boolean
+  darkMode?: boolean
+  fontScale?: number
+  style?: ViewStyle
+  textStyle?: TextStyle
+  icon?: React.ReactNode
 }
 
 type ButtonProps =
   | (ButtonBaseProps & {
-      needsConfirmation?: false | undefined;
-      confirmationText?: undefined;
+      needsConfirmation?: false | undefined
+      confirmationText?: undefined
     })
   | (ButtonBaseProps & {
-      needsConfirmation: true;
-      confirmationText: string;
+      needsConfirmation: true
+      confirmationText: string
     })
 
-const variantMap = {
-  default: { action: "primary" as const, variant: "solid" as const },
-  success: { action: "positive" as const, variant: "solid" as const },
-  danger: { action: "negative" as const, variant: "solid" as const },
-  "default-outline": { action: "primary" as const, variant: "outline" as const },
-  "success-outline": { action: "positive" as const, variant: "outline" as const },
-  "danger-outline": { action: "negative" as const, variant: "outline" as const },
-  "primary": { action: "primary" as const, variant: "solid" as const },
-  "secondary": { action: "secondary" as const, variant: "solid" as const },
-  "secondary-outline": { action: "secondary" as const, variant: "outline" as const },
-}
+const SIZES = {
+  xs: { height: 36, radius: 12, font: 14, pad: 16 },
+  sm: { height: 40, radius: 12, font: 15, pad: 16 },
+  md: { height: 48, radius: 14, font: 16, pad: 20 },
+  lg: { height: 52, radius: 16, font: 17, pad: 24 },
+  xl: { height: 56, radius: 16, font: 17, pad: 28 },
+} as const
 
-const PRESS_OPACITY = 0.85
-const HOVER_FILL = "#F6F6F6"
+const C = Constants.styles
 
-function darkenHex(color: string): string {
-  const match = /^#([0-9a-fA-F]{6})$/.exec(color)
-  if (!match) {
-    return color
+function palette(variant: ButtonVariant) {
+  const filled = {
+    backgroundColor: C.brand.PRIMARY,
+    color: C.text.DEFAULT,
+    borderColor: "transparent",
+    borderWidth: 0,
   }
-  const num = parseInt(match[1], 16)
-  const channel = (shift: number) =>
-    Math.max(0, Math.round(((num >> shift) & 0xff) * 0.88))
-  const parts = [channel(16), channel(8), channel(0)]
-  return `#${parts.map((part) => part.toString(16).padStart(2, "0")).join("")}`
-}
-
-const CONFIRM_RESET_MS = 8000
-const CONFIRM_ANIM_MS = 300
-const DANGER_BG = Constants.styles.textColor.DANGER
-const DANGER_TEXT = Constants.styles.color.WHITE
-
-function resolveStaticStyles(
-  variant: ButtonVariant,
-  darkMode: boolean,
-  fontScale: number,
-) {
-  let buttonStyle: Record<string, unknown> = {}
-  let textStyle: Record<string, unknown> = {}
-
-  if (variant === "primary") {
-    buttonStyle = {
-      backgroundColor: Constants.styles.color.PRIMARY_DARK,
-      borderColor: Constants.styles.color.PRIMARY_DARK,
-      borderWidth: 1,
-    }
-    textStyle = {
-      color: Constants.styles.color.PRIMARY_LIGHT,
-    }
-  }
-  if (variant === "secondary") {
-    buttonStyle = {
-      backgroundColor: Constants.styles.color.PRIMARY_DARK,
-      borderColor: Constants.styles.color.PRIMARY_DARK,
-      borderWidth: 1,
-    }
-    textStyle = {
-      color: Constants.styles.color.BACKGROUND_LIGHT,
-    }
-  }
-  if (variant === "secondary-outline") {
-    buttonStyle = {
-      backgroundColor: Constants.styles.color.BACKGROUND_LIGHT,
-      borderColor: Constants.styles.color.PRIMARY_DARK,
-      borderWidth: 1,
-    }
-    textStyle = {
-      color: Constants.styles.color.PRIMARY_DARK,
-    }
-  }
-  if (variant === "danger-outline") {
-    buttonStyle = {
+  const map: Record<ButtonVariant, typeof filled> = {
+    default: filled,
+    primary: filled,
+    success: filled,
+    "default-outline": {
+      backgroundColor: C.surface.DEFAULT,
+      color: C.text.DEFAULT,
+      borderColor: C.border.INTERACTIVE,
+      borderWidth: C.borderWidth.INTERACTIVE,
+    },
+    "success-outline": {
+      backgroundColor: C.surface.ACCENT,
+      color: C.brand.DARK,
+      borderColor: C.brand.DARK,
+      borderWidth: C.borderWidth.INTERACTIVE,
+    },
+    secondary: {
+      backgroundColor: C.brand.SURFACE,
+      color: C.color.WHITE,
+      borderColor: "transparent",
+      borderWidth: 0,
+    },
+    "secondary-outline": {
+      backgroundColor: C.surface.DEFAULT,
+      color: C.text.DEFAULT,
+      borderColor: C.brand.SURFACE,
+      borderWidth: C.borderWidth.INTERACTIVE,
+    },
+    danger: {
+      backgroundColor: C.text.DANGER,
+      color: C.color.WHITE,
+      borderColor: "transparent",
+      borderWidth: 0,
+    },
+    "danger-outline": {
+      backgroundColor: C.surface.DEFAULT,
+      color: C.text.DANGER,
+      borderColor: C.text.DANGER,
+      borderWidth: C.borderWidth.INTERACTIVE,
+    },
+    ghost: {
       backgroundColor: "transparent",
-      borderColor: DANGER_BG,
-      borderWidth: 1,
-    }
-    textStyle = {
-      color: DANGER_BG,
-    }
+      color: C.brand.DARK,
+      borderColor: "transparent",
+      borderWidth: 0,
+    },
+    "ghost-danger": {
+      backgroundColor: "transparent",
+      color: C.text.DANGER,
+      borderColor: "transparent",
+      borderWidth: 0,
+    },
   }
-  if (variant === "danger") {
-    buttonStyle = {
-      backgroundColor: DANGER_BG,
-      borderColor: DANGER_BG,
-      borderWidth: 1,
-    }
-    textStyle = {
-      color: DANGER_TEXT,
-    }
-  }
-
-  if (darkMode && (variant === "default" || variant === "default-outline")) {
-    buttonStyle = {
-      backgroundColor: variant === "default" ? Constants.styles.theme.dark.background.subtle : "transparent",
-      borderColor: Constants.styles.theme.dark.border.default,
-      borderWidth: 1,
-    }
-    textStyle = {
-      color: Constants.styles.theme.dark.text.default,
-      fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
-    }
-  } else if (fontScale !== 1) {
-    textStyle = {
-      ...textStyle,
-      fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
-    }
-  }
-
-  return { buttonStyle, textStyle }
+  return map[variant]
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  text,
-  variant = "default",
-  size,
-  onClick,
-  disabled = false,
-  darkMode = false,
-  fontScale = 1,
-  needsConfirmation = false,
-  confirmationText,
-  style,
-  textStyle: textStyleOverride,
-  icon,
-}) => {
-  const { action, variant: gluestackVariant } = variantMap[variant]
-  const [awaitingConfirmation, setAwaitingConfirmation] = useState(false)
-  const confirmProgress = useRef(new Animated.Value(0)).current
-  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const buttonSize: "xs" | "sm" | "md" | "lg" | "xl" = size !== undefined ? size : "md"
-  const { buttonStyle, textStyle } = resolveStaticStyles(variant, darkMode, fontScale)
+export const Button = (props: ButtonProps) => {
+  const {
+    text,
+    onClick,
+    variant = "default",
+    size = "md",
+    disabled = false,
+    fontScale = 1,
+    style,
+    textStyle,
+    icon,
+    needsConfirmation,
+    confirmationText,
+  } = props
+  void props.darkMode
+
+  const [confirming, setConfirming] = useState(false)
   const [pressed, setPressed] = useState(false)
   const [hovered, setHovered] = useState(false)
-  const labelFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD)
-  const labelFontStyle: TextStyle = {
-    fontFamily: labelFont,
-    fontWeight: labelFont ? "normal" : undefined,
-  }
-
-  const clearResetTimer = useCallback(() => {
-    if (resetTimerRef.current) {
-      clearTimeout(resetTimerRef.current)
-      resetTimerRef.current = null
-    }
-  }, [])
+  const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
+  const metrics = SIZES[size]
+  const colors = confirming
+    ? {
+        backgroundColor: C.text.DANGER,
+        color: C.color.WHITE,
+        borderColor: "transparent",
+        borderWidth: 0,
+      }
+    : palette(variant)
 
   useEffect(() => {
-    Animated.timing(confirmProgress, {
-      toValue: awaitingConfirmation ? 1 : 0,
-      duration: CONFIRM_ANIM_MS,
-      useNativeDriver: false,
-    }).start()
-  }, [awaitingConfirmation, confirmProgress])
+    if (!confirming) return
+    const timer = setTimeout(() => setConfirming(false), 8000)
+    return () => clearTimeout(timer)
+  }, [confirming])
 
-  useEffect(() => {
-    clearResetTimer()
-    if (!awaitingConfirmation) {
-      return
-    }
+  const transparent =
+    colors.backgroundColor === "transparent" || colors.backgroundColor === C.surface.DEFAULT
+  const backgroundColor = disabled
+    ? C.surface.MUTED
+    : pressed
+      ? transparent
+        ? C.surface.MUTED
+        : colors.backgroundColor
+      : hovered && transparent
+        ? C.surface.MUTED
+        : colors.backgroundColor
 
-    resetTimerRef.current = setTimeout(() => {
-      setAwaitingConfirmation(false)
-    }, CONFIRM_RESET_MS)
-
-    return clearResetTimer
-  }, [awaitingConfirmation, clearResetTimer])
-
-  useEffect(() => clearResetTimer, [clearResetTimer])
-
-  const handlePress = () => {
-    if (disabled) {
-      return
-    }
-
-    if (!needsConfirmation) {
-      onClick()
-      return
-    }
-
-    if (awaitingConfirmation) {
-      clearResetTimer()
-      setAwaitingConfirmation(false)
-      onClick()
-      return
-    }
-
-    setAwaitingConfirmation(true)
-  }
-
-  if (needsConfirmation) {
-    const fromBg =
-      (buttonStyle.backgroundColor as string) ||
-      (variant.includes("outline") ? "transparent" : Constants.styles.color.BLUE)
-    const fromBorder =
-      (buttonStyle.borderColor as string) ||
-      (variant.includes("outline") ? DANGER_BG : fromBg)
-    const fromText =
-      (textStyle.color as string) ||
-      (variant.includes("outline") ? DANGER_BG : DANGER_TEXT)
-
-    const animatedContainerStyle = {
-      backgroundColor: confirmProgress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [fromBg, DANGER_BG],
-      }),
-      borderColor: confirmProgress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [fromBorder, DANGER_BG],
-      }),
-    }
-
-    const animatedLabelStyle = {
-      color: confirmProgress.interpolate({
-        inputRange: [0, 1],
-        outputRange: [fromText, DANGER_TEXT],
-      }),
-      fontSize:
-        (textStyle.fontSize as number) ||
-        Constants.styles.fontSize.MEDIUM * fontScale,
-    }
-
-    const displayText =
-      awaitingConfirmation && confirmationText ? confirmationText : text
-
-    return (
-      <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
-        <Pressable
-          onPress={handlePress}
-          disabled={disabled}
-          style={({ pressed }) => [
-            { opacity: disabled ? 0.5 : pressed ? 0.85 : 1 },
-          ]}
-        >
-          <Animated.View
-            style={[
-              styles.confirmButton,
-              {
-                borderWidth: (buttonStyle.borderWidth as number) || 1,
-              },
-              animatedContainerStyle,
-            ]}
-          >
-            <Animated.Text style={[styles.confirmLabel, labelFontStyle, animatedLabelStyle]}>
-              {displayText}
-            </Animated.Text>
-          </Animated.View>
-        </Pressable>
-      </GluestackUIProvider>
-    )
-  }
-
-  const inlineBackground =
-    typeof buttonStyle.backgroundColor === "string"
-      ? buttonStyle.backgroundColor
-      : undefined
-  const feedbackStyle =
-    inlineBackground && !disabled
-      ? {
-          ...buttonStyle,
-          backgroundColor:
-            hovered && !pressed
-              ? inlineBackground === "transparent"
-                ? HOVER_FILL
-                : darkenHex(inlineBackground)
-              : inlineBackground,
-          opacity: pressed ? PRESS_OPACITY : buttonStyle.opacity,
-        }
-      : buttonStyle
+  const label = confirming && confirmationText ? confirmationText : text
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
-    <GluestackButton
-      action={action}
-      variant={gluestackVariant}
-      size={buttonSize}
-      onPress={onClick}
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
+      onPress={() => {
+        if (needsConfirmation && !confirming) {
+          setConfirming(true)
+          return
+        }
+        setConfirming(false)
+        onClick()
+      }}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
       onHoverIn={() => setHovered(true)}
       onHoverOut={() => setHovered(false)}
-      isDisabled={disabled}
-      style={[feedbackStyle, style, icon ? styles.withIcon : null]}
+      style={[
+        styles.button,
+        {
+          height: metrics.height,
+          borderRadius: metrics.radius,
+          paddingHorizontal: metrics.pad,
+          backgroundColor,
+          borderColor: disabled ? "transparent" : colors.borderColor,
+          borderWidth: disabled ? 0 : colors.borderWidth,
+          opacity: pressed && !disabled && !transparent ? 0.85 : 1,
+        },
+        Platform.OS === "web"
+          ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
+          : null,
+        style,
+      ]}
     >
-      {icon ? <View style={styles.iconSlot}>{icon}</View> : null}
-      <ButtonText style={[textStyle, labelFontStyle, textStyleOverride]}>
-        {text}
-      </ButtonText>
-    </GluestackButton>
-    </GluestackUIProvider>
+      {icon ? <View style={styles.icon}>{icon}</View> : null}
+      <Text
+        style={[
+          styles.label,
+          {
+            color: disabled ? C.text.MUTED : colors.color,
+            fontSize: metrics.font * fontScale,
+            lineHeight: metrics.font * 1.2 * fontScale,
+            fontFamily: labelFont,
+            fontWeight: labelFont ? "normal" : "700",
+          },
+          textStyle,
+        ]}
+      >
+        {label}
+      </Text>
+    </Pressable>
   )
 }
 
 const styles = StyleSheet.create({
-  confirmButton: {
-    minHeight: Constants.styles.componentSize.BUTTON_HEIGHT,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
-    paddingHorizontal: Constants.styles.spacing.MEDIUM,
-    paddingVertical: Constants.styles.spacing.SMALL,
+  button: {
+    alignSelf: "stretch",
+    flexGrow: 0,
+    flexShrink: 0,
     alignItems: "center",
     justifyContent: "center",
   },
-  confirmLabel: {
-    fontWeight: Constants.styles.fontWeight.BOLD,
+  label: {
     textAlign: "center",
   },
-  withIcon: {
-    position: "relative",
-  },
-  iconSlot: {
+  icon: {
     position: "absolute",
-    left: Constants.styles.spacing.MEDIUM,
-    zIndex: 1,
+    left: 16,
   },
 })
