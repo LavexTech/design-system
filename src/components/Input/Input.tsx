@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Platform, StyleSheet } from "react-native"
+import { NativeSyntheticEvent, Platform, StyleSheet, TextInputKeyPressEventData } from "react-native"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
 import { TextBox as Text } from "../Text/Text"
@@ -164,7 +164,7 @@ export const Input: React.FC<InputProps> = ({
             blurOnSubmit={!!onSubmitEditing}
             onKeyPress={
               Platform.OS === "web" && onSubmitEditing
-                ? (event) => {
+                ? (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
                     if (event.nativeEvent.key === "Enter") {
                       event.preventDefault?.()
                       onSubmitEditing()
