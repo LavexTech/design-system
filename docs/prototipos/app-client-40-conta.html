@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>app-client-40-conta · Minha conta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#0B7566}a:hover{color:#2D3B42}
+button{font-family:inherit;cursor:pointer}
+a:focus-visible{outline:2px solid #0B7566;outline-offset:2px}
+button:focus-visible{outline:3px solid #2D3B42;outline-offset:2px}
+</style>
+</head>
+<body>
+<div style="width: 390px; height: 1280px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #2D3B42; font-family: &quot;Plus Jakarta Sans&quot;, &quot;Segoe UI&quot;, system-ui, sans-serif;">
+  <main style="flex: 1 1 0%; min-height: 0px; display: flex; flex-direction: column; gap: 28px; padding: 60px 24px 24px;">
+    <header style="display: flex; flex-direction: column; gap: 20px;">
+      <h1 style="margin: 0px; font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.4px;">Minha conta</h1>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <img src="assets/avatar-joao.jpg" alt="Foto de João de Azevedo" style="flex: 0 0 auto; width: 64px; height: 64px; border-radius: 32px; object-fit: cover; background: #E2FAF6;">
+        <div style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 2px;">
+          <span style="font-size: 19px; line-height: 26px; font-weight: 700;">João de Azevedo</span>
+          <div style="display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 20px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#0B7566" aria-hidden="true" style="flex: 0 0 auto;"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.5l-5.9 3.2 1.2-6.6L2.5 9.5l6.6-.9Z"></path></svg>
+            <span style="font-weight: 700;">4,8</span>
+            <span style="color: #5A6A72;">· 55 pedidos</span>
+          </div>
+          <span style="font-size: 13px; line-height: 18px; color: #5A6A72;">Nota média dada pelos Lavexers.</span>
+        </div>
+      </div>
+    </header>
+    <section aria-labelledby="pendencia-titulo" style="display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 16px; background: #EEFBF8;">
+      <div style="display: flex; align-items: flex-start; gap: 12px;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0B7566" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px;"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>
+        <div style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 4px;">
+          <h2 id="pendencia-titulo" style="margin: 0px; font-size: 16px; line-height: 22px; font-weight: 700;">Falta seu endereço</h2>
+          <p style="margin: 0px; font-size: 14px; line-height: 20px; color: #46565E; text-wrap: pretty;">Usamos para mostrar Lavexers perto de você.</p>
+        </div>
+      </div>
+      <button type="button" style="height: 48px; border: none; border-radius: 14px; background: #3CDBC0; color: #2D3B42; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center;">Adicionar endereço</button>
+    </section>
+    <section aria-labelledby="dados-titulo" style="display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <h2 id="dados-titulo" style="margin: 0px; font-size: 13px; line-height: 18px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #0B7566;">Seus dados</h2>
+        <a href="#" style="height: 44px; padding: 0px 4px; display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; text-decoration: none; color: #0B7566;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z"></path><path d="M13.5 6.5l4 4"></path></svg>
+          <span>Editar</span>
+        </a>
+      </div>
+      <dl style="margin: 0px; display: flex; flex-direction: column;">
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0px; border-top: 1px solid #E5E1E6;">
+          <dt style="font-size: 13px; line-height: 18px; color: #5A6A72;">CPF</dt>
+          <dd style="margin: 0px; font-size: 16px; line-height: 22px;">•••.456.789-••</dd>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0px; border-top: 1px solid #E5E1E6;">
+          <dt style="font-size: 13px; line-height: 18px; color: #5A6A72;">Data de nascimento</dt>
+          <dd style="margin: 0px; font-size: 16px; line-height: 22px;">08/02/1988</dd>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0px; border-top: 1px solid #E5E1E6;">
+          <dt style="font-size: 13px; line-height: 18px; color: #5A6A72;">E-mail</dt>
+          <dd style="margin: 0px; font-size: 16px; line-height: 22px; overflow-wrap: anywhere;">joaodeazevedofilho@gmail.com</dd>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0px; border-top: 1px solid #E5E1E6;">
+          <dt style="font-size: 13px; line-height: 18px; color: #5A6A72;">Celular</dt>
+          <dd style="margin: 0px; font-size: 16px; line-height: 22px;">(41) 99754-9636</dd>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px; padding: 12px 0px; border-top: 1px solid #E5E1E6; border-bottom: 1px solid #E5E1E6;">
+          <dt style="font-size: 13px; line-height: 18px; color: #5A6A72;">Endereço</dt>
+          <dd style="margin: 0px; font-size: 16px; line-height: 22px; color: #5A6A72;">Não informado</dd>
+        </div>
+      </dl>
+    </section>
+    <section aria-labelledby="atalhos-titulo" style="display: flex; flex-direction: column; gap: 12px;">
+      <h2 id="atalhos-titulo" style="margin: 0px; font-size: 13px; line-height: 18px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #0B7566;">Pagamento e ajuda</h2>
+      <div style="display: flex; flex-direction: column; border: 1px solid #E5E1E6; border-radius: 16px;">
+        <a href="#" style="min-height: 72px; box-sizing: border-box; padding: 12px 12px 12px 14px; display: flex; align-items: center; gap: 12px; text-decoration: none; color: #2D3B42; border-bottom: 1px solid #E5E1E6;">
+          <span style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; background: #F4F2F5; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"></rect><path d="M3 10.5h18M7 15h3"></path></svg>
+          </span>
+          <span style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 16px; line-height: 22px; font-weight: 600;">Carteira</span>
+            <span style="font-size: 14px; line-height: 20px; color: #5A6A72;">Cartões para pagar seus pedidos. Nenhum salvo ainda.</span>
+          </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto;"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+        <a href="#" style="min-height: 72px; box-sizing: border-box; padding: 12px 12px 12px 14px; display: flex; align-items: center; gap: 12px; text-decoration: none; color: #2D3B42;">
+          <span style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px; background: #F4F2F5; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z"></path></svg>
+          </span>
+          <span style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 2px;">
+            <span style="font-size: 16px; line-height: 22px; font-weight: 600;">Suporte</span>
+            <span style="font-size: 14px; line-height: 20px; color: #5A6A72;">Fale com a equipe Lavex pelo chat.</span>
+          </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto;"><path d="M9 6l6 6-6 6"></path></svg>
+        </a>
+      </div>
+    </section>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <button type="button" style="height: 48px; border: 1.5px solid #869199; border-radius: 14px; background: #FFFFFF; color: #2D3B42; font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 4H5v16h5"></path><path d="M14 8l4 4-4 4M18 12H9"></path></svg>
+        <span>Sair da conta</span>
+      </button>
+      <a href="#" style="align-self: center; height: 44px; padding: 0px 16px; display: flex; align-items: center; font-size: 14px; font-weight: 600; text-decoration: none; color: #5A6A72;">Excluir conta</a>
+      <span style="font-size: 13px; line-height: 18px; color: #5A6A72; text-align: center;">Versão 1.0.31</span>
+    </div>
+  </main>
+  <nav aria-label="Navegação principal" style="flex: 0 0 auto; height: 76px; box-sizing: border-box; border-top: 1px solid #E5E1E6; padding: 8px 12px 0px; display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 4px; align-items: start;">
+    <button type="button" style="height: 56px; border: none; background: transparent; color: #5A6A72; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 500;">Pedido</span>
+    </button>
+    <button type="button" style="height: 56px; border: none; background: transparent; color: #5A6A72; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"></path><path d="M9 8h6M9 12h6"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 500;">Histórico</span>
+    </button>
+    <button type="button" aria-current="page" style="height: 56px; border: none; background: transparent; color: #0B7566; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; border-radius: 15px; background: #E2FAF6; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 700;">Conta</span>
+    </button>
+  </nav>
+</div>
+</body>
+</html>

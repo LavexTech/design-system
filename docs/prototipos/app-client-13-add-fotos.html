@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>app-client-13-add-fotos · Fotos do pedido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#0B7566}a:hover{color:#2D3B42}
+button{font-family:inherit;cursor:pointer}
+a:focus-visible{outline:2px solid #0B7566;outline-offset:2px}
+button:focus-visible{outline:3px solid #2D3B42;outline-offset:2px}
+</style>
+</head>
+<body>
+<div style="width: 390px; height: 844px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #2D3B42; font-family: &quot;Plus Jakarta Sans&quot;, &quot;Segoe UI&quot;, system-ui, sans-serif;">
+  <header style="flex: 0 0 auto; padding: 52px 24px 0px 12px; display: flex; flex-direction: column; gap: 6px;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <a href="app-client-12-edicao-itens.html" aria-label="Voltar para Peças do pedido" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: #2D3B42; text-decoration: none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+      </a>
+      <h1 style="margin: 0px; font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.4px;">Fotos do pedido</h1>
+    </div>
+    <p style="margin: 0px; padding-left: 12px; font-size: 15px; line-height: 22px; color: #5A6A72;">Fotografe as peças antes de enviar.</p>
+  </header>
+  <main style="flex: 1 1 0%; min-height: 0px; display: flex; flex-direction: column; gap: 20px; padding: 20px 24px 16px;">
+    <div style="flex: 0 0 auto; display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-radius: 14px; background: #EEFBF8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B7566" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px;"><path d="M12 3l7 3v5.5c0 4.3-2.9 7.9-7 9.5-4.1-1.6-7-5.2-7-9.5V6l7-3Z"></path><path d="M9 12l2.2 2.2L15 10.2"></path></svg>
+      <div style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column; gap: 4px;">
+        <span style="font-size: 15px; line-height: 22px; font-weight: 700;">Sem fotos, sem seguro-garantia</span>
+        <span style="font-size: 14px; line-height: 20px; color: #46565E; text-wrap: pretty;">As fotos são opcionais, mas só com elas suas peças ficam cobertas. Não recomendamos enviar o pedido sem fotos.</span>
+      </div>
+    </div>
+    <div style="flex: 0 0 auto; display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 10px;">
+      <button type="button" style="aspect-ratio: 1 / 1; box-sizing: border-box; padding: 0px; border: 1.5px dashed #0B7566; border-radius: 14px; background: #FFFFFF; color: #0B7566; font-size: 14px; font-weight: 700; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3v11H4V8Z"></path><circle cx="12" cy="13" r="3.2"></circle></svg>
+        <span>Adicionar foto</span>
+      </button>
+      <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 14px; background: #E5E1E6; color: #46565E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+        <div style="position: absolute; inset: 0px; border-radius: 14px; overflow: hidden;">
+          <img src="assets/roupas-1.jpg" alt="Foto 1: roupas em uma bacia e em um cesto" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <button type="button" aria-label="Remover foto 1" style="position: absolute; top: -6px; right: -6px; width: 44px; height: 44px; padding: 0px; border: none; background: transparent; display: flex; align-items: center; justify-content: center;">
+          <span style="width: 26px; height: 26px; border-radius: 13px; background: #2D3B42; color: #FFFFFF; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+          </span>
+        </button>
+      </div>
+      <div style="position: relative; aspect-ratio: 1 / 1; border-radius: 14px; background: #E5E1E6; color: #46565E; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;">
+        <div style="position: absolute; inset: 0px; border-radius: 14px; overflow: hidden;">
+          <img src="assets/roupas-2.jpg" alt="Foto 2: cesto cheio de roupas" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+        </div>
+        <button type="button" aria-label="Remover foto 2" style="position: absolute; top: -6px; right: -6px; width: 44px; height: 44px; padding: 0px; border: none; background: transparent; display: flex; align-items: center; justify-content: center;">
+          <span style="width: 26px; height: 26px; border-radius: 13px; background: #2D3B42; color: #FFFFFF; display: flex; align-items: center; justify-content: center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+          </span>
+        </button>
+      </div>
+    </div>
+    <p style="flex: 0 0 auto; margin: 0px; font-size: 14px; line-height: 20px; color: #5A6A72;">
+      <span class="sc-interp">2 fotos adicionadas.</span>
+    </p>
+  </main>
+  <div style="flex: 0 0 auto; border-top: 1px solid #E5E1E6; padding: 12px 24px; display: flex; flex-direction: column; background: #FFFFFF;">
+    <button type="button" style="height: 56px; border: none; border-radius: 16px; background: #3CDBC0; color: #2D3B42; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <span>
+        <span class="sc-interp">Avançar</span>
+      </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+    </button>
+  </div>
+  <nav aria-label="Navegação principal" style="flex: 0 0 auto; height: 76px; box-sizing: border-box; border-top: 1px solid #E5E1E6; padding: 8px 12px 0px; display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 4px; align-items: start;">
+    <button type="button" aria-current="page" style="height: 56px; border: none; background: transparent; color: #0B7566; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; border-radius: 15px; background: #E2FAF6; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 700;">Pedido</span>
+    </button>
+    <button type="button" style="height: 56px; border: none; background: transparent; color: #5A6A72; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"></path><path d="M9 8h6M9 12h6"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 500;">Histórico</span>
+    </button>
+    <button type="button" style="height: 56px; border: none; background: transparent; color: #5A6A72; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 500;">Conta</span>
+    </button>
+  </nav>
+</div>
+</body>
+</html>

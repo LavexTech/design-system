@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>app-client-11-selecao-itens · Adicionar peças</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0}
+a{color:#0B7566}a:hover{color:#2D3B42}
+button{font-family:inherit;cursor:pointer}
+button:disabled{cursor:default}
+input{font-family:inherit}
+input::placeholder{color:#66757D;opacity:1}
+.busca input:focus-visible{outline:none}
+.busca:focus-within{outline:2px solid #0B7566;outline-offset:1px}
+input[type=checkbox]:focus-visible{outline:2px solid #0B7566;outline-offset:2px}
+a:focus-visible{outline:2px solid #0B7566;outline-offset:2px}
+button:focus-visible{outline:3px solid #2D3B42;outline-offset:-3px}
+</style>
+</head>
+<body>
+<div style="width: 390px; height: 1140px; box-sizing: border-box; display: flex; flex-direction: column; background: #FFFFFF; color: #2D3B42; font-family: &quot;Plus Jakarta Sans&quot;, &quot;Segoe UI&quot;, system-ui, sans-serif;">
+  <header style="flex: 0 0 auto; padding: 52px 24px 0px 12px; display: flex; flex-direction: column; gap: 6px;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <a href="app-client-10-novo-pedido.html" aria-label="Voltar para Novo pedido" style="flex: 0 0 auto; width: 44px; height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: #2D3B42; text-decoration: none;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+      </a>
+      <h1 style="margin: 0px; font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.4px;">Adicionar peças</h1>
+    </div>
+    <p style="margin: 0px; padding-left: 12px; font-size: 15px; line-height: 22px; color: #5A6A72;">Marque tudo o que vai no pedido.</p>
+  </header>
+  <main style="flex: 1 1 0%; min-height: 0px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding: 20px 24px 16px;">
+    <div class="busca" style="flex: 0 0 auto; height: 52px; box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 0px 16px; border: 1.5px solid #869199; border-radius: 12px; background: #FFFFFF;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto;"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.8-3.8"></path></svg>
+      <input type="search" aria-label="Buscar peça" placeholder="Buscar peça, ex.: camisa" value="" style="flex: 1 1 0%; min-width: 0px; height: 44px; padding: 0px; border: none; background: transparent; font-size: 16px; color: #2D3B42;">
+    </div>
+    <section aria-labelledby="categorias-titulo" style="flex: 0 0 auto; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
+        <h2 id="categorias-titulo" style="margin: 0px; font-size: 13px; line-height: 18px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: #0B7566;">Escolha por categoria</h2>
+        <p style="margin: 0px; font-size: 13px; line-height: 18px; color: #5A6A72;">Em cada uma, as mais pedidas aparecem primeiro.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; border: 1px solid #E5E1E6; border-radius: 16px; overflow: hidden;">
+        <div style="display: flex; flex-direction: column; border-bottom: 1px solid #E5E1E6;">
+          <button type="button" aria-expanded="true" style="height: 56px; padding: 0px 14px 0px 16px; border: none; background: #FFFFFF; color: #2D3B42; display: flex; align-items: center; gap: 10px; text-align: left;">
+            <span style="flex: 1 1 0%; font-size: 16px; font-weight: 700;">Roupa</span>
+            <span style="font-size: 14px; color: #5A6A72;">
+              <span class="sc-interp">15 peças</span>
+            </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: rotate(180deg);"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+          <div style="display: flex; flex-direction: column; background: #FAF9FA;">
+            <div style="max-height: 390px; overflow-y: auto; display: flex; flex-direction: column; padding: 0px 16px;">
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Camiseta</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Calça</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Camisa</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Bermuda/Shorts</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Blusinha</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Blusa Moletom</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Vestido</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Saia</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Jaqueta</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Camisa polo</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Regata</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Pijama</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Legging</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Suéter</span>
+                </span>
+              </label>
+              <label style="flex: 0 0 auto; min-height: 52px; display: flex; align-items: center; gap: 14px; border-bottom: 1px solid #E5E1E6; cursor: pointer;">
+                <input type="checkbox" style="flex: 0 0 auto; width: 22px; height: 22px; margin: 0px; accent-color: #0B7566;">
+                <span style="font-size: 16px; line-height: 22px;">
+                  <span class="sc-interp">Macacão</span>
+                </span>
+              </label>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; height: 36px; border-top: 1px solid #E5E1E6; font-size: 13px; font-weight: 600; color: #46565E;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+              <span>Role a lista para ver mais peças</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; border-bottom: 1px solid #E5E1E6;">
+          <button type="button" aria-expanded="false" style="height: 56px; padding: 0px 14px 0px 16px; border: none; background: #FFFFFF; color: #2D3B42; display: flex; align-items: center; gap: 10px; text-align: left;">
+            <span style="flex: 1 1 0%; font-size: 16px; font-weight: 700;">Cama</span>
+            <span style="font-size: 14px; color: #5A6A72;">
+              <span class="sc-interp">10 peças</span>
+            </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: none;"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: column; border-bottom: 1px solid #E5E1E6;">
+          <button type="button" aria-expanded="false" style="height: 56px; padding: 0px 14px 0px 16px; border: none; background: #FFFFFF; color: #2D3B42; display: flex; align-items: center; gap: 10px; text-align: left;">
+            <span style="flex: 1 1 0%; font-size: 16px; font-weight: 700;">Mesa</span>
+            <span style="font-size: 14px; color: #5A6A72;">
+              <span class="sc-interp">7 peças</span>
+            </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: none;"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+          <button type="button" aria-expanded="false" style="height: 56px; padding: 0px 14px 0px 16px; border: none; background: #FFFFFF; color: #2D3B42; display: flex; align-items: center; gap: 10px; text-align: left;">
+            <span style="flex: 1 1 0%; font-size: 16px; font-weight: 700;">Banho</span>
+            <span style="font-size: 14px; color: #5A6A72;">
+              <span class="sc-interp">6 peças</span>
+            </span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6A72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; transform: none;"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div style="flex: 0 0 auto; border-top: 1px solid #E5E1E6; padding: 12px 24px; display: flex; flex-direction: column; background: #FFFFFF;">
+    <button type="button" disabled="" style="height: 56px; border: none; border-radius: 16px; background: #F4F2F5; color: #5A6A72; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center;">
+      <span class="sc-interp">Selecione as peças</span>
+    </button>
+  </div>
+  <nav aria-label="Navegação principal" style="flex: 0 0 auto; height: 76px; box-sizing: border-box; border-top: 1px solid #E5E1E6; padding: 8px 12px 0px; display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 4px; align-items: start;">
+    <button type="button" aria-current="page" style="height: 56px; border: none; background: transparent; color: #0B7566; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; border-radius: 15px; background: #E2FAF6; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1Z"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 700;">Pedido</span>
+    </button>
+    <button type="button" style="height: 56px; border: none; background: transparent; color: #5A6A72; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2Z"></path><path d="M9 8h6M9 12h6"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 500;">Histórico</span>
+    </button>
+    <button type="button" style="height: 56px; border: none; background: transparent; color: #5A6A72; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;">
+      <span style="width: 56px; height: 30px; display: flex; align-items: center; justify-content: center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"></path></svg>
+      </span>
+      <span style="font-size: 13px; line-height: 18px; font-weight: 500;">Conta</span>
+    </button>
+  </nav>
+</div>
+</body>
+</html>

@@ -4,7 +4,9 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `0.2.15`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `0.2.20`. Data de referência do código: outubro de 2026.
+
+> **Migração 2.0 em andamento.** O repositório está migrando para a linguagem visual 2.0 (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps consumidores, em `docs/migracao-2.0.md`. Este documento continua descrevendo o **código atual**: cada sub-issue da migração atualiza a seção correspondente quando entra.
 
 ---
 
@@ -71,6 +73,8 @@ design-system/
     fontSetup.ts                  # useFonts / useGlobalFonts
     global.css                    # apenas as 3 diretivas @tailwind
   docs/*.md                       # docs antigas por componente (parcialmente desatualizadas)
+  docs/migracao-2.0.md            # guia de impacto da migração 2.0 para os apps consumidores
+  docs/prototipos/                # 21 telas HTML de alta fidelidade — especificação visual do 2.0
   demo/                           # app Expo de testes manuais
   README.md, DesignSystemUsage.md, checklist.md
 ```
@@ -1297,7 +1301,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 ## 12. Dívidas técnicas conhecidas
 
 1. **Sem testes e sem CI.** Não há runner, nenhum arquivo de teste e nenhum workflow de build/lint. Toda verificação é manual via `demo/` ou pelo app consumidor.
-2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; `docs/` é histórico.
+2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; as docs por componente em `docs/` são histórico e serão apagadas no fechamento da migração 2.0. `docs/prototipos/` e `docs/migracao-2.0.md` não entram nessa limpeza.
 3. **`checklist.md` obsoleto.** Lista quase tudo como não implementado e cita componentes inexistentes (`TabBar`, `OrderList`, `OfferCard`).
 4. **Dois sistemas de cor paralelos.** `Constants.styles` (hex, usado por quase todos os componentes) e a paleta semântica NativeWind/gluestack (CSS vars, usada por `src/ui/*`) não conversam. Por isso `Button variant="default"` é grafite enquanto o azul da marca está em `textColor.PRIMARY`.
    - Efeito colateral no `Button`: o compound variant `outline + positive` do gluestack usa `text-primary-500`, então `success-outline` tem borda verde e **texto grafite** `#333333`. `danger-outline` escapa disso porque o componente sobrescreve a cor do texto explicitamente.
@@ -1312,6 +1316,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
+16. **Linguagem visual 1.0 e 2.0 convivem.** Enquanto o épico #205 não fecha, parte do catálogo está na paleta e na tipografia antigas e parte na 2.0. O que já migrou está descrito na seção 8; o que falta está nas sub-issues do épico. A dívida se quita com o bump para `1.0.0`.
 16. **Tipografia inconsistente.** `Button`, `Input`, `TextArea` e `Accordion` herdam a fonte do sistema porque os primitivos em `src/ui/*` definem peso mas não `fontFamily`. No iOS e na web, a mesma tela mistura Roboto (componentes próprios) com SF Pro / fonte do navegador (esses quatro).
 17. **Wrapper `flex: 1` do `GluestackUIProvider`.** `Button`, `Input`, `TextArea`, `Accordion` e `Modal` não passam `style` ao provider, que cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de colunas flexíveis o wrapper absorve espaço livre e distorce o layout, obrigando os apps a envolver o componente em uma `View` com altura fixa ou `flexGrow: 0`.
 18. **Hover/active mortos em cinco variantes do `Button`.** `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` inline, que vence o `className`; os estados `data-[hover]`/`data-[active]` do gluestack não têm efeito nelas.
