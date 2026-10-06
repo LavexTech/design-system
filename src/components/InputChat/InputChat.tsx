@@ -1,81 +1,77 @@
-import React from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
-import { IconSend } from '../Icons/IconSend'
-import { Input } from '../Input/Input'
-import Constants from '../../constants/constants'
+import React from "react"
+import { Pressable, StyleSheet, TextInput, View } from "react-native"
+import Constants from "../../constants/constants"
+import { IconSend } from "../Icons/IconSend"
 
 type InputChatProps = {
-  value: string,
-  placeholder?: string,
-  onChange: (value: string) => void,
+  value: string
+  placeholder?: string
+  onChange: (value: string) => void
   onSend: () => void
 }
 
+const C = Constants.styles
+
 export function InputChat({
   value,
-  placeholder = 'Enviar mensagem...',
+  placeholder = "Escreva sua mensagem",
   onChange,
   onSend,
 }: InputChatProps) {
+  const canSend = value.trim().length > 0
   const handleSend = () => {
-    if (value.trim()) {
-      onSend();
-    }
+    if (canSend) onSend()
   }
 
   return (
     <View style={styles.row}>
-      <View style={styles.inputContainer}>
-        <Input
-          label=""
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          placeholderTextColor={Constants.styles.color.GRAY}
-          returnKeyType="send"
-          onSubmitEditing={handleSend}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, !value.trim() && styles.disabledButton]}
-          onPress={handleSend}
-          disabled={!value.trim()}
-        >
-          <IconSend
-            fill={value.trim() ? Constants.styles.color.BLUE : Constants.styles.color.MEDIUM_GRAY}
-            width={Constants.styles.icon.MEDIUM}
-            height={Constants.styles.icon.MEDIUM}
-          />
-        </TouchableOpacity>
-      </View>
+      <TextInput
+        accessibilityLabel="Sua mensagem"
+        value={value}
+        onChangeText={onChange}
+        placeholder={placeholder}
+        placeholderTextColor={C.text.PLACEHOLDER}
+        returnKeyType="send"
+        onSubmitEditing={handleSend}
+        style={styles.field}
+      />
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel="Enviar mensagem"
+        accessibilityState={{ disabled: !canSend }}
+        disabled={!canSend}
+        onPress={handleSend}
+        style={[styles.send, { backgroundColor: canSend ? C.brand.PRIMARY : C.surface.MUTED }]}
+      >
+        <IconSend size={20} color={canSend ? C.brand.SURFACE : C.text.MUTED} />
+      </Pressable>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   row: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    gap: Constants.styles.spacing.SMALL,
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 10,
   },
-  inputContainer: {
+  field: {
     flex: 1,
-    minWidth: 0,
+    height: 48,
+    paddingHorizontal: 18,
+    borderWidth: C.borderWidth.INTERACTIVE,
+    borderColor: C.border.INTERACTIVE,
+    borderRadius: C.borderRadius.PILL,
+    backgroundColor: C.surface.DEFAULT,
+    color: C.text.DEFAULT,
+    fontSize: C.fontSize.BODY,
   },
-  buttonContainer: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    paddingBottom: Constants.styles.spacing.TINY,
-  },
-  button: {
-    padding: Constants.styles.spacing.SMALL,
-    borderRadius: Constants.styles.borderRadius.LARGE,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  disabledButton: {
-    opacity: Constants.styles.opacity.LOW,
+  send: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
   },
 })

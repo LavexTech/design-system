@@ -5,7 +5,7 @@ import { IconProfile } from "../Icons/IconProfile"
 import Constants from "../../constants/constants"
 import { hasProfileImage } from "../../utils/profileImage"
 
-type AvatarSize = "2xs" | "xs" | "sm" | "md"
+type AvatarSize = "2xs" | "xs" | "sm" | "md" | number
 
 type ProfileAvatarProps = {
   profileImage?: string | null
@@ -29,7 +29,10 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
   onPress,
   darkMode = false,
 }) => {
-  const px = SIZE_PX[size]
+  const px =
+    typeof size === "number"
+      ? Math.max(24, size < 24 ? (console.warn("ProfileAvatar: tamanho mínimo é 24"), 24) : size)
+      : SIZE_PX[size]
   const showPhoto = hasProfileImage(profileImage)
 
   const content = showPhoto ? (
@@ -44,7 +47,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
       ]}
     >
       <Image
-        size={size}
+        size={typeof size === "number" ? "sm" : size}
         src={profileImage!.trim()}
         type="circle"
         alt={alt}

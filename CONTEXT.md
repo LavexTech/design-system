@@ -4,7 +4,9 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `0.2.15`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.0.0`. Data de referência do código: outubro de 2026.
+
+> **Migração 2.0 em andamento.** O repositório está migrando para a linguagem visual 2.0 (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps consumidores, em `docs/migracao-2.0.md`. Este documento continua descrevendo o **código atual**: cada sub-issue da migração atualiza a seção correspondente quando entra.
 
 ---
 
@@ -71,6 +73,8 @@ design-system/
     fontSetup.ts                  # useFonts / useGlobalFonts
     global.css                    # apenas as 3 diretivas @tailwind
   docs/*.md                       # docs antigas por componente (parcialmente desatualizadas)
+  docs/migracao-2.0.md            # guia de impacto da migração 2.0 para os apps consumidores
+  docs/prototipos/                # 21 telas HTML de alta fidelidade — especificação visual do 2.0
   demo/                           # app Expo de testes manuais
   README.md, DesignSystemUsage.md, checklist.md
 ```
@@ -134,7 +138,7 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | `fontSize` | `LARGEST` / `LARGER` / `LARGE` / `MEDIUM` / `SMALL` | 36 / 24 / 20 / 18 / 14 |
 | `lineHeight` | `LARGEST` / `LARGER` / `LARGE` / `MEDIUM` / `SMALL` | 30 / 26 / 22 / 18 / 14 |
 | `fontWeight` | `BOLD` / `NORMAL` / `THIN` | `"700"` / `"400"` / `"100"` |
-| `fontFamily` | `REGULAR`, `REGULAR_ITALIC`, `EXTRA_LIGHT`, `EXTRA_LIGHT_ITALIC`, `BOLD`, `BOLD_ITALIC` | `Roboto-Regular`, `Roboto-Italic`, `Roboto-ExtraLight`, `Roboto-ExtraLightItalic`, `Roboto-Bold`, `Roboto-BoldItalic` |
+| `fontFamily` | `REGULAR`, `MEDIUM`, `SEMIBOLD`, `BOLD` | `PlusJakartaSans-Regular`, `PlusJakartaSans-Medium`, `PlusJakartaSans-SemiBold`, `PlusJakartaSans-Bold` |
 
 ### Cores
 
@@ -219,7 +223,7 @@ Sombras nomeadas do Tailwind: `hard-1..hard-5` e `soft-1..soft-4` (todas em `rgb
 
 ## 7. Tipografia e carregamento de fontes
 
-Família única: **Roboto**, embarcada em `src/assets/fonts/Roboto/static/` nos cortes Regular, Italic, Bold, BoldItalic, ExtraLight e ExtraLightItalic.
+Família única: **Plus Jakarta Sans**, embarcada em `src/assets/fonts/PlusJakartaSans/static/` nos cortes Regular (400), Medium (500), SemiBold (600) e Bold (700). Nomes antigos `Roboto-*` ainda são aceitos em `useFonts` e `useResolvedFontFamily` e resolvem para o corte equivalente da família nova.
 
 `src/fontSetup.ts` exporta:
 
@@ -1214,6 +1218,36 @@ Componente de exemplo que renderiza o texto `"Hello World"`. **Não é exportado
 
 ---
 
+### 8.10 Linguagem 2.0 — o que o código faz agora
+
+Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. `darkMode` continua aceita e é ignorada nos componentes reescritos.
+
+**Tipografia.** Plus Jakarta Sans (400/500/600/700). Alias `Roboto-*` ainda carrega o corte equivalente.
+
+**`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#F4F2F5`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
+
+**`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566` (outline na web). Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max} caracteres"`.
+
+**`Select`.** O gatilho usa a mesma caixa do `Input` (52 px, raio 12, borda 1.5). O modal de opções não mudou.
+
+**`InputChat`.** Campo de 48 px com raio 24 e botão circular de 48 px em `#3CDBC0`. Vazio, o botão fica `#F4F2F5`. Não limpa o campo.
+
+**`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#F4F2F5`, sem borda, canto inferior esquerdo 4.
+
+**`NavigationBar`.** Altura mínima 76. Aba ativa com pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa em `#5A6A72`. `NAVIGATION_BAR_HEIGHT` vale 76.
+
+**`Tag`.** Preenchida, raio 12, texto 13 peso 700. Nomes `*-outline` permanecem. `primary`/`success`: fundo `#E2FAF6`, texto `#0B7566`. `danger`: `#FDECEC` / `#C62828`. `warning`: `#FFF4E5` / `#8A5A00`.
+
+**`ProfileAvatar`.** `size` aceita os nomes antigos ou um número (diâmetro). Abaixo de 24, cai para 24.
+
+**`Gallery`.** Itens de 80 px com raio 14.
+
+**`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
+
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento).
+
+**Ainda no gluestack.** `Modal`, `Grid`, `Accordion`, `Image` e o provider do `Select`. Por isso essas dependências continuam no `package.json`.
+
 ## 9. Ícones
 
 Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` (SVG via `react-native-svg`). Contrato comum (`iconProps.ts`):
@@ -1291,7 +1325,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 ## 12. Dívidas técnicas conhecidas
 
 1. **Sem testes e sem CI.** Não há runner, nenhum arquivo de teste e nenhum workflow de build/lint. Toda verificação é manual via `demo/` ou pelo app consumidor.
-2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; `docs/` é histórico.
+2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; as docs por componente em `docs/` são histórico e serão apagadas no fechamento da migração 2.0. `docs/prototipos/` e `docs/migracao-2.0.md` não entram nessa limpeza.
 3. **`checklist.md` obsoleto.** Lista quase tudo como não implementado e cita componentes inexistentes (`TabBar`, `OrderList`, `OfferCard`).
 4. **Dois sistemas de cor paralelos.** `Constants.styles` (hex, usado por quase todos os componentes) e a paleta semântica NativeWind/gluestack (CSS vars, usada por `src/ui/*`) não conversam. Por isso `Button variant="default"` é grafite enquanto o azul da marca está em `textColor.PRIMARY`.
    - Efeito colateral no `Button`: o compound variant `outline + positive` do gluestack usa `text-primary-500`, então `success-outline` tem borda verde e **texto grafite** `#333333`. `danger-outline` escapa disso porque o componente sobrescreve a cor do texto explicitamente.
@@ -1306,6 +1340,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
+16. **Linguagem visual 1.0 e 2.0 convivem.** Enquanto o épico #205 não fecha, parte do catálogo está na paleta e na tipografia antigas e parte na 2.0. O que já migrou está descrito na seção 8; o que falta está nas sub-issues do épico. A dívida se quita com o bump para `1.0.0`.
 
 ---
 

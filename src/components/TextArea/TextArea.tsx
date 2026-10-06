@@ -1,22 +1,19 @@
-import React from "react"
-import { View, StyleSheet } from "react-native"
-import { Textarea, TextareaInput } from "../../ui/textarea"
-import { TextBox } from "../Text/Text"
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
-import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
-import { Grid, GridItem } from "../Grid/Grid"
+import React, { useState } from "react"
+import { Platform, StyleSheet, Text, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 
 type TextAreaProps = {
-  label: string,
-  value?: string,
-  placeholder?: string,
-  onChange: (value: string) => void,
-  maxLength?: number,
-  darkMode?: boolean,
-  fontScale?: number,
+  label: string
+  value?: string
+  placeholder?: string
+  onChange: (value: string) => void
+  maxLength?: number
+  darkMode?: boolean
+  fontScale?: number
 }
+
+const C = Constants.styles
 
 export const TextArea: React.FC<TextAreaProps> = ({
   label,
@@ -24,68 +21,79 @@ export const TextArea: React.FC<TextAreaProps> = ({
   placeholder,
   maxLength,
   onChange,
-  darkMode = false,
   fontScale = 1,
-}: TextAreaProps) => {
-  const handleChange = (text: string) => {
-    if (maxLength && text.length > maxLength) {
-      return
-    }
-    onChange(text)
-  }
-
+  darkMode,
+}) => {
+  void darkMode
+  const [focused, setFocused] = useState(false)
+  const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
+  const labelFont = useResolvedFontFamily(C.fontFamily.SEMIBOLD)
   const currentLength = value?.length || 0
-  const fieldFont = useResolvedFontFamily(Constants.styles.fontFamily.REGULAR)
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
-      <Grid columns={1} gapY={2} darkMode={darkMode}>
-        <GridItem colSpan={1}>
-          <TextBox text={label} size="small" darkMode={darkMode} fontScale={fontScale} />
-        </GridItem>
-        <GridItem colSpan={1}>
-          <Textarea style={[styles.textarea, darkMode ? styles.textareaDark : null]} size="xl">
-            <TextareaInput
-              {...({
-                value,
-                placeholder,
-                onChangeText: handleChange,
-                multiline: true,
-                placeholderTextColor: darkMode ? Constants.styles.theme.dark.text.muted : Constants.styles.textColor.INFO,
-                style: {
-                  color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
-                  fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
-                  fontFamily: fieldFont,
-                },
-              } as any)}
-            />
-          </Textarea>
-        </GridItem>
-        {maxLength && (
-          <View style={styles.charCounterContainer}>
-            <TextBox 
-              text={`${currentLength}/${maxLength} caracteres`} 
-              size="small"
-              darkMode={darkMode}
-              fontScale={fontScale}
-            />
-          </View>
-        )}
-      </Grid>
-    </GluestackUIProvider>
+    <View style={styles.wrap}>
+      {label ? (
+        <Text
+          style={[
+            styles.label,
+            {
+              fontSize: C.fontSize.LABEL * fontScale,
+              fontFamily: labelFont,
+              fontWeight: labelFont ? "normal" : "600",
+            },
+          ]}
+        >
+          {label}
+        </Text>
+      ) : null}
+      <TextInput
+        accessibilityLabel={label}
+        multiline
+        value={value}
+        placeholder={placeholder}
+        placeholderTextColor={C.text.PLACEHOLDER}
+        onChangeText={(text) => {
+          if (maxLength && text.length > maxLength) return
+          onChange(text)
+        }}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        textAlignVertical="top"
+        style={[
+          styles.field,
+          {
+            borderColor: focused ? C.brand.DARK : C.border.INTERACTIVE,
+            fontFamily: fieldFont,
+            fontSize: C.fontSize.BODY * fontScale,
+          },
+          Platform.OS === "web" && focused
+            ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
+            : null,
+        ]}
+      />
+      {maxLength ? (
+        <Text style={styles.counter}>
+          {currentLength}/{maxLength} caracteres
+        </Text>
+      ) : null}
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  textarea: {
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderRadius: Constants.styles.borderRadius.MEDIUM,
+  wrap: { alignSelf: "stretch", gap: 6 },
+  label: { color: C.text.DEFAULT, lineHeight: C.lineHeight.LABEL },
+  field: {
+    minHeight: 120,
+    borderWidth: C.borderWidth.INTERACTIVE,
+    borderRadius: C.borderRadius.LARGE,
+    backgroundColor: C.surface.DEFAULT,
+    color: C.text.DEFAULT,
+    padding: 16,
   },
-  textareaDark: {
-    backgroundColor: Constants.styles.theme.dark.background.subtle,
-    borderColor: Constants.styles.theme.dark.border.default,
-  },
-  charCounterContainer: {
-    alignItems: 'flex-end',
+  counter: {
+    alignSelf: "flex-end",
+    color: C.text.MUTED,
+    fontSize: C.fontSize.CAPTION,
   },
 })

@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
         gap: Constants.styles.spacing.TINY,
     },
     messageBubble: {
-        backgroundColor: Constants.styles.color.SOFT_BLUE,
-        borderRadius: Constants.styles.borderRadius.LARGE,
+        backgroundColor: Constants.styles.brand.SURFACE,
+        borderRadius: 18,
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
-        borderBottomRightRadius: Constants.styles.borderRadius.SMALL,
+        borderBottomRightRadius: 4,
         flexShrink: 1,
         maxWidth: '75%',
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         fontFamily: Constants.styles.fontFamily.REGULAR,
         fontSize: Constants.styles.fontSize.MEDIUM,
         lineHeight: Constants.styles.lineHeight.LARGE,
-        color: Constants.styles.theme.light.text.default,
+        color: Constants.styles.color.WHITE,
         flexShrink: 1,
     },
     timestamp: {

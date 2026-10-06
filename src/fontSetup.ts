@@ -2,21 +2,33 @@ import * as Font from "expo-font";
 import { useEffect, useState } from "react";
 
 const AVAILABLE_FONTS = {
-  "Roboto-Regular": require("./assets/fonts/Roboto/static/Roboto-Regular.ttf"),
-  "Roboto-Italic": require("./assets/fonts/Roboto/static/Roboto-Italic.ttf"),
-  "Roboto-Bold": require("./assets/fonts/Roboto/static/Roboto-Bold.ttf"),
-  "Roboto-BoldItalic": require("./assets/fonts/Roboto/static/Roboto-BoldItalic.ttf"),
-  "Roboto-ExtraLight": require("./assets/fonts/Roboto/static/Roboto-ExtraLight.ttf"),
-  "Roboto-ExtraLightItalic": require("./assets/fonts/Roboto/static/Roboto-ExtraLightItalic.ttf"),
+  "PlusJakartaSans-Regular": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-Regular.ttf"),
+  "PlusJakartaSans-Medium": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-Medium.ttf"),
+  "PlusJakartaSans-SemiBold": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-SemiBold.ttf"),
+  "PlusJakartaSans-Bold": require("./assets/fonts/PlusJakartaSans/static/PlusJakartaSans-Bold.ttf"),
 };
 
-// Cache para controlar quais fontes já foram carregadas
+// Alias temporário: chamadas antigas com o nome Roboto carregam a família nova.
+const FONT_ALIASES: Record<string, keyof typeof AVAILABLE_FONTS> = {
+  "Roboto-Regular": "PlusJakartaSans-Regular",
+  "Roboto-Italic": "PlusJakartaSans-Regular",
+  "Roboto-Bold": "PlusJakartaSans-Bold",
+  "Roboto-BoldItalic": "PlusJakartaSans-Regular",
+  "Roboto-ExtraLight": "PlusJakartaSans-Regular",
+  "Roboto-ExtraLightItalic": "PlusJakartaSans-Regular",
+};
+
+function resolveFontName(fontName: string): string {
+  return FONT_ALIASES[fontName] ?? fontName;
+}
+
 const loadedFonts = new Set<string>();
 
 async function loadSpecificFonts(fontNames: string[]) {
   const fontsToLoad: { [key: string]: any } = {};
 
-  fontNames.forEach((fontName) => {
+  fontNames.forEach((requested) => {
+    const fontName = resolveFontName(requested);
     if (
       !loadedFonts.has(fontName) &&
       AVAILABLE_FONTS[fontName as keyof typeof AVAILABLE_FONTS]
@@ -32,7 +44,7 @@ async function loadSpecificFonts(fontNames: string[]) {
   }
 }
 
-export function useFonts(fontNames: string[] = ["Roboto-Regular"]) {
+export function useFonts(fontNames: string[] = ["PlusJakartaSans-Regular"]) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -57,6 +69,7 @@ export function useGlobalFonts() {
 }
 
 export function useResolvedFontFamily(fontName: string): string | undefined {
-  const ready = useFonts([fontName]);
-  return ready ? fontName : undefined;
+  const resolved = resolveFontName(fontName);
+  const ready = useFonts([resolved]);
+  return ready ? resolved : undefined;
 }

@@ -72,6 +72,17 @@ import { Order } from "@src/components/Order/Order";
 import { Offer } from "@src/components/Offer/Offer"
 import { Gallery } from "@src/components/Gallery/Gallery"
 import { NavigationBar } from "@src/components/NavigationBar/NavigationBar"
+import { SearchInput } from "@src/components/SearchInput/SearchInput"
+import { TopHeader } from "@src/components/TopHeader/TopHeader"
+import { RadioCard } from "@src/components/RadioCard/RadioCard"
+import { CheckboxListItem } from "@src/components/CheckboxListItem/CheckboxListItem"
+import { QuantityStepper } from "@src/components/QuantityStepper/QuantityStepper"
+import { StatusBanner } from "@src/components/StatusBanner/StatusBanner"
+import { EmptyState } from "@src/components/EmptyState/EmptyState"
+import { Timeline } from "@src/components/Timeline/Timeline"
+import { ImageUploader } from "@src/components/ImageUploader/ImageUploader"
+import { AnimatedStatusIndicator } from "@src/components/AnimatedStatusIndicator/AnimatedStatusIndicator"
+import { Tag } from "@src/components/Tag/Tag"
 import { StarRating } from "@src/components/StarRating/StarRating"
 
 
@@ -99,6 +110,11 @@ export default function Index() {
     "https://picsum.photos/id/12/200/200",
     "https://picsum.photos/id/13/200/200",
   ];
+  const [search, setSearch] = useState("");
+  const [delivery, setDelivery] = useState("home");
+  const [checkedShirt, setCheckedShirt] = useState(true);
+  const [qty, setQty] = useState(2);
+  const [photos, setPhotos] = useState<string[]>([]);
   const [shirtCount, setShirtCount] = useState(0);
   const [pantsCount, setPantsCount] = useState(1);
   const [socksCount, setSocksCount] = useState(0);
@@ -742,6 +758,26 @@ export default function Index() {
           <IconExclamation fill="#FF9500" width={32} height={32} />
           <IconEdit fill="#5856D6" width={32} height={32} />
         </View>
+      </Card>
+      <Card title="Design system 2.0">
+        <TopHeader title="Novo pedido" subtitle="Escolha as peças" onBack={() => undefined} />
+        <SearchInput value={search} onChange={setSearch} onClear={() => setSearch("")} />
+        <RadioCard selected={delivery === "home"} onSelect={() => setDelivery("home")} accessibilityLabel="Entrega em casa">
+          <Text text="Entrega em casa" />
+        </RadioCard>
+        <CheckboxListItem label="Camisa social" checked={checkedShirt} onChange={setCheckedShirt} />
+        <QuantityStepper value={qty} min={1} max={9} onChange={setQty} label="Camisa" />
+        <StatusBanner text="Aguardando a coleta" />
+        <EmptyState title="Nenhum pedido" description="Quando você fizer um pedido, ele aparece aqui." />
+        <Timeline steps={[
+          { id: "1", title: "Pedido criado", status: "done" },
+          { id: "2", title: "Em lavagem", status: "current" },
+          { id: "3", title: "Entrega", status: "pending" },
+        ]} />
+        <ImageUploader images={photos} onAdd={() => setPhotos((current) => [...current, "https://picsum.photos/id/20/200/200"])} onRemove={(_, index) => setPhotos((current) => current.filter((__, i) => i !== index))} />
+        <AnimatedStatusIndicator accessibilityLabel="Aguardando ofertas" />
+        <Tag text="Confirmado" variant="primary-outline" />
+        <Button text="Primário" onClick={() => undefined} variant="primary" size="xl" />
       </Card>
     </ScrollView>
     <NavigationBar
