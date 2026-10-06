@@ -4,9 +4,9 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.0.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.0.2`. Data de referência do código: outubro de 2026.
 
-> **Migração 2.0 em andamento.** O repositório está migrando para a linguagem visual 2.0 (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps consumidores, em `docs/migracao-2.0.md`. Este documento continua descrevendo o **código atual**: cada sub-issue da migração atualiza a seção correspondente quando entra.
+> A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
 ---
 
@@ -28,7 +28,7 @@ Instalação nos apps (pin de branch, não de tag):
 
 Entrypoint: `index.ts` na raiz (`main` e `react-native` apontam para ele). Tudo que o app consome **precisa estar exportado lá**. Arquivos publicados (`files`): `src/`, `docs/`, `babel.config.js`, `tailwind.config.js`, `nativewind-env.d.ts`, `react-native.config.js`, `metro.config.js`, `README.md`, `index.ts`.
 
-Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. `npm run build` (`tsc`) gera `dist/` com `.d.ts` e sourcemaps, e `npm run typecheck` roda `tsc --noEmit`. O `tsconfig` usa `module: esnext` e `moduleResolution: bundler` para resolver os subpath exports de `@gluestack-ui/*`, e inclui `nativewind-env.d.ts` para o tipo de `className`. Os apps não consomem `dist/`: o Metro compila `src/` diretamente. Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`. Para o `tsc` deste repositório enxergar os peers (`react`, `react-native`, `@gluestack-ui/core`, `@gluestack-ui/utils`, `@legendapp/motion`, `expo-font`, `react-native-svg`), eles também estão em `devDependencies`.
+Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. `npm run build` (`tsc`) gera `dist/` com `.d.ts` e sourcemaps, e `npm run typecheck` roda `tsc --noEmit`. O `tsconfig` usa `module: esnext` e `moduleResolution: bundler`, e inclui `nativewind-env.d.ts`. Os apps não consomem `dist/`: o Metro compila `src/` diretamente. Os peers (`react`, `react-native`, `expo-font`, `nativewind`, `react-native-svg`, `react-native-reanimated`) também estão em `devDependencies` para o `tsc` deste repositório.
 
 ---
 
@@ -38,14 +38,11 @@ Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não
 |---|---|
 | Base | React `19.1.0`, React Native `0.81.4` (peer deps) |
 | Expo | `expo ^54.0.12`, `expo-font >=14.0.0` (peer) |
-| Estilo | NativeWind 4 (`nativewind ^4.2.1`, peer) + `tailwindcss ^3.4.18` + `StyleSheet` nativo |
-| Primitivos de UI | `gluestack-ui ^3.0.7`, `@gluestack-ui/core ^3.0.10`, `@gluestack-ui/utils ^3.0.7`, `@gluestack-ui/accordion ^1.0.14` |
-| Variantes de classe | `tailwind-variants ^0.1.20` (via `tva` do gluestack) |
+| Estilo | `StyleSheet` nativo. NativeWind 4 (`nativewind ^4.2.1`, peer) e `tailwindcss ^3.4.18` permanecem na toolchain do `demo/` e no `babel.config.js` |
 | Ícones | `lucide-react-native ^1.31.0` + `react-native-svg ^15.13.0` (peer) |
-| Animação | `Animated` da RN (maioria), `react-native-reanimated ~4.1.0`, `react-native-worklets ^0.5.1`, `@legendapp/motion ^2.4.0` (peer) |
+| Animação | `Animated` da RN e `react-native-reanimated ~4.1.0` + `react-native-worklets ^0.5.1` |
 | Gestos | `PanResponder` da RN (não usa `react-native-gesture-handler`) |
 | Safe area | `react-native-safe-area-context ^5.6.1` (usado pelo `Modal`) |
-| Acessibilidade web | `react-aria ^3.44.0`, `react-stately ^3.42.0` (transitivo do gluestack) |
 | Linguagem | TypeScript `~5.9.2`, `strict: true`, `jsx: react-native`, alias `@/*` |
 | Testes | **nenhum** runner e nenhum arquivo de teste |
 | CI | **nenhum** workflow de build/lint/teste |
@@ -67,7 +64,6 @@ design-system/
     components/Icons/*.tsx        # wrappers finos de lucide-react-native
     components/Icons/iconProps.ts # contrato comum dos ícones
     constants/constants.ts        # design tokens em JS (fonte principal de estilo)
-    ui/                           # primitivos gluestack-ui (gerados/ajustados, uso interno)
     utils/                        # helpers puros
     assets/fonts/Roboto/          # TTFs da família Roboto
     fontSetup.ts                  # useFonts / useGlobalFonts
@@ -87,30 +83,28 @@ design-system/
 
 1. Um componente por pasta: `src/components/<Nome>/<Nome>.tsx`, export **nomeado** (`export const <Nome>`).
 2. Todo componente público é reexportado em `index.ts`, agrupado por seção (`// Texts`, `// Inputs`, `// User Cards`, `// Lists`, `// Others`, `// Fonts`, `// Icons`). Componente fora do `index.ts` não existe para o app.
-3. `src/ui/*` é **interno**: primitivos gluestack consumidos pelos componentes, nunca exportados direto para os apps.
 
 ### Estilo
 
-4. A fonte de verdade de estilo é `src/constants/constants.ts` (importado como `Constants`). Valores numéricos/cores crus no `StyleSheet` são exceção; o padrão é `Constants.styles.*`.
-5. A maioria dos componentes usa `StyleSheet.create` + `Constants`. NativeWind/Tailwind aparece apenas dentro de `src/ui/*` (primitivos gluestack) e em classes de grid/raio passadas por `className`.
-6. Componentes que embrulham primitivos gluestack renderizam um `GluestackUIProvider` próprio (`Button`, `Input`, `TextArea`, `Select`, `Grid`, `Modal`, `Accordion`). Esse provider é uma `View` extra na árvore. Sem `style`, o default é `{ flex: 1, height: '100%', width: '100%' }`. `Button`, `Input`, `TextArea` e `Accordion` passam `hugContentStyle` (`flexGrow: 0`, `flexShrink: 0`, `alignSelf: 'stretch'`, `width: '100%'`). `Modal` passa `{ flex: 1, width: '100%', height: '100%' }` de propósito, para o overlay cobrir a tela.
+3. A fonte de verdade de estilo é `src/constants/constants.ts` (importado como `Constants`). Valores numéricos/cores crus no `StyleSheet` são exceção; o padrão é `Constants.styles.*`.
+4. Os componentes usam `StyleSheet.create` + `Constants`. Não há `className` nem provider de tema de terceiros na árvore.
 
 ### Texto e dimensão (regras transversais)
 
-7. **Nada trunca.** Não existe um único `numberOfLines` ou `ellipsizeMode` em todo o `src/`. Todo texto longo **quebra linha** e faz o componente crescer em altura — nunca aparece reticência. Vale para nomes em cards de usuário, títulos de `Order`/`AccordionItem`, rótulos de `CheckButton`, opções de `Select` e balões de `Message`. Ao imaginar o layout, suponha sempre multi-linha, não corte.
-8. **Fonte do texto é o Roboto embarcado.** Componentes próprios e `Button`, `Input`, `TextArea` e `Accordion` aplicam a família via `useResolvedFontFamily` (seção 7). O corte Bold neutraliza `fontWeight` do Tailwind para o negrito vir do arquivo `Roboto-Bold`.
+5. **Nada trunca.** Não existe um único `numberOfLines` ou `ellipsizeMode` em todo o `src/`. Todo texto longo **quebra linha** e faz o componente crescer em altura — nunca aparece reticência. Vale para nomes em cards de usuário, títulos de `Order`/`AccordionItem`, rótulos de `CheckButton`, opções de `Select` e balões de `Message`. Ao imaginar o layout, suponha sempre multi-linha, não corte.
+6. **A família carregada é Plus Jakarta Sans.** `fontSetup.ts` registra Regular, Medium, SemiBold e Bold. Aliases `Roboto-*` ainda resolvem para o corte equivalente. Quando a família estática já está carregada, `fontWeight` fica `"normal"` e o peso vem do arquivo.
 
 ### Props
 
-9. Texto entra como prop `text: string`, não como `children`. `children` é reservado para composição (`Card`, `List`, `Modal`, `Accordion`, `SwipeableListItem`, `Grid`).
-10. Callback de interação principal é `onClick` (não `onPress`), exceto em primitivos de baixo nível (`ProfileAvatar.onPress`, `Image.onClick`).
-11. Props de tema/escala são opcionais e com default: `darkMode?: boolean = false`, `fontScale?: number = 1`. `fontScale` multiplica `fontSize`/`lineHeight`.
-12. Identificadores de código em inglês; textos visíveis padrão e comentários voltados a humanos em pt-BR.
+7. Texto entra como prop `text: string`, não como `children`. `children` é reservado para composição (`Card`, `List`, `Modal`, `Accordion`, `SwipeableListItem`, `Grid`).
+8. Callback de interação principal é `onClick` (não `onPress`), exceto em primitivos de baixo nível (`ProfileAvatar.onPress`, `Image.onClick`).
+9. Props de tema/escala são opcionais e com default: `darkMode?: boolean = false`, `fontScale?: number = 1`. `fontScale` multiplica `fontSize`/`lineHeight`.
+10. Identificadores de código em inglês; textos visíveis padrão e comentários voltados a humanos em pt-BR.
 
 ### Manutenção obrigatória
 
-13. **Toda alteração em componente, prop, variante, token ou ícone deve atualizar este `CONTEXT.md` no mesmo conjunto de mudanças** (regra `.cursor/rules/context-md.mdc`). Em review de PR, `CONTEXT.md` desatualizado é achado bloqueante.
-14. Toda alteração também exige bump de `version` no `package.json` (regra `.cursor/rules/version-bump.mdc`).
+11. **Toda alteração em componente, prop, variante, token ou ícone deve atualizar este `CONTEXT.md` no mesmo conjunto de mudanças** (regra `.cursor/rules/context-md.mdc`). Em review de PR, `CONTEXT.md` desatualizado é achado bloqueante.
+12. Toda alteração também exige bump de `version` no `package.json` (regra `.cursor/rules/version-bump.mdc`).
 
 ### Largura natural
 
@@ -118,12 +112,9 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default) |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
-| **Largura total, altura do conteúdo** (`hugContentStyle`) | `Button`, `Input`, `TextArea`, `Accordion`, `Grid`, `Select` |
-| **Cobre a tela** (`flex: 1`) | `Modal` |
-
-`Button`, `Input`, `TextArea` e `Accordion` passam `hugContentStyle` ao provider, no mesmo espírito do `Grid`. Dois `Button` empilhados numa coluna flexível ficam com a altura do próprio botão. `Modal` mantém `flex: 1` no wrapper porque o overlay precisa ocupar a tela; o `GluestackModal` interno também recebe `flex: 1`. O default do provider não foi invertido: um consumidor sem `style` ainda estica, e o `Modal` depende disso.
+| **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
 ---
 
@@ -179,11 +170,12 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | Grupo | Chave | Valor |
 |---|---|---|
 | `spacing` | `TINY` / `SMALL` / `MEDIUM` / `LARGE` / `EXTRA_LARGE` | 4 / 8 / 16 / 24 / 32 |
-| `borderRadius` | `SMALL` / `MEDIUM` / `LARGE` | 4 / 8 / 12 |
-| `borderWidth` | `THIN` / `REGULAR` / `THICK` | 0.4 / 0.8 / 1.2 |
+| `borderRadius` | `SMALL` / `MEDIUM` / `LARGE` / `XL` / `2XL` / `3XL` / `PILL` / `FULL` | 4 / 8 / 12 / 14 / 16 / 20 / 24 / 999 |
+| `borderWidth` | `THIN` / `REGULAR` / `THICK` / `HAIRLINE` / `INTERACTIVE` | 0.4 / 0.8 / 1.2 / 1 / 1.5 |
 | `componentSize` | `BUTTON_HEIGHT` / `BUTTON_WIDTH` | 40 / 40 |
+| | `BUTTON_HEIGHT_LG` / `INPUT_HEIGHT` / `TOUCH_TARGET` | 56 / 52 / 44 |
 | | `INPUT_MIN_WIDTH` | 50 |
-| | `NAVIGATION_BAR_HEIGHT` | 64 |
+| | `NAVIGATION_BAR_HEIGHT` | 76 |
 | `icon` | `SMALL` / `MEDIUM` | 16 / 20 |
 | `opacity` | `LOW` / `MEDIUM` / `HIGH` | 0.5 / 0.7 / 0.9 |
 | `maxWidth` | `messageBubble` | `"75%"` |
@@ -192,32 +184,11 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 
 ---
 
-## 6. Paleta NativeWind/gluestack
+## 6. Paleta no `tailwind.config.js`
 
-Paralela aos tokens acima e usada **apenas** pelos primitivos `src/ui/*`. `tailwind.config.js` mapeia cada cor para uma CSS var (`rgb(var(--color-<nome>-<escala>)/<alpha>)`) e `src/ui/gluestack-ui-provider/config.ts` define os valores light/dark.
+O `tailwind.config.js` ainda declara a paleta semântica antiga em CSS vars (`primary`, `success`, `background`, etc.). Nenhum componente lê essas vars. A cor que aparece na tela vem de `Constants.styles` (`brand`, `surface`, `text`, `border`, `feedback`).
 
-Escalas disponíveis: `primary`, `secondary`, `tertiary`, `error`, `success`, `warning`, `info`, `typography`, `outline`, `background` (0–950), mais `background.error|warning|muted|success|info|light|dark`, `typography.white|gray|black` e `indicator.primary|info|error`.
-
-Valores de referência no modo light (os mais presentes na UI):
-
-| Token | light | dark |
-|---|---|---|
-| `primary-500` | `#333333` | `#E6E6E6` |
-| `primary-600` | `#292929` | `#F0F0F0` |
-| `secondary-500` | `#D9D9DB` | `#3F4040` |
-| `success-500` | `#348352` | `#489766` |
-| `error-500` | `#E63535` | `#EF4444` |
-| `warning-500` | `#E77828` | `#FB954B` |
-| `info-500` | `#0DA6F2` | `#32B4F4` |
-| `typography-0` | `#FEFEFF` | `#171717` |
-| `typography-900` | `#262627` | `#F5F5F5` |
-| `background-0` | `#FFFFFF` | `#121212` |
-| `outline-300` | `#D3D3D3` | `#747474` |
-| `indicator-primary` | `#373737` | `#F7F7F7` |
-
-Consequência prática: um `Button` "default" não é azul — o `primary` do gluestack é **grafite** (`#333333`). O azul da marca vive em `Constants.styles.textColor.PRIMARY` / `color.BLUE`.
-
-Sombras nomeadas do Tailwind: `hard-1..hard-5` e `soft-1..soft-4` (todas em `rgba(38,38,38,0.1–0.2)`).
+`Button variant="default"` é fundo `#3CDBC0` e texto `#2D3B42`.
 
 ---
 
@@ -233,7 +204,7 @@ Família única: **Plus Jakarta Sans**, embarcada em `src/assets/fonts/PlusJakar
 
 Componentes de texto (`MainTitle`, `Title`, `Subtitle`, `Text`, `FAB`) chamam `useFonts` internamente e aplicam `fontFamily: undefined` enquanto a fonte não carregou, evitando o erro de família inexistente. `Info`, `Tag`, `NavigationBar` e os balões de `Message` aplicam `Roboto-Regular` direto, sem esperar o load.
 
-`Button` (rótulo e confirmação), `Input`, `TextArea` e o título do `AccordionItem` usam `useResolvedFontFamily`: Regular no campo, Bold no botão e no título. Com a família Bold carregada, `fontWeight` fica `"normal"` para o negrito vir do arquivo estático (no Android, `fontWeight` não combina com família estática). `textStyle` do `Button` continua por último e vence o default. Os primitivos em `src/ui/*` seguem sem `fontFamily` na classe Tailwind; a família entra pelo `style` do componente.
+`Button` (rótulo e confirmação), `Input`, `TextArea` e o título do `AccordionItem` usam `useResolvedFontFamily`: Regular no campo, Bold no botão e no título. Com a família Bold carregada, `fontWeight` fica `"normal"` para o negrito vir do arquivo estático (no Android, `fontWeight` não combina com família estática). `textStyle` do `Button` continua por último e vence o default.
 
 ---
 
@@ -446,7 +417,7 @@ Barra de envio de mensagem no chat.
 |---|---|---|
 | `value` / `onChange` | — | obrigatórias |
 | `onSend` | `() => void` | — (obrigatória) |
-| `placeholder` | `string` | `"Enviar mensagem..."` |
+| `placeholder` | `string` | `"Escreva sua mensagem"` |
 
 ```
 ┌──────────────────────────────────┐  ┌────┐
@@ -455,7 +426,7 @@ Barra de envio de mensagem no chat.
   flex: 1                        gap 8   ícone 20 + padding 8
 ```
 
-**Aparência:** linha de largura total alinhada pela base, com gap 8: à esquerda o `Input` sem label ocupando o espaço restante (placeholder em `#E0E0E0`); à direita um botão quadrado de padding 8 e raio 12 com `IconSend` 20×20. O ícone fica azul `#007AFF` quando há texto e cinza `#6C757D` quando vazio; o botão inteiro cai para `opacity 0.5` quando desabilitado.
+**Aparência:** linha de largura total, gap 10, alinhada pela base. Campo de 48 px, raio 24, borda 1,5 px `#869199`, padding horizontal 18, texto 16. Botão circular de 48 px: `#3CDBC0` com ícone `#2D3B42` quando há texto; `#F4F2F5` com ícone `#5A6A72` quando vazio. Vazio, o botão fica desabilitado.
 
 **Comportamento:** `onSend` só dispara com `value.trim()` não vazio; `returnKeyType="send"` e Enter também enviam. O componente não limpa o campo — isso é responsabilidade do app.
 
@@ -481,7 +452,7 @@ Campo multilinha com contador opcional.
                         120/300 caracteres  ← alinhado à direita, só com maxLength
 ```
 
-**Aparência:** label (`Text size="small"`) acima, caixa multilinha `size="xl"` com fundo branco, raio 8 e borda padrão do gluestack; texto `18 × fontScale` em `#262627`, em `Roboto-Regular` (seção 7). Com `maxLength`, abaixo e alinhado à direita aparece `"{n}/{max} caracteres"` em `Text size="small"`. Dark mode: fundo `#1A2432`, borda `#2A364A`.
+**Aparência:** rótulo 14 px peso 600. Campo com altura mínima 120, borda 1,5 px `#869199`, raio 12, texto 16. Foco pinta a borda de `#0B7566`. Com `maxLength`, o contador `"{n}/{max} caracteres"` fica à direita e o campo ignora entrada além do máximo. `darkMode` é aceita e ignorada.
 
 **Comportamento:** digitação acima de `maxLength` é **ignorada** (não trunca, simplesmente não aplica).
 
@@ -759,23 +730,23 @@ Superfície padrão para agrupar conteúdo.
 
 #### `Grid` / `GridItem`
 
-Layout em colunas sobre o grid do gluestack.
+Layout em colunas, sem biblioteca de grid.
 
 | `Grid` | Tipo | Default |
 |---|---|---|
 | `children` | `ReactNode` | — (obrigatória) |
 | `columns` | `number` | `12` |
 | `gap` / `gapX` / `gapY` | `number` | — |
-| `darkMode` | `boolean` | `false` |
+| `darkMode` | `boolean` | `false` (aceita e ignora) |
 
 | `GridItem` | Tipo | Default |
 |---|---|---|
 | `children` | `ReactNode` | — (obrigatória) |
 | `colSpan` | `number` | `1` |
 
-**Aparência:** contêiner de largura total que não cresce nem encolhe (`flexGrow/flexShrink: 0`, `alignSelf: stretch`), distribuindo filhos em `columns` colunas. O `gap` **não é em pixels**: é mapeado para as classes Tailwind `gap-1|2|3|4|6|8|12` por faixas (`<=1 → gap-1`, `<=2 → gap-2`, `<=3 → gap-3`, `<=4 → gap-4`, `<=6 → gap-6`, `<=8 → gap-8`, acima → `gap-12`), ou seja, 4/8/12/16/24/32/48 px.
+**Aparência:** contêiner de largura total que não cresce nem encolhe (`flexGrow/flexShrink: 0`, `alignSelf: stretch`). O `gap` **não é em pixels**: cai em faixas de 4, 8, 12, 16, 24, 32 ou 48 px (`<=1 → 4`, `<=2 → 8`, `<=3 → 12`, `<=4 → 16`, `<=6 → 24`, `<=8 → 32`, acima → 48). `gapX` define o vão horizontal; `gapY`, o vertical. Sem um dos dois, vale `gap`.
 
-**Comportamento:** filhos que não são `GridItem` são embrulhados automaticamente com `col-span-1`. O `colSpan` é limitado a `columns`.
+**Comportamento:** filhos que não são `GridItem` entram com `colSpan` 1. O `colSpan` é limitado a `columns`. A largura de cada célula é `(largura útil × colSpan) / columns`, e a largura útil desconta o vão horizontal entre as células da linha.
 
 #### `Divider`
 
@@ -787,7 +758,9 @@ Layout em colunas sobre o grid do gluestack.
 
 #### `Tag`
 
-Etiqueta de status, sempre em contorno (não existe variante preenchida).
+Etiqueta preenchida. Os nomes `*-outline` permanecem.
+
+**Aparência:** raio 12, texto 13 px peso 700, sem borda. `primary` e `success`: fundo `#E2FAF6`, texto `#0B7566`. `danger`: fundo `#FDECEC`, texto `#C62828`. `warning`: fundo `#FFF4E5`, texto `#8A5A00`. Mede pelo conteúdo (`alignSelf: flex-start`). `darkMode` é aceita e ignorada.
 
 | Prop | Tipo | Default |
 |---|---|---|
@@ -796,8 +769,6 @@ Etiqueta de status, sempre em contorno (não existe variante preenchida).
 | `size` | `'default' \| 'sm'` | `'default'` |
 | `fontScale` | `number` | `1` |
 | `darkMode` | `boolean` | `false` (aceita mas ignora) |
-
-**Aparência:** retângulo que mede pelo conteúdo (`alignSelf: flex-start`), fundo **transparente**, borda de 1 px e raio 4. `default`: padding 8 horizontal / 4 vertical e texto de `14 × fontScale`. `sm`: padding 6 horizontal / 2 vertical e texto de `11,9 × fontScale` (14 × 0,85). `lineHeight` sempre 1,3 × o tamanho da fonte. Texto Roboto-Regular peso 400, na mesma cor da borda: `#007AFF` (`primary-outline`), `#059669` (`success-outline`), `#DC2626` (`danger-outline`) ou `#F59E0B` (`warning-outline`).
 
 **Comportamento:** puramente visual — não é tocável e não tem estados.
 
@@ -835,9 +806,9 @@ Diálogo centralizado com rodapé de ações.
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ```
 
-**Aparência:** backdrop escurecido cobrindo a tela (toque fecha) e um cartão centralizado `size="md"` do gluestack. Altura máxima = altura da janela − 64 (altura da navigation bar) − safe area inferior; o corpo rola e é limitado a 70% desse máximo. Com `title`, cabeçalho com o texto centralizado (`Text`). Rodapé em linha com gap 8: só um botão alinhado à direita no modo simples; dois botões com `space-between` quando há `onConfirm` (cancelar à esquerda, confirmar à direita).
+**Aparência:** `Modal` nativo transparente. Backdrop `rgba(0,0,0,0.5)` cobre a tela e o toque chama `onClose`. O cartão fica centralizado, com 80% da largura (máximo 510), raio 6, borda 1 px, padding 24 e fundo da superfície do tema (`#FFFFFF` no claro, `#121821` no escuro). Altura máxima = altura da janela − `NAVIGATION_BAR_HEIGHT` (76) − safe area inferior. O corpo rola e fica limitado a 70% desse máximo. Com `title`, o texto fica centralizado. Rodapé em linha com gap 8. Com dois botões, cada um cresce para dividir a largura do cartão.
 
-**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. Usa `useRNModal`, então funciona sobre qualquer stack de navegação. O `GluestackUIProvider` do modal recebe `flex: 1` de propósito para o backdrop cobrir a tela.
+**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. O modal nativo cobre a stack de navegação. `onRequestClose` (botão voltar do Android) chama `onClose`.
 
 #### `Accordion` / `AccordionItem`
 
@@ -856,6 +827,8 @@ Seções expansíveis, uma por vez.
 | `children` | `ReactNode` | — (obrigatória) |
 | `titleAccessory` | `ReactNode` | — (ex.: `Tag` de status, logo após o título) |
 | `leading` | `ReactNode` | — (ex.: chevron de voltar, antes do título) |
+| `trailingAccessory` | `ReactNode` | — (antes do chevron) |
+| `contentBackground` | `string` | — (fundo do conteúdo, com padding 16) |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
 ```
@@ -866,9 +839,9 @@ Seções expansíveis, uma por vez.
 ───────────────────────────────────────────────  Divider após cada item
 ```
 
-**Aparência:** lista de cabeçalhos sobre fundo branco (`#121821` no dark). Cada cabeçalho é uma linha de largura total: opcional `leading` (margem direita 8), título `18 × fontScale` em `#262627` e em negrito (`Roboto-Bold`), `titleAccessory` colado ao título com gap 8, e na extremidade direita um chevron (para cima quando aberto, para baixo quando fechado). Abaixo de cada item, um `Divider`.
+**Aparência:** lista de cabeçalhos com padding 16 horizontal e 12 vertical. Fundo branco no claro e `#121821` no escuro. Cada cabeçalho é uma linha: `leading` opcional (margem direita 8), título `18 × fontScale` na cor do tema e em negrito (Plus Jakarta Bold), `titleAccessory` ao lado do título com gap 8, `trailingAccessory` antes do chevron, e um `IconChevronDown` que gira 180° quando o item está aberto. Conteúdo com `contentBackground` ganha esse fundo e padding 16. Abaixo de cada item, um `Divider`.
 
-**Comportamento:** `type="single"` e colapsável — abrir um item fecha o outro, e o aberto pode ser fechado. A transição usa `LayoutAnimation` easeInEaseOut de 300 ms (habilitada explicitamente no Android).
+**Comportamento:** um item por vez, e o aberto pode ser fechado. A troca usa `LayoutAnimation` easeInEaseOut de 300 ms (habilitada no Android).
 
 ### 8.6 Ações
 
@@ -898,39 +871,23 @@ sem icon:                        com icon:
                                          texto segue centralizado no botão
 ```
 
-**Aparência base:** retângulo de cantos levemente arredondados (raio 4), conteúdo em linha centralizado com gap 8. Altura e padding por `size`: `xs` 32/14, `sm` 36/16, `md` 40/20, `lg` 44/24, `xl` 48/28 px. Texto em `Roboto-Bold` (aparência de negrito), tamanho `text-base` (16) no `md`. Desabilitado: `opacity 40%`.
-
-**Variantes:**
+**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo `#F4F2F5`, texto `#5A6A72`, sem borda. `darkMode` é aceita e ignorada.
 
 | Variante | Fundo | Texto | Borda |
 |---|---|---|---|
-| `default` | `#333333` (primary-500) | branco (`typography-0`) | — |
-| `default-outline` | transparente | `#333333` | 1 px primary-300 |
-| `success` | `#348352` (success-500) | branco | — |
-| `success-outline` | transparente | `#333333` (não verde — ver dívidas) | 1 px success-300 |
-| `danger` | `#DC2626` | branco | 1 px `#DC2626` |
-| `danger-outline` | transparente | `#DC2626` | 1 px `#DC2626` |
-| `primary` | `#2D3B42` | `#3CDBC0` | 1 px `#2D3B42` |
-| `secondary` | `#2D3B42` | `#E5E1E6` | 1 px `#2D3B42` |
-| `secondary-outline` | `#E5E1E6` | `#2D3B42` | 1 px `#2D3B42` |
+| `default`, `primary`, `success` | `#3CDBC0` | `#2D3B42` | — |
+| `default-outline` | `#FFFFFF` | `#2D3B42` | 1,5 px `#869199` |
+| `success-outline` | `#E2FAF6` | `#0B7566` | 1,5 px `#0B7566` |
+| `secondary` | `#2D3B42` | branco | — |
+| `secondary-outline` | `#FFFFFF` | `#2D3B42` | 1,5 px `#2D3B42` |
+| `danger` | `#C62828` | branco | — |
+| `danger-outline` | `#FFFFFF` | `#C62828` | 1,5 px `#C62828` |
+| `ghost` | transparente | `#0B7566` | — |
+| `ghost-danger` | transparente | `#C62828` | — |
 
-`primary`, `secondary` e `secondary-outline` são as variantes com a identidade visual da marca (grafite + verde-água). `default` e `success` herdam a paleta do gluestack.
+Toque em fundo opaco aplica opacidade 0,85. Fundo transparente ou branco, no toque, vai para `#F4F2F5`.
 
-Em dark mode, `default` e `default-outline` passam a fundo `#1A2432`/transparente, borda `#2A364A` e texto `#F3F7FF`. `fontScale` ≠ 1 ajusta o texto para `18 × fontScale`.
-
-**Estados `hover` e `active`** (relevantes na web; no mobile só o `active` aparece, durante o toque):
-
-| Variante | Normal | Hover | Active |
-|---|---|---|---|
-| `default` | `#333333` | `#292929` | `#1F1F1F` |
-| `success` | `#348352` | `#2A7948` | `#206F3E` |
-| `default-outline` / `success-outline` | transparente | fundo `#F6F6F6` (`background-50`) | volta a transparente |
-| `primary` / `secondary` / `danger` | cor de repouso | fundo ~12% mais escuro | opacidade 0,85 |
-| `secondary-outline` / `danger-outline` | cor de repouso | `#F6F6F6` se o fundo é transparente; senão ~12% mais escuro | opacidade 0,85 |
-
-`default`, `default-outline`, `success` e `success-outline` usam as classes `data-[hover]`/`data-[active]` do gluestack. As outras cinco (e `default`/`default-outline` em dark mode, que também pintam o fundo por `style` inline) usam `onHoverIn`/`onPressIn`: o hover escurece o hex em 12% (ou aplica `#F6F6F6` quando o fundo é transparente) e o toque aplica opacidade 0,85. A cor de repouso não muda. `needsConfirmation` continua no `Pressable` próprio, com opacidade 0,85 no pressed.
-
-**Comportamento:** com `icon`, o nó é posicionado em `position: absolute` a 16 px da esquerda, e o texto continua centralizado. Com `needsConfirmation`, o botão deixa de usar o primitivo gluestack e vira um `Pressable` próprio (altura mínima 40, raio 8, padding 16/8, texto bold centralizado): o primeiro toque troca o rótulo para `confirmationText` e anima fundo, borda e texto para vermelho `#DC2626`/branco em 300 ms; o segundo toque dispara `onClick`. Sem o segundo toque, volta ao estado original após **8 segundos**. Pressionado reduz a opacidade para 0,85; desabilitado, 0,5.
+**Comportamento:** com `icon`, o nó fica em `position: absolute` a 16 px da esquerda e o texto continua centralizado. Com `needsConfirmation`, o primeiro toque troca o rótulo para `confirmationText` e pinta fundo `#C62828` com texto branco; o segundo toque dispara `onClick`. Sem o segundo toque, volta após 8 segundos.
 
 #### `CheckButton`
 
@@ -1015,12 +972,12 @@ Barra de abas inferior.
 ```
 ──────────────────────────────────────  borda superior 0,4px
 │   [ic]   │   [ic]   │   [ic]   │
-│  Início  │  Pedido  │   Conta  │      ativo #007DFF, inativo #8F98AD
+│  Início  │  Pedido  │   Conta  │      ativo #0B7566, inativo #5A6A72
 └──────────┴──────────┴──────────┘
     1/3         1/3        1/3           cada aba com flex igual
 ```
 
-**Aparência:** linha de largura total com fundo branco (`#121821` no dark) e borda superior de 0,4 px `#DEE2E6` (`#2A364A`). Cada aba ocupa fração igual, centralizada, com ícone opcional acima (margem inferior 2) e rótulo Roboto-Regular de `15 × fontScale` (`lineHeight` `18 × fontScale`). Ativa em azul `#007DFF`, inativa em `#8F98AD`. Padding vertical 4 px, exceto no iOS: 10 px no topo e 14 px na base (acomoda o home indicator). Altura de referência para cálculos de layout: `Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT` = 64.
+**Aparência:** altura mínima 76, fundo branco, borda superior 1 px `#E5E1E6`. Aba ativa: pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa: texto `#5A6A72` peso 500. Rótulo 13 px. No iOS há padding extra para o home indicator. `NAVIGATION_BAR_HEIGHT` vale 76.
 
 **Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`.
 
@@ -1189,7 +1146,7 @@ recebida — espelhada:
    gap 12        padding horizontal 4
 ```
 
-**Aparência:** `ScrollView` horizontal sem barra de rolagem, padding horizontal 4 e gap 12 entre itens, cada um uma `Image` `md` (80×80) com raio 8.
+**Aparência:** `ScrollView` horizontal sem barra de rolagem, padding horizontal 4 e gap 12 entre itens, cada um uma `Image` `md` (80×80) com raio 14.
 
 #### `Alert`
 
@@ -1228,7 +1185,9 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566` (outline na web). Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max} caracteres"`.
 
-**`Select`.** O gatilho usa a mesma caixa do `Input` (52 px, raio 12, borda 1.5). O modal de opções não mudou.
+**`Select`.** Gatilho com a caixa do `Input` (52 px, raio 12, borda 1.5 `#869199`). O modal de opções usa o `Modal` nativo. Não há provider de tema.
+
+**Sem gluestack.** `Modal`, `Grid`, `Accordion`, `Image` e `Select` usam primitivos do React Native. A pasta `src/ui` foi removida, junto com `@gluestack-ui/*`, `gluestack-ui`, `@legendapp/motion`, `react-aria` e `react-stately`.
 
 **`InputChat`.** Campo de 48 px com raio 24 e botão circular de 48 px em `#3CDBC0`. Vazio, o botão fica `#F4F2F5`. Não limpa o campo.
 
@@ -1246,7 +1205,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento).
 
-**Ainda no gluestack.** `Modal`, `Grid`, `Accordion`, `Image` e o provider do `Select`. Por isso essas dependências continuam no `package.json`.
+---
 
 ## 9. Ícones
 
@@ -1292,21 +1251,9 @@ Para adicionar um ícone: criar `src/components/Icons/Icon<Nome>.tsx` seguindo o
 
 ---
 
-## 10. Camada interna `src/ui/*`
+## 10. Camada `src/ui`
 
-Primitivos do gluestack-ui (gerados pelo CLI e ajustados). Não são exportados para os apps.
-
-| Módulo | O que provê |
-|---|---|
-| `gluestack-ui-provider/` | `GluestackUIProvider` + `config.ts` com as CSS vars light/dark. Sem `style`, aplica `{ flex: 1, height: '100%', width: '100%' }` |
-| `button/` | `Button`, `ButtonText`, `ButtonIcon`, `ButtonSpinner`, `ButtonGroup` com variantes `solid/outline/link` × `primary/secondary/positive/negative` |
-| `input/` | `Input`, `InputField`, `InputIcon`, `InputSlot`, variantes `outline/underlined/rounded` e tamanhos `sm/md/lg/xl` |
-| `textarea/` | `Textarea`, `TextareaInput` |
-| `modal/` | `Modal`, `ModalBackdrop`, `ModalContent`, `ModalHeader`, `ModalBody`, `ModalFooter` |
-| `accordion/` | primitivos do `@gluestack-ui/accordion` |
-| `grid/` | `Grid`/`GridItem` com cálculo responsivo de colunas (versões nativa e web) |
-| `icon/` | `Icon` + glifos usados pelo accordion (`ChevronUpIcon`, `ChevronDownIcon`) |
-| `image/` | `Image` + `NATIVE_IMAGE_SIZE_PX` (`2xs` 24, `xs` 40, `sm` 64, `md` 80, `lg` 96, `xl` 128, `2xl` 256) |
+Removida na `1.0.1`. Os componentes usam `View`, `Pressable`, `TextInput`, `Image` e `Modal` do React Native. O `Image` público mede `2xs` 24, `xs` 40, `sm` 64, `md` 80, `lg` 96, `xl` 128 e `2xl` 256. `type="circle"` usa metade do lado como raio; `default` usa raio 8.
 
 ---
 
@@ -1327,20 +1274,19 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 1. **Sem testes e sem CI.** Não há runner, nenhum arquivo de teste e nenhum workflow de build/lint. Toda verificação é manual via `demo/` ou pelo app consumidor.
 2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; as docs por componente em `docs/` são histórico e serão apagadas no fechamento da migração 2.0. `docs/prototipos/` e `docs/migracao-2.0.md` não entram nessa limpeza.
 3. **`checklist.md` obsoleto.** Lista quase tudo como não implementado e cita componentes inexistentes (`TabBar`, `OrderList`, `OfferCard`).
-4. **Dois sistemas de cor paralelos.** `Constants.styles` (hex, usado por quase todos os componentes) e a paleta semântica NativeWind/gluestack (CSS vars, usada por `src/ui/*`) não conversam. Por isso `Button variant="default"` é grafite enquanto o azul da marca está em `textColor.PRIMARY`.
-   - Efeito colateral no `Button`: o compound variant `outline + positive` do gluestack usa `text-primary-500`, então `success-outline` tem borda verde e **texto grafite** `#333333`. `danger-outline` escapa disso porque o componente sobrescreve a cor do texto explicitamente.
-5. **Dark mode parcial.** `MainTitle`, `Subtitle`, `Tag`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `List`, `Message*` e `InputChat` não reagem a `darkMode`; `FAB` e `Image` aceitam a prop e a descartam explicitamente (`void darkMode`).
+4. **Paleta antiga no Tailwind.** `tailwind.config.js` ainda declara CSS vars da paleta semântica. Nenhum componente as lê. A cor da tela vem de `Constants.styles`.
+5. **Dark mode parcial.** `MainTitle`, `Subtitle`, `Tag`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `List`, `Message*`, `InputChat`, `Button`, `Input` e `TextArea` não reagem a `darkMode`. `Modal`, `Accordion`, `Select` (texto) e `Divider` ainda usam o tema claro/escuro. `FAB`, `Image` e `Grid` aceitam a prop e a descartam.
 6. **`UserCardHorizontal` não é horizontal** — empilha os dados em coluna e não mostra avatar.
 7. **`UserCardBio` não renderiza a `bio`**, embora o campo seja obrigatório no tipo.
 8. **`OfferList` e `UserList` não passam `key`** no `GridItem` mapeado (o `key` do `OfferList` está no `Offer` interno, não no item da lista) e `OfferList` não repassa `amountLabel` nem `totalRatings`.
 9. **`UserList` tem o `Divider` entre itens comentado** no código.
-10. **`Grid.gap` não é pixel.** É convertido em faixas para classes Tailwind, então valores intermediários são arredondados para baixo na faixa.
-11. **`GluestackUIProvider` aninhado.** Vários componentes criam o próprio provider, gerando `View`s extras e múltiplos `OverlayProvider`/`ToastProvider` na árvore quando se aninham (ex.: `Select` dentro de `Grid` dentro de `Input`).
+10. **`Grid.gap` não é pixel.** Cai em faixas de 4, 8, 12, 16, 24, 32 ou 48 px. Um valor como `5` vira 16 px.
+11. **Textos de `MainTitle`, `Title`, `Subtitle`, `Text` e `Info` ainda documentam a métrica antiga** (tamanhos 36/24/20/18 e cores `#262627` / `#007AFF`) porque o código desses componentes não foi redesenhado. A família carregada, porém, é Plus Jakarta via alias `Roboto-*`.
 12. **`Alert` importa `Constants` e `Dimensions` sem usar**; `Modal` importa `Dimensions` via `useWindowDimensions` (ok) mas `Order` importa `Constants` para poucos usos.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
-16. **Linguagem visual 1.0 e 2.0 convivem.** Enquanto o épico #205 não fecha, parte do catálogo está na paleta e na tipografia antigas e parte na 2.0. O que já migrou está descrito na seção 8; o que falta está nas sub-issues do épico. A dívida se quita com o bump para `1.0.0`.
+16. **`Stepper` e `CheckButton` seguem o desenho antigo.** Os equivalentes 2.0 são `QuantityStepper` e, na lista de peças, `Tag` mais `Button`. A troca na tela fica no app cliente.
 
 ---
 
@@ -1351,7 +1297,7 @@ Atualize o `CONTEXT.md` **no mesmo commit/branch** da alteração sempre que:
 - criar, renomear ou remover um componente ou ícone;
 - adicionar, remover ou mudar o default de uma prop;
 - mudar a aparência (cor, raio, borda, espaçamento, tipografia, tamanho) ou o comportamento de um componente;
-- alterar `src/constants/constants.ts`, `tailwind.config.js` ou `src/ui/gluestack-ui-provider/config.ts`;
+- alterar `src/constants/constants.ts` ou `tailwind.config.js`;
 - adicionar ou remover dependência;
 - criar ou quitar uma dívida técnica.
 

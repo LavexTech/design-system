@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { Pressable, StyleSheet, View } from "react-native"
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import { TextBox as Text } from "../Text/Text"
 import { Grid, GridItem } from "../Grid/Grid"
 import { Modal } from "../Modal/Modal"
@@ -49,7 +48,7 @@ export const Select: React.FC<SelectProps> = ({
   }
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={{ width: "100%" }}>
+    <View style={styles.root}>
       <Grid columns={1} gap={2} darkMode={darkMode}>
         {label ? (
           <GridItem colSpan={4}>
@@ -131,11 +130,15 @@ export const Select: React.FC<SelectProps> = ({
           </View>
         </Modal>
       ) : null}
-    </GluestackUIProvider>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  root: {
+    width: "100%",
+    alignSelf: "stretch",
+  },
   trigger: {
     minHeight: Constants.styles.componentSize.INPUT_HEIGHT,
     flexDirection: "row",

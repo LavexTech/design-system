@@ -1,26 +1,17 @@
-import React from "react"
+import React, { createContext, useContext, useState } from "react"
 import {
   LayoutAnimation,
   Platform,
+  Pressable,
   UIManager,
   View,
+  Text,
   StyleSheet,
 } from "react-native"
-import {
-  Accordion as GluestackAccordion,
-  AccordionItem as GluestackAccordionItem,
-  AccordionHeader,
-  AccordionTrigger,
-  AccordionTitleText,
-  AccordionContent,
-  AccordionIcon,
-} from "../../ui/accordion"
 import { Divider } from "../Divider/Divider"
-import { ChevronDownIcon, ChevronUpIcon } from "../../ui/icon"
+import { IconChevronDown } from "../Icons/IconChevronDown"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
-import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
 
 if (
   Platform.OS === "android" &&
@@ -43,6 +34,16 @@ const ACCORDION_ANIMATION = {
     property: LayoutAnimation.Properties.opacity,
   },
 }
+
+type AccordionContextValue = {
+  expandedId: string | null
+  toggle: (id: string) => void
+}
+
+const AccordionContext = createContext<AccordionContextValue>({
+  expandedId: null,
+  toggle: () => {},
+})
 
 type AccordionItemProps = {
   id: string
@@ -76,59 +77,46 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
   darkMode = false,
   fontScale = 1,
 }) => {
+  const { expandedId, toggle } = useContext(AccordionContext)
+  const expanded = expandedId === id
   const titleFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD)
+  const theme = darkMode ? Constants.styles.theme.dark : Constants.styles.theme.light
+
   return (
     <>
-      <GluestackAccordionItem value={id}>
-        <AccordionHeader>
-          <AccordionTrigger>
-            {({ isExpanded }: { isExpanded: boolean }) => {
-              return (
-                <View style={styles.triggerRow}>
-                  <View style={styles.titleRow}>
-                    {leading ? (
-                      <View style={styles.leading}>{leading}</View>
-                    ) : null}
-                    <View style={styles.titleCluster}>
-                      <AccordionTitleText
-                        style={{
-                          color: darkMode
-                            ? Constants.styles.theme.dark.text.default
-                            : Constants.styles.theme.light.text.default,
-                          fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
-                          flexShrink: 1,
-                          fontFamily: titleFont,
-                          fontWeight: titleFont ? "normal" : undefined,
-                        }}
-                      >
-                        {title}
-                      </AccordionTitleText>
-                      {titleAccessory ? (
-                        <View style={styles.titleAccessory}>
-                          {titleAccessory}
-                        </View>
-                      ) : null}
-                    </View>
-                  </View>
-                  {trailingAccessory ? <View style={styles.trailing}>{trailingAccessory}</View> : null}
-                  <View style={styles.chevron}>
-                    {isExpanded ? (
-                      <AccordionIcon as={ChevronUpIcon} />
-                    ) : (
-                      <AccordionIcon as={ChevronDownIcon} />
-                    )}
-                  </View>
-                </View>
-              )
-            }}
-          </AccordionTrigger>
-        </AccordionHeader>
-        <AccordionContent>
-          <View style={contentBackground ? { backgroundColor: contentBackground, padding: 16 } : undefined}>
-            {children}
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ expanded }}
+        onPress={() => toggle(id)}
+        style={styles.triggerRow}
+      >
+        <View style={styles.titleRow}>
+          {leading ? <View style={styles.leading}>{leading}</View> : null}
+          <View style={styles.titleCluster}>
+            <Text
+              style={{
+                color: theme.text.default,
+                fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+                flexShrink: 1,
+                fontFamily: titleFont,
+                fontWeight: titleFont ? "normal" : "700",
+              }}
+            >
+              {title}
+            </Text>
+            {titleAccessory ? <View style={styles.titleAccessory}>{titleAccessory}</View> : null}
           </View>
-        </AccordionContent>
-      </GluestackAccordionItem>
+        </View>
+        {trailingAccessory ? <View style={styles.trailing}>{trailingAccessory}</View> : null}
+        <View style={[styles.chevron, expanded ? styles.chevronOpen : null]}>
+          <IconChevronDown size={20} color={theme.text.default} />
+        </View>
+      </Pressable>
+      {expanded ? (
+        <View style={contentBackground ? { backgroundColor: contentBackground, padding: 16 } : undefined}>
+          {children}
+        </View>
+      ) : null}
       <Divider darkMode={darkMode} />
     </>
   )
@@ -139,34 +127,31 @@ export const Accordion: React.FC<AccordionProps> = ({
   darkMode = false,
   defaultValue,
 }) => {
+  const [expandedId, setExpandedId] = useState<string | null>(defaultValue ?? null)
+  const theme = darkMode ? Constants.styles.theme.dark : Constants.styles.theme.light
+
+  function toggle(id: string) {
+    LayoutAnimation.configureNext(ACCORDION_ANIMATION)
+    setExpandedId((current) => (current === id ? null : id))
+  }
+
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
-      <GluestackAccordion
-        variant="unfilled"
-        type="single"
-        isCollapsible={true}
-        defaultValue={defaultValue ? [defaultValue] : undefined}
-        onValueChange={() => {
-          LayoutAnimation.configureNext(ACCORDION_ANIMATION)
-        }}
-        style={{
-          backgroundColor: darkMode
-            ? Constants.styles.theme.dark.background.surface
-            : Constants.styles.backgroundColor.WHITE,
-        }}
-      >
+    <AccordionContext.Provider value={{ expandedId, toggle }}>
+      <View style={{ backgroundColor: theme.background.surface, alignSelf: "stretch" }}>
         {children}
-      </GluestackAccordion>
-    </GluestackUIProvider>
+      </View>
+    </AccordionContext.Provider>
   )
 }
 
 const styles = StyleSheet.create({
   triggerRow: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
+    alignSelf: "stretch",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   titleRow: {
     flex: 1,
@@ -196,5 +181,8 @@ const styles = StyleSheet.create({
   chevron: {
     flexShrink: 0,
     marginLeft: Constants.styles.spacing.SMALL,
+  },
+  chevronOpen: {
+    transform: [{ rotate: "180deg" }],
   },
 })
