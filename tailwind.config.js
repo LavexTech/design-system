@@ -13,12 +13,28 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /(bg|border|text|stroke|fill)-(primary|secondary|tertiary|error|success|warning|info|typography|outline|background|indicator)-(0|50|100|200|300|400|500|600|700|800|900|950|white|gray|black|error|warning|muted|success|info|light|dark|primary)/,
+        /(bg|border|text|stroke|fill)-(primary|secondary|tertiary|error|success|warning|info|typography|outline|background|indicator|brand|ink|line)-(0|50|100|200|300|400|500|600|700|800|900|950|white|gray|black|error|warning|muted|success|info|light|dark|primary|DEFAULT|dark|deep|surface|muted|placeholder|soft|interactive|subtle)/,
     },
   ],
   theme: {
     extend: {
       colors: {
+        brand: {
+          DEFAULT: "#3CDBC0",
+          dark: "#0B7566",
+          deep: "#08706D",
+          surface: "#2D3B42",
+        },
+        ink: {
+          DEFAULT: "#2D3B42",
+          muted: "#5A6A72",
+          placeholder: "#66757D",
+        },
+        line: {
+          soft: "#E5E1E6",
+          interactive: "#869199",
+          subtle: "#D5DCDF",
+        },
         primary: {
           0: 'rgb(var(--color-primary-0)/<alpha-value>)',
           50: 'rgb(var(--color-primary-50)/<alpha-value>)',
@@ -173,6 +189,12 @@ module.exports = {
           info: 'rgb(var(--color-indicator-info)/<alpha-value>)',
           error: 'rgb(var(--color-indicator-error)/<alpha-value>)',
         },
+      },
+      borderRadius: {
+        xl: "14px",
+        "2xl": "16px",
+        "3xl": "20px",
+        pill: "24px",
       },
       fontFamily: {
         sans: ["PlusJakartaSans-Regular", "system-ui", "sans-serif"],
