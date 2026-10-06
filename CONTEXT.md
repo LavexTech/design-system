@@ -380,7 +380,7 @@ Nome completo com capitalização automática.
 | `minLength` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
-**Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão de ~48×32 com ícone de olho (`IconEye` aberto quando visível, `IconEyeClosed` quando oculto), padding 16 horizontal e 8 vertical.
+**Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta) e padding de 16 horizontal / 8 vertical.
 
 **Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência).
 
@@ -745,7 +745,7 @@ Botão principal do sistema, com modo de confirmação em duas etapas.
 | `default` | `#333333` (primary-500) | branco (`typography-0`) | — |
 | `default-outline` | transparente | `#333333` | 1 px primary-300 |
 | `success` | `#348352` (success-500) | branco | — |
-| `success-outline` | transparente | verde | 1 px success-300 |
+| `success-outline` | transparente | `#333333` (não verde — ver dívidas) | 1 px success-300 |
 | `danger` | `#DC2626` | branco | 1 px `#DC2626` |
 | `danger-outline` | transparente | `#DC2626` | 1 px `#DC2626` |
 | `primary` | `#2D3B42` | `#3CDBC0` | 1 px `#2D3B42` |
@@ -1030,6 +1030,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; `docs/` é histórico.
 3. **`checklist.md` obsoleto.** Lista quase tudo como não implementado e cita componentes inexistentes (`TabBar`, `OrderList`, `OfferCard`).
 4. **Dois sistemas de cor paralelos.** `Constants.styles` (hex, usado por quase todos os componentes) e a paleta semântica NativeWind/gluestack (CSS vars, usada por `src/ui/*`) não conversam. Por isso `Button variant="default"` é grafite enquanto o azul da marca está em `textColor.PRIMARY`.
+   - Efeito colateral no `Button`: o compound variant `outline + positive` do gluestack usa `text-primary-500`, então `success-outline` tem borda verde e **texto grafite** `#333333`. `danger-outline` escapa disso porque o componente sobrescreve a cor do texto explicitamente.
 5. **Dark mode parcial.** `MainTitle`, `Subtitle`, `Tag`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `List`, `Message*` e `InputChat` não reagem a `darkMode`; `FAB` e `Image` aceitam a prop e a descartam explicitamente (`void darkMode`).
 6. **`UserCardHorizontal` não é horizontal** — empilha os dados em coluna e não mostra avatar.
 7. **`UserCardBio` não renderiza a `bio`**, embora o campo seja obrigatório no tipo.
