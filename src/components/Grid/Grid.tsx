@@ -1,7 +1,5 @@
-import React from "react";
-import { Grid as GluestackGrid, GridItem as GluestackGridItem } from "../../ui/grid";
-import { GluestackUIProvider } from "../../ui/gluestack-ui-provider";
-import { StyleSheet } from "react-native";
+import React, { useMemo, useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 type GridProps = {
   children: React.ReactNode;
@@ -12,6 +10,58 @@ type GridProps = {
   darkMode?: boolean;
 }
 
+/** Faixas do Tailwind: gap-1=4 … gap-12=48. Valores intermediários caem na faixa inferior. */
+function gapToPx(gapValue?: number): number {
+  if (!gapValue || gapValue <= 0) return 0
+  if (gapValue <= 1) return 4
+  if (gapValue <= 2) return 8
+  if (gapValue <= 3) return 12
+  if (gapValue <= 4) return 16
+  if (gapValue <= 6) return 24
+  if (gapValue <= 8) return 32
+  return 48
+}
+
+type Cell = {
+  key: string
+  colSpan: number
+  node: React.ReactNode
+}
+
+function readCells(children: React.ReactNode, columns: number): Cell[] {
+  return React.Children.toArray(children).map((child, index) => {
+    if (React.isValidElement(child) && child.type === GridItem) {
+      const props = child.props as GridItemProps
+      const requested = props.colSpan ?? 1
+      return {
+        key: String(index),
+        colSpan: Math.min(Math.max(requested, 1), columns),
+        node: props.children,
+      }
+    }
+    return { key: String(index), colSpan: 1, node: child }
+  })
+}
+
+function rowsOf(cells: Cell[], columns: number): Cell[][] {
+  const rows: Cell[][] = []
+  let current: Cell[] = []
+  let used = 0
+  cells.forEach((cell) => {
+    if (used > 0 && used + cell.colSpan > columns) {
+      rows.push(current)
+      current = []
+      used = 0
+    }
+    current.push(cell)
+    used += cell.colSpan
+  })
+  if (current.length > 0) {
+    rows.push(current)
+  }
+  return rows
+}
+
 export const Grid: React.FC<GridProps> = ({
   children,
   columns = 12,
@@ -20,87 +70,52 @@ export const Grid: React.FC<GridProps> = ({
   gapY,
   darkMode = false,
 }) => {
-  const childrenArray = React.Children.toArray(children)
-
-  const getGapClass = (gapValue?: number) => {
-    if (!gapValue || gapValue <= 0) return "";
-    if (gapValue <= 1) return "gap-1";
-    if (gapValue <= 2) return "gap-2";
-    if (gapValue <= 3) return "gap-3";
-    if (gapValue <= 4) return "gap-4";
-    if (gapValue <= 6) return "gap-6";
-    if (gapValue <= 8) return "gap-8";
-    return "gap-12";
-  }
-
-  const getGapXClass = (gapValue?: number) => {
-    if (!gapValue || gapValue <= 0) return "";
-    if (gapValue <= 1) return "gap-x-1";
-    if (gapValue <= 2) return "gap-x-2";
-    if (gapValue <= 3) return "gap-x-3";
-    if (gapValue <= 4) return "gap-x-4";
-    if (gapValue <= 6) return "gap-x-6";
-    if (gapValue <= 8) return "gap-x-8";
-    return "gap-x-12";
-  }
-
-  const getGapYClass = (gapValue?: number) => {
-    if (!gapValue || gapValue <= 0) return "";
-    if (gapValue <= 1) return "gap-y-1";
-    if (gapValue <= 2) return "gap-y-2";
-    if (gapValue <= 3) return "gap-y-3";
-    if (gapValue <= 4) return "gap-y-4";
-    if (gapValue <= 6) return "gap-y-6";
-    if (gapValue <= 8) return "gap-y-8";
-    return "gap-y-12";
-  }
-
-  const gapClasses = [
-    gap && getGapClass(gap),
-    gapX && getGapXClass(gapX),
-    gapY && getGapYClass(gapY),
-  ].filter(Boolean).join(" ")
+  void darkMode
+  const [width, setWidth] = useState(0)
+  const columnGap = gapToPx(gapX ?? gap)
+  const rowGap = gapToPx(gapY ?? gap)
+  const cells = useMemo(() => readCells(children, columns), [children, columns])
+  const rows = useMemo(() => rowsOf(cells, columns), [cells, columns])
 
   return (
-    <GluestackUIProvider
-      mode={darkMode ? "dark" : "light"}
-      style={styles.gridProvider}
+    <View
+      style={styles.grid}
+      onLayout={(event) => {
+        const next = Math.floor(event.nativeEvent.layout.width)
+        setWidth((current) => (current === next ? current : next))
+      }}
     >
-      <GluestackGrid 
-        className={gapClasses}
-        _extra={{ 
-          className: `grid-cols-${columns}` 
-        }}
-      >
-        {childrenArray.map((child, index) => {
-          if (React.isValidElement(child) && child.type === GridItem) {
-            const colSpan = (child.props as any).colSpan || 1
-            const actualColSpan = Math.min(colSpan, columns)
-            return (
-              <GluestackGridItem
-                key={index}
-                _extra={{ 
-                  className: `col-span-${actualColSpan}` 
-                }}
-              >
-                {(child.props as any).children}
-              </GluestackGridItem>
-            )
-          }
-          
-          return (
-            <GluestackGridItem
-              key={index}
-              _extra={{ 
-                className: `col-span-1` 
-              }}
+      {width > 0
+        ? rows.map((row, rowIndex) => (
+            <View
+              key={rowIndex}
+              style={[
+                styles.row,
+                { marginBottom: rowIndex < rows.length - 1 ? rowGap : 0 },
+              ]}
             >
-              {child}
-            </GluestackGridItem>
-          )
-        })}
-      </GluestackGrid>
-    </GluestackUIProvider>
+              {row.map((cell, cellIndex) => {
+                const gaps = columnGap * (row.length - 1)
+                const available = Math.max(0, width - gaps)
+                const cellWidth = Math.floor((available * cell.colSpan) / columns)
+                return (
+                  <View
+                    key={cell.key}
+                    style={{
+                      width: cellWidth,
+                      marginRight: cellIndex < row.length - 1 ? columnGap : 0,
+                      flexGrow: 0,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {cell.node}
+                  </View>
+                )
+              })}
+            </View>
+          ))
+        : null}
+    </View>
   )
 }
 
@@ -109,26 +124,20 @@ type GridItemProps = {
   colSpan?: number;
 }
 
-export const GridItem: React.FC<GridItemProps> = ({
-  children,
-  colSpan = 1,
-}) => {
-  return (
-    <GluestackGridItem
-      _extra={{ 
-        className: `col-span-${colSpan}` 
-      }}
-    >
-      {children}
-    </GluestackGridItem>
-  )
+export const GridItem: React.FC<GridItemProps> = ({ children }) => {
+  return <>{children}</>
 }
 
 const styles = StyleSheet.create({
-  gridProvider: {
+  grid: {
     flexGrow: 0,
     flexShrink: 0,
     alignSelf: "stretch",
+    width: "100%",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "flex-start",
     width: "100%",
   },
 })

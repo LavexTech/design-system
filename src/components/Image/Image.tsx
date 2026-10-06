@@ -1,9 +1,18 @@
 import React from "react"
-import { StyleSheet, TouchableOpacity, View } from "react-native"
-import { Image as GluestackImage, NATIVE_IMAGE_SIZE_PX } from "../../ui/image"
+import { Image as RNImage, StyleSheet, TouchableOpacity, View } from "react-native"
 
 type ImageSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"
 type ImageType = "default" | "circle"
+
+const IMAGE_SIZE_PX: Record<ImageSize, number> = {
+  "2xs": 24,
+  xs: 40,
+  sm: 64,
+  md: 80,
+  lg: 96,
+  xl: 128,
+  "2xl": 256,
+}
 
 type ImageProps = {
   src: string
@@ -24,31 +33,23 @@ export const Image: React.FC<ImageProps> = ({
 }) => {
   void darkMode
 
-  const px = NATIVE_IMAGE_SIZE_PX[size]
+  const px = IMAGE_SIZE_PX[size]
   const isCircle = type === "circle"
-
-  const getBorderRadiusClass = () => {
-    if (isCircle) {
-      return "rounded-full"
-    }
-    return "rounded-lg"
-  }
-
   const frameStyle = [
     styles.frame,
     {
       width: px,
       height: px,
-      borderRadius: isCircle ? px / 2 : undefined,
+      borderRadius: isCircle ? px / 2 : 8,
     },
   ]
 
   const imageNode = (
-    <GluestackImage
+    <RNImage
       source={{ uri: src }}
-      size={size}
-      alt={alt}
-      className={getBorderRadiusClass()}
+      accessibilityLabel={alt}
+      style={{ width: px, height: px }}
+      resizeMode="cover"
     />
   )
 
