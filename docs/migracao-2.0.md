@@ -16,7 +16,17 @@ Os dois apps consomem o design system por pin de GitHub:
 "lavex-design-system": "github:LavexTech/design-system#main"
 ```
 
-Não há tag nem versão congelada. **Toda PR mergeada na `main` do design system chega no app no próximo `npm install`.** Isso foi uma decisão consciente do épico: o visual novo entra em produção à medida que fica pronto, e as issues de adaptação dos apps andam logo atrás das issues do design system.
+Não há tag nem versão congelada: **toda PR mergeada na `main` do design system chega no app no próximo `npm install`.**
+
+Por isso a migração 2.0 não é desenvolvida direto na `main`. As 16 tarefas são integradas na branch **`feat/205-ds-2.0`** — cada sub-issue abre uma PR pequena contra ela — e só no fim uma única PR leva tudo de `feat/205-ds-2.0` para a `main`. Até esse momento, **nada do 2.0 aparece nos apps**: eles continuam recebendo a linguagem 1.0 normalmente.
+
+Consequência para quem mantém os apps: existe **um** momento de impacto, não dezoito. As issues de adaptação ([app-client-lavex#145](https://github.com/LavexTech/app-client-lavex/issues/145), [app-client-lavex#146](https://github.com/LavexTech/app-client-lavex/issues/146) e [app-provider-lavex#7](https://github.com/LavexTech/app-provider-lavex/issues/7)) só começam depois desse merge. Quem quiser antecipar a validação pode apontar o pin para a branch de integração em ambiente local:
+
+```json
+"lavex-design-system": "github:LavexTech/design-system#feat/205-ds-2.0"
+```
+
+Isso é para teste local — não comite esse pin.
 
 Consequências práticas:
 
@@ -203,10 +213,10 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 
 ## 6. Ordem de adoção recomendada
 
-1. Espere as fundações (tipografia e tokens) e os primitivos (`Button`, família `Input`) entrarem na `main` do design system.
-2. Faça a revalidação visual do app — em especial o `TAB_BAR_HEIGHT` e as telas de formulário.
-3. Adote os componentes novos por tela, um commit por componente, conforme cada sub-issue do design system for mergeada.
-4. Só depois disso o design system remove o legado e publica a `1.0.0` (sub-issue de fechamento).
+1. Espere a PR de integração (`feat/205-ds-2.0` → `main`) ser mergeada. Antes disso o app não vê o 2.0, e a validação antecipada se faz com o pin local da seção 1.
+2. Atualize o pin (`npm install github:LavexTech/design-system#main`) com o Metro parado e suba com `npm run dev -- --clear`.
+3. Faça a revalidação visual do app — em especial o `TAB_BAR_HEIGHT` e as telas de formulário.
+4. Adote os componentes novos por tela, um commit por componente.
 
 ---
 
