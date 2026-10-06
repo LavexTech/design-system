@@ -135,17 +135,17 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 
 | Grupo | Chave | Valor |
 |---|---|---|
-| `textColor` | `DEFAULT` | `#262627` (quase preto) |
+| `textColor` | `DEFAULT` | `#2D3B42` (cinza escuro) |
 | | `PRIMARY` | `#007AFF` (azul) |
 | | `SUCCESS` | `#059669` (verde) |
 | | `DANGER` | `#DC2626` (vermelho) |
 | | `INFO` | `#8F98AD` (cinza azulado) |
 | | `WARNING` | `#F59E0B` (âmbar) |
-| `backgroundColor` | `WHITE` / `LIGHT_GRAY` / `GRAY` | `#FFFFFF` / `#F8F9FA` / `#E9ECEF` |
-| `borderColor` | `LIGHT` / `MEDIUM` | `#DEE2E6` / `#CED4DA` |
+| `backgroundColor` | `WHITE` / `LIGHT_GRAY` / `GRAY` | `#FFFFFF` / `#E5E1E6` / `#E5E1E6` |
+| `borderColor` | `LIGHT` / `MEDIUM` | `#E5E1E6` / `#CED4DA` |
 | `color` | `WHITE` / `BLACK` | `#FFFFFF` / `#000000` |
 | | `GOLD` | `#FFD700` (estrela preenchida) |
-| | `GRAY` | `#E0E0E0` (estrela vazia, badge inativo) |
+| | `GRAY` | `#E5E1E6` (estrela vazia, badge inativo) |
 | | `BLUE` | `#007AFF` |
 | | `MEDIUM_GRAY` | `#6C757D` |
 | | `SOFT_BLUE` | `#D7E7FA` (balão de mensagem enviada) |
@@ -158,12 +158,12 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 
 | Caminho | light | dark |
 |---|---|---|
-| `text.default` | `#262627` | `#F3F7FF` |
+| `text.default` | `#2D3B42` | `#F3F7FF` |
 | `text.muted` | `#8F98AD` | `#B7C1D6` |
 | `text.primary` | `#007AFF` | `#4EA8FF` |
 | `background.surface` | `#FFFFFF` | `#121821` |
-| `background.subtle` | `#F8F9FA` | `#1A2432` |
-| `border.default` | `#DEE2E6` | `#2A364A` |
+| `background.subtle` | `#E5E1E6` | `#1A2432` |
+| `border.default` | `#E5E1E6` | `#2A364A` |
 
 ### Espaçamento, raio, borda e tamanhos
 
@@ -308,18 +308,19 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
 | `autoCorrect` | `boolean` | — (`false` quando `mobileKeyboard='email'`) |
 | `darkMode` | `boolean` | `false` |
 | `fontScale` | `number` | `1` |
+| `fieldHeight` | `number` | `52` (`INPUT_HEIGHT`) |
 
 ```
-  Nome completo                             ← label (Text size=small, 15px)
+  Nome completo                             ← label Bold 14/20, #2D3B42
 ┌────────────────────────────────┬────────┐
-│ ←12→ valor digitado            │ [right]│ 48
+│ ←16→ valor digitado            │ [right]│ fieldHeight (padrão 52)
 └────────────────────────────────┴────────┘
-  Email deve ter formato válido             ← só quando inválido (14px, vermelho)
+  mensagem de erro                           ← caption, #C62828
 ```
 
-**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12, em `PlusJakartaSans-Regular` (seção 7). Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
+**Aparência:** coluna com `gap` 6. Label em Plus Jakarta Bold, `fontSize` `14 × fontScale`, `lineHeight` `20 × fontScale`, cor `#2D3B42`. A caixa tem altura `fieldHeight` (padrão 52), raio 12, borda 1,5 px `#869199`, fundo branco e `paddingLeft` 16. O texto digitado usa Plus Jakarta Regular, 16 px, cor `#2D3B42`, altura interna 44. Inválido: borda `#C62828` e a `errorMessage` abaixo, em caption. Foco: borda `#0B7566` e, na web, outline de 2 px na mesma cor. `InputEmail` e `InputPassword` repassam `fieldHeight`.
 
-**Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` é renderizado dentro da caixa, à direita.
+**Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` fica dentro da caixa, à direita, sem encolher (`flexShrink: 0`). O texto do campo encolhe (`minWidth: 0`) para o elemento da direita não sair do quadro em telas estreitas. A caixa corta o que ainda extrapolar (`overflow: hidden`).
 
 #### `InputName`
 
@@ -392,7 +393,7 @@ Nome completo com capitalização automática.
   A senha deve conter pelo menos um número  ← mensagem da 1ª regra violada
 ```
 
-**Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta) e padding de 16 horizontal / 8 vertical.
+**Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão de 44×44 com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta). O botão não encolhe e permanece inteiro dentro da borda, mesmo quando a largura da tela não comporta o texto ao lado.
 
 **Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência).
 
@@ -426,7 +427,7 @@ Barra de envio de mensagem no chat.
   flex: 1                        gap 8   ícone 20 + padding 8
 ```
 
-**Aparência:** linha de largura total, gap 10, alinhada pela base. Campo de 48 px, raio 24, borda 1,5 px `#869199`, padding horizontal 18, texto 16. Botão circular de 48 px: `#3CDBC0` com ícone `#2D3B42` quando há texto; `#F4F2F5` com ícone `#5A6A72` quando vazio. Vazio, o botão fica desabilitado.
+**Aparência:** linha de largura total, gap 10, alinhada pela base. Campo de 48 px, raio 24, borda 1,5 px `#869199`, padding horizontal 18, texto 16. Botão circular de 48 px: `#3CDBC0` com ícone `#2D3B42` quando há texto; `#E5E1E6` com ícone `#5A6A72` quando vazio. Vazio, o botão fica desabilitado.
 
 **Comportamento:** `onSend` só dispara com `value.trim()` não vazio; `returnKeyType="send"` e Enter também enviam. O componente não limpa o campo — isso é responsabilidade do app.
 
@@ -596,11 +597,11 @@ Avatar circular com fallback para ícone.
 ```
 com foto:        sem foto (ou só espaços):
  ╭──────╮         ╭──────╮
- │ foto │         │  👤  │   fundo #E9ECEF
+ │ foto │         │  👤  │   fundo #E5E1E6
  ╰──────╯         ╰──────╯   ícone a 45% do diâmetro, cor #8F98AD
 ```
 
-**Aparência:** círculo de 32 (`2xs`), 40 (`xs`), 64 (`sm`) ou 80 px (`md`), com `overflow: hidden` e `alignSelf: flex-start`. Com imagem: a foto recortada em círculo. Sem imagem (nulo ou só espaços): fundo `#E9ECEF` (ou `#1A2432` no dark) com `IconProfile` centralizado em 45% do diâmetro, cor `#8F98AD` (ou `#B7C1D6`).
+**Aparência:** círculo de 32 (`2xs`), 40 (`xs`), 64 (`sm`) ou 80 px (`md`), com `overflow: hidden` e `alignSelf: flex-start`. Com imagem: a foto recortada em círculo. Sem imagem (nulo ou só espaços): fundo `#E5E1E6` (ou `#1A2432` no dark) com `IconProfile` centralizado em 45% do diâmetro, cor `#8F98AD` (ou `#B7C1D6`).
 
 **Comportamento:** com foto, o toque é tratado pelo próprio `Image` (`onClick`); sem foto, o placeholder é envolvido por um `Pressable` com `accessibilityLabel={alt}`.
 
@@ -640,13 +641,13 @@ Empilha filhos com separador opcional.
 ```
 Tarefas pendentes          ← Subtitle 20px, só com title
 item 1
-──────────────────────     ← 1px #DEE2E6, margem vertical 8
+──────────────────────     ← 1px #E5E1E6, margem vertical 8
 item 2
 ──────────────────────     ← nunca antes do primeiro item
 item 3
 ```
 
-**Aparência:** coluna de largura total; se houver `title`, um `Subtitle` no topo. Entre itens (nunca antes do primeiro), uma linha de 1 px `#DEE2E6` com margem vertical 8.
+**Aparência:** coluna de largura total; se houver `title`, um `Subtitle` no topo. Entre itens (nunca antes do primeiro), uma linha de 1 px `#E5E1E6` com margem vertical 8.
 
 #### `TextList`
 
@@ -697,7 +698,7 @@ fechado:                        aberto (arrastado para ←):
                                  ← o conteúdo desliza; a faixa estava embaixo
 ```
 
-**Aparência:** container de largura total com `overflow: hidden`. Atrás do conteúdo, encostada à direita e ocupando toda a altura, uma faixa vermelha `#DC2626` de `deleteWidth` px com `IconTrash` branco de 20 px centralizado. O conteúdo fica por cima, fundo branco, com hairlines `#DEE2E6` no topo e na base, e desliza horizontalmente.
+**Aparência:** container de largura total com `overflow: hidden`. Atrás do conteúdo, encostada à direita e ocupando toda a altura, uma faixa vermelha `#DC2626` de `deleteWidth` px com `IconTrash` branco de 20 px centralizado. O conteúdo fica por cima, fundo branco, com hairlines `#E5E1E6` no topo e na base, e desliza horizontalmente.
 
 **Comportamento:** `PanResponder` só assume o gesto depois de 10 px horizontais predominando sobre o vertical (rolagem da lista continua funcionando). O arraste é limitado ao intervalo `[-deleteWidth, 0]`. No soltar, abre se a velocidade for menor que −0,45, fecha se maior que +0,45, e caso contrário decide pela posição (abre além de 45% da faixa). A animação é `Animated.spring` sem bounce. Tocar no conteúdo aberto **fecha** em vez de disparar `onPress`. Com `swipeEnabled: false`, o item fecha e o gesto é ignorado — o toque continua funcionando. Suporta uso controlado (`isOpen` + `onOpenChange`) para manter só um item aberto na lista.
 
@@ -724,7 +725,7 @@ Superfície padrão para agrupar conteúdo.
    ↓ margem inferior 8 (empilha cards com respiro)
 ```
 
-**Aparência:** retângulo de largura total, fundo branco (`#121821` no dark), raio 8, borda 0,4 px `#DEE2E6` (`#2A364A` no dark), padding 16 e margem inferior 8. Com `title`, um texto Plus Jakarta Bold de `14 × fontScale` em `#262627`, alinhado à esquerda, com 8 px abaixo. O conteúdo fica em uma `View` de largura total com `overflow: hidden`.
+**Aparência:** retângulo de largura total, fundo branco (`#121821` no dark), raio 8, borda 0,4 px `#E5E1E6` (`#2A364A` no dark), padding 16 e margem inferior 8. Com `title`, um texto Plus Jakarta Bold de `14 × fontScale` em `#2D3B42`, alinhado à esquerda, com 8 px abaixo. O conteúdo fica em uma `View` de largura total com `overflow: hidden`.
 
 **Comportamento:** com `onClick` vira `TouchableOpacity` com `activeOpacity 0.7`; sem, é uma `View` inerte.
 
@@ -754,7 +755,7 @@ Layout em colunas, sem biblioteca de grid.
 |---|---|---|
 | `darkMode` | `boolean` | `false` |
 
-**Aparência:** linha horizontal de largura total e altura 0,4 px, cor `#DEE2E6` (ou `#2A364A` no dark). Sem margens.
+**Aparência:** linha horizontal de largura total e altura 0,4 px, cor `#E5E1E6` (ou `#2A364A` no dark). Sem margens.
 
 #### `Tag`
 
@@ -871,7 +872,7 @@ sem icon:                        com icon:
                                          texto segue centralizado no botão
 ```
 
-**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo `#F4F2F5`, texto `#5A6A72`, sem borda. `darkMode` é aceita e ignorada.
+**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`, sem borda. `darkMode` é aceita e ignorada.
 
 | Variante | Fundo | Texto | Borda |
 |---|---|---|---|
@@ -885,7 +886,7 @@ sem icon:                        com icon:
 | `ghost` | transparente | `#0B7566` | — |
 | `ghost-danger` | transparente | `#C62828` | — |
 
-Toque em fundo opaco aplica opacidade 0,85. Fundo transparente ou branco, no toque, vai para `#F4F2F5`.
+Toque em fundo opaco aplica opacidade 0,85. Fundo transparente ou branco, no toque, vai para `#E5E1E6`.
 
 **Comportamento:** com `icon`, o nó fica em `position: absolute` a 16 px da esquerda e o texto continua centralizado. Com `needsConfirmation`, o primeiro toque troca o rótulo para `confirmationText` e pinta fundo `#C62828` com texto branco; o segundo toque dispara `onClick`. Sem o segundo toque, volta após 8 segundos.
 
@@ -914,7 +915,7 @@ isLocked: false                  isLocked: true
  fonte 14,4 preta
 ```
 
-**Aparência:** pílula retangular de raio 8, borda 1,2 px, fundo branco, que mede pelo conteúdo (`alignSelf: flex-start`). No estado normal (`isLocked: false`): borda e texto pretos, padding esquerdo ~28 px para acomodar um badge circular de 15,4 px a 5 px da borda esquerda — verde `#059669` com `IconCircleCheck` branco quando `checked`, cinza `#E0E0E0` com `IconCircle` preto quando não. Texto Plus Jakarta Regular 14,4 px centralizado. No estado travado (`isLocked: true`): o badge some, o padding encolhe para ~4,8 px, a fonte cai para 11,5 px e borda e texto assumem `lockedColor`.
+**Aparência:** pílula retangular de raio 8, borda 1,2 px, fundo branco, que mede pelo conteúdo (`alignSelf: flex-start`). No estado normal (`isLocked: false`): borda e texto pretos, padding esquerdo ~28 px para acomodar um badge circular de 15,4 px a 5 px da borda esquerda — verde `#059669` com `IconCircleCheck` branco quando `checked`, cinza `#E5E1E6` com `IconCircle` preto quando não. Texto Plus Jakarta Regular 14,4 px centralizado. No estado travado (`isLocked: true`): o badge some, o padding encolhe para ~4,8 px, a fonte cai para 11,5 px e borda e texto assumem `lockedColor`.
 
 **Comportamento:** a troca de `isLocked` é **instantânea** (`setValue`, sem animação), embora os valores sejam interpolados. O toque chama `onClick(!checked)` e `onTap(!checked)` — o componente é controlado, não guarda estado. Desabilitado fica com `opacity 0.7`; pressionado, 0,9. Expõe `accessibilityRole="button"` e `accessibilityState={{ checked, disabled }}`.
 
@@ -953,7 +954,7 @@ Contador de quantidade com botões − / + e exclusão opcional.
  (só com onDelete)              30px (52 com valueSuffix)
 ```
 
-**Aparência:** linha de largura total: botão de lixeira opcional de 40×40 (borda 0,4 px, raio 8, margem direita 8), rótulo flexível (`Text` 18 px), valor alinhado à direita em uma coluna de 30 px (52 px quando há `valueSuffix`) e, encostado na direita, o par de botões de 40×40 unidos — o esquerdo com `IconMinus` e cantos arredondados só à esquerda, o direito com `IconPlus` e cantos só à direita, sem borda entre eles. Ícones de 16 px, fundo branco, borda `#CED4DA`. Botão no limite: fundo `#E9ECEF` e `opacity 0.5`.
+**Aparência:** linha de largura total: botão de lixeira opcional de 40×40 (borda 0,4 px, raio 8, margem direita 8), rótulo flexível (`Text` 18 px), valor alinhado à direita em uma coluna de 30 px (52 px quando há `valueSuffix`) e, encostado na direita, o par de botões de 40×40 unidos — o esquerdo com `IconMinus` e cantos arredondados só à esquerda, o direito com `IconPlus` e cantos só à direita, sem borda entre eles. Ícones de 16 px, fundo branco, borda `#CED4DA`. Botão no limite: fundo `#E5E1E6` e `opacity 0.5`.
 
 **Comportamento:** `+` só incrementa abaixo de `max`, `−` só decrementa acima de `min`; o componente é controlado.
 
@@ -1047,10 +1048,10 @@ Exibição somente leitura de uma nota.
 
 ```
 ★ ★ ★ ★ ☆     sem gap entre as estrelas; altura da linha = size
-↑ douradas    ↑ cinza #E0E0E0 (a base aparece sempre, por baixo)
+↑ douradas    ↑ cinza #E5E1E6 (a base aparece sempre, por baixo)
 ```
 
-**Aparência:** linha de 5 estrelas de `size` px. Fundo sempre em cinza `#E0E0E0`; por cima, estrela cheia dourada `#FFD700` ou meia estrela dourada, conforme a nota. Altura da linha = `size`, sem gap entre as estrelas.
+**Aparência:** linha de 5 estrelas de `size` px. Fundo sempre em cinza `#E5E1E6`; por cima, estrela cheia dourada `#FFD700` ou meia estrela dourada, conforme a nota. Altura da linha = `size`, sem gap entre as estrelas.
 
 **Comportamento:** a nota é limitada a `[0, 5]` e arredondada para o meio ponto mais próximo.
 
@@ -1071,7 +1072,7 @@ Avaliação interativa com meia estrela.
 └─┴─ metade esquerda = .5   |   metade direita = inteiro
 ```
 
-**Aparência:** `Grid` de 5 colunas com `gap-1` (4 px), cada célula com uma estrela de `size` px — cinza `#E0E0E0` de base, com sobreposição dourada cheia ou meia conforme a seleção.
+**Aparência:** `Grid` de 5 colunas com `gap-1` (4 px), cada célula com uma estrela de `size` px — cinza `#E5E1E6` de base, com sobreposição dourada cheia ou meia conforme a seleção.
 
 **Comportamento:** cada estrela tem duas áreas tocáveis (metade esquerda = `.5`, metade direita = inteiro). O componente mantém a nota em estado próprio a partir de `initialRating` (não é controlado por prop) e expõe prévia enquanto o toque está pressionado (`onPressIn`/`onPressOut`). Nota final limitada a `[0, 5]`.
 
@@ -1110,11 +1111,11 @@ recebida — espelhada:
          canto inf. esquerdo reto
 ```
 
-**Aparência — enviada (`isOwn: true`):** linha alinhada à direita e pela base, com gap 4: horário em cinza `#8F98AD` de 12 px, balão azul claro `#D7E7FA` com raio 12 (canto inferior direito reto, raio 4), padding 16/8, texto `#262627` de 18 px, largura máxima 75%; e, à direita, coluna de avatar de 40×40 com margem esquerda 8.
+**Aparência — enviada (`isOwn: true`):** linha alinhada à direita e pela base, com gap 4: horário em cinza `#8F98AD` de 12 px, balão azul claro `#D7E7FA` com raio 12 (canto inferior direito reto, raio 4), padding 16/8, texto `#2D3B42` de 18 px, largura máxima 75%; e, à direita, coluna de avatar de 40×40 com margem esquerda 8.
 
-**Aparência — recebida:** espelhada — avatar à esquerda (40×40, margem direita 8), depois coluna com o nome do remetente (`Text size="small"`, margem inferior 4) e o balão **branco** com borda 0,4 px `#DEE2E6`, raio 12 com canto inferior esquerdo reto (raio 4); o horário fica à direita do balão.
+**Aparência — recebida:** espelhada — avatar à esquerda (40×40, margem direita 8), depois coluna com o nome do remetente (`Text size="small"`, margem inferior 4) e o balão **branco** com borda 0,4 px `#E5E1E6`, raio 12 com canto inferior esquerdo reto (raio 4); o horário fica à direita do balão.
 
-**Comportamento:** `isGrouped` reduz a margem superior de 8 para 2 px (mensagens consecutivas do mesmo remetente). `showAvatar: false` mantém a coluna de 40 px vazia, preservando o alinhamento. `avatarVariant: 'headset'` troca a foto por um círculo cinza `#E9ECEF` de 32 px com `IconHeadset` de 22 px em `#8F98AD` — usado no chat de suporte. Com `onClick`, toda a mensagem vira área tocável com `activeOpacity 0.7`.
+**Comportamento:** `isGrouped` reduz a margem superior de 8 para 2 px (mensagens consecutivas do mesmo remetente). `showAvatar: false` mantém a coluna de 40 px vazia, preservando o alinhamento. `avatarVariant: 'headset'` troca a foto por um círculo cinza `#E5E1E6` de 32 px com `IconHeadset` de 22 px em `#8F98AD` — usado no chat de suporte. Com `onClick`, toda a mensagem vira área tocável com `activeOpacity 0.7`.
 
 ### 8.8 Mídia e avisos
 
@@ -1181,7 +1182,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **Tipografia.** Plus Jakarta Sans (400/500/600/700). Não há segunda família.
 
-**`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#F4F2F5`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
+**`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
 
 **`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566` (outline na web). Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max} caracteres"`.
 
@@ -1189,9 +1190,9 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **Sem gluestack.** `Modal`, `Grid`, `Accordion`, `Image` e `Select` usam primitivos do React Native. A pasta `src/ui` foi removida, junto com `@gluestack-ui/*`, `gluestack-ui`, `@legendapp/motion`, `react-aria` e `react-stately`.
 
-**`InputChat`.** Campo de 48 px com raio 24 e botão circular de 48 px em `#3CDBC0`. Vazio, o botão fica `#F4F2F5`. Não limpa o campo.
+**`InputChat`.** Campo de 48 px com raio 24 e botão circular de 48 px em `#3CDBC0`. Vazio, o botão fica `#E5E1E6`. Não limpa o campo.
 
-**`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#F4F2F5`, sem borda, canto inferior esquerdo 4.
+**`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#E5E1E6`, sem borda, canto inferior esquerdo 4.
 
 **`NavigationBar`.** Altura mínima 76. Aba ativa com pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa em `#5A6A72`. `NAVIGATION_BAR_HEIGHT` vale 76.
 
@@ -1213,13 +1214,13 @@ Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` (SV
 
 | Prop | Tipo | Default |
 |---|---|---|
-| `color` | `string` | `#262627` (cor de traço, preferida) |
+| `color` | `string` | `#2D3B42` (cinza escuro; cor de traço, preferida) |
 | `fill` | `string` | — (alias legado de `color`; em `IconStar`/`IconStarHalf` também preenche a forma) |
 | `size` | `number` | `24` (preferida) |
 | `width` / `height` | `number` | — (fallback quando `size` não é passado) |
 | `strokeWidth` | `number` | `2` |
 
-Resolução: cor = `color ?? fill ?? '#262627'`; tamanho = `size ?? width ?? height ?? 24`. Exceto nas estrelas, os ícones são **somente traço** (`fill: none`).
+Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? height ?? 24`. Exceto nas estrelas, os ícones são **somente traço** (`fill: none`).
 
 | Export | Glifo lucide | Uso típico |
 |---|---|---|

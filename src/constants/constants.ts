@@ -40,7 +40,7 @@ const Constants = {
       BOLD: "PlusJakartaSans-Bold",
     },
     textColor: {
-      DEFAULT: "#262627",
+      DEFAULT: "#2D3B42",
       PRIMARY: "#007AFF",
       SUCCESS: "#059669",
       DANGER: "#DC2626",
@@ -49,11 +49,11 @@ const Constants = {
     },
     backgroundColor: {
       WHITE: "#FFFFFF",
-      LIGHT_GRAY: "#F8F9FA",
-      GRAY: "#E9ECEF",
+      LIGHT_GRAY: "#E5E1E6",
+      GRAY: "#E5E1E6",
     },
     borderColor: {
-      LIGHT: "#DEE2E6",
+      LIGHT: "#E5E1E6",
       MEDIUM: "#CED4DA",
     },
     spacing: {
@@ -97,7 +97,7 @@ const Constants = {
     },
     surface: {
       DEFAULT: "#FFFFFF",
-      MUTED: "#F4F2F5",
+      MUTED: "#E5E1E6",
       SUBTLE: "#FAF9FA",
       INFO: "#EEFBF8",
       ACCENT: "#E2FAF6",
@@ -124,7 +124,7 @@ const Constants = {
       WHITE: "#FFFFFF",
       BLACK: "#000000",
       GOLD: "#FFD700",
-      GRAY: "#E0E0E0",
+      GRAY: "#E5E1E6",
       BLUE: "#007AFF",
       MEDIUM_GRAY: "#6C757D",
       SOFT_BLUE: "#D7E7FA",
@@ -150,16 +150,16 @@ const Constants = {
     theme: {
       light: {
         text: {
-          default: "#262627",
+          default: "#2D3B42",
           muted: "#8F98AD",
           primary: "#007AFF",
         },
         background: {
           surface: "#FFFFFF",
-          subtle: "#F8F9FA",
+          subtle: "#E5E1E6",
         },
         border: {
-          default: "#DEE2E6",
+          default: "#E5E1E6",
         },
       },
       dark: {

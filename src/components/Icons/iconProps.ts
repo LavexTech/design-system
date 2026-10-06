@@ -10,7 +10,7 @@ export type IconProps = {
   strokeWidth?: number
 }
 
-export const DEFAULT_ICON_COLOR = '#262627'
+export const DEFAULT_ICON_COLOR = '#2D3B42'
 export const DEFAULT_ICON_SIZE = 24
 export const DEFAULT_STROKE_WIDTH = 2
 

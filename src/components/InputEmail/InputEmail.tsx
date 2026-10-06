@@ -9,6 +9,7 @@ type InputEmailProps = {
   errorMessage?: string,
   darkMode?: boolean,
   fontScale?: number,
+  fieldHeight?: number,
 }
 
 export const InputEmail: React.FC<InputEmailProps> = ({
@@ -19,6 +20,7 @@ export const InputEmail: React.FC<InputEmailProps> = ({
   errorMessage = "Email deve ter formato válido",
   darkMode = false,
   fontScale = 1,
+  fieldHeight,
 }) => {
   const validateEmail = (email: string): boolean => {
     if (!email) return true;
@@ -44,6 +46,7 @@ export const InputEmail: React.FC<InputEmailProps> = ({
       mobileKeyboard="email"
       darkMode={darkMode}
       fontScale={fontScale}
+      fieldHeight={fieldHeight}
     />
   );
 };
