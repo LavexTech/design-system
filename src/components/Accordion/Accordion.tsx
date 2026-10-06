@@ -20,6 +20,7 @@ import { ChevronDownIcon, ChevronUpIcon } from "../../ui/icon"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
 
 if (
   Platform.OS === "android" &&
@@ -130,7 +131,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   defaultValue,
 }) => {
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
       <GluestackAccordion
         variant="unfilled"
         type="single"

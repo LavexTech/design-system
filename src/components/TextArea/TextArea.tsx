@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native"
 import { Textarea, TextareaInput } from "../../ui/textarea"
 import { TextBox } from "../Text/Text"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
+import { hugContentStyle } from "../../ui/gluestack-ui-provider/hugContentStyle"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
@@ -37,7 +38,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   const fieldFont = useResolvedFontFamily(Constants.styles.fontFamily.REGULAR)
 
   return (
-    <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+    <GluestackUIProvider mode={darkMode ? "dark" : "light"} style={hugContentStyle}>
       <Grid columns={1} gapY={2} darkMode={darkMode}>
         <GridItem colSpan={1}>
           <TextBox text={label} size="small" darkMode={darkMode} fontScale={fontScale} />

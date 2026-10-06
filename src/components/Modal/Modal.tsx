@@ -81,7 +81,10 @@ export const Modal: React.FC<ModalProps> = ({
     }
 
     return (
-        <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
+        <GluestackUIProvider
+            mode={darkMode ? "dark" : "light"}
+            style={{ flex: 1, width: "100%", height: "100%" }}
+        >
             <GluestackModal
                 isOpen={visible}
                 onClose={onClose}

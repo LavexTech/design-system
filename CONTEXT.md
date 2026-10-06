@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `0.2.17`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `0.2.19`. Data de referência do código: outubro de 2026.
 
 > **Migração 2.0 em andamento.** O repositório está migrando para a linguagem visual 2.0 (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps consumidores, em `docs/migracao-2.0.md`. Este documento continua descrevendo o **código atual**: cada sub-issue da migração atualiza a seção correspondente quando entra.
 
@@ -28,7 +28,7 @@ Instalação nos apps (pin de branch, não de tag):
 
 Entrypoint: `index.ts` na raiz (`main` e `react-native` apontam para ele). Tudo que o app consome **precisa estar exportado lá**. Arquivos publicados (`files`): `src/`, `docs/`, `babel.config.js`, `tailwind.config.js`, `nativewind-env.d.ts`, `react-native.config.js`, `metro.config.js`, `README.md`, `index.ts`.
 
-Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. Existe um script `npm run build` (`tsc`, saída em `dist/`), mas ele **falha hoje** com 52 erros `TS2307` e, de qualquer forma, não é o que os apps consomem — o Metro do app compila `src/` diretamente (ver dívida 19). Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`.
+Importante: o pacote é distribuído como **código-fonte TypeScript/TSX**, não como build. `npm run build` (`tsc`) gera `dist/` com `.d.ts` e sourcemaps, e `npm run typecheck` roda `tsc --noEmit`. O `tsconfig` usa `module: esnext` e `moduleResolution: bundler` para resolver os subpath exports de `@gluestack-ui/*`, e inclui `nativewind-env.d.ts` para o tipo de `className`. Os apps não consomem `dist/`: o Metro compila `src/` diretamente. Por isso a config do Tailwind do app precisa incluir `node_modules/lavex-design-system` no `content`. Para o `tsc` deste repositório enxergar os peers (`react`, `react-native`, `@gluestack-ui/core`, `@gluestack-ui/utils`, `@legendapp/motion`, `expo-font`, `react-native-svg`), eles também estão em `devDependencies`.
 
 ---
 
@@ -93,7 +93,7 @@ design-system/
 
 4. A fonte de verdade de estilo é `src/constants/constants.ts` (importado como `Constants`). Valores numéricos/cores crus no `StyleSheet` são exceção; o padrão é `Constants.styles.*`.
 5. A maioria dos componentes usa `StyleSheet.create` + `Constants`. NativeWind/Tailwind aparece apenas dentro de `src/ui/*` (primitivos gluestack) e em classes de grid/raio passadas por `className`.
-6. Componentes que embrulham primitivos gluestack renderizam um `GluestackUIProvider` próprio (`Button`, `Input`, `TextArea`, `Select`, `Grid`, `Modal`, `Accordion`). Esse provider é uma `View` extra na árvore — relevante para layout: sem `style` explícito ele aplica `{ flex: 1, height: '100%', width: '100%' }`.
+6. Componentes que embrulham primitivos gluestack renderizam um `GluestackUIProvider` próprio (`Button`, `Input`, `TextArea`, `Select`, `Grid`, `Modal`, `Accordion`). Esse provider é uma `View` extra na árvore. Sem `style`, o default é `{ flex: 1, height: '100%', width: '100%' }`. `Button`, `Input`, `TextArea` e `Accordion` passam `hugContentStyle` (`flexGrow: 0`, `flexShrink: 0`, `alignSelf: 'stretch'`, `width: '100%'`). `Modal` passa `{ flex: 1, width: '100%', height: '100%' }` de propósito, para o overlay cobrir a tela.
 
 ### Texto e dimensão (regras transversais)
 
@@ -120,9 +120,10 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 |---|---|
 | **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default) |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
-| **Largura total + wrapper `flex: 1`** | `Button`, `Input`, `TextArea`, `Accordion`, `Modal` |
+| **Largura total, altura do conteúdo** (`hugContentStyle`) | `Button`, `Input`, `TextArea`, `Accordion`, `Grid`, `Select` |
+| **Cobre a tela** (`flex: 1`) | `Modal` |
 
-A terceira linha é a pegadinha: esses cinco não passam `style` para o `GluestackUIProvider`, então o wrapper cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de uma coluna flexível, esse wrapper **absorve o espaço livre** — dois `Button` empilhados numa `View` com `flex: 1` dividem a altura disponível em vez de ficarem com 40 px cada. Na prática, os apps contornam envolvendo cada um em uma `View` de altura fixa ou `flexGrow: 0`. `Select` (passa `width: 100%`) e `Grid` (passa `flexGrow/flexShrink: 0`) escapam do problema.
+`Button`, `Input`, `TextArea` e `Accordion` passam `hugContentStyle` ao provider, no mesmo espírito do `Grid`. Dois `Button` empilhados numa coluna flexível ficam com a altura do próprio botão. `Modal` mantém `flex: 1` no wrapper porque o overlay precisa ocupar a tela; o `GluestackModal` interno também recebe `flex: 1`. O default do provider não foi invertido: um consumidor sem `style` ainda estica, e o `Modal` depende disso.
 
 ---
 
@@ -836,7 +837,7 @@ Diálogo centralizado com rodapé de ações.
 
 **Aparência:** backdrop escurecido cobrindo a tela (toque fecha) e um cartão centralizado `size="md"` do gluestack. Altura máxima = altura da janela − 64 (altura da navigation bar) − safe area inferior; o corpo rola e é limitado a 70% desse máximo. Com `title`, cabeçalho com o texto centralizado (`Text`). Rodapé em linha com gap 8: só um botão alinhado à direita no modo simples; dois botões com `space-between` quando há `onConfirm` (cancelar à esquerda, confirmar à direita).
 
-**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. Usa `useRNModal`, então funciona sobre qualquer stack de navegação.
+**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. Usa `useRNModal`, então funciona sobre qualquer stack de navegação. O `GluestackUIProvider` do modal recebe `flex: 1` de propósito para o backdrop cobrir a tela.
 
 #### `Accordion` / `AccordionItem`
 
@@ -924,8 +925,10 @@ Em dark mode, `default` e `default-outline` passam a fundo `#1A2432`/transparent
 | `default` | `#333333` | `#292929` | `#1F1F1F` |
 | `success` | `#348352` | `#2A7948` | `#206F3E` |
 | `default-outline` / `success-outline` | transparente | fundo `#F6F6F6` (`background-50`) | volta a transparente |
+| `primary` / `secondary` / `danger` | cor de repouso | fundo ~12% mais escuro | opacidade 0,85 |
+| `secondary-outline` / `danger-outline` | cor de repouso | `#F6F6F6` se o fundo é transparente; senão ~12% mais escuro | opacidade 0,85 |
 
-Ressalva importante: as variantes `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` **inline**, que vence o `className` do NativeWind. Nessas cinco **não há** mudança nenhuma de hover/active — o botão fica visualmente estático até o toque ser solto.
+`default`, `default-outline`, `success` e `success-outline` usam as classes `data-[hover]`/`data-[active]` do gluestack. As outras cinco (e `default`/`default-outline` em dark mode, que também pintam o fundo por `style` inline) usam `onHoverIn`/`onPressIn`: o hover escurece o hex em 12% (ou aplica `#F6F6F6` quando o fundo é transparente) e o toque aplica opacidade 0,85. A cor de repouso não muda. `needsConfirmation` continua no `Pressable` próprio, com opacidade 0,85 no pressed.
 
 **Comportamento:** com `icon`, o nó é posicionado em `position: absolute` a 16 px da esquerda, e o texto continua centralizado. Com `needsConfirmation`, o botão deixa de usar o primitivo gluestack e vira um `Pressable` próprio (altura mínima 40, raio 8, padding 16/8, texto bold centralizado): o primeiro toque troca o rótulo para `confirmationText` e anima fundo, borda e texto para vermelho `#DC2626`/branco em 300 ms; o segundo toque dispara `onClick`. Sem o segundo toque, volta ao estado original após **8 segundos**. Pressionado reduz a opacidade para 0,85; desabilitado, 0,5.
 
