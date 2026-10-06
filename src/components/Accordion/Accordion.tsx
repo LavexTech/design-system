@@ -18,6 +18,7 @@ import {
 import { Divider } from "../Divider/Divider"
 import { ChevronDownIcon, ChevronUpIcon } from "../../ui/icon"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 
 if (
@@ -70,6 +71,7 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
   darkMode = false,
   fontScale = 1,
 }) => {
+  const titleFont = useResolvedFontFamily(Constants.styles.fontFamily.BOLD)
   return (
     <>
       <GluestackAccordionItem value={id}>
@@ -90,6 +92,8 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
                             : Constants.styles.theme.light.text.default,
                           fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
                           flexShrink: 1,
+                          fontFamily: titleFont,
+                          fontWeight: titleFont ? "normal" : undefined,
                         }}
                       >
                         {title}

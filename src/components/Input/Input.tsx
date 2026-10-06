@@ -5,6 +5,7 @@ import { TextBox as Text } from "../Text/Text"
 import { Input as InputBase, InputField } from '../../ui/input'
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 
 type InputProps = {
   label: string
@@ -48,6 +49,7 @@ export const Input: React.FC<InputProps> = ({
   autoCorrect,
 }) => {
   const [isValid, setIsValid] = useState<boolean>(true)
+  const fieldFont = useResolvedFontFamily(Constants.styles.fontFamily.REGULAR)
 
   const applyMask = (inputValue: string, maskPattern?: string): string => {
     if (!maskPattern) return inputValue
@@ -172,6 +174,7 @@ export const Input: React.FC<InputProps> = ({
             style={{
               color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
               fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+              fontFamily: fieldFont,
             }}
           />
           {rightElement}

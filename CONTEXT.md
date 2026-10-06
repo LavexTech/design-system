@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `0.2.16`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `0.2.17`. Data de referência do código: outubro de 2026.
 
 > **Migração 2.0 em andamento.** O repositório está migrando para a linguagem visual 2.0 (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps consumidores, em `docs/migracao-2.0.md`. Este documento continua descrevendo o **código atual**: cada sub-issue da migração atualiza a seção correspondente quando entra.
 
@@ -98,7 +98,7 @@ design-system/
 ### Texto e dimensão (regras transversais)
 
 7. **Nada trunca.** Não existe um único `numberOfLines` ou `ellipsizeMode` em todo o `src/`. Todo texto longo **quebra linha** e faz o componente crescer em altura — nunca aparece reticência. Vale para nomes em cards de usuário, títulos de `Order`/`AccordionItem`, rótulos de `CheckButton`, opções de `Select` e balões de `Message`. Ao imaginar o layout, suponha sempre multi-linha, não corte.
-8. **Fonte do texto não é uniforme.** Componentes próprios usam o Roboto embarcado; os que delegam para primitivos gluestack (`Button`, `Input`, `TextArea`, `Accordion`) renderizam na **fonte do sistema** — ver seção 7.
+8. **Fonte do texto é o Roboto embarcado.** Componentes próprios e `Button`, `Input`, `TextArea` e `Accordion` aplicam a família via `useResolvedFontFamily` (seção 7). O corte Bold neutraliza `fontWeight` do Tailwind para o negrito vir do arquivo `Roboto-Bold`.
 
 ### Props
 
@@ -228,20 +228,11 @@ Família única: **Roboto**, embarcada em `src/assets/fonts/Roboto/static/` nos 
 
 - `useFonts(fontNames?: string[])` — carrega sob demanda via `expo-font`, com cache em `Set` de módulo para não recarregar. Default: `["Roboto-Regular"]`. Retorna `ready: boolean`; em erro, loga e retorna `true` mesmo assim (degrada para a fonte do sistema).
 - `useGlobalFonts()` — carrega todos os 6 cortes.
+- `useResolvedFontFamily(fontName)` — devolve o nome da família quando o corte carregou, ou `undefined` antes disso.
 
 Componentes de texto (`MainTitle`, `Title`, `Subtitle`, `Text`, `FAB`) chamam `useFonts` internamente e aplicam `fontFamily: undefined` enquanto a fonte não carregou, evitando o erro de família inexistente. `Info`, `Tag`, `NavigationBar` e os balões de `Message` aplicam `Roboto-Regular` direto, sem esperar o load.
 
-### Quem **não** usa o Roboto embarcado
-
-`src/ui/button`, `src/ui/input`, `src/ui/textarea` e `src/ui/accordion` definem apenas o peso por classe Tailwind (`font-semibold`, `font-bold`, `font-normal`) e **nunca** `fontFamily`. Consequência: o texto de **`Button`, `Input`, `TextArea` e `Accordion` renderiza na fonte do sistema**, não no Roboto do pacote.
-
-| Plataforma | Fonte do sistema | Diferença visível |
-|---|---|---|
-| Android | Roboto | nenhuma — coincide com o Roboto embarcado |
-| iOS | SF Pro | sim — letras mais estreitas e `g`/`a` de desenho diferente |
-| Web | fonte padrão do navegador/SO | sim |
-
-Na prática, uma tela com `Title` (Roboto embarcado) sobre um `Input` (fonte do sistema) mostra **duas tipografias** no iOS e na web. Ao imaginar o render, assuma Roboto em tudo **exceto** nesses quatro componentes. Registrado como dívida técnica (item 16).
+`Button` (rótulo e confirmação), `Input`, `TextArea` e o título do `AccordionItem` usam `useResolvedFontFamily`: Regular no campo, Bold no botão e no título. Com a família Bold carregada, `fontWeight` fica `"normal"` para o negrito vir do arquivo estático (no Android, `fontWeight` não combina com família estática). `textStyle` do `Button` continua por último e vence o default. Os primitivos em `src/ui/*` seguem sem `fontFamily` na classe Tailwind; a família entra pelo `style` do componente.
 
 ---
 
@@ -354,7 +345,7 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
   Email deve ter formato válido             ← só quando inválido (14px, vermelho)
 ```
 
-**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12, na **fonte do sistema** (não no Roboto embarcado — ver seção 7). Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
+**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12, em `Roboto-Regular` (seção 7). Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
 
 **Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` é renderizado dentro da caixa, à direita.
 
@@ -489,7 +480,7 @@ Campo multilinha com contador opcional.
                         120/300 caracteres  ← alinhado à direita, só com maxLength
 ```
 
-**Aparência:** label (`Text size="small"`) acima, caixa multilinha `size="xl"` com fundo branco, raio 8 e borda padrão do gluestack; texto `18 × fontScale` em `#262627`, na **fonte do sistema** (ver seção 7). Com `maxLength`, abaixo e alinhado à direita aparece `"{n}/{max} caracteres"` em `Text size="small"`. Dark mode: fundo `#1A2432`, borda `#2A364A`.
+**Aparência:** label (`Text size="small"`) acima, caixa multilinha `size="xl"` com fundo branco, raio 8 e borda padrão do gluestack; texto `18 × fontScale` em `#262627`, em `Roboto-Regular` (seção 7). Com `maxLength`, abaixo e alinhado à direita aparece `"{n}/{max} caracteres"` em `Text size="small"`. Dark mode: fundo `#1A2432`, borda `#2A364A`.
 
 **Comportamento:** digitação acima de `maxLength` é **ignorada** (não trunca, simplesmente não aplica).
 
@@ -874,7 +865,7 @@ Seções expansíveis, uma por vez.
 ───────────────────────────────────────────────  Divider após cada item
 ```
 
-**Aparência:** lista de cabeçalhos sobre fundo branco (`#121821` no dark). Cada cabeçalho é uma linha de largura total: opcional `leading` (margem direita 8), título `18 × fontScale` em `#262627` e em negrito (`font-bold`), na **fonte do sistema** (ver seção 7), `titleAccessory` colado ao título com gap 8, e na extremidade direita um chevron (para cima quando aberto, para baixo quando fechado). Abaixo de cada item, um `Divider`.
+**Aparência:** lista de cabeçalhos sobre fundo branco (`#121821` no dark). Cada cabeçalho é uma linha de largura total: opcional `leading` (margem direita 8), título `18 × fontScale` em `#262627` e em negrito (`Roboto-Bold`), `titleAccessory` colado ao título com gap 8, e na extremidade direita um chevron (para cima quando aberto, para baixo quando fechado). Abaixo de cada item, um `Divider`.
 
 **Comportamento:** `type="single"` e colapsável — abrir um item fecha o outro, e o aberto pode ser fechado. A transição usa `LayoutAnimation` easeInEaseOut de 300 ms (habilitada explicitamente no Android).
 
@@ -906,7 +897,7 @@ sem icon:                        com icon:
                                          texto segue centralizado no botão
 ```
 
-**Aparência base:** retângulo de cantos levemente arredondados (raio 4), conteúdo em linha centralizado com gap 8. Altura e padding por `size`: `xs` 32/14, `sm` 36/16, `md` 40/20, `lg` 44/24, `xl` 48/28 px. Texto semibold, tamanho `text-base` (16) no `md`, na **fonte do sistema** (não no Roboto embarcado — ver seção 7). Desabilitado: `opacity 40%`.
+**Aparência base:** retângulo de cantos levemente arredondados (raio 4), conteúdo em linha centralizado com gap 8. Altura e padding por `size`: `xs` 32/14, `sm` 36/16, `md` 40/20, `lg` 44/24, `xl` 48/28 px. Texto em `Roboto-Bold` (aparência de negrito), tamanho `text-base` (16) no `md`. Desabilitado: `opacity 40%`.
 
 **Variantes:**
 
@@ -1317,10 +1308,6 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
 15. **`StarRating` não é controlado** — ignora mudanças de `initialRating` após a montagem.
 16. **Linguagem visual 1.0 e 2.0 convivem.** Enquanto o épico #205 não fecha, parte do catálogo está na paleta e na tipografia antigas e parte na 2.0. O que já migrou está descrito na seção 8; o que falta está nas sub-issues do épico. A dívida se quita com o bump para `1.0.0`.
-16. **Tipografia inconsistente.** `Button`, `Input`, `TextArea` e `Accordion` herdam a fonte do sistema porque os primitivos em `src/ui/*` definem peso mas não `fontFamily`. No iOS e na web, a mesma tela mistura Roboto (componentes próprios) com SF Pro / fonte do navegador (esses quatro).
-17. **Wrapper `flex: 1` do `GluestackUIProvider`.** `Button`, `Input`, `TextArea`, `Accordion` e `Modal` não passam `style` ao provider, que cai no default `{ flex: 1, height: '100%', width: '100%' }`. Dentro de colunas flexíveis o wrapper absorve espaço livre e distorce o layout, obrigando os apps a envolver o componente em uma `View` com altura fixa ou `flexGrow: 0`.
-18. **Hover/active mortos em cinco variantes do `Button`.** `primary`, `secondary`, `secondary-outline`, `danger` e `danger-outline` definem `backgroundColor` por `style` inline, que vence o `className`; os estados `data-[hover]`/`data-[active]` do gluestack não têm efeito nelas.
-19. **`npm run build` falha.** O `tsc` acusa 52 erros `TS2307` ("Cannot find module") em `src/ui/*` e em `src/components/Input/Input.tsx`, porque o `tsconfig.json` usa `moduleResolution: "node"`, que não entende os subpath exports dos pacotes `@gluestack-ui/*` (`@gluestack-ui/utils/nativewind-utils`, `@gluestack-ui/core/*/creator`). Passa despercebido porque nada no repositório roda o build e os apps compilam `src/` pelo Metro. Correção provável: `moduleResolution: "bundler"`.
 
 ---
 
