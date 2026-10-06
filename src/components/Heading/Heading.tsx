@@ -53,8 +53,8 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
     lineHeight: C.lineHeight.CAPTION,
     color: C.brand.DARK,
     letterSpacing: 0.6,
-    font: C.fontFamily.BOLD,
-    fallbackWeight: "700",
+    font: C.fontFamily.EXTRABOLD,
+    fallbackWeight: "800",
     uppercase: true,
   },
 };

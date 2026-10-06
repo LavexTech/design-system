@@ -65,7 +65,7 @@ design-system/
     components/Icons/iconProps.ts # contrato comum dos ícones
     constants/constants.ts        # design tokens em JS (fonte principal de estilo)
     utils/                        # helpers puros
-    assets/fonts/PlusJakartaSans/static/  # TTFs Regular, Medium, SemiBold e Bold
+    assets/fonts/PlusJakartaSans/static/  # TTFs Regular, Medium, SemiBold, Bold e ExtraBold
     fontSetup.ts                  # useFonts / useGlobalFonts
     global.css                    # apenas as 3 diretivas @tailwind
   docs/README.md
@@ -92,7 +92,7 @@ design-system/
 ### Texto e dimensão (regras transversais)
 
 5. **Nada trunca.** Não existe um único `numberOfLines` ou `ellipsizeMode` em todo o `src/`. Todo texto longo **quebra linha** e faz o componente crescer em altura — nunca aparece reticência. Vale para nomes em cards de usuário, títulos de `Order`/`AccordionItem`, rótulos de `CheckButton`, opções de `Select` e balões de `Message`. Ao imaginar o layout, suponha sempre multi-linha, não corte.
-6. **A família carregada é só Plus Jakarta Sans.** `fontSetup.ts` registra Regular, Medium, SemiBold e Bold. Não há alias `Roboto-*`. Quando a família estática já está carregada, `fontWeight` fica `"normal"` e o peso vem do arquivo.
+6. **A família carregada é só Plus Jakarta Sans.** `fontSetup.ts` registra Regular, Medium, SemiBold, Bold e ExtraBold. Não há alias `Roboto-*`. Quando a família estática já está carregada, `fontWeight` fica `"normal"` e o peso vem do arquivo.
 
 ### Props
 
@@ -241,7 +241,7 @@ Título semântico da hierarquia da marca (`h1`, `h2`, `h4`). O `h4` sai em caix
 
 - `h1`: Plus Jakarta SemiBold, 30 px / 36 px (`WORDMARK`), `letterSpacing` -0,5, cor verde-água `#3CDBC0` (`brand.PRIMARY`).
 - `h2`: Plus Jakarta Bold, 28 px / 34 px (`DISPLAY`), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
-- `h4`: Plus Jakarta Bold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
+- `h4`: Plus Jakarta ExtraBold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
 
 **Comportamento:** estático. `accessibilityRole="header"` e `aria-level` 1, 2 ou 4. Na web o react-native-web usa esse nível para a tag (`h1`, `h2`, `h4`). Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
 
@@ -1211,7 +1211,7 @@ Componente de exemplo que renderiza o texto `"Hello World"`. **Não é exportado
 
 Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. `darkMode` continua aceita e é ignorada nos componentes reescritos.
 
-**Tipografia.** Plus Jakarta Sans (400/500/600/700). Não há segunda família.
+**Tipografia.** Plus Jakarta Sans (400/500/600/700/800). Não há segunda família.
 
 **`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
 

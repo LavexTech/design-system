@@ -31,7 +31,7 @@ Estes itens trocam a aparência sem tocar em nome de componente, prop, variante 
 
 | O que | Detalhe |
 |---|---|
-| **Tipografia** | A única família é Plus Jakarta Sans, pesos 400/500/600/700. `useFonts(["Roboto-Regular"])` não carrega mais nada. Texto sem `fontFamily` no design system passou a usar o corte correspondente. |
+| **Tipografia** | A única família é Plus Jakarta Sans, pesos 400/500/600/700/800. O `Heading` `h4` usa o 800. `useFonts(["Roboto-Regular"])` não carrega mais nada. Texto sem `fontFamily` no design system passou a usar o corte correspondente. |
 | **Tokens e paleta** | `src/constants/constants.ts` e `tailwind.config.js` usam a paleta 2.0 em hexadecimal. `Constants` **não é exportado** no `index.ts`. |
 | **Saída do gluestack-ui** | `Button`, `Input`, `TextArea`, `Select`, `Modal`, `Grid` e `Accordion` deixam de embrulhar primitivos do gluestack. `src/ui/*` sempre foi interno e nunca esteve no `index.ts`. Efeito colateral bom: somem as `View` extras do `GluestackUIProvider` aninhado. |
 | **Componentes repintados** | `Button`, `Input` e família, `TextArea`, `Select`, `Tag`, `Accordion`, `NavigationBar`, `Message`, `InputChat` e `Gallery` mudam de cor, raio, altura e tipografia mantendo a API. |
