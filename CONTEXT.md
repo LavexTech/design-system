@@ -112,7 +112,7 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select` |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `Heading` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
 | **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
@@ -127,7 +127,9 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | Grupo | Chave | Valor |
 |---|---|---|
 | `fontSize` | `LARGEST` / `LARGER` / `LARGE` / `MEDIUM` / `SMALL` | 36 / 24 / 20 / 18 / 14 |
+| `fontSize` | `DISPLAY` / `WORDMARK` / `TITLE` / `ACTION` / `BODY` / `SUBTITLE` / `LABEL` / `CAPTION` | 28 / 30 / 22 / 17 / 16 / 15 / 14 / 13 |
 | `lineHeight` | `LARGEST` / `LARGER` / `LARGE` / `MEDIUM` / `SMALL` | 30 / 26 / 22 / 18 / 14 |
+| `lineHeight` | `DISPLAY` / `WORDMARK` / `TITLE` / `ACTION` / `BODY` / `SUBTITLE` / `LABEL` / `CAPTION` | 34 / 36 / 28 / 22 / 24 / 22 / 20 / 18 |
 | `fontWeight` | `BOLD` / `NORMAL` / `THIN` | `"700"` / `"400"` / `"100"` |
 | `fontFamily` | `REGULAR`, `MEDIUM`, `SEMIBOLD`, `BOLD` | `PlusJakartaSans-Regular`, `PlusJakartaSans-Medium`, `PlusJakartaSans-SemiBold`, `PlusJakartaSans-Bold` |
 
@@ -153,6 +155,17 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | | `PRIMARY_DARK` | `#2D3B42` (grafite azulado da marca) |
 | | `BACKGROUND_LIGHT` | `#E5E1E6` |
 | `shadowColor` | `DEFAULT` | `#000` |
+
+### Paleta da marca (`Constants.styles.brand`)
+
+| Chave | Valor | Uso |
+|---|---|---|
+| `PRIMARY` | `#3CDBC0` | Verde-água da marca. Cor dos títulos `h1` (`Heading level="h1"`). |
+| `DARK` | `#0B7566` | Verde-escuro da marca. Cor dos títulos `h4` e dos links. |
+| `DEEP` | `#08706D` | Verde profundo, apoio da escala. |
+| `SURFACE` | `#2D3B42` | Grafite azulado da marca. Mesmo hex de `color.PRIMARY_DARK` e `text.DEFAULT`. Cor dos títulos `h2`. |
+
+O Tailwind repete esses hex em `brand.DEFAULT`, `brand.dark`, `brand.deep` e `brand.surface`.
 
 ### Tema light/dark (`Constants.styles.theme`)
 
@@ -213,6 +226,24 @@ Todo texto do pacote usa um desses cortes via `useResolvedFontFamily`. Título e
 Formato de cada entrada: **para que serve**, **contrato** (props), **aparência** (o que se vê) e **comportamento/variantes**.
 
 ### 8.1 Textos
+
+#### `Heading`
+
+Título semântico da hierarquia da marca (`h1`, `h2`, `h4`). O `h4` sai em caixa alta mesmo quando o `text` chega em caixa normal.
+
+| Prop | Tipo | Default | Obrigatória |
+|---|---|---|---|
+| `text` | `string` | — | sim |
+| `level` | `'h1' \| 'h2' \| 'h4'` | — | sim |
+| `position` | `'left' \| 'center' \| 'right'` | `'left'` | não |
+
+**Aparência:** quebra linha, sem margem nem padding. Com a fonte carregada, `fontWeight` fica `"normal"`.
+
+- `h1`: Plus Jakarta SemiBold, 30 px / 36 px (`WORDMARK`), `letterSpacing` -0,5, cor verde-água `#3CDBC0` (`brand.PRIMARY`).
+- `h2`: Plus Jakarta Bold, 28 px / 34 px (`DISPLAY`), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
+- `h4`: Plus Jakarta Bold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
+
+**Comportamento:** estático. `accessibilityRole="header"`. Não aceita `darkMode` nem `fontScale`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
 
 #### `MainTitle`
 

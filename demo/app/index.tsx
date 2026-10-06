@@ -4,6 +4,7 @@ import { View, ScrollView, KeyboardAvoidingView, Platform } from "react-native"
 import Constants from "@src/constants/constants"
 
 // Texts
+import { Heading } from "@src/components/Heading/Heading"
 import { MainTitle } from "@src/components/MainTitle/MainTitle"
 import { Subtitle } from "@src/components/Subtitle/Subtitle"
 import { Title } from "@src/components/Title/Title"
@@ -312,6 +313,9 @@ export default function Index() {
 
       <Card>
         <Grid columns={1} gap={4}>
+          <Heading level="h1" text="lavex" />
+          <Heading level="h2" text="Criar conta" />
+          <Heading level="h4" text="Dados pessoais" />
           <MainTitle text="Main Title" />
           <Title text="Title" />
           <Subtitle text="Subtitle" />
