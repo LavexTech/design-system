@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
-import { useFonts } from "../../fontSetup";
+import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
 
 export interface MainTitleProps {
@@ -8,18 +8,19 @@ export interface MainTitleProps {
   position?: 'left' | 'center' | 'right';
 }
 
+const C = Constants.styles
+
 export const MainTitle: React.FC<MainTitleProps> = ({ text, position = 'left' }) => {
-  const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
+  const fontFamily = useResolvedFontFamily(C.fontFamily.BOLD)
 
   return (
     <Text
       style={[
-        styles.MainTitle,
+        styles.title,
         {
           textAlign: position,
-          fontFamily: fontLoaded
-            ? Constants.styles.fontFamily.REGULAR
-            : undefined,
+          fontFamily,
+          fontWeight: fontFamily ? "normal" : "700",
         },
       ]}
     >
@@ -29,12 +30,11 @@ export const MainTitle: React.FC<MainTitleProps> = ({ text, position = 'left' })
 };
 
 const styles = StyleSheet.create({
-  MainTitle: {
-    fontSize: Constants.styles.fontSize.LARGEST,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    lineHeight: Constants.styles.fontSize.LARGEST,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
+  title: {
+    fontSize: C.fontSize.DISPLAY,
+    lineHeight: C.lineHeight.DISPLAY,
+    color: C.text.DEFAULT,
+    letterSpacing: -0.4,
     flexWrap: "wrap",
     flexShrink: 1,
   },

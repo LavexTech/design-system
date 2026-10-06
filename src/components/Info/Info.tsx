@@ -8,7 +8,7 @@ export interface InfoProps {
   fontScale?: number;
   bold?: boolean;
   position?: "left" | "center" | "right";
-  /** muted = cinza (#8F98AD); default = mesma cor do Title (#262627) */
+  /** muted = `#5A6A72`; default = `#2D3B42` */
   tone?: "muted" | "default";
 }
 
@@ -22,10 +22,10 @@ export const Info: React.FC<InfoProps> = ({
 }) => {
   const mutedColor = darkMode
     ? Constants.styles.theme.dark.text.muted
-    : Constants.styles.theme.light.text.muted;
+    : Constants.styles.text.MUTED;
   const defaultColor = darkMode
     ? Constants.styles.theme.dark.text.default
-    : Constants.styles.theme.light.text.default;
+    : Constants.styles.text.DEFAULT;
 
   return (
     <Text
@@ -33,9 +33,8 @@ export const Info: React.FC<InfoProps> = ({
         styles.info,
         {
           color: tone === "default" ? defaultColor : mutedColor,
-          opacity: tone === "default" ? 1 : 0.7,
-          fontSize: Constants.styles.fontSize.SMALL * fontScale,
-          lineHeight: Constants.styles.fontSize.SMALL * 1.4 * fontScale,
+          fontSize: Constants.styles.fontSize.CAPTION * fontScale,
+          lineHeight: Constants.styles.lineHeight.CAPTION * fontScale,
           fontFamily: Constants.styles.fontFamily.REGULAR,
           fontWeight: bold
             ? (Constants.styles.fontWeight.BOLD as any)

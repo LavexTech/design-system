@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
-import { useFonts } from "../../fontSetup";
+import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
 
 export interface SubtitleProps {
@@ -8,18 +8,19 @@ export interface SubtitleProps {
   position?: 'left' | 'center' | 'right';
 }
 
+const C = Constants.styles
+
 export const Subtitle: React.FC<SubtitleProps> = ({ text, position = 'left' }) => {
-  const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
+  const fontFamily = useResolvedFontFamily(C.fontFamily.SEMIBOLD)
 
   return (
     <Text
       style={[
-        styles.Subtitle,
+        styles.subtitle,
         {
           textAlign: position,
-          fontFamily: fontLoaded
-            ? Constants.styles.fontFamily.REGULAR
-            : undefined,
+          fontFamily,
+          fontWeight: fontFamily ? "normal" : "600",
         },
       ]}
     >
@@ -29,12 +30,10 @@ export const Subtitle: React.FC<SubtitleProps> = ({ text, position = 'left' }) =
 };
 
 const styles = StyleSheet.create({
-  Subtitle: {
-    fontSize: Constants.styles.fontSize.LARGE,
-    fontWeight: Constants.styles.fontWeight.BOLD,
-    lineHeight: Constants.styles.fontSize.LARGE,
-    fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
+  subtitle: {
+    fontSize: C.fontSize.SUBTITLE,
+    lineHeight: C.lineHeight.SUBTITLE,
+    color: C.text.DEFAULT,
     flexWrap: "wrap",
     flexShrink: 1,
   },

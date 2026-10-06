@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
-import { useFonts } from "../../fontSetup";
+import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
 
 export interface TextProps {
@@ -14,6 +14,8 @@ export interface TextProps {
   fill?: boolean;
 }
 
+const C = Constants.styles
+
 export const TextBox: React.FC<TextProps> = ({
   text,
   size = "medium",
@@ -23,47 +25,48 @@ export const TextBox: React.FC<TextProps> = ({
   fontScale = 1,
   fill = true,
 }) => {
-  const fontLoaded = useFonts([Constants.styles.fontFamily.REGULAR]);
+  const fontFamily = useResolvedFontFamily(C.fontFamily.REGULAR)
+  const theme = darkMode ? C.theme.dark : C.theme.light
 
   const sizes = {
-    small: 15,
-    medium: Constants.styles.fontSize.MEDIUM,
-    large: 20,
+    small: { fontSize: C.fontSize.LABEL, lineHeight: C.lineHeight.LABEL },
+    medium: { fontSize: C.fontSize.BODY, lineHeight: C.lineHeight.BODY },
+    large: { fontSize: C.fontSize.ACTION, lineHeight: C.lineHeight.ACTION },
   }
 
   const levels = {
-    success: Constants.styles.textColor.SUCCESS,
-    error: Constants.styles.textColor.DANGER,
-    warning: Constants.styles.textColor.WARNING,
-    default: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
-    primary: darkMode ? Constants.styles.theme.dark.text.primary : Constants.styles.theme.light.text.primary
+    success: C.brand.DARK,
+    error: C.text.DANGER,
+    warning: C.feedback.WARNING_TEXT,
+    default: darkMode ? theme.text.default : C.text.DEFAULT,
+    primary: darkMode ? theme.text.primary : C.brand.DARK,
   }
 
-  const fontSize = sizes[size] * fontScale;
-  const color = levels[level];
+  const metrics = sizes[size]
 
-  const styles = StyleSheet.create({
-    text: {
-      fontWeight: Constants.styles.fontWeight.NORMAL,
-      lineHeight: Constants.styles.lineHeight.LARGE,
-      fontFamily: fontLoaded
-        ? Constants.styles.fontFamily.REGULAR
-        : undefined,
-      textAlign: position,
-      flexWrap: "wrap",
-      flexShrink: 1,
-      ...(fill ? { width: "100%" as const } : null),
-    },
-  });
-
-  return <Text style={
-    {
-      ...styles.text,
-      fontSize,
-      lineHeight: Constants.styles.lineHeight.LARGE * fontScale,
-      color
-    }}>
-    {text}
-  </Text>;
+  return (
+    <Text
+      style={[
+        styles.text,
+        {
+          textAlign: position,
+          fontFamily,
+          fontWeight: fontFamily ? "normal" : "400",
+          fontSize: metrics.fontSize * fontScale,
+          lineHeight: metrics.lineHeight * fontScale,
+          color: levels[level],
+          ...(fill ? { width: "100%" as const } : null),
+        },
+      ]}
+    >
+      {text}
+    </Text>
+  );
 };
 
+const styles = StyleSheet.create({
+  text: {
+    flexWrap: "wrap",
+    flexShrink: 1,
+  },
+});

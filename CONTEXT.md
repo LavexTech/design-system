@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.0.2`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.0.3`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -68,11 +68,11 @@ design-system/
     assets/fonts/Roboto/          # TTFs da família Roboto
     fontSetup.ts                  # useFonts / useGlobalFonts
     global.css                    # apenas as 3 diretivas @tailwind
-  docs/*.md                       # docs antigas por componente (parcialmente desatualizadas)
+  docs/README.md
   docs/migracao-2.0.md            # guia de impacto da migração 2.0 para os apps consumidores
   docs/prototipos/                # 21 telas HTML de alta fidelidade — especificação visual do 2.0
   demo/                           # app Expo de testes manuais
-  README.md, DesignSystemUsage.md, checklist.md
+  README.md, DesignSystemUsage.md
 ```
 
 ---
@@ -223,7 +223,7 @@ Título principal de tela (o maior da hierarquia).
 | `text` | `string` | — | sim |
 | `position` | `'left' \| 'center' \| 'right'` | `'left'` | não |
 
-**Aparência:** texto Roboto-Regular com `fontWeight` 700, `fontSize` 36 e `lineHeight` 36 (sem respiro extra entre linhas), cor `#262627`, alinhado conforme `position`, quebra linha (`flexWrap: wrap`, `flexShrink: 1`). Não tem margem nem padding próprios.
+**Aparência:** Plus Jakarta Bold, `fontSize` 28, `lineHeight` 34, `letterSpacing` -0,4, cor `#2D3B42`. Com a fonte carregada, `fontWeight` fica `"normal"` para o Android usar o arquivo estático. Quebra linha. Não tem margem nem padding próprios.
 
 **Comportamento:** estático; não aceita `darkMode` nem `fontScale`.
 
@@ -238,7 +238,7 @@ Título de seção.
 | `darkMode` | `boolean` | `false` |
 | `fontScale` | `number` | `1` |
 
-**Aparência:** Roboto-Regular 700, `fontSize` e `lineHeight` iguais a `24 × fontScale`, cor `#262627` (light) ou `#F3F7FF` (dark). Quebra linha, sem margens.
+**Aparência:** Plus Jakarta Bold, `fontSize` e `lineHeight` `22 × fontScale` e `28 × fontScale`, cor `#2D3B42` (light) ou `#F3F7FF` (dark). `fontWeight: "normal"` quando a fonte carregou. Quebra linha, sem margens.
 
 #### `Subtitle`
 
@@ -249,7 +249,7 @@ Subtítulo / título de bloco dentro de um card ou lista.
 | `text` | `string` | — (obrigatória) |
 | `position` | `'left' \| 'center' \| 'right'` | `'left'` |
 
-**Aparência:** Roboto-Regular 700, `fontSize`/`lineHeight` 20, cor `#262627`. Sem suporte a dark mode.
+**Aparência:** Plus Jakarta SemiBold, `fontSize` 15 e `lineHeight` 22, cor `#2D3B42`. `fontWeight: "normal"` quando a fonte carregou. Sem suporte a dark mode.
 
 #### `Text` (export do componente `TextBox`)
 
@@ -265,7 +265,7 @@ Texto de corpo. É o componente de texto mais usado internamente.
 | `fontScale` | `number` | `1` |
 | `fill` | `boolean` | `true` |
 
-**Aparência:** Roboto-Regular peso 400, `lineHeight` `22 × fontScale`. Tamanhos: `small` 15, `medium` 18, `large` 20 (todos × `fontScale`). Cor por `level`: `default` `#262627` / `#F3F7FF` (dark), `primary` `#007AFF` / `#4EA8FF`, `success` `#059669`, `error` `#DC2626`, `warning` `#F59E0B`. Com `fill: true` (padrão) ocupa `width: 100%` — por isso, dentro de linhas (`flexDirection: row`), passe `fill={false}` para o texto medir pelo conteúdo.
+**Aparência:** Plus Jakarta Regular, `fontWeight: "normal"` quando a fonte carregou. Tamanhos: `small` 14/20, `medium` 16/24, `large` 17/22 (todos × `fontScale`). Cor por `level` no tema claro: `default` `#2D3B42`, `primary` `#0B7566`, `success` `#0B7566`, `error` `#C62828`, `warning` `#8A5A00`. No `darkMode`, `default` e `primary` continuam nas cores do tema escuro (`#F3F7FF` e `#4EA8FF`). Com `fill: true` (padrão) ocupa `width: 100%` — por isso, dentro de linhas (`flexDirection: row`), passe `fill={false}` para o texto medir pelo conteúdo.
 
 #### `Info`
 
@@ -280,7 +280,7 @@ Texto auxiliar/legenda — metadados, labels de campo, "Sem avaliações", datas
 | `darkMode` | `boolean` | `false` |
 | `fontScale` | `number` | `1` |
 
-**Aparência:** Roboto-Regular, `fontSize` `14 × fontScale`, `lineHeight` `19,6 × fontScale` (14 × 1.4). `tone="muted"`: cor `#8F98AD` (light) / `#B7C1D6` (dark) com `opacity: 0.7` — ou seja, visivelmente apagado. `tone="default"`: mesma cor do `Title` (`#262627` / `#F3F7FF`) e opacidade total. `bold` troca o peso para 700. Ocupa a largura disponível (`alignSelf: stretch`).
+**Aparência:** Plus Jakarta Regular, `fontSize` `13 × fontScale`, `lineHeight` `18 × fontScale`. `tone="muted"`: `#5A6A72` (light) / `#B7C1D6` (dark), sem opacidade extra. `tone="default"`: `#2D3B42` / `#F3F7FF`. `bold` troca o peso para 700. Ocupa a largura disponível (`alignSelf: stretch`).
 
 ### 8.2 Inputs
 
@@ -477,12 +477,12 @@ Seleção de uma opção via modal.
 ┌──────────────────────────────────┬─────┐
 │ ←16→ Selecione                   │  ⌄  │ ≥48
 └──────────────────────────────────┴─────┘
-  ao tocar → Modal com os CheckButton empilhados (gap 16) + botão "Voltar"
+  ao tocar → Modal com CheckboxListItem (gap 16) + botão "Voltar"
 ```
 
 **Aparência:** label acima; gatilho em linha de altura mínima 48, fundo branco, raio 8, borda 0,8 px `#CED4DA`, padding horizontal 16, com o texto selecionado (ou o placeholder) à esquerda e um `IconChevronDown` à direita em `#8F98AD`, separado por 8. Com `errorMessage`, a borda vira `#DC2626` e a mensagem aparece embaixo em vermelho. Dark mode: fundo `#1A2432`, borda `#2A364A`, chevron `#B7C1D6`.
 
-**Comportamento:** ao tocar, abre um `Modal` com botão "Voltar" (`default-outline`) listando as opções como `CheckButton` empilhados com gap 16, largura total; a opção atual aparece marcada. Selecionar fecha o modal e chama `onChange`. Desmarcar a opção já selecionada não faz nada. `triggerFontScale` escala **somente** o texto do gatilho (combinado com `fontScale`), útil para caber rótulos longos.
+**Comportamento:** ao tocar, abre um `Modal` com botão "Voltar" (`default-outline`) listando as opções como `CheckboxListItem` com gap 16 e largura total; a opção atual aparece marcada. Selecionar fecha o modal e chama `onChange`. Desmarcar a opção já selecionada não faz nada. `triggerFontScale` escala **somente** o texto do gatilho (combinado com `fontScale`), útil para caber rótulos longos.
 
 #### `Toggle`
 
@@ -1272,8 +1272,8 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 ## 12. Dívidas técnicas conhecidas
 
 1. **Sem testes e sem CI.** Não há runner, nenhum arquivo de teste e nenhum workflow de build/lint. Toda verificação é manual via `demo/` ou pelo app consumidor.
-2. **Docs antigas divergentes.** `docs/` ainda tem `Title1.md`, `Title2.md`, `Title3.md` e `InputToolbar.md` de componentes que não existem mais, e não tem doc para `Toggle`, `Divider`, `Tag`, `FAB`, `Card`, `Text`, `Subtitle`, `SwipeableListItem`, `ProfileAvatar` e `Message*` parcialmente. Este `CONTEXT.md` é a fonte canônica; as docs por componente em `docs/` são histórico e serão apagadas no fechamento da migração 2.0. `docs/prototipos/` e `docs/migracao-2.0.md` não entram nessa limpeza.
-3. **`checklist.md` obsoleto.** Lista quase tudo como não implementado e cita componentes inexistentes (`TabBar`, `OrderList`, `OfferCard`).
+2. **Docs por componente removidas.** Permanecem `docs/README.md`, `docs/migracao-2.0.md` e `docs/prototipos/`. Este `CONTEXT.md` é a fonte canônica do contrato.
+3. **`checklist.md` removido.** A lista antiga citava componentes que não existem (`TabBar`, `OrderList`, `OfferCard`).
 4. **Paleta antiga no Tailwind.** `tailwind.config.js` ainda declara CSS vars da paleta semântica. Nenhum componente as lê. A cor da tela vem de `Constants.styles`.
 5. **Dark mode parcial.** `MainTitle`, `Subtitle`, `Tag`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `List`, `Message*`, `InputChat`, `Button`, `Input` e `TextArea` não reagem a `darkMode`. `Modal`, `Accordion`, `Select` (texto) e `Divider` ainda usam o tema claro/escuro. `FAB`, `Image` e `Grid` aceitam a prop e a descartam.
 6. **`UserCardHorizontal` não é horizontal** — empilha os dados em coluna e não mostra avatar.
@@ -1281,7 +1281,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 8. **`OfferList` e `UserList` não passam `key`** no `GridItem` mapeado (o `key` do `OfferList` está no `Offer` interno, não no item da lista) e `OfferList` não repassa `amountLabel` nem `totalRatings`.
 9. **`UserList` tem o `Divider` entre itens comentado** no código.
 10. **`Grid.gap` não é pixel.** Cai em faixas de 4, 8, 12, 16, 24, 32 ou 48 px. Um valor como `5` vira 16 px.
-11. **Textos de `MainTitle`, `Title`, `Subtitle`, `Text` e `Info` ainda documentam a métrica antiga** (tamanhos 36/24/20/18 e cores `#262627` / `#007AFF`) porque o código desses componentes não foi redesenhado. A família carregada, porém, é Plus Jakarta via alias `Roboto-*`.
+11. **`Text` no `darkMode` ainda usa o azul `#4EA8FF` em `level="primary"`.** O tema claro já usa `#0B7566`. O app do prestador depende dessas cores escuras.
 12. **`Alert` importa `Constants` e `Dimensions` sem usar**; `Modal` importa `Dimensions` via `useWindowDimensions` (ok) mas `Order` importa `Constants` para poucos usos.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
