@@ -1,6 +1,7 @@
 import React from "react"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 import { IconMinus } from "../Icons/IconMinus"
 import { IconPlus } from "../Icons/IconPlus"
 import { IconTrash } from "../Icons/IconTrash"
@@ -32,6 +33,8 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
   const atMin = value <= min
   const atMax = value >= max
   const name = label ?? "item"
+  const labelFont = useResolvedFontFamily(C.fontFamily.REGULAR)
+  const valueFont = useResolvedFontFamily(C.fontFamily.BOLD)
   return (
     <View style={styles.row}>
       {onDelete ? (
@@ -39,7 +42,7 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
           <IconTrash size={20} color={C.text.DANGER} />
         </Pressable>
       ) : null}
-      {label ? <Text style={styles.label}>{label}</Text> : <View style={{ flex: 1 }} />}
+      {label ? <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal" }]}>{label}</Text> : <View style={{ flex: 1 }} />}
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`Diminuir ${name}`}
@@ -49,7 +52,7 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
       >
         <IconMinus size={20} color={atMin ? C.border.SOFT : C.text.DEFAULT} />
       </Pressable>
-      <Text accessibilityRole="text" accessibilityLabel={`${value} ${valueSuffix ?? ""}`} style={styles.value}>
+      <Text accessibilityRole="text" accessibilityLabel={`${value} ${valueSuffix ?? ""}`} style={[styles.value, { fontFamily: valueFont, fontWeight: "normal" }]}>
         {value}{valueSuffix ? ` ${valueSuffix}` : ""}
       </Text>
       <Pressable
@@ -71,5 +74,5 @@ const styles = StyleSheet.create({
   circle: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center", backgroundColor: C.surface.DEFAULT },
   bordered: { borderWidth: C.borderWidth.INTERACTIVE, borderColor: C.border.INTERACTIVE },
   limit: { borderColor: C.border.SOFT },
-  value: { minWidth: 32, textAlign: "center", fontSize: C.fontSize.ACTION, fontWeight: "700", color: C.text.DEFAULT },
+  value: { minWidth: 32, textAlign: "center", fontSize: C.fontSize.ACTION, color: C.text.DEFAULT },
 })

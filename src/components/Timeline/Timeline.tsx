@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCheck } from "../Icons/IconCheck"
 
 export type TimelineStep = {
@@ -15,7 +16,12 @@ type TimelineProps = { steps: TimelineStep[]; fontScale?: number }
 
 const C = Constants.styles
 
-export const Timeline: React.FC<TimelineProps> = ({ steps, fontScale = 1 }) => (
+export const Timeline: React.FC<TimelineProps> = ({ steps, fontScale = 1 }) => {
+  const titleFont = useResolvedFontFamily(C.fontFamily.BOLD)
+  const pendingFont = useResolvedFontFamily(C.fontFamily.MEDIUM)
+  const metaFont = useResolvedFontFamily(C.fontFamily.REGULAR)
+
+  return (
   <View accessibilityRole="list" style={styles.list}>
     {steps.map((step, index) => {
       const last = index === steps.length - 1
@@ -29,15 +35,21 @@ export const Timeline: React.FC<TimelineProps> = ({ steps, fontScale = 1 }) => (
             {!last ? <View style={[styles.line, { backgroundColor: lineColor }]} /> : null}
           </View>
           <View style={styles.copy}>
-            <Text style={{ fontSize: 15 * fontScale, fontWeight: step.status === "pending" ? "500" : "700", color: step.status === "pending" ? C.text.MUTED : C.text.DEFAULT }}>{step.title}</Text>
-            {step.description ? <Text style={styles.meta}>{step.description}</Text> : null}
-            {step.timestamp ? <Text style={styles.meta}>{step.timestamp}</Text> : null}
+            <Text style={{
+              fontFamily: step.status === "pending" ? pendingFont : titleFont,
+              fontWeight: "normal",
+              fontSize: 15 * fontScale,
+              color: step.status === "pending" ? C.text.MUTED : C.text.DEFAULT,
+            }}>{step.title}</Text>
+            {step.description ? <Text style={[styles.meta, { fontFamily: metaFont, fontWeight: "normal" }]}>{step.description}</Text> : null}
+            {step.timestamp ? <Text style={[styles.meta, { fontFamily: metaFont, fontWeight: "normal" }]}>{step.timestamp}</Text> : null}
           </View>
         </View>
       )
     })}
   </View>
-)
+  )
+}
 
 const styles = StyleSheet.create({
   list: { alignSelf: "stretch" },

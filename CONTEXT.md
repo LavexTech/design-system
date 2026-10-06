@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.0.3`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.0.4`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -65,7 +65,7 @@ design-system/
     components/Icons/iconProps.ts # contrato comum dos ícones
     constants/constants.ts        # design tokens em JS (fonte principal de estilo)
     utils/                        # helpers puros
-    assets/fonts/Roboto/          # TTFs da família Roboto
+    assets/fonts/PlusJakartaSans/static/  # TTFs Regular, Medium, SemiBold e Bold
     fontSetup.ts                  # useFonts / useGlobalFonts
     global.css                    # apenas as 3 diretivas @tailwind
   docs/README.md
@@ -92,7 +92,7 @@ design-system/
 ### Texto e dimensão (regras transversais)
 
 5. **Nada trunca.** Não existe um único `numberOfLines` ou `ellipsizeMode` em todo o `src/`. Todo texto longo **quebra linha** e faz o componente crescer em altura — nunca aparece reticência. Vale para nomes em cards de usuário, títulos de `Order`/`AccordionItem`, rótulos de `CheckButton`, opções de `Select` e balões de `Message`. Ao imaginar o layout, suponha sempre multi-linha, não corte.
-6. **A família carregada é Plus Jakarta Sans.** `fontSetup.ts` registra Regular, Medium, SemiBold e Bold. Aliases `Roboto-*` ainda resolvem para o corte equivalente. Quando a família estática já está carregada, `fontWeight` fica `"normal"` e o peso vem do arquivo.
+6. **A família carregada é só Plus Jakarta Sans.** `fontSetup.ts` registra Regular, Medium, SemiBold e Bold. Não há alias `Roboto-*`. Quando a família estática já está carregada, `fontWeight` fica `"normal"` e o peso vem do arquivo.
 
 ### Props
 
@@ -186,7 +186,7 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 
 ## 6. Paleta no `tailwind.config.js`
 
-O `tailwind.config.js` ainda declara a paleta semântica antiga em CSS vars (`primary`, `success`, `background`, etc.). Nenhum componente lê essas vars. A cor que aparece na tela vem de `Constants.styles` (`brand`, `surface`, `text`, `border`, `feedback`).
+O `tailwind.config.js` grava a paleta 2.0 em hexadecimal. `brand`, `ink` e `line` repetem os tokens de `Constants.styles`. As escalas antigas (`primary`, `typography`, `background`, `error` e as demais) também apontam para esses hex, não mais para CSS vars. Nenhum componente lê classes Tailwind para cor. A cor da tela vem de `Constants.styles`.
 
 `Button variant="default"` é fundo `#3CDBC0` e texto `#2D3B42`.
 
@@ -194,15 +194,15 @@ O `tailwind.config.js` ainda declara a paleta semântica antiga em CSS vars (`pr
 
 ## 7. Tipografia e carregamento de fontes
 
-Família única: **Plus Jakarta Sans**, embarcada em `src/assets/fonts/PlusJakartaSans/static/` nos cortes Regular (400), Medium (500), SemiBold (600) e Bold (700). Nomes antigos `Roboto-*` ainda são aceitos em `useFonts` e `useResolvedFontFamily` e resolvem para o corte equivalente da família nova.
+Família única: **Plus Jakarta Sans**, embarcada em `src/assets/fonts/PlusJakartaSans/static/` nos cortes Regular (400), Medium (500), SemiBold (600) e Bold (700). `useFonts` só carrega esses quatro nomes.
 
 `src/fontSetup.ts` exporta:
 
-- `useFonts(fontNames?: string[])` — carrega sob demanda via `expo-font`, com cache em `Set` de módulo para não recarregar. Default: `["Roboto-Regular"]`. Retorna `ready: boolean`; em erro, loga e retorna `true` mesmo assim (degrada para a fonte do sistema).
+- `useFonts(fontNames?: string[])` — carrega sob demanda via `expo-font`, com cache em `Set` de módulo para não recarregar. Default: `["PlusJakartaSans-Regular"]`. Retorna `ready: boolean`; em erro, loga e retorna `true` mesmo assim (degrada para a fonte do sistema). Nome fora dos quatro cortes é ignorado.
 - `useGlobalFonts()` — carrega todos os 6 cortes.
 - `useResolvedFontFamily(fontName)` — devolve o nome da família quando o corte carregou, ou `undefined` antes disso.
 
-Componentes de texto (`MainTitle`, `Title`, `Subtitle`, `Text`, `FAB`) chamam `useFonts` internamente e aplicam `fontFamily: undefined` enquanto a fonte não carregou, evitando o erro de família inexistente. `Info`, `Tag`, `NavigationBar` e os balões de `Message` aplicam `Roboto-Regular` direto, sem esperar o load.
+Todo texto do pacote usa um desses cortes via `useResolvedFontFamily`. Título e rótulo em negrito usam Bold; peso 500 usa Medium; corpo usa Regular. Com o arquivo carregado, `fontWeight` fica `"normal"`.
 
 `Button` (rótulo e confirmação), `Input`, `TextArea` e o título do `AccordionItem` usam `useResolvedFontFamily`: Regular no campo, Bold no botão e no título. Com a família Bold carregada, `fontWeight` fica `"normal"` para o negrito vir do arquivo estático (no Android, `fontWeight` não combina com família estática). `textStyle` do `Button` continua por último e vence o default.
 
@@ -317,7 +317,7 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
   Email deve ter formato válido             ← só quando inválido (14px, vermelho)
 ```
 
-**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12, em `Roboto-Regular` (seção 7). Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
+**Aparência:** coluna (`Grid` 1 coluna, `gap-2`) com três blocos empilhados: label (`Text size="small"`), caixa do campo e mensagem de erro. A caixa é retangular de altura 48 (`size="xl"`), raio 8, borda 1 px `background-300` (`#D5D4D4`), fundo branco; texto digitado em `#262627`, `fontSize` `18 × fontScale`, padding horizontal 12, em `PlusJakartaSans-Regular` (seção 7). Em dark mode o fundo vira `#1A2432` e a borda `#2A364A`. Inválido: borda vermelha `#DC2626` e, abaixo, a `errorMessage` em `Text size="small" level="error"`. Foco: borda `primary-700` (`#1F1F1F`) e, na web, ring interno.
 
 **Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` é renderizado dentro da caixa, à direita.
 
@@ -724,7 +724,7 @@ Superfície padrão para agrupar conteúdo.
    ↓ margem inferior 8 (empilha cards com respiro)
 ```
 
-**Aparência:** retângulo de largura total, fundo branco (`#121821` no dark), raio 8, borda 0,4 px `#DEE2E6` (`#2A364A` no dark), padding 16 e margem inferior 8. Com `title`, um texto Roboto 700 de `14 × fontScale` em `#262627`, alinhado à esquerda, com 8 px abaixo. O conteúdo fica em uma `View` de largura total com `overflow: hidden`.
+**Aparência:** retângulo de largura total, fundo branco (`#121821` no dark), raio 8, borda 0,4 px `#DEE2E6` (`#2A364A` no dark), padding 16 e margem inferior 8. Com `title`, um texto Plus Jakarta Bold de `14 × fontScale` em `#262627`, alinhado à esquerda, com 8 px abaixo. O conteúdo fica em uma `View` de largura total com `overflow: hidden`.
 
 **Comportamento:** com `onClick` vira `TouchableOpacity` com `activeOpacity 0.7`; sem, é uma `View` inerte.
 
@@ -914,7 +914,7 @@ isLocked: false                  isLocked: true
  fonte 14,4 preta
 ```
 
-**Aparência:** pílula retangular de raio 8, borda 1,2 px, fundo branco, que mede pelo conteúdo (`alignSelf: flex-start`). No estado normal (`isLocked: false`): borda e texto pretos, padding esquerdo ~28 px para acomodar um badge circular de 15,4 px a 5 px da borda esquerda — verde `#059669` com `IconCircleCheck` branco quando `checked`, cinza `#E0E0E0` com `IconCircle` preto quando não. Texto Roboto 14,4 px centralizado. No estado travado (`isLocked: true`): o badge some, o padding encolhe para ~4,8 px, a fonte cai para 11,5 px e borda e texto assumem `lockedColor`.
+**Aparência:** pílula retangular de raio 8, borda 1,2 px, fundo branco, que mede pelo conteúdo (`alignSelf: flex-start`). No estado normal (`isLocked: false`): borda e texto pretos, padding esquerdo ~28 px para acomodar um badge circular de 15,4 px a 5 px da borda esquerda — verde `#059669` com `IconCircleCheck` branco quando `checked`, cinza `#E0E0E0` com `IconCircle` preto quando não. Texto Plus Jakarta Regular 14,4 px centralizado. No estado travado (`isLocked: true`): o badge some, o padding encolhe para ~4,8 px, a fonte cai para 11,5 px e borda e texto assumem `lockedColor`.
 
 **Comportamento:** a troca de `isLocked` é **instantânea** (`setValue`, sem animação), embora os valores sejam interpolados. O toque chama `onClick(!checked)` e `onTap(!checked)` — o componente é controlado, não guarda estado. Desabilitado fica com `opacity 0.7`; pressionado, 0,9. Expõe `accessibilityRole="button"` e `accessibilityState={{ checked, disabled }}`.
 
@@ -929,7 +929,7 @@ Botão de ação flutuante com rótulo (pílula), não circular.
 | `disabled` | `boolean` | `false` |
 | `darkMode` | `boolean` | `false` (ignorado) |
 
-**Aparência:** pílula verde `#059669` de raio 999, padding 16 horizontal e 12 vertical, texto branco Roboto-Regular 18 px (`lineHeight` 22), sombra preta deslocada 2 px para baixo (`opacity 0.22`, raio 4, `elevation 4`). Mede pelo conteúdo (`alignSelf: flex-start`). O posicionamento flutuante é responsabilidade do app — o componente não se posiciona sozinho.
+**Aparência:** pílula verde `#059669` de raio 999, padding 16 horizontal e 12 vertical, texto branco Plus Jakarta Regular 18 px (`lineHeight` 22), sombra preta deslocada 2 px para baixo (`opacity 0.22`, raio 4, `elevation 4`). Mede pelo conteúdo (`alignSelf: flex-start`). O posicionamento flutuante é responsabilidade do app — o componente não se posiciona sozinho.
 
 **Comportamento:** pressionado vai a `opacity 0.9`; desabilitado, 0,5. `darkMode` é aceito mas não altera nada.
 
@@ -1179,7 +1179,7 @@ Componente de exemplo que renderiza o texto `"Hello World"`. **Não é exportado
 
 Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. `darkMode` continua aceita e é ignorada nos componentes reescritos.
 
-**Tipografia.** Plus Jakarta Sans (400/500/600/700). Alias `Roboto-*` ainda carrega o corte equivalente.
+**Tipografia.** Plus Jakarta Sans (400/500/600/700). Não há segunda família.
 
 **`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#F4F2F5`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
 
@@ -1274,7 +1274,7 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 1. **Sem testes e sem CI.** Não há runner, nenhum arquivo de teste e nenhum workflow de build/lint. Toda verificação é manual via `demo/` ou pelo app consumidor.
 2. **Docs por componente removidas.** Permanecem `docs/README.md`, `docs/migracao-2.0.md` e `docs/prototipos/`. Este `CONTEXT.md` é a fonte canônica do contrato.
 3. **`checklist.md` removido.** A lista antiga citava componentes que não existem (`TabBar`, `OrderList`, `OfferCard`).
-4. **Paleta antiga no Tailwind.** `tailwind.config.js` ainda declara CSS vars da paleta semântica. Nenhum componente as lê. A cor da tela vem de `Constants.styles`.
+4. **Escalas Tailwind antigas apontam para a paleta 2.0.** `primary-500` é `#3CDBC0`, não um azul. Nenhum componente usa essas classes; a cor da tela continua em `Constants.styles`.
 5. **Dark mode parcial.** `MainTitle`, `Subtitle`, `Tag`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `List`, `Message*`, `InputChat`, `Button`, `Input` e `TextArea` não reagem a `darkMode`. `Modal`, `Accordion`, `Select` (texto) e `Divider` ainda usam o tema claro/escuro. `FAB`, `Image` e `Grid` aceitam a prop e a descartam.
 6. **`UserCardHorizontal` não é horizontal** — empilha os dados em coluna e não mostra avatar.
 7. **`UserCardBio` não renderiza a `bio`**, embora o campo seja obrigatório no tipo.
