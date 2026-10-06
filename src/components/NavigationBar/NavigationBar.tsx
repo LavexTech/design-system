@@ -2,8 +2,8 @@ import React from "react"
 import { View, TouchableOpacity, Text, StyleSheet, Platform } from "react-native"
 import Constants from "../../constants/constants"
 
-const TAB_ACTIVE_COLOR = "#007DFF"
-const TAB_INACTIVE_COLOR = "#8F98AD"
+const TAB_ACTIVE_COLOR = Constants.styles.brand.DARK
+const TAB_INACTIVE_COLOR = Constants.styles.text.MUTED
 
 type NavigationBarProps = {
   pages: string[]
@@ -37,12 +37,15 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         return (
           <TouchableOpacity
             key={page}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: isActive }}
+            accessibilityLabel={page}
             style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
             onPress={() => handlePagePress(page)}
             activeOpacity={0.7}
           >
             {icons && icons[index] && (
-              <View style={styles.iconContainer}>
+              <View style={[styles.iconContainer, isActive ? styles.iconActive : null]}>
                 {icons[index](isActive)}
               </View>
             )}
@@ -51,8 +54,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                 styles.tabText,
                 {
                   color,
-                  fontSize: 15 * fontScale,
+                  fontSize: 13 * fontScale,
                   lineHeight: 18 * fontScale,
+                  fontWeight: isActive ? "700" : "500",
                 },
               ]}
             >
@@ -68,10 +72,11 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    minHeight: Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT,
     flexDirection: "row",
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
-    borderTopWidth: Constants.styles.borderWidth.THIN,
-    borderTopColor: Constants.styles.borderColor.LIGHT,
+    backgroundColor: Constants.styles.surface.DEFAULT,
+    borderTopWidth: Constants.styles.borderWidth.HAIRLINE,
+    borderTopColor: Constants.styles.border.SOFT,
     shadowColor: Constants.styles.shadowColor.DEFAULT,
   },
   containerDark: {
@@ -93,6 +98,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 2,
+    minWidth: 56,
+    height: 30,
+    borderRadius: 15,
+  },
+  iconActive: {
+    backgroundColor: Constants.styles.surface.ACCENT,
   },
   tabText: {
     fontWeight: Constants.styles.fontWeight.NORMAL as any,

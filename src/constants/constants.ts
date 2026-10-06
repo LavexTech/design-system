@@ -87,7 +87,7 @@ const Constants = {
       INPUT_HEIGHT: 52,
       TOUCH_TARGET: 44,
       INPUT_MIN_WIDTH: 50,
-      NAVIGATION_BAR_HEIGHT: 64,
+      NAVIGATION_BAR_HEIGHT: 76,
     },
     brand: {
       PRIMARY: "#3CDBC0",
