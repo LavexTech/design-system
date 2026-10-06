@@ -5,6 +5,7 @@ import { TextBox } from "../Text/Text"
 import { GluestackUIProvider } from "../../ui/gluestack-ui-provider"
 import { Grid, GridItem } from "../Grid/Grid"
 import Constants from "../../constants/constants"
+import { useResolvedFontFamily } from "../../fontSetup"
 
 type TextAreaProps = {
   label: string,
@@ -33,6 +34,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   }
 
   const currentLength = value?.length || 0
+  const fieldFont = useResolvedFontFamily(Constants.styles.fontFamily.REGULAR)
 
   return (
     <GluestackUIProvider mode={darkMode ? "dark" : "light"}>
@@ -52,6 +54,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
                 style: {
                   color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
                   fontSize: Constants.styles.fontSize.MEDIUM * fontScale,
+                  fontFamily: fieldFont,
                 },
               } as any)}
             />

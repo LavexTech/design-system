@@ -55,3 +55,8 @@ export function useFonts(fontNames: string[] = ["Roboto-Regular"]) {
 export function useGlobalFonts() {
   return useFonts(Object.keys(AVAILABLE_FONTS));
 }
+
+export function useResolvedFontFamily(fontName: string): string | undefined {
+  const ready = useFonts([fontName]);
+  return ready ? fontName : undefined;
+}
