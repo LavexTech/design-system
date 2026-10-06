@@ -320,7 +320,7 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
 
 **Aparência:** coluna com `gap` 6. Label em Plus Jakarta Bold, `fontSize` `14 × fontScale`, `lineHeight` `20 × fontScale`, cor `#2D3B42`. A caixa tem altura `fieldHeight` (padrão 52), raio 12, borda 1,5 px `#869199`, fundo branco e `paddingLeft` 16. O texto digitado usa Plus Jakarta Regular, 16 px, cor `#2D3B42`, altura interna 44. Inválido: borda `#C62828` e a `errorMessage` abaixo, em caption. Foco: borda `#0B7566` e, na web, outline de 2 px na mesma cor. `InputEmail` e `InputPassword` repassam `fieldHeight`.
 
-**Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` é renderizado dentro da caixa, à direita.
+**Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` fica dentro da caixa, à direita, sem encolher (`flexShrink: 0`). O texto do campo encolhe (`minWidth: 0`) para o elemento da direita não sair do quadro em telas estreitas. A caixa corta o que ainda extrapolar (`overflow: hidden`).
 
 #### `InputName`
 
@@ -393,7 +393,7 @@ Nome completo com capitalização automática.
   A senha deve conter pelo menos um número  ← mensagem da 1ª regra violada
 ```
 
-**Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta) e padding de 16 horizontal / 8 vertical.
+**Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão de 44×44 com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta). O botão não encolhe e permanece inteiro dentro da borda, mesmo quando a largura da tela não comporta o texto ao lado.
 
 **Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência).
 

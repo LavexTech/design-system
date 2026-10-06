@@ -174,7 +174,7 @@ export const Input: React.FC<InputProps> = ({
             },
           ]}
         />
-        {rightElement}
+        {rightElement ? <View style={styles.right}>{rightElement}</View> : null}
       </View>
       {!isValid && errorMessage ? (
         <Text style={[styles.error, { fontSize: C.fontSize.CAPTION * fontScale }]}>
@@ -196,12 +196,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 16,
+    minWidth: 0,
+    maxWidth: "100%",
+    overflow: "hidden",
   },
   input: {
-    flex: 1,
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    minWidth: 0,
     height: 44,
     color: C.text.DEFAULT,
     padding: 0,
+  },
+  right: {
+    flexGrow: 0,
+    flexShrink: 0,
   },
   error: { color: C.text.DANGER },
 })

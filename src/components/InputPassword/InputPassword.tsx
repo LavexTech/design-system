@@ -3,7 +3,6 @@ import { TouchableOpacity, StyleSheet } from "react-native"
 import { IconEye } from "../Icons/IconEye"
 import { IconEyeClosed } from "../Icons/IconEyeClosed"
 import { Input } from "../Input/Input"
-import Constants from "../../constants/constants"
 
 type InputPasswordProps = {
     label: string,
@@ -99,7 +98,10 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
 
 const styles = StyleSheet.create({
     toggleButton: {
-        paddingHorizontal: Constants.styles.spacing.MEDIUM,
-        paddingVertical: Constants.styles.spacing.SMALL,
+        width: 44,
+        height: 44,
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
     },
 })
