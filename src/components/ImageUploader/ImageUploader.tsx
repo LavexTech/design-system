@@ -2,8 +2,8 @@ import React from "react"
 import { Image as RNImage, Pressable, StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { IconCamera } from "../Icons/IconCamera"
 import { IconClose } from "../Icons/IconClose"
-import { IconPlus } from "../Icons/IconPlus"
 
 type ImageUploaderProps = {
   images: string[]
@@ -46,7 +46,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       ))}
       {showAdd ? (
         <Pressable accessibilityRole="button" accessibilityLabel={addLabel} disabled={disabled} onPress={onAdd} style={[styles.cell, styles.add, { width: `${100 / columns}%` as any }]}>
-          <IconPlus size={24} color={C.brand.DARK} />
+          <IconCamera size={24} color={C.brand.DARK} />
           <Text style={[styles.addLabel, { fontFamily: labelFont, fontWeight: "normal" }]}>{addLabel}</Text>
         </Pressable>
       ) : null}
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   cell: { width: "30%", aspectRatio: 1, borderRadius: C.borderRadius.XL, overflow: "visible" },
   photo: { width: "100%", height: "100%", borderRadius: C.borderRadius.XL, backgroundColor: C.border.SOFT },
   add: { borderWidth: C.borderWidth.INTERACTIVE, borderStyle: "dashed", borderColor: C.brand.DARK, backgroundColor: C.surface.DEFAULT, alignItems: "center", justifyContent: "center", gap: 6 },
-  addLabel: { color: C.brand.DARK, fontSize: C.fontSize.LABEL },
+  addLabel: { color: C.brand.DARK, fontSize: C.fontSize.LABEL, textAlign: "center" },
   remove: { position: "absolute", top: -6, right: -6, width: 44, height: 44, alignItems: "center", justifyContent: "center" },
   removeDot: { width: 24, height: 24, borderRadius: 12, backgroundColor: C.brand.SURFACE, alignItems: "center", justifyContent: "center" },
 })

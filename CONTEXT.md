@@ -1241,7 +1241,11 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
 
-**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`.
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera` e `IconShieldCheck` é `ShieldCheck`.
+
+`Button` aceita `iconPosition` `"left"` (padrão) ou `"right"`. O ícone fica absoluto, a 16 px da borda correspondente, e o rótulo continua centralizado.
+
+`ImageUploader`: a célula de adicionar tem borda tracejada 1,5 px `#0B7566`, fundo branco e raio `XL`. `IconCamera` e o rótulo (`addLabel`, padrão “Adicionar”) ficam centralizados, também em `#0B7566`. O rótulo usa a fonte de label.
 
 `SearchInput` tem `fontScale` (padrão `1`). Ele escala a fonte de 16 px e também a altura do campo (52 px) e a altura interna (44 px). Com `fontScale` 1 o campo não muda. Com texto, um `IconClose` fica à direita, dentro do campo; o toque esvazia o valor (`onChange("")`) e, se houver, chama `onClear`. Sem texto, o ícone não aparece.
 

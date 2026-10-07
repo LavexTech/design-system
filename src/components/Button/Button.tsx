@@ -35,6 +35,7 @@ type ButtonBaseProps = {
   style?: ViewStyle
   textStyle?: TextStyle
   icon?: React.ReactNode
+  iconPosition?: "left" | "right"
 }
 
 type ButtonProps =
@@ -131,6 +132,7 @@ export const Button = (props: ButtonProps) => {
     style,
     textStyle,
     icon,
+    iconPosition = "left",
     needsConfirmation,
     confirmationText,
   } = props
@@ -205,7 +207,7 @@ export const Button = (props: ButtonProps) => {
         style,
       ]}
     >
-      {icon ? <View style={styles.icon}>{icon}</View> : null}
+      {icon ? <View style={[styles.icon, iconPosition === "right" ? styles.iconRight : styles.iconLeft]}>{icon}</View> : null}
       <Text
         style={[
           styles.label,
@@ -238,6 +240,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
+  },
+  iconLeft: {
     left: 16,
+  },
+  iconRight: {
+    right: 16,
   },
 })

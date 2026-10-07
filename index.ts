@@ -98,6 +98,8 @@ export { IconMessage } from "./src/components/Icons/IconMessage";
 export { IconArrowLeft } from "./src/components/Icons/IconArrowLeft";
 export { IconArrowRight } from "./src/components/Icons/IconArrowRight";
 export { IconArrowDown } from "./src/components/Icons/IconArrowDown";
+export { IconCamera } from "./src/components/Icons/IconCamera";
+export { IconShieldCheck } from "./src/components/Icons/IconShieldCheck";
 export { IconChevronLeft } from "./src/components/Icons/IconChevronLeft";
 export { IconChevronRight } from "./src/components/Icons/IconChevronRight";
 export { IconChevronDown } from "./src/components/Icons/IconChevronDown";
