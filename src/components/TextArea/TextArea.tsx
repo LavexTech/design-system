@@ -66,9 +66,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
             fontFamily: fieldFont,
             fontSize: C.fontSize.BODY * fontScale,
           },
-          Platform.OS === "web" && focused
-            ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
-            : null,
+          Platform.OS === "web" ? styles.webNoOutline : null,
         ]}
       />
       {maxLength ? (
@@ -83,6 +81,10 @@ export const TextArea: React.FC<TextAreaProps> = ({
 const styles = StyleSheet.create({
   wrap: { alignSelf: "stretch", gap: 6 },
   label: { color: C.text.DEFAULT, lineHeight: C.lineHeight.LABEL },
+  webNoOutline: {
+    outlineStyle: "none",
+    outlineWidth: 0,
+  } as object,
   field: {
     minHeight: 120,
     borderWidth: C.borderWidth.INTERACTIVE,

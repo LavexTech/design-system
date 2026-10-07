@@ -34,9 +34,6 @@ export const SearchInput: React.FC<SearchInputProps> = ({
       style={[
         styles.box,
         { borderColor: focused ? C.brand.DARK : C.border.INTERACTIVE },
-        Platform.OS === "web" && focused
-          ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
-          : null,
       ]}
     >
       <View style={styles.icon}>
@@ -53,7 +50,11 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         onSubmitEditing={onSubmit}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        style={[styles.input, { fontFamily: fieldFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale }]}
+        style={[
+          styles.input,
+          { fontFamily: fieldFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale },
+          Platform.OS === "web" ? styles.webNoOutline : null,
+        ]}
       />
       {onClear ? (
         <Pressable
@@ -83,6 +84,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon: { position: "absolute", left: 16 },
+  webNoOutline: {
+    outlineStyle: "none",
+    outlineWidth: 0,
+  } as object,
   input: { flex: 1, height: 44, marginLeft: 44, color: C.text.DEFAULT, padding: 0 },
   clear: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
 })

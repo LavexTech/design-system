@@ -132,9 +132,6 @@ export const Input: React.FC<InputProps> = ({
         style={[
           styles.field,
           { borderColor, height: fieldHeight ?? C.componentSize.INPUT_HEIGHT },
-          Platform.OS === "web" && focused
-            ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
-            : null,
         ]}
       >
         <TextInput
@@ -172,6 +169,7 @@ export const Input: React.FC<InputProps> = ({
               fontFamily: fieldFont,
               paddingRight: rightElement ? 4 : 16,
             },
+            Platform.OS === "web" ? styles.webNoOutline : null,
           ]}
         />
         {rightElement ? <View style={styles.right}>{rightElement}</View> : null}
@@ -200,6 +198,10 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     overflow: "hidden",
   },
+  webNoOutline: {
+    outlineStyle: "none",
+    outlineWidth: 0,
+  } as object,
   input: {
     flexGrow: 1,
     flexShrink: 1,

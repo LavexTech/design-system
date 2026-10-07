@@ -1,5 +1,5 @@
 import React from "react"
-import { Pressable, StyleSheet, TextInput, View } from "react-native"
+import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconSend } from "../Icons/IconSend"
@@ -35,7 +35,11 @@ export function InputChat({
         placeholderTextColor={C.text.PLACEHOLDER}
         returnKeyType="send"
         onSubmitEditing={handleSend}
-        style={[styles.field, { fontFamily: fieldFont, fontWeight: "normal" }]}
+        style={[
+          styles.field,
+          { fontFamily: fieldFont, fontWeight: "normal" },
+          Platform.OS === "web" ? styles.webNoOutline : null,
+        ]}
       />
       <Pressable
         accessibilityRole="button"
@@ -58,6 +62,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     gap: 10,
   },
+  webNoOutline: {
+    outlineStyle: "none",
+    outlineWidth: 0,
+  } as object,
   field: {
     flex: 1,
     height: 48,
