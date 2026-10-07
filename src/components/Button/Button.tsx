@@ -204,10 +204,11 @@ export const Button = (props: ButtonProps) => {
         Platform.OS === "web"
           ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
           : null,
+        iconPosition === "right" && icon ? styles.withTrailingIcon : null,
         style,
       ]}
     >
-      {icon ? <View style={[styles.icon, iconPosition === "right" ? styles.iconRight : styles.iconLeft]}>{icon}</View> : null}
+      {icon && iconPosition === "left" ? <View style={[styles.icon, styles.iconLeft]}>{icon}</View> : null}
       <Text
         style={[
           styles.label,
@@ -223,6 +224,7 @@ export const Button = (props: ButtonProps) => {
       >
         {label}
       </Text>
+      {icon && iconPosition === "right" ? <View>{icon}</View> : null}
     </Pressable>
   )
 }
@@ -238,13 +240,14 @@ const styles = StyleSheet.create({
   label: {
     textAlign: "center",
   },
+  withTrailingIcon: {
+    flexDirection: "row",
+    gap: 6,
+  },
   icon: {
     position: "absolute",
   },
   iconLeft: {
     left: 16,
-  },
-  iconRight: {
-    right: 16,
   },
 })
