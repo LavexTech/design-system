@@ -145,6 +145,8 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | | `WARNING` | `#F59E0B` (âmbar) |
 | `backgroundColor` | `WHITE` / `LIGHT_GRAY` / `GRAY` | `#FFFFFF` / `#E5E1E6` / `#E5E1E6` |
 | `borderColor` | `LIGHT` / `MEDIUM` | `#E5E1E6` / `#CED4DA` |
+| `surface` | `MUTED` | `#E5E1E6` (cinza-claro) |
+| | `SUBTLE` | `#FAF9FA` (cinza-claríssimo) |
 | `color` | `WHITE` / `BLACK` | `#FFFFFF` / `#000000` |
 | | `GOLD` | `#FFD700` (estrela preenchida) |
 | | `GRAY` | `#E5E1E6` (estrela vazia, badge inativo) |
@@ -166,6 +168,8 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | `SURFACE` | `#2D3B42` | Grafite azulado da marca. Mesmo hex de `color.PRIMARY_DARK` e `text.DEFAULT`. Cor dos títulos `h2`. |
 
 O Tailwind repete esses hex em `brand.DEFAULT`, `brand.dark`, `brand.deep` e `brand.surface`.
+
+**Cinza-claro** é `#E5E1E6` (`surface.MUTED`, `backgroundColor.LIGHT_GRAY`, `color.GRAY`, `border.SOFT`). **Cinza-claríssimo** é `#FAF9FA` (`surface.SUBTLE`).
 
 ### Tema light/dark (`Constants.styles.theme`)
 
