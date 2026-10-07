@@ -1013,7 +1013,7 @@ Barra de abas inferior.
 
 **Aparência:** altura mínima 76, fundo branco, borda superior 1 px `#E5E1E6`. Aba ativa: texto `#0B7566` peso 700. Inativa: texto `#5A6A72` peso 500. Rótulo 13 px. A pílula verde-clara (`#E2FAF6`, 56×30, raio 15) é um elemento único da barra, atrás dos ícones, e não o fundo de cada ícone. No iOS há padding extra para o home indicator. `NAVIGATION_BAR_HEIGHT` vale 76.
 
-**Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`. Ao mudar a aba ativa, o item que sai do estado ativo e o item que entra cruzam opacidade em 400 ms (ícone e rótulo), em paralelo. No mesmo intervalo a pílula desliza na horizontal até o centro do ícone da aba destino.
+**Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`. Ao mudar a aba ativa, o item que sai do estado ativo e o item que entra cruzam opacidade em 400 ms (ícone e rótulo), em paralelo. A pílula fica a 12px do topo da barra e desliza na horizontal em 300ms até o centro do ícone da aba destino.
 
 ### 8.7 Domínio (pedidos, ofertas, avaliação, chat)
 
@@ -1227,7 +1227,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#E5E1E6`, sem borda, canto inferior esquerdo 4.
 
-**`NavigationBar`.** Altura mínima 76. Texto ativo `#0B7566` peso 700, inativo `#5A6A72`. A pílula `#E2FAF6` é única e desliza até o ícone ativo em 400 ms, junto com a troca de cor do ícone e do rótulo. `NAVIGATION_BAR_HEIGHT` vale 76.
+**`NavigationBar`.** Altura mínima 76. Texto ativo `#0B7566` peso 700, inativo `#5A6A72`. A pílula `#E2FAF6` é única, fica a 12px do topo e desliza até o ícone ativo em 300ms. A cor do ícone e do rótulo cruza em 400ms. `NAVIGATION_BAR_HEIGHT` vale 76.
 
 **`Tag`.** Preenchida, raio 12, texto 13 peso 700. Nomes `*-outline` permanecem. `primary`/`success`: fundo `#E2FAF6`, texto `#0B7566`. `danger`: `#FDECEC` / `#C62828`. `warning`: `#FFF4E5` / `#8A5A00`.
 

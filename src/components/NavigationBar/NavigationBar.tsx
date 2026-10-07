@@ -5,6 +5,8 @@ import Constants from "../../constants/constants"
 const TAB_ACTIVE_COLOR = Constants.styles.brand.DARK
 const TAB_INACTIVE_COLOR = Constants.styles.text.MUTED
 const TAB_TRANSITION_MS = 400
+const BUBBLE_TRANSITION_MS = 300
+const BUBBLE_TOP = 12
 const BUBBLE_WIDTH = 56
 const BUBBLE_HEIGHT = 30
 
@@ -41,7 +43,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     }
     Animated.timing(bubbleX, {
       toValue: nextX,
-      duration: TAB_TRANSITION_MS,
+      duration: BUBBLE_TRANSITION_MS,
       useNativeDriver: true,
     }).start()
   }, [activeIndex, barWidth, bubbleX, pages.length])
@@ -52,10 +54,6 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     }
   }
 
-  const bubbleTop = Platform.OS === "ios"
-    ? Constants.styles.spacing.TINY + 6
-    : Constants.styles.spacing.TINY
-
   return (
     <View
       style={[styles.container, darkMode ? styles.containerDark : null]}
@@ -65,7 +63,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         pointerEvents="none"
         style={[
           styles.bubble,
-          { top: bubbleTop, transform: [{ translateX: bubbleX }] },
+          { top: BUBBLE_TOP, transform: [{ translateX: bubbleX }] },
         ]}
       />
       {pages.map((page, index) => (
