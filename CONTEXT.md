@@ -905,7 +905,7 @@ sem icon:                        com icon:
                                          texto segue centralizado no botão
 ```
 
-**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`, sem borda. `darkMode` é aceita e ignorada.
+**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo cinza-claro `#E5E1E6`, texto cinza-escuro `#2D3B42`, sem borda. `darkMode` é aceita e ignorada.
 
 | Variante | Fundo | Texto | Borda |
 |---|---|---|---|

@@ -210,7 +210,7 @@ export const Button = (props: ButtonProps) => {
         style={[
           styles.label,
           {
-            color: disabled ? C.text.MUTED : colors.color,
+            color: disabled ? C.text.DEFAULT : colors.color,
             fontSize: metrics.font * fontScale,
             lineHeight: metrics.font * 1.2 * fontScale,
             fontFamily: labelFont,
