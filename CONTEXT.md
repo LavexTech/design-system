@@ -1243,7 +1243,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`.
 
-`SearchInput` tem `fontScale` (padrão `1`). Ele escala a fonte de 16 px e também a altura do campo (52 px) e a altura interna (44 px). Com `fontScale` 1 o campo não muda.
+`SearchInput` tem `fontScale` (padrão `1`). Ele escala a fonte de 16 px e também a altura do campo (52 px) e a altura interna (44 px). Com `fontScale` 1 o campo não muda. Com texto, um `IconClose` fica à direita, dentro do campo; o toque esvazia o valor (`onChange("")`) e, se houver, chama `onClear`. Sem texto, o ícone não aparece.
 
 `CheckboxListItem`: caixa de 22 px com raio 6 e linha de altura mínima 52. `boxSize` e `boxRadius` trocam a caixa (o check de 14 px escala junto com `boxSize`). `verticalPadding`, quando informado, zera a altura mínima e aplica esse padding vertical. `fontScale` só muda o texto do rótulo (16 px).
 

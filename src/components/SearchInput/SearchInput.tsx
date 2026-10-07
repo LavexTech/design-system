@@ -64,17 +64,17 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           Platform.OS === "web" ? styles.webNoOutline : null,
         ]}
       />
-      {onClear ? (
+      {value.length > 0 ? (
         <Pressable
           accessibilityRole="button"
           accessibilityLabel="Limpar busca"
           onPress={() => {
-            onClear()
             onChange("")
+            onClear?.()
           }}
-          style={styles.clear}
+          style={[styles.clear, { width: 44 * fontScale, height: 44 * fontScale }]}
         >
-          <IconClose size={18} color={C.text.MUTED} />
+          <IconClose size={18 * fontScale} color={C.text.MUTED} />
         </Pressable>
       ) : null}
     </View>
