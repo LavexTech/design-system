@@ -97,6 +97,7 @@ export { IconFilter } from "./src/components/Icons/IconFilter";
 export { IconMessage } from "./src/components/Icons/IconMessage";
 export { IconArrowLeft } from "./src/components/Icons/IconArrowLeft";
 export { IconArrowRight } from "./src/components/Icons/IconArrowRight";
+export { IconArrowDown } from "./src/components/Icons/IconArrowDown";
 export { IconChevronLeft } from "./src/components/Icons/IconChevronLeft";
 export { IconChevronRight } from "./src/components/Icons/IconChevronRight";
 export { IconChevronDown } from "./src/components/Icons/IconChevronDown";

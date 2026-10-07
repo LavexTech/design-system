@@ -33,7 +33,10 @@ export const SearchInput: React.FC<SearchInputProps> = ({
       accessibilityRole="search"
       style={[
         styles.box,
-        { borderColor: focused ? C.brand.DARK : C.border.INTERACTIVE },
+        {
+          borderColor: focused ? C.brand.DARK : C.border.INTERACTIVE,
+          height: C.componentSize.INPUT_HEIGHT * fontScale,
+        },
       ]}
     >
       <View style={styles.icon}>
@@ -52,7 +55,12 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         onBlur={() => setFocused(false)}
         style={[
           styles.input,
-          { fontFamily: fieldFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale },
+          {
+            fontFamily: fieldFont,
+            fontWeight: "normal",
+            fontSize: C.fontSize.BODY * fontScale,
+            height: 44 * fontScale,
+          },
           Platform.OS === "web" ? styles.webNoOutline : null,
         ]}
       />
