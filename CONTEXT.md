@@ -1262,8 +1262,9 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconSend` | `Send` | `InputChat` |
 | `IconHome` | `House` | aba Início |
 | `IconHistory` | `History` | aba Histórico |
-| `IconReceipt` | `Receipt` | aba Pedido |
-| `IconProfile` | `User` | `ProfileAvatar` placeholder, aba Conta |
+| `IconReceipt` | `ReceiptText` | aba Histórico |
+| `IconProfile` | `User` | `ProfileAvatar` placeholder |
+| `IconUserRound` | `UserRound` | aba Conta |
 | `IconHeadset` | `Headset` | avatar do suporte no chat |
 | `IconLoader` | `LoaderCircle` | estados de carregamento |
 | `IconEye` / `IconEyeClosed` | `Eye` / `EyeOff` | `InputPassword` |

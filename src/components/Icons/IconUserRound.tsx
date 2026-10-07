@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReceiptText } from 'lucide-react-native'
+import { UserRound } from 'lucide-react-native'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
@@ -7,9 +7,9 @@ import {
   resolveIconSize,
 } from './iconProps'
 
-export type IconReceiptProps = IconProps
+export type IconUserRoundProps = IconProps
 
-export const IconReceipt: React.FC<IconReceiptProps> = ({
+export const IconUserRound: React.FC<IconUserRoundProps> = ({
   color,
   fill,
   width,
@@ -17,7 +17,7 @@ export const IconReceipt: React.FC<IconReceiptProps> = ({
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
-  <ReceiptText
+  <UserRound
     color={resolveIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
