@@ -415,6 +415,8 @@ Nome completo com capitalização automática.
 | `errorMessage` | `string` | — (mensagem derivada da regra violada) |
 | `minLength` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
+| `onSubmitEditing` | `() => void` | — |
+| `returnKeyType` | `'done' \| 'go' \| 'next' \| 'search' \| 'send' \| 'default'` | — |
 
 ```
   Senha
@@ -426,7 +428,7 @@ Nome completo com capitalização automática.
 
 **Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão de 44×44 com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta). O botão não encolhe e permanece inteiro dentro da borda, mesmo quando a largura da tela não comporta o texto ao lado.
 
-**Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência).
+**Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência). `onSubmitEditing` dispara no Enter do teclado (nativo e web) e `returnKeyType` define o rótulo da tecla.
 
 #### `InputNumber`
 
