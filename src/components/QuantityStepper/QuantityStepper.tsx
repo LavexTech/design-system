@@ -34,15 +34,15 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
   const atMax = value >= max
   const name = label ?? "item"
   const labelFont = useResolvedFontFamily(C.fontFamily.REGULAR)
-  const valueFont = useResolvedFontFamily(C.fontFamily.BOLD)
+  const valueFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   return (
-    <View style={styles.row}>
+    <View style={[styles.row, label ? null : styles.hug]}>
       {onDelete ? (
         <Pressable accessibilityRole="button" accessibilityLabel={`Remover ${name}`} onPress={onDelete} style={styles.circle}>
           <IconTrash size={20} color={C.text.DANGER} />
         </Pressable>
       ) : null}
-      {label ? <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal" }]}>{label}</Text> : <View style={{ flex: 1 }} />}
+      {label ? <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal" }]}>{label}</Text> : null}
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`Diminuir ${name}`}
@@ -70,9 +70,10 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
 
 const styles = StyleSheet.create({
   row: { alignSelf: "stretch", flexDirection: "row", alignItems: "center", gap: 12 },
+  hug: { alignSelf: "flex-start" },
   label: { flex: 1, fontSize: C.fontSize.BODY, color: C.text.DEFAULT },
-  circle: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center", backgroundColor: C.surface.DEFAULT },
+  circle: { width: 36, height: 36, borderRadius: 18, alignItems: "center", justifyContent: "center", backgroundColor: C.surface.DEFAULT },
   bordered: { borderWidth: C.borderWidth.INTERACTIVE, borderColor: C.border.INTERACTIVE },
   limit: { borderColor: C.border.SOFT },
-  value: { minWidth: 32, textAlign: "center", fontSize: C.fontSize.ACTION, color: C.text.DEFAULT },
+  value: { minWidth: 24, textAlign: "center", fontSize: C.fontSize.BODY, color: C.text.DEFAULT },
 })

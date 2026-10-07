@@ -1247,6 +1247,8 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 `CheckboxListItem`: caixa de 22 px com raio 6 e linha de altura mínima 52. `boxSize` e `boxRadius` trocam a caixa (o check de 14 px escala junto com `boxSize`). `verticalPadding`, quando informado, zera a altura mínima e aplica esse padding vertical. `fontScale` só muda o texto do rótulo (16 px).
 
+`QuantityStepper`: grupo compacto, nesta ordem, com gap 12. Botão circular de 36 px, fundo branco, borda 1,5 px `#869199`, ícone `−` de 20 px. No limite, a borda vai para `#E5E1E6` e o ícone também. No meio, a quantidade em 16 px, `#2D3B42`, centralizada. Depois, o botão circular outlined `+`, igual ao `−`. `label`, quando vier, fica à esquerda com `flex: 1` e não entra nesse grupo. Sem `label`, o grupo só ocupa a largura dos botões e da quantidade. `onDelete` continua à esquerda, com `IconTrash` `#C62828`.
+
 ---
 
 ## 9. Ícones
