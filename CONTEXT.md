@@ -1013,7 +1013,7 @@ Barra de abas inferior.
 
 **Aparência:** altura mínima 76, fundo branco, borda superior 1 px `#E5E1E6`. Aba ativa: pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa: texto `#5A6A72` peso 500. Rótulo 13 px. No iOS há padding extra para o home indicator. `NAVIGATION_BAR_HEIGHT` vale 76.
 
-**Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`.
+**Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`. Ao mudar a aba ativa, o item que sai do estado ativo e o item que entra cruzam opacidade em 400 ms (ícone, pílula e rótulo), em paralelo.
 
 ### 8.7 Domínio (pedidos, ofertas, avaliação, chat)
 
@@ -1227,7 +1227,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#E5E1E6`, sem borda, canto inferior esquerdo 4.
 
-**`NavigationBar`.** Altura mínima 76. Aba ativa com pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa em `#5A6A72`. `NAVIGATION_BAR_HEIGHT` vale 76.
+**`NavigationBar`.** Altura mínima 76. Aba ativa com pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa em `#5A6A72`. A troca de aba cruza esses estilos em 400 ms. `NAVIGATION_BAR_HEIGHT` vale 76.
 
 **`Tag`.** Preenchida, raio 12, texto 13 peso 700. Nomes `*-outline` permanecem. `primary`/`success`: fundo `#E2FAF6`, texto `#0B7566`. `danger`: `#FDECEC` / `#C62828`. `warning`: `#FFF4E5` / `#8A5A00`.
 
