@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from "react-native"
 import Constants from "../../constants/constants"
 
 const TAB_ACTIVE_COLOR = Constants.styles.brand.DARK
 const TAB_INACTIVE_COLOR = Constants.styles.text.MUTED
 const TAB_TRANSITION_MS = 400
+const BUBBLE_WIDTH = 56
+const BUBBLE_HEIGHT = 30
 
 type NavigationBarProps = {
   pages: string[]
@@ -23,14 +25,49 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   darkMode = false,
   fontScale = 1,
 }: NavigationBarProps) => {
+  const [barWidth, setBarWidth] = useState(0)
+  const bubbleX = useRef(new Animated.Value(0)).current
+  const bubbleReady = useRef(false)
+  const activeIndex = Math.max(0, pages.indexOf(activePage))
+
+  useEffect(() => {
+    if (barWidth <= 0 || pages.length === 0) return
+    const tabWidth = barWidth / pages.length
+    const nextX = activeIndex * tabWidth + (tabWidth - BUBBLE_WIDTH) / 2
+    if (!bubbleReady.current) {
+      bubbleX.setValue(nextX)
+      bubbleReady.current = true
+      return
+    }
+    Animated.timing(bubbleX, {
+      toValue: nextX,
+      duration: TAB_TRANSITION_MS,
+      useNativeDriver: true,
+    }).start()
+  }, [activeIndex, barWidth, bubbleX, pages.length])
+
   const handlePagePress = (page: string) => {
     if (onNavigate) {
       onNavigate(page)
     }
   }
 
+  const bubbleTop = Platform.OS === "ios"
+    ? Constants.styles.spacing.TINY + 6
+    : Constants.styles.spacing.TINY
+
   return (
-    <View style={[styles.container, darkMode ? styles.containerDark : null]}>
+    <View
+      style={[styles.container, darkMode ? styles.containerDark : null]}
+      onLayout={(event) => setBarWidth(event.nativeEvent.layout.width)}
+    >
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.bubble,
+          { top: bubbleTop, transform: [{ translateX: bubbleX }] },
+        ]}
+      />
       {pages.map((page, index) => (
         <NavTab
           key={page}
@@ -106,7 +143,7 @@ function TabFace({
   return (
     <View style={styles.face}>
       {icon ? (
-        <View style={[styles.iconContainer, isActive ? styles.iconActive : null]}>
+        <View style={styles.iconContainer}>
           {icon(isActive)}
         </View>
       ) : null}
@@ -143,6 +180,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
+    zIndex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingTop: Constants.styles.spacing.TINY,
@@ -165,16 +203,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  bubble: {
+    position: "absolute",
+    left: 0,
+    width: BUBBLE_WIDTH,
+    height: BUBBLE_HEIGHT,
+    borderRadius: BUBBLE_HEIGHT / 2,
+    backgroundColor: Constants.styles.surface.ACCENT,
+    zIndex: 0,
+  },
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 2,
-    minWidth: 56,
-    height: 30,
-    borderRadius: 15,
-  },
-  iconActive: {
-    backgroundColor: Constants.styles.surface.ACCENT,
+    minWidth: BUBBLE_WIDTH,
+    height: BUBBLE_HEIGHT,
+    zIndex: 1,
   },
   tabText: {
     fontWeight: Constants.styles.fontWeight.NORMAL as any,
