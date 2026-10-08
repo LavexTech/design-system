@@ -84,13 +84,16 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   return (
     <View style={[styles.grid, { gap: rowGap }]} onLayout={(event) => setContainerWidth(event.nativeEvent.layout.width)}>
       {itemSize > 0
-        ? rows.map((row, rowIndex) => (
-            <View key={`row-${rowIndex}`} style={styles.row}>
-              {row.map((slot) => (
-                <View key={slot.key}>{slot.node}</View>
-              ))}
-            </View>
-          ))
+        ? rows.map((row, rowIndex) => {
+            const full = row.length === columnCount
+            return (
+              <View key={`row-${rowIndex}`} style={[styles.row, full ? styles.rowFull : styles.rowStart, full ? null : { gap: rowGap }]}>
+                {row.map((slot) => (
+                  <View key={slot.key}>{slot.node}</View>
+                ))}
+              </View>
+            )
+          })
         : null}
     </View>
   )
@@ -98,7 +101,9 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
 const styles = StyleSheet.create({
   grid: { alignSelf: "stretch" },
-  row: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
+  row: { flexDirection: "row", alignItems: "flex-start" },
+  rowFull: { justifyContent: "space-between" },
+  rowStart: { justifyContent: "flex-start" },
   cell: { borderRadius: C.borderRadius.XL, overflow: "visible" },
   photo: { width: "100%", height: "100%", borderRadius: C.borderRadius.XL, backgroundColor: C.border.SOFT },
   add: { borderWidth: 2, borderStyle: "dashed", borderColor: C.brand.DARK, backgroundColor: C.surface.DEFAULT, alignItems: "center", justifyContent: "center", gap: 6 },
