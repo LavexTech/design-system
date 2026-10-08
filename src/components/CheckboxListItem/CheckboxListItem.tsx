@@ -12,6 +12,12 @@ type CheckboxListItemProps = {
   disabled?: boolean
   divider?: boolean
   fontScale?: number
+  /** Lado da caixa. O padrão é 22. */
+  boxSize?: number
+  /** Raio da caixa. O padrão é 6. */
+  boxRadius?: number
+  /** Quando informado, substitui a altura mínima de 52 por esse padding vertical. */
+  verticalPadding?: number
 }
 
 const C = Constants.styles
@@ -24,6 +30,9 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
   disabled = false,
   divider = true,
   fontScale = 1,
+  boxSize = 22,
+  boxRadius = 6,
+  verticalPadding,
 }) => {
   const labelFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   return (
@@ -35,12 +44,19 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
     onPress={() => onChange(!checked)}
     style={({ pressed }) => [
       styles.row,
+      verticalPadding != null ? { minHeight: 0, paddingVertical: verticalPadding } : null,
       divider ? styles.divider : null,
       { opacity: pressed && !disabled ? 0.85 : 1 },
     ]}
   >
-    <View style={[styles.box, checked ? styles.boxOn : null]}>
-      {checked ? <IconCheck size={14} color={C.color.WHITE} /> : null}
+    <View
+      style={[
+        styles.box,
+        { width: boxSize, height: boxSize, borderRadius: boxRadius },
+        checked ? styles.boxOn : null,
+      ]}
+    >
+      {checked ? <IconCheck size={14 * (boxSize / 22)} color={C.color.WHITE} /> : null}
     </View>
     <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale, color: disabled ? C.text.MUTED : C.text.DEFAULT }]}>
       {label}

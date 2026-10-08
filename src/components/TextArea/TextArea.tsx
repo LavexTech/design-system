@@ -9,6 +9,7 @@ type TextAreaProps = {
   placeholder?: string
   onChange: (value: string) => void
   maxLength?: number
+  counterSuffix?: string
   darkMode?: boolean
   fontScale?: number
 }
@@ -20,6 +21,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   value,
   placeholder,
   maxLength,
+  counterSuffix = " caracteres",
   onChange,
   fontScale = 1,
   darkMode,
@@ -66,14 +68,12 @@ export const TextArea: React.FC<TextAreaProps> = ({
             fontFamily: fieldFont,
             fontSize: C.fontSize.BODY * fontScale,
           },
-          Platform.OS === "web" && focused
-            ? { outlineWidth: 2, outlineColor: C.brand.DARK, outlineOffset: 1 }
-            : null,
+          Platform.OS === "web" ? styles.webNoOutline : null,
         ]}
       />
       {maxLength ? (
         <Text style={styles.counter}>
-          {currentLength}/{maxLength} caracteres
+          {currentLength}/{maxLength}{counterSuffix}
         </Text>
       ) : null}
     </View>
@@ -83,6 +83,10 @@ export const TextArea: React.FC<TextAreaProps> = ({
 const styles = StyleSheet.create({
   wrap: { alignSelf: "stretch", gap: 6 },
   label: { color: C.text.DEFAULT, lineHeight: C.lineHeight.LABEL },
+  webNoOutline: {
+    outlineStyle: "none",
+    outlineWidth: 0,
+  } as object,
   field: {
     minHeight: 120,
     borderWidth: C.borderWidth.INTERACTIVE,

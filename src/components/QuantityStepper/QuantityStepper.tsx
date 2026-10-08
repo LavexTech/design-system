@@ -36,43 +36,47 @@ export const QuantityStepper: React.FC<QuantityStepperProps> = ({
   const labelFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const valueFont = useResolvedFontFamily(C.fontFamily.BOLD)
   return (
-    <View style={styles.row}>
+    <View style={[styles.row, label ? null : styles.hug]}>
       {onDelete ? (
         <Pressable accessibilityRole="button" accessibilityLabel={`Remover ${name}`} onPress={onDelete} style={styles.circle}>
           <IconTrash size={20} color={C.text.DANGER} />
         </Pressable>
       ) : null}
-      {label ? <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal" }]}>{label}</Text> : <View style={{ flex: 1 }} />}
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={`Diminuir ${name}`}
-        disabled={disabled || atMin}
-        onPress={() => onChange(value - 1)}
-        style={[styles.circle, styles.bordered, atMin ? styles.limit : null]}
-      >
-        <IconMinus size={20} color={atMin ? C.border.SOFT : C.text.DEFAULT} />
-      </Pressable>
-      <Text accessibilityRole="text" accessibilityLabel={`${value} ${valueSuffix ?? ""}`} style={[styles.value, { fontFamily: valueFont, fontWeight: "normal" }]}>
-        {value}{valueSuffix ? ` ${valueSuffix}` : ""}
-      </Text>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={`Aumentar ${name}`}
-        disabled={disabled || atMax}
-        onPress={() => onChange(value + 1)}
-        style={[styles.circle, styles.bordered, atMax ? styles.limit : null]}
-      >
-        <IconPlus size={20} color={atMax ? C.border.SOFT : C.text.DEFAULT} />
-      </Pressable>
+      {label ? <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal" }]}>{label}</Text> : null}
+      <View style={styles.controls}>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Diminuir ${name}`}
+          disabled={disabled || atMin}
+          onPress={() => onChange(value - 1)}
+          style={[styles.circle, styles.bordered, atMin ? styles.limit : null]}
+        >
+          <IconMinus size={20} color={atMin ? C.border.SOFT : C.text.DEFAULT} />
+        </Pressable>
+        <Text accessibilityRole="text" accessibilityLabel={`${value} ${valueSuffix ?? ""}`} style={[styles.value, { fontFamily: valueFont, fontWeight: "normal" }]}>
+          {value}{valueSuffix ? ` ${valueSuffix}` : ""}
+        </Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Aumentar ${name}`}
+          disabled={disabled || atMax}
+          onPress={() => onChange(value + 1)}
+          style={[styles.circle, styles.bordered, atMax ? styles.limit : null]}
+        >
+          <IconPlus size={20} color={atMax ? C.border.SOFT : C.text.DEFAULT} />
+        </Pressable>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   row: { alignSelf: "stretch", flexDirection: "row", alignItems: "center", gap: 12 },
+  hug: { alignSelf: "flex-start" },
+  controls: { flexDirection: "row", alignItems: "center", gap: 6 },
   label: { flex: 1, fontSize: C.fontSize.BODY, color: C.text.DEFAULT },
-  circle: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center", backgroundColor: C.surface.DEFAULT },
+  circle: { width: 36, height: 36, borderRadius: 18, alignItems: "center", justifyContent: "center", backgroundColor: C.surface.DEFAULT },
   bordered: { borderWidth: C.borderWidth.INTERACTIVE, borderColor: C.border.INTERACTIVE },
   limit: { borderColor: C.border.SOFT },
-  value: { minWidth: 32, textAlign: "center", fontSize: C.fontSize.ACTION, color: C.text.DEFAULT },
+  value: { minWidth: 24, textAlign: "center", fontSize: C.fontSize.BODY, color: C.text.DEFAULT },
 })

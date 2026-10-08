@@ -40,8 +40,8 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
     uppercase: false,
   },
   h2: {
-    fontSize: C.fontSize.DISPLAY,
-    lineHeight: C.lineHeight.DISPLAY,
+    fontSize: C.fontSize.DISPLAY * 0.75,
+    lineHeight: C.lineHeight.DISPLAY * 0.75,
     color: C.color.PRIMARY_DARK,
     letterSpacing: -0.4,
     font: C.fontFamily.BOLD,

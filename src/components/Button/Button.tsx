@@ -35,6 +35,7 @@ type ButtonBaseProps = {
   style?: ViewStyle
   textStyle?: TextStyle
   icon?: React.ReactNode
+  iconPosition?: "left" | "right"
 }
 
 type ButtonProps =
@@ -131,6 +132,7 @@ export const Button = (props: ButtonProps) => {
     style,
     textStyle,
     icon,
+    iconPosition = "left",
     needsConfirmation,
     confirmationText,
   } = props
@@ -202,15 +204,16 @@ export const Button = (props: ButtonProps) => {
         Platform.OS === "web"
           ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
           : null,
+        iconPosition === "right" && icon ? styles.withTrailingIcon : null,
         style,
       ]}
     >
-      {icon ? <View style={styles.icon}>{icon}</View> : null}
+      {icon && iconPosition === "left" ? <View style={[styles.icon, styles.iconLeft]}>{icon}</View> : null}
       <Text
         style={[
           styles.label,
           {
-            color: disabled ? C.text.MUTED : colors.color,
+            color: disabled ? C.text.DEFAULT : colors.color,
             fontSize: metrics.font * fontScale,
             lineHeight: metrics.font * 1.2 * fontScale,
             fontFamily: labelFont,
@@ -221,6 +224,7 @@ export const Button = (props: ButtonProps) => {
       >
         {label}
       </Text>
+      {icon && iconPosition === "right" ? <View>{icon}</View> : null}
     </Pressable>
   )
 }
@@ -236,8 +240,14 @@ const styles = StyleSheet.create({
   label: {
     textAlign: "center",
   },
+  withTrailingIcon: {
+    flexDirection: "row",
+    gap: 6,
+  },
   icon: {
     position: "absolute",
+  },
+  iconLeft: {
     left: 16,
   },
 })

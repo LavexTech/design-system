@@ -1,9 +1,14 @@
-import React from "react"
-import { View, TouchableOpacity, Text, StyleSheet, Platform } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
+import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from "react-native"
 import Constants from "../../constants/constants"
 
 const TAB_ACTIVE_COLOR = Constants.styles.brand.DARK
 const TAB_INACTIVE_COLOR = Constants.styles.text.MUTED
+const TAB_TRANSITION_MS = 400
+const BUBBLE_TRANSITION_MS = 300
+const BUBBLE_TOP = 12
+const BUBBLE_WIDTH = 56
+const BUBBLE_HEIGHT = 30
 
 type NavigationBarProps = {
   pages: string[]
@@ -22,6 +27,27 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   darkMode = false,
   fontScale = 1,
 }: NavigationBarProps) => {
+  const [barWidth, setBarWidth] = useState(0)
+  const bubbleX = useRef(new Animated.Value(0)).current
+  const bubbleReady = useRef(false)
+  const activeIndex = Math.max(0, pages.indexOf(activePage))
+
+  useEffect(() => {
+    if (barWidth <= 0 || pages.length === 0) return
+    const tabWidth = barWidth / pages.length
+    const nextX = activeIndex * tabWidth + (tabWidth - BUBBLE_WIDTH) / 2
+    if (!bubbleReady.current) {
+      bubbleX.setValue(nextX)
+      bubbleReady.current = true
+      return
+    }
+    Animated.timing(bubbleX, {
+      toValue: nextX,
+      duration: BUBBLE_TRANSITION_MS,
+      useNativeDriver: true,
+    }).start()
+  }, [activeIndex, barWidth, bubbleX, pages.length])
+
   const handlePagePress = (page: string) => {
     if (onNavigate) {
       onNavigate(page)
@@ -29,42 +55,109 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   }
 
   return (
-    <View style={[styles.container, darkMode ? styles.containerDark : null]}>
-      {pages.map((page, index) => {
-        const isActive = activePage === page
-        const color = isActive ? TAB_ACTIVE_COLOR : TAB_INACTIVE_COLOR
+    <View
+      style={[styles.container, darkMode ? styles.containerDark : null]}
+      onLayout={(event) => setBarWidth(event.nativeEvent.layout.width)}
+    >
+      <Animated.View
+        pointerEvents="none"
+        style={[
+          styles.bubble,
+          { top: BUBBLE_TOP, transform: [{ translateX: bubbleX }] },
+        ]}
+      />
+      {pages.map((page, index) => (
+        <NavTab
+          key={page}
+          page={page}
+          isActive={activePage === page}
+          icon={icons?.[index]}
+          fontScale={fontScale}
+          onPress={() => handlePagePress(page)}
+        />
+      ))}
+    </View>
+  )
+}
 
-        return (
-          <TouchableOpacity
-            key={page}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: isActive }}
-            accessibilityLabel={page}
-            style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
-            onPress={() => handlePagePress(page)}
-            activeOpacity={0.7}
-          >
-            {icons && icons[index] && (
-              <View style={[styles.iconContainer, isActive ? styles.iconActive : null]}>
-                {icons[index](isActive)}
-              </View>
-            )}
-            <Text
-              style={[
-                styles.tabText,
-                {
-                  color,
-                  fontSize: 13 * fontScale,
-                  lineHeight: 18 * fontScale,
-                  fontWeight: isActive ? "700" : "500",
-                },
-              ]}
-            >
-              {page}
-            </Text>
-          </TouchableOpacity>
-        )
-      })}
+type NavTabProps = {
+  page: string
+  isActive: boolean
+  icon?: (isActive: boolean) => React.ReactNode
+  fontScale: number
+  onPress: () => void
+}
+
+function NavTab({ page, isActive, icon, fontScale, onPress }: NavTabProps) {
+  const progress = useRef(new Animated.Value(isActive ? 1 : 0)).current
+
+  useEffect(() => {
+    Animated.timing(progress, {
+      toValue: isActive ? 1 : 0,
+      duration: TAB_TRANSITION_MS,
+      useNativeDriver: true,
+    }).start()
+  }, [isActive, progress])
+
+  const inactiveOpacity = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  })
+
+  return (
+    <TouchableOpacity
+      accessibilityRole="tab"
+      accessibilityState={{ selected: isActive }}
+      accessibilityLabel={page}
+      style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
+      onPress={onPress}
+      activeOpacity={0.7}
+    >
+      <View style={styles.tabFace}>
+        <Animated.View style={{ opacity: inactiveOpacity }}>
+          <TabFace icon={icon} isActive={false} label={page} fontScale={fontScale} />
+        </Animated.View>
+        <Animated.View style={[styles.tabFaceOverlay, { opacity: progress }]}>
+          <TabFace icon={icon} isActive label={page} fontScale={fontScale} />
+        </Animated.View>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
+function TabFace({
+  icon,
+  isActive,
+  label,
+  fontScale,
+}: {
+  icon?: (isActive: boolean) => React.ReactNode
+  isActive: boolean
+  label: string
+  fontScale: number
+}) {
+  const color = isActive ? TAB_ACTIVE_COLOR : TAB_INACTIVE_COLOR
+
+  return (
+    <View style={styles.face}>
+      {icon ? (
+        <View style={styles.iconContainer}>
+          {icon(isActive)}
+        </View>
+      ) : null}
+      <Text
+        style={[
+          styles.tabText,
+          {
+            color,
+            fontSize: 13 * fontScale,
+            lineHeight: 18 * fontScale,
+            fontWeight: isActive ? "700" : "500",
+          },
+        ]}
+      >
+        {label}
+      </Text>
     </View>
   )
 }
@@ -85,6 +178,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     flex: 1,
+    zIndex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingTop: Constants.styles.spacing.TINY,
@@ -94,16 +188,35 @@ const styles = StyleSheet.create({
     paddingTop: Constants.styles.spacing.TINY + 6,
     paddingBottom: Constants.styles.spacing.TINY + 10,
   },
+  tabFace: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tabFaceOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  face: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bubble: {
+    position: "absolute",
+    left: 0,
+    width: BUBBLE_WIDTH,
+    height: BUBBLE_HEIGHT,
+    borderRadius: BUBBLE_HEIGHT / 2,
+    backgroundColor: Constants.styles.surface.ACCENT,
+    zIndex: 0,
+  },
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 2,
-    minWidth: 56,
-    height: 30,
-    borderRadius: 15,
-  },
-  iconActive: {
-    backgroundColor: Constants.styles.surface.ACCENT,
+    minWidth: BUBBLE_WIDTH,
+    height: BUBBLE_HEIGHT,
+    zIndex: 1,
   },
   tabText: {
     fontWeight: Constants.styles.fontWeight.NORMAL as any,

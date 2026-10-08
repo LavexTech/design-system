@@ -16,6 +16,8 @@ type InputPasswordProps = {
     darkMode?: boolean,
     fontScale?: number,
     fieldHeight?: number,
+    onSubmitEditing?: () => void,
+    returnKeyType?: "done" | "go" | "next" | "search" | "send" | "default",
 }
 
 export const InputPassword: React.FC<InputPasswordProps> = ({
@@ -29,6 +31,8 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
     darkMode = false,
     fontScale = 1,
     fieldHeight,
+    onSubmitEditing,
+    returnKeyType,
 }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
@@ -92,6 +96,8 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
             darkMode={darkMode}
             fontScale={fontScale}
             fieldHeight={fieldHeight}
+            onSubmitEditing={onSubmitEditing}
+            returnKeyType={returnKeyType}
         />
     )
 }

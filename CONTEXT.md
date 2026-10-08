@@ -145,6 +145,8 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | | `WARNING` | `#F59E0B` (âmbar) |
 | `backgroundColor` | `WHITE` / `LIGHT_GRAY` / `GRAY` | `#FFFFFF` / `#E5E1E6` / `#E5E1E6` |
 | `borderColor` | `LIGHT` / `MEDIUM` | `#E5E1E6` / `#CED4DA` |
+| `surface` | `MUTED` | `#E5E1E6` (cinza-claro) |
+| | `SUBTLE` | `#FAF9FA` (cinza-claríssimo) |
 | `color` | `WHITE` / `BLACK` | `#FFFFFF` / `#000000` |
 | | `GOLD` | `#FFD700` (estrela preenchida) |
 | | `GRAY` | `#E5E1E6` (estrela vazia, badge inativo) |
@@ -166,6 +168,8 @@ Acessados como `Constants.styles.<grupo>.<CHAVE>`.
 | `SURFACE` | `#2D3B42` | Grafite azulado da marca. Mesmo hex de `color.PRIMARY_DARK` e `text.DEFAULT`. Cor dos títulos `h2`. |
 
 O Tailwind repete esses hex em `brand.DEFAULT`, `brand.dark`, `brand.deep` e `brand.surface`.
+
+**Cinza-claro** é `#E5E1E6` (`surface.MUTED`, `backgroundColor.LIGHT_GRAY`, `color.GRAY`, `border.SOFT`). **Cinza-claríssimo** é `#FAF9FA` (`surface.SUBTLE`).
 
 ### Tema light/dark (`Constants.styles.theme`)
 
@@ -240,7 +244,7 @@ Título semântico da hierarquia da marca (`h1`, `h2`, `h4`). O `h4` sai em caix
 **Aparência:** quebra linha, sem margem nem padding. Com a fonte carregada, `fontWeight` fica `"normal"`.
 
 - `h1`: Plus Jakarta SemiBold, 30 px / 36 px (`WORDMARK`), `letterSpacing` -0,5, cor verde-água `#3CDBC0` (`brand.PRIMARY`).
-- `h2`: Plus Jakarta Bold, 28 px / 34 px (`DISPLAY`), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
+- `h2`: Plus Jakarta Bold, 21 px / 25,5 px (75% do `DISPLAY` 28/34), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
 - `h4`: Plus Jakarta Bold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
 
 **Comportamento:** estático. `accessibilityRole="header"` e `aria-level` 1, 2 ou 4. Na web o react-native-web usa esse nível para a tag (`h1`, `h2`, `h4`). Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
@@ -349,7 +353,7 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
   mensagem de erro                           ← caption, #C62828
 ```
 
-**Aparência:** coluna com `gap` 6. Label em Plus Jakarta Bold, `fontSize` `14 × fontScale`, `lineHeight` `20 × fontScale`, cor `#2D3B42`. A caixa tem altura `fieldHeight` (padrão 52), raio 12, borda 1,5 px `#869199`, fundo branco e `paddingLeft` 16. O texto digitado usa Plus Jakarta Regular, 16 px, cor `#2D3B42`, altura interna 44. Inválido: borda `#C62828` e a `errorMessage` abaixo, em caption. Foco: borda `#0B7566` e, na web, outline de 2 px na mesma cor. `InputEmail` e `InputPassword` repassam `fieldHeight`.
+**Aparência:** coluna com `gap` 6. Label em Plus Jakarta Bold, `fontSize` `14 × fontScale`, `lineHeight` `20 × fontScale`, cor `#2D3B42`. A caixa tem altura `fieldHeight` (padrão 52), raio 12, borda 1,5 px `#869199`, fundo branco e `paddingLeft` 16. O texto digitado usa Plus Jakarta Regular, 16 px, cor `#2D3B42`, altura interna 44. Inválido: borda `#C62828` e a `errorMessage` abaixo, em caption. Foco: borda `#0B7566`. Na web o outline nativo do campo fica desligado. `InputEmail` e `InputPassword` repassam `fieldHeight`.
 
 **Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` fica dentro da caixa, à direita, sem encolher (`flexShrink: 0`). O texto do campo encolhe (`minWidth: 0`) para o elemento da direita não sair do quadro em telas estreitas. A caixa corta o que ainda extrapolar (`overflow: hidden`).
 
@@ -415,6 +419,8 @@ Nome completo com capitalização automática.
 | `errorMessage` | `string` | — (mensagem derivada da regra violada) |
 | `minLength` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
+| `onSubmitEditing` | `() => void` | — |
+| `returnKeyType` | `'done' \| 'go' \| 'next' \| 'search' \| 'send' \| 'default'` | — |
 
 ```
   Senha
@@ -426,7 +432,7 @@ Nome completo com capitalização automática.
 
 **Aparência:** `Input` com `secureTextEntry` e, à direita dentro da caixa, um botão de 44×44 com ícone de olho de 24 px (`IconEye` quando a senha está visível, `IconEyeClosed` quando oculta). O botão não encolhe e permanece inteiro dentro da borda, mesmo quando a largura da tela não comporta o texto ao lado.
 
-**Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência).
+**Comportamento:** o toggle alterna a visibilidade localmente. Validação exige maiúscula, minúscula e dígito, mais `minLength` quando informado; a mensagem de erro é específica para a primeira regra violada (ou a `errorMessage` passada, que tem precedência). `onSubmitEditing` dispara no Enter do teclado (nativo e web) e `returnKeyType` define o rótulo da tecla.
 
 #### `InputNumber`
 
@@ -473,6 +479,7 @@ Campo multilinha com contador opcional.
 | `value` | `string` | — |
 | `placeholder` | `string` | — |
 | `maxLength` | `number` | — |
+| `counterSuffix` | `string` | `" caracteres"` |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
 ```
@@ -481,10 +488,10 @@ Campo multilinha com contador opcional.
 │ ←12→ texto multilinha, cresce conforme   │
 │ o conteúdo…                              │
 └──────────────────────────────────────────┘
-                        120/300 caracteres  ← alinhado à direita, só com maxLength
+                        120/300 caracteres  ← alinhado à direita, só com maxLength; o sufixo vem de counterSuffix
 ```
 
-**Aparência:** rótulo 14 px peso 600. Campo com altura mínima 120, borda 1,5 px `#869199`, raio 12, texto 16. Foco pinta a borda de `#0B7566`. Com `maxLength`, o contador `"{n}/{max} caracteres"` fica à direita e o campo ignora entrada além do máximo. `darkMode` é aceita e ignorada.
+**Aparência:** rótulo 14 px peso 600. Campo com altura mínima 120, borda 1,5 px `#869199`, raio 12, texto 16. Foco pinta a borda de `#0B7566`. Com `maxLength`, o contador `"{n}/{max}"` mais `counterSuffix` (padrão `" caracteres"`) fica à direita e o campo ignora entrada além do máximo. `counterSuffix=""` deixa só `"{n}/{max}"`. `darkMode` é aceita e ignorada.
 
 **Comportamento:** digitação acima de `maxLength` é **ignorada** (não trunca, simplesmente não aplica).
 
@@ -903,7 +910,7 @@ sem icon:                        com icon:
                                          texto segue centralizado no botão
 ```
 
-**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`, sem borda. `darkMode` é aceita e ignorada.
+**Aparência:** `Pressable` de largura total. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. Raios: 12, 12, 14, 16, 16. Texto Plus Jakarta, peso 700, tamanhos 14, 15, 16, 17, 17. Desabilitado: fundo cinza-claro `#E5E1E6`, texto cinza-escuro `#2D3B42`, sem borda. `darkMode` é aceita e ignorada.
 
 | Variante | Fundo | Texto | Borda |
 |---|---|---|---|
@@ -1009,9 +1016,9 @@ Barra de abas inferior.
     1/3         1/3        1/3           cada aba com flex igual
 ```
 
-**Aparência:** altura mínima 76, fundo branco, borda superior 1 px `#E5E1E6`. Aba ativa: pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa: texto `#5A6A72` peso 500. Rótulo 13 px. No iOS há padding extra para o home indicator. `NAVIGATION_BAR_HEIGHT` vale 76.
+**Aparência:** altura mínima 76, fundo branco, borda superior 1 px `#E5E1E6`. Aba ativa: texto `#0B7566` peso 700. Inativa: texto `#5A6A72` peso 500. Rótulo 13 px. A pílula verde-clara (`#E2FAF6`, 56×30, raio 15) é um elemento único da barra, atrás dos ícones, e não o fundo de cada ícone. No iOS há padding extra para o home indicator. `NAVIGATION_BAR_HEIGHT` vale 76.
 
-**Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`.
+**Comportamento:** a função de ícone recebe `isActive` e deve devolver o ícone já colorido. Toque com `activeOpacity 0.7` chama `onNavigate(page)`. Ao mudar a aba ativa, o item que sai do estado ativo e o item que entra cruzam opacidade em 400 ms (ícone e rótulo), em paralelo. A pílula fica a 12px do topo da barra e desliza na horizontal em 300ms até o centro do ícone da aba destino.
 
 ### 8.7 Domínio (pedidos, ofertas, avaliação, chat)
 
@@ -1215,7 +1222,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
 
-**`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566` (outline na web). Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max} caracteres"`.
+**`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566`. O outline nativo da web fica desligado. Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max}"` seguido de `counterSuffix` (padrão `" caracteres"`).
 
 **`Select`.** Gatilho com a caixa do `Input` (52 px, raio 12, borda 1.5 `#869199`). O modal de opções usa o `Modal` nativo. Não há provider de tema.
 
@@ -1225,7 +1232,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`Message`.** Enviada: fundo `#2D3B42`, texto branco, raio 18 com canto inferior direito 4. Recebida: fundo `#E5E1E6`, sem borda, canto inferior esquerdo 4.
 
-**`NavigationBar`.** Altura mínima 76. Aba ativa com pílula `#E2FAF6` e texto `#0B7566` peso 700. Inativa em `#5A6A72`. `NAVIGATION_BAR_HEIGHT` vale 76.
+**`NavigationBar`.** Altura mínima 76. Texto ativo `#0B7566` peso 700, inativo `#5A6A72`. A pílula `#E2FAF6` é única, fica a 12px do topo e desliza até o ícone ativo em 300ms. A cor do ícone e do rótulo cruza em 400ms. `NAVIGATION_BAR_HEIGHT` vale 76.
 
 **`Tag`.** Preenchida, raio 12, texto 13 peso 700. Nomes `*-outline` permanecem. `primary`/`success`: fundo `#E2FAF6`, texto `#0B7566`. `danger`: `#FDECEC` / `#C62828`. `warning`: `#FFF4E5` / `#8A5A00`.
 
@@ -1235,7 +1242,17 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
 
-**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento).
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
+
+`Button` aceita `iconPosition` `"left"` (padrão) ou `"right"`. À esquerda, o ícone fica absoluto, a 16 px da borda, e o rótulo continua centralizado. À direita, o ícone entra na fileira do rótulo, 6 px depois do texto, e os dois ficam centralizados juntos.
+
+`ImageUploader`: a célula de adicionar vem antes das fotos. Cada célula é quadrada e 10% menor que a fatia igual da largura (`columns`, padrão 3). A fileira completa (`columns` células) usa `space-between`: a primeira encosta na esquerda e a última na direita, e o vão depende da largura. A fileira com menos células alinha à esquerda, com esse mesmo vão. A de adicionar tem borda tracejada de 2 px `#0B7566`, fundo branco e raio `XL`. O ícone padrão é `IconCamera`; `addIcon` troca esse glifo. O rótulo (`addLabel`, padrão “Adicionar”) fica centralizado, também em `#0B7566`, na fonte de label. `addLabel` vazio esconde o texto. A foto ocupa a célula inteira. O toque na foto, fora do X de remover, abre essa imagem em 300 ms: ela cresce a partir da própria célula até uma das dimensões encostar na tela, sem ultrapassar a outra. Atrás fica um overlay `rgba(0, 0, 0, 0.5)`. Toque na foto ou no overlay desfaz o zoom nos mesmos 300 ms.
+
+`SearchInput` tem `fontScale` (padrão `1`). Ele escala a fonte de 16 px e também a altura do campo (52 px) e a altura interna (44 px). Com `fontScale` 1 o campo não muda. Com texto, um `IconClose` fica à direita, dentro do campo; o toque esvazia o valor (`onChange("")`) e, se houver, chama `onClear`. Sem texto, o ícone não aparece.
+
+`CheckboxListItem`: caixa de 22 px com raio 6 e linha de altura mínima 52. `boxSize` e `boxRadius` trocam a caixa (o check de 14 px escala junto com `boxSize`). `verticalPadding`, quando informado, zera a altura mínima e aplica esse padding vertical. `fontScale` só muda o texto do rótulo (16 px).
+
+`QuantityStepper`: grupo compacto, nesta ordem. Botão circular de 36 px, fundo branco, borda 1,5 px `#869199`, ícone `−` de 20 px. No limite, a borda vai para `#E5E1E6` e o ícone também. No meio, a quantidade em Plus Jakarta Bold 16 px, `#2D3B42`, centralizada, com gap 6 até cada botão. Depois, o botão circular outlined `+`, igual ao `−`. `label`, quando vier, fica à esquerda com `flex: 1` e gap 12 até esse grupo. Sem `label`, o grupo só ocupa a largura dos botões e da quantidade. `onDelete` continua à esquerda, com `IconTrash` `#C62828`.
 
 ---
 
@@ -1260,8 +1277,9 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconSend` | `Send` | `InputChat` |
 | `IconHome` | `House` | aba Início |
 | `IconHistory` | `History` | aba Histórico |
-| `IconReceipt` | `Receipt` | aba Pedido |
-| `IconProfile` | `User` | `ProfileAvatar` placeholder, aba Conta |
+| `IconReceipt` | `ReceiptText` | aba Histórico |
+| `IconProfile` | `User` | `ProfileAvatar` placeholder |
+| `IconUserRound` | `UserRound` | aba Conta |
 | `IconHeadset` | `Headset` | avatar do suporte no chat |
 | `IconLoader` | `LoaderCircle` | estados de carregamento |
 | `IconEye` / `IconEyeClosed` | `Eye` / `EyeOff` | `InputPassword` |
