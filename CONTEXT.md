@@ -479,6 +479,7 @@ Campo multilinha com contador opcional.
 | `value` | `string` | — |
 | `placeholder` | `string` | — |
 | `maxLength` | `number` | — |
+| `counterSuffix` | `string` | `" caracteres"` |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
 ```
@@ -487,10 +488,10 @@ Campo multilinha com contador opcional.
 │ ←12→ texto multilinha, cresce conforme   │
 │ o conteúdo…                              │
 └──────────────────────────────────────────┘
-                        120/300 caracteres  ← alinhado à direita, só com maxLength
+                        120/300 caracteres  ← alinhado à direita, só com maxLength; o sufixo vem de counterSuffix
 ```
 
-**Aparência:** rótulo 14 px peso 600. Campo com altura mínima 120, borda 1,5 px `#869199`, raio 12, texto 16. Foco pinta a borda de `#0B7566`. Com `maxLength`, o contador `"{n}/{max} caracteres"` fica à direita e o campo ignora entrada além do máximo. `darkMode` é aceita e ignorada.
+**Aparência:** rótulo 14 px peso 600. Campo com altura mínima 120, borda 1,5 px `#869199`, raio 12, texto 16. Foco pinta a borda de `#0B7566`. Com `maxLength`, o contador `"{n}/{max}"` mais `counterSuffix` (padrão `" caracteres"`) fica à direita e o campo ignora entrada além do máximo. `counterSuffix=""` deixa só `"{n}/{max}"`. `darkMode` é aceita e ignorada.
 
 **Comportamento:** digitação acima de `maxLength` é **ignorada** (não trunca, simplesmente não aplica).
 
@@ -1221,7 +1222,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
 
-**`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566`. O outline nativo da web fica desligado. Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max} caracteres"`.
+**`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566`. O outline nativo da web fica desligado. Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max}"` seguido de `counterSuffix` (padrão `" caracteres"`).
 
 **`Select`.** Gatilho com a caixa do `Input` (52 px, raio 12, borda 1.5 `#869199`). O modal de opções usa o `Modal` nativo. Não há provider de tema.
 
@@ -1245,7 +1246,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 `Button` aceita `iconPosition` `"left"` (padrão) ou `"right"`. À esquerda, o ícone fica absoluto, a 16 px da borda, e o rótulo continua centralizado. À direita, o ícone entra na fileira do rótulo, 6 px depois do texto, e os dois ficam centralizados juntos.
 
-`ImageUploader`: a célula de adicionar tem borda tracejada 1,5 px `#0B7566`, fundo branco e raio `XL`. `IconCamera` e o rótulo (`addLabel`, padrão “Adicionar”) ficam centralizados, também em `#0B7566`. O rótulo usa a fonte de label.
+`ImageUploader`: a célula de adicionar vem antes das fotos. Cada célula é quadrada e 10% menor que a fatia igual da largura (`columns`, padrão 3). A fileira usa `space-between`, então a primeira célula encosta na esquerda e a última da fileira encosta na direita; o vão depende da largura. A de adicionar tem borda tracejada de 2 px `#0B7566`, fundo branco e raio `XL`. `IconCamera` e o rótulo (`addLabel`, padrão “Adicionar”) ficam centralizados, também em `#0B7566`. O rótulo usa a fonte de label. A foto ocupa a célula inteira.
 
 `SearchInput` tem `fontScale` (padrão `1`). Ele escala a fonte de 16 px e também a altura do campo (52 px) e a altura interna (44 px). Com `fontScale` 1 o campo não muda. Com texto, um `IconClose` fica à direita, dentro do campo; o toque esvazia o valor (`onChange("")`) e, se houver, chama `onClear`. Sem texto, o ícone não aparece.
 

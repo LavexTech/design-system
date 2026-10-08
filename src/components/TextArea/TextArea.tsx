@@ -9,6 +9,7 @@ type TextAreaProps = {
   placeholder?: string
   onChange: (value: string) => void
   maxLength?: number
+  counterSuffix?: string
   darkMode?: boolean
   fontScale?: number
 }
@@ -20,6 +21,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   value,
   placeholder,
   maxLength,
+  counterSuffix = " caracteres",
   onChange,
   fontScale = 1,
   darkMode,
@@ -71,7 +73,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
       />
       {maxLength ? (
         <Text style={styles.counter}>
-          {currentLength}/{maxLength} caracteres
+          {currentLength}/{maxLength}{counterSuffix}
         </Text>
       ) : null}
     </View>
