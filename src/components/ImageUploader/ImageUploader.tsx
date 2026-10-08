@@ -13,6 +13,7 @@ type ImageUploaderProps = {
   maxImages?: number
   columns?: number
   addLabel?: string
+  addIcon?: React.ReactNode
   disabled?: boolean
 }
 
@@ -27,6 +28,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   maxImages,
   columns = 3,
   addLabel = "Adicionar",
+  addIcon,
   disabled = false,
 }) => {
   const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
@@ -43,13 +45,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       node: (
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={addLabel}
+          accessibilityLabel={addLabel || "Adicionar foto"}
           disabled={disabled}
           onPress={onAdd}
           style={[styles.cell, styles.add, { width: itemSize, height: itemSize }]}
         >
-          <IconCamera size={24} color={C.brand.DARK} />
-          <Text style={[styles.addLabel, { fontFamily: labelFont, fontWeight: "normal" }]}>{addLabel}</Text>
+          {addIcon ?? <IconCamera size={24} color={C.brand.DARK} />}
+          {addLabel ? (
+            <Text style={[styles.addLabel, { fontFamily: labelFont, fontWeight: "normal" }]}>{addLabel}</Text>
+          ) : null}
         </Pressable>
       ),
     })
