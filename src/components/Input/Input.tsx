@@ -140,6 +140,18 @@ export const Input: React.FC<InputProps> = ({
           value={value}
           onChangeText={handleTextChange}
           keyboardType={keyboardType}
+          inputMode={
+            mobileKeyboard === "email"
+              ? "email"
+              : mobileKeyboard === "phone"
+                ? "tel"
+                : mobileKeyboard === "number"
+                  ? "numeric"
+                  : "text"
+          }
+          autoComplete={mobileKeyboard === "email" ? "email" : undefined}
+          textContentType={mobileKeyboard === "email" ? "emailAddress" : undefined}
+          keyboardAppearance="light"
           autoCapitalize={autoCapitalize ?? (mobileKeyboard === "email" ? "none" : undefined)}
           autoCorrect={autoCorrect ?? (mobileKeyboard === "email" ? false : undefined)}
           placeholderTextColor={placeholderTextColor}

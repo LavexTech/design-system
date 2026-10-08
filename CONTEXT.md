@@ -355,7 +355,7 @@ Campo de texto base. Todos os demais inputs especializados delegam para ele.
 
 **Aparência:** coluna com `gap` 6. Label em Plus Jakarta Bold, `fontSize` `14 × fontScale`, `lineHeight` `20 × fontScale`, cor `#2D3B42`. A caixa tem altura `fieldHeight` (padrão 52), raio 12, borda 1,5 px `#869199`, fundo branco e `paddingLeft` 16. O texto digitado usa Plus Jakarta Regular, 16 px, cor `#2D3B42`, altura interna 44. Inválido: borda `#C62828` e a `errorMessage` abaixo, em caption. Foco: borda `#0B7566`. Na web o outline nativo do campo fica desligado. `InputEmail` e `InputPassword` repassam `fieldHeight`.
 
-**Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` fica dentro da caixa, à direita, sem encolher (`flexShrink: 0`). O texto do campo encolhe (`minWidth: 0`) para o elemento da direita não sair do quadro em telas estreitas. A caixa corta o que ainda extrapolar (`overflow: hidden`).
+**Comportamento:** aplica `mask` caractere a caractere, onde `X`/`x` são posições de dígito/letra e o resto é literal (máscara com letras A–Z ou dígitos é rejeitada com `console.warn`). Roda `validation` a cada digitação e via `useEffect` quando `value` muda. Na web, `onSubmitEditing` é disparado por `onKeyPress` com Enter (o `onSubmitEditing` nativo é desligado). `rightElement` fica dentro da caixa, à direita, sem encolher (`flexShrink: 0`). O texto do campo encolhe (`minWidth: 0`) para o elemento da direita não sair do quadro em telas estreitas. A caixa corta o que ainda extrapolar (`overflow: hidden`). `keyboardAppearance` é `light`. `mobileKeyboard="email"` abre teclado de e-mail: `keyboardType="email-address"`, `inputMode="email"`, `autoComplete="email"` e `textContentType="emailAddress"`. `phone` usa `tel` e `phone-pad`. `number` usa `numeric`. O restante usa `text` e `default`.
 
 #### `InputName`
 
@@ -1169,7 +1169,29 @@ recebida — espelhada:
 
 **Aparência:** quadrado de 24, 40, 64, 80, 96, 128 ou 256 px conforme o `size`, com `overflow: hidden`, `alignSelf: flex-start` e sem crescer/encolher. `type="circle"` aplica raio igual à metade do lado; `default` usa `rounded-lg` (8 px).
 
-**Comportamento:** com `onClick` vira `TouchableOpacity` (`activeOpacity 0.7`) com `accessibilityRole="button"` e `accessibilityLabel={alt}`.
+**Comportamento:** com `onClick` vira `TouchableOpacity` (`activeOpacity 0.7`) com `accessibilityRole="button"` e `accessibilityLabel={alt}`. Enquanto a URI ainda não pintou, um `PhotoSkeleton` cobre o quadro, no mesmo tamanho e no mesmo raio. Ao trocar `src`, o skeleton volta. `onError` tira o skeleton.
+
+#### `PhotoSkeleton`
+
+Bloco de espera no formato da foto, do tamanho do espaço em que estiver.
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `width` | `DimensionValue` | `"100%"` |
+| `height` | `DimensionValue` | `"100%"` |
+| `borderRadius` | `number` | `14` (`XL`) |
+| `style` | `StyleProp<ViewStyle>` | — |
+
+```
+┌────────────────────┐
+│░░░░░████░░░░░░░░░░░│  faixa clara percorre o bloco
+└────────────────────┘
+   fundo #E5E1E6
+```
+
+**Aparência:** preenche a largura e a altura recebidas (padrão 100% do pai). Fundo `#E5E1E6`, `overflow: hidden`, raio `borderRadius` (padrão 14). Uma faixa branca com opacidade 0,55, largura de 45% do bloco (mínimo 24 px), sai da esquerda e entra pela direita.
+
+**Comportamento:** a faixa completa o percurso em 1200 ms e recomeça. O componente mede a própria largura para a faixa acompanhar o tamanho. Some da acessibilidade (`accessibilityElementsHidden`). Se o sistema pede reduzir movimento, a faixa não existe e fica só o bloco `#E5E1E6`. `Image`, `ImageUploader` (célula e zoom) e, por eles, `ProfileAvatar` e `Gallery` usam este bloco até a imagem pintar.
 
 #### `Gallery`
 
@@ -1242,11 +1264,11 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
 
-**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `PhotoSkeleton` (bloco `#E5E1E6` no tamanho do pai, faixa clara em 1200 ms; para se o sistema pede reduzir movimento), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
 
 `Button` aceita `iconPosition` `"left"` (padrão) ou `"right"`. À esquerda, o ícone fica absoluto, a 16 px da borda, e o rótulo continua centralizado. À direita, o ícone entra na fileira do rótulo, 6 px depois do texto, e os dois ficam centralizados juntos.
 
-`ImageUploader`: a célula de adicionar vem antes das fotos. Cada célula é quadrada e 10% menor que a fatia igual da largura (`columns`, padrão 3). A fileira completa (`columns` células) usa `space-between`: a primeira encosta na esquerda e a última na direita, e o vão depende da largura. A fileira com menos células alinha à esquerda, com esse mesmo vão. A de adicionar tem borda tracejada de 2 px `#0B7566`, fundo branco e raio `XL`. O ícone padrão é `IconCamera`; `addIcon` troca esse glifo. O rótulo (`addLabel`, padrão “Adicionar”) fica centralizado, também em `#0B7566`, na fonte de label. `addLabel` vazio esconde o texto. A foto ocupa a célula inteira. O toque na foto, fora do X de remover, abre essa imagem em 300 ms: ela cresce a partir da própria célula até uma das dimensões encostar na tela, sem ultrapassar a outra. Atrás fica um overlay `rgba(0, 0, 0, 0.5)`. Toque na foto ou no overlay desfaz o zoom nos mesmos 300 ms.
+`ImageUploader`: a célula de adicionar vem antes das fotos. Cada célula é quadrada e 10% menor que a fatia igual da largura (`columns`, padrão 3). A fileira completa (`columns` células) usa `space-between`: a primeira encosta na esquerda e a última na direita, e o vão depende da largura. A fileira com menos células alinha à esquerda, com esse mesmo vão. A de adicionar tem borda tracejada de 2 px `#0B7566`, fundo branco e raio `XL`. O ícone padrão é `IconCamera`; `addIcon` troca esse glifo. O rótulo (`addLabel`, padrão “Adicionar”) fica centralizado, também em `#0B7566`, na fonte de label. `addLabel` vazio esconde o texto. A foto ocupa a célula inteira. Até `onLoad`, um `PhotoSkeleton` com raio 14 cobre a célula; `onError` tira o skeleton. Trocar a URI mostra o skeleton de novo. O toque na foto, fora do X de remover, abre essa imagem em 300 ms: ela cresce a partir da própria célula até uma das dimensões encostar na tela, sem ultrapassar a outra. Atrás fica um overlay `rgba(0, 0, 0, 0.5)`. O zoom também mostra o `PhotoSkeleton` até a imagem pintar. Toque na foto ou no overlay desfaz o zoom nos mesmos 300 ms.
 
 `SearchInput` tem `fontScale` (padrão `1`). Ele escala a fonte de 16 px e também a altura do campo (52 px) e a altura interna (44 px). Com `fontScale` 1 o campo não muda. Com texto, um `IconClose` fica à direita, dentro do campo; o toque esvazia o valor (`onChange("")`) e, se houver, chama `onClear`. Sem texto, o ícone não aparece.
 

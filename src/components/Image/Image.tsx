@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Image as RNImage, StyleSheet, TouchableOpacity, View } from "react-native"
+import { PhotoSkeleton } from "../PhotoSkeleton/PhotoSkeleton"
 
 type ImageSize = "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl"
 type ImageType = "default" | "circle"
@@ -35,22 +36,40 @@ export const Image: React.FC<ImageProps> = ({
 
   const px = IMAGE_SIZE_PX[size]
   const isCircle = type === "circle"
+  const radius = isCircle ? px / 2 : 8
+  const [ready, setReady] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    setReady(false)
+    setFailed(false)
+  }, [src])
+
   const frameStyle = [
     styles.frame,
     {
       width: px,
       height: px,
-      borderRadius: isCircle ? px / 2 : 8,
+      borderRadius: radius,
     },
   ]
 
   const imageNode = (
-    <RNImage
-      source={{ uri: src }}
-      accessibilityLabel={alt}
-      style={{ width: px, height: px }}
-      resizeMode="cover"
-    />
+    <View style={styles.stack}>
+      <RNImage
+        source={{ uri: src }}
+        accessibilityLabel={alt}
+        style={{ width: px, height: px }}
+        resizeMode="cover"
+        onLoad={() => setReady(true)}
+        onError={() => setFailed(true)}
+      />
+      {!ready && !failed ? (
+        <View pointerEvents="none" style={styles.skeleton}>
+          <PhotoSkeleton borderRadius={radius} />
+        </View>
+      ) : null}
+    </View>
   )
 
   if (onClick === undefined) {
@@ -76,5 +95,12 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     alignSelf: "flex-start",
     overflow: "hidden",
+  },
+  stack: {
+    width: "100%",
+    height: "100%",
+  },
+  skeleton: {
+    ...StyleSheet.absoluteFillObject,
   },
 })

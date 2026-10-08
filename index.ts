@@ -59,6 +59,7 @@ export { StatusBanner } from "./src/components/StatusBanner/StatusBanner";
 export { EmptyState } from "./src/components/EmptyState/EmptyState";
 export { Timeline } from "./src/components/Timeline/Timeline";
 export { ImageUploader } from "./src/components/ImageUploader/ImageUploader";
+export { PhotoSkeleton } from "./src/components/PhotoSkeleton/PhotoSkeleton";
 export { AnimatedStatusIndicator } from "./src/components/AnimatedStatusIndicator/AnimatedStatusIndicator";
 export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";

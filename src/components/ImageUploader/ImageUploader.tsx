@@ -4,6 +4,7 @@ import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCamera } from "../Icons/IconCamera"
 import { IconClose } from "../Icons/IconClose"
+import { PhotoSkeleton } from "../PhotoSkeleton/PhotoSkeleton"
 
 type ImageUploaderProps = {
   images: string[]
@@ -40,6 +41,13 @@ function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClo
   const progress = useRef(new Animated.Value(0)).current
   const closing = useRef(false)
   const [target, setTarget] = useState<Frame | null>(null)
+  const [ready, setReady] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    setReady(false)
+    setFailed(false)
+  }, [uri])
 
   useEffect(() => {
     let alive = true
@@ -121,7 +129,18 @@ function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClo
         <Pressable accessibilityLabel="Fechar foto" style={StyleSheet.absoluteFill} onPress={dismiss} />
         <Animated.View style={{ position: "absolute", left, top, width, height, borderRadius: radius, overflow: "hidden" }}>
           <Pressable accessibilityLabel="Fechar foto" style={styles.zoomPhoto} onPress={dismiss}>
-            <RNImage source={{ uri }} resizeMode="cover" style={styles.photo} />
+            <RNImage
+              source={{ uri }}
+              resizeMode="cover"
+              style={styles.photo}
+              onLoad={() => setReady(true)}
+              onError={() => setFailed(true)}
+            />
+            {!ready && !failed ? (
+              <View pointerEvents="none" style={styles.skeleton}>
+                <PhotoSkeleton borderRadius={0} />
+              </View>
+            ) : null}
           </Pressable>
         </Animated.View>
       </View>
@@ -145,6 +164,13 @@ function PhotoCell({
   showRemove: boolean
 }) {
   const cellRef = useRef<View>(null)
+  const [ready, setReady] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  useEffect(() => {
+    setReady(false)
+    setFailed(false)
+  }, [uri])
 
   function open() {
     cellRef.current?.measureInWindow((x, y, width, height) => {
@@ -157,7 +183,17 @@ function PhotoCell({
 
   return (
     <Pressable ref={cellRef} style={[styles.cell, { width: size, height: size }]} onPress={open}>
-      <RNImage source={{ uri }} style={styles.photo} />
+      <RNImage
+        source={{ uri }}
+        style={styles.photo}
+        onLoad={() => setReady(true)}
+        onError={() => setFailed(true)}
+      />
+      {!ready && !failed ? (
+        <View pointerEvents="none" style={styles.skeleton}>
+          <PhotoSkeleton borderRadius={C.borderRadius.XL} />
+        </View>
+      ) : null}
       {showRemove && onRemove ? (
         <Pressable
           accessibilityRole="button"
@@ -267,6 +303,7 @@ const styles = StyleSheet.create({
   rowStart: { justifyContent: "flex-start" },
   cell: { borderRadius: C.borderRadius.XL, overflow: "visible" },
   photo: { width: "100%", height: "100%", borderRadius: C.borderRadius.XL, backgroundColor: C.border.SOFT },
+  skeleton: { ...StyleSheet.absoluteFillObject },
   add: { borderWidth: 2, borderStyle: "dashed", borderColor: C.brand.DARK, backgroundColor: C.surface.DEFAULT, alignItems: "center", justifyContent: "center", gap: 6 },
   addLabel: { color: C.brand.DARK, fontSize: C.fontSize.LABEL, textAlign: "center" },
   remove: { position: "absolute", top: -6, right: -6, width: 44, height: 44, alignItems: "center", justifyContent: "center" },
