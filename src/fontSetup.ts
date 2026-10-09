@@ -30,21 +30,34 @@ async function loadSpecificFonts(fontNames: string[]) {
 }
 
 export function useFonts(fontNames: string[] = ["PlusJakartaSans-Regular"]) {
-  const [ready, setReady] = useState(false);
+  const fontKey = fontNames.join(",");
+  const [ready, setReady] = useState(() =>
+    fontNames.every((name) => Font.isLoaded(name))
+  );
 
   useEffect(() => {
+    let alive = true;
+
+    if (fontNames.every((name) => Font.isLoaded(name))) {
+      setReady(true);
+      return;
+    }
+
     const loadFonts = async () => {
       try {
         await loadSpecificFonts(fontNames);
-        setReady(true);
+        if (alive) setReady(true);
       } catch (error) {
         console.error("Erro ao carregar fontes:", error);
-        setReady(true);
+        if (alive) setReady(true);
       }
     };
 
     loadFonts();
-  }, [fontNames.join(",")]);
+    return () => {
+      alive = false;
+    };
+  }, [fontKey]);
 
   return ready;
 }
@@ -55,6 +68,23 @@ export function useGlobalFonts() {
 
 export function useResolvedFontFamily(fontName: string): string | undefined {
   const known = fontName in AVAILABLE_FONTS;
-  const ready = useFonts(known ? [fontName] : []);
+  const [ready, setReady] = useState(() => known && Font.isLoaded(fontName));
+
+  useEffect(() => {
+    if (!known || ready) return;
+    let alive = true;
+    loadSpecificFonts([fontName])
+      .then(() => {
+        if (alive) setReady(true);
+      })
+      .catch((error) => {
+        console.error("Erro ao carregar fontes:", error);
+        if (alive) setReady(true);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [fontName, known, ready]);
+
   return known && ready ? fontName : undefined;
 }

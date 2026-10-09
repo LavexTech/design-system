@@ -215,9 +215,9 @@ Família única: **Plus Jakarta Sans**, embarcada em `src/assets/fonts/PlusJakar
 
 `src/fontSetup.ts` exporta:
 
-- `useFonts(fontNames?: string[])` — carrega sob demanda via `expo-font`, com cache em `Set` de módulo para não recarregar. Default: `["PlusJakartaSans-Regular"]`. Retorna `ready: boolean`; em erro, loga e retorna `true` mesmo assim (degrada para a fonte do sistema). Nome fora dos quatro cortes é ignorado.
+- `useFonts(fontNames?: string[])` — carrega sob demanda via `expo-font`, com cache em `Set` de módulo para não recarregar. Default: `["PlusJakartaSans-Regular"]`. O estado inicial já é `true` quando `Font.isLoaded` confirma todos os nomes. Retorna `ready: boolean`; em erro, loga e retorna `true` mesmo assim (degrada para a fonte do sistema). Nome fora dos quatro cortes é ignorado.
 - `useGlobalFonts()` — carrega todos os 6 cortes.
-- `useResolvedFontFamily(fontName)` — devolve o nome da família quando o corte carregou, ou `undefined` antes disso.
+- `useResolvedFontFamily(fontName)` — se o corte já está em `Font.isLoaded`, o estado nasce pronto e não há segundo render. Caso contrário carrega o arquivo e só então devolve o nome; antes disso devolve `undefined`.
 
 Todo texto do pacote usa um desses cortes via `useResolvedFontFamily`. Título e rótulo em negrito usam Bold; peso 500 usa Medium; corpo usa Regular. Com o arquivo carregado, `fontWeight` fica `"normal"`.
 
