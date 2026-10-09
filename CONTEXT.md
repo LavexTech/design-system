@@ -924,7 +924,7 @@ sem icon:                        com icon:
 | `ghost` | transparente | `#0B7566` | — |
 | `ghost-danger` | transparente | `#C62828` | — |
 
-Toque em fundo opaco aplica opacidade 0,85. Fundo transparente ou branco, no toque, vai para `#E5E1E6`.
+Toque em fundo opaco aplica opacidade 0,85. Fundo transparente ou branco, no toque, vai para `#E5E1E6`. O toque não usa estado React: `backgroundColor` e `opacity` saem de `getButtonColors` dentro do callback `style` do `Pressable`. Hover (`hovered`) só existe na web; no nativo `onHoverIn` e `onHoverOut` não são passados. O componente é `React.memo`.
 
 **Comportamento:** com `icon`, o nó fica em `position: absolute` a 16 px da esquerda e o texto continua centralizado. Com `needsConfirmation`, o primeiro toque troca o rótulo para `confirmationText` e pinta fundo `#C62828` com texto branco; o segundo toque dispara `onClick`. Sem o segundo toque, volta após 8 segundos.
 
@@ -1242,7 +1242,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **Tipografia.** Plus Jakarta Sans (400/500/600/700). Não há segunda família.
 
-**`Button`.** `Pressable`, sem gluestack. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
+**`Button`.** `Pressable`, sem gluestack, envolvido em `React.memo`. Alturas: `xs` 36, `sm` 40, `md` 48, `lg` 52, `xl` 56. `default`, `primary` e `success` são fundo `#3CDBC0` e texto `#2D3B42`. Desabilitado: fundo `#E5E1E6`, texto `#5A6A72`. Variantes novas: `ghost` e `ghost-danger`. O estado visual de toque vem do callback `style` do `Pressable` (`getButtonColors`); não há `useState` de `pressed`. Hover só na web. `needsConfirmation`, `style`, `textStyle`, `icon` e `fontScale` seguem o contrato antigo.
 
 **`Input` e `TextArea`.** `TextInput` nativo. Campo 52 px, borda 1.5 `#869199`, raio 12, texto 16. Rótulo 14 px peso 600. Foco pinta a borda de `#0B7566`. O outline nativo da web fica desligado. Erro em `#C62828`. Máscara, validação e Enter na web permanecem. `TextArea` tem altura mínima 120 e contador `"{n}/{max}"` seguido de `counterSuffix` (padrão `" caracteres"`).
 

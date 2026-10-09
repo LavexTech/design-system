@@ -58,6 +58,43 @@ const SIZES = {
 
 const C = Constants.styles
 
+type ButtonInteraction = {
+  pressed: boolean
+  hovered: boolean
+  disabled: boolean
+  confirming: boolean
+}
+
+function getButtonColors(variant: ButtonVariant, interaction: ButtonInteraction) {
+  const colors = interaction.confirming
+    ? {
+        backgroundColor: C.text.DANGER,
+        color: C.color.WHITE,
+        borderColor: "transparent",
+        borderWidth: 0,
+      }
+    : palette(variant)
+  const transparent =
+    colors.backgroundColor === "transparent" || colors.backgroundColor === C.surface.DEFAULT
+  const backgroundColor = interaction.disabled
+    ? C.surface.MUTED
+    : interaction.pressed
+      ? transparent
+        ? C.surface.MUTED
+        : colors.backgroundColor
+      : interaction.hovered && transparent
+        ? C.surface.MUTED
+        : colors.backgroundColor
+
+  return {
+    backgroundColor,
+    borderColor: interaction.disabled ? "transparent" : colors.borderColor,
+    borderWidth: interaction.disabled ? 0 : colors.borderWidth,
+    opacity: interaction.pressed && !interaction.disabled && !transparent ? 0.85 : 1,
+    labelColor: interaction.disabled ? C.text.DEFAULT : colors.color,
+  }
+}
+
 function palette(variant: ButtonVariant) {
   const filled = {
     backgroundColor: C.brand.PRIMARY,
@@ -121,7 +158,7 @@ function palette(variant: ButtonVariant) {
   return map[variant]
 }
 
-export const Button = (props: ButtonProps) => {
+function ButtonComponent(props: ButtonProps) {
   const {
     text,
     onClick,
@@ -139,36 +176,16 @@ export const Button = (props: ButtonProps) => {
   void props.darkMode
 
   const [confirming, setConfirming] = useState(false)
-  const [pressed, setPressed] = useState(false)
   const [hovered, setHovered] = useState(false)
   const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const metrics = SIZES[size]
-  const colors = confirming
-    ? {
-        backgroundColor: C.text.DANGER,
-        color: C.color.WHITE,
-        borderColor: "transparent",
-        borderWidth: 0,
-      }
-    : palette(variant)
+  const isWeb = Platform.OS === "web"
 
   useEffect(() => {
     if (!confirming) return
     const timer = setTimeout(() => setConfirming(false), 8000)
     return () => clearTimeout(timer)
   }, [confirming])
-
-  const transparent =
-    colors.backgroundColor === "transparent" || colors.backgroundColor === C.surface.DEFAULT
-  const backgroundColor = disabled
-    ? C.surface.MUTED
-    : pressed
-      ? transparent
-        ? C.surface.MUTED
-        : colors.backgroundColor
-      : hovered && transparent
-        ? C.surface.MUTED
-        : colors.backgroundColor
 
   const label = confirming && confirmationText ? confirmationText : text
 
@@ -186,34 +203,40 @@ export const Button = (props: ButtonProps) => {
         setConfirming(false)
         onClick()
       }}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
-      onHoverIn={() => setHovered(true)}
-      onHoverOut={() => setHovered(false)}
-      style={[
-        styles.button,
-        {
-          height: metrics.height,
-          borderRadius: metrics.radius,
-          paddingHorizontal: metrics.pad,
-          backgroundColor,
-          borderColor: disabled ? "transparent" : colors.borderColor,
-          borderWidth: disabled ? 0 : colors.borderWidth,
-          opacity: pressed && !disabled && !transparent ? 0.85 : 1,
-        },
-        Platform.OS === "web"
-          ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
-          : null,
-        iconPosition === "right" && icon ? styles.withTrailingIcon : null,
-        style,
-      ]}
+      onHoverIn={isWeb ? () => setHovered(true) : undefined}
+      onHoverOut={isWeb ? () => setHovered(false) : undefined}
+      style={({ pressed }) => {
+        const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming })
+        return [
+          styles.button,
+          {
+            height: metrics.height,
+            borderRadius: metrics.radius,
+            paddingHorizontal: metrics.pad,
+            backgroundColor: colors.backgroundColor,
+            borderColor: colors.borderColor,
+            borderWidth: colors.borderWidth,
+            opacity: colors.opacity,
+          },
+          isWeb
+            ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
+            : null,
+          iconPosition === "right" && icon ? styles.withTrailingIcon : null,
+          style,
+        ]
+      }}
     >
       {icon && iconPosition === "left" ? <View style={[styles.icon, styles.iconLeft]}>{icon}</View> : null}
       <Text
         style={[
           styles.label,
           {
-            color: disabled ? C.text.DEFAULT : colors.color,
+            color: getButtonColors(variant, {
+              pressed: false,
+              hovered,
+              disabled,
+              confirming,
+            }).labelColor,
             fontSize: metrics.font * fontScale,
             lineHeight: metrics.font * 1.2 * fontScale,
             fontFamily: labelFont,
@@ -228,6 +251,8 @@ export const Button = (props: ButtonProps) => {
     </Pressable>
   )
 }
+
+export const Button = React.memo(ButtonComponent)
 
 const styles = StyleSheet.create({
   button: {
