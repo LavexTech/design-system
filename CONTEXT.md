@@ -1191,7 +1191,7 @@ Bloco de espera no formato da foto, do tamanho do espaço em que estiver.
 
 **Aparência:** preenche a largura e a altura recebidas (padrão 100% do pai). Fundo `#E5E1E6`, `overflow: hidden`, raio `borderRadius` (padrão 14). Uma faixa branca com opacidade 0,55, largura de 45% do bloco (mínimo 24 px), sai da esquerda e entra pela direita.
 
-**Comportamento:** a faixa completa o percurso em 1200 ms e recomeça. O componente mede a própria largura para a faixa acompanhar o tamanho. Some da acessibilidade (`accessibilityElementsHidden`). Se o sistema pede reduzir movimento, a faixa não existe e fica só o bloco `#E5E1E6`. `Image`, `ImageUploader` (célula e zoom) e, por eles, `ProfileAvatar` e `Gallery` usam este bloco até a imagem pintar.
+**Comportamento:** a faixa completa o percurso em 1200 ms e recomeça. O componente mede a própria largura para a faixa acompanhar o tamanho. Some da acessibilidade (`accessibilityElementsHidden`). Se o sistema pede reduzir movimento, a faixa não existe e fica só o bloco `#E5E1E6`. Essa preferência vem de `useReduceMotion()` (`src/utils/reduceMotion.ts`): uma leitura e um listener para todas as instâncias. `Image`, `ImageUploader` (célula e zoom) e, por eles, `ProfileAvatar` e `Gallery` usam este bloco até a imagem pintar.
 
 #### `Gallery`
 
@@ -1336,6 +1336,7 @@ Removida na `1.0.1`. Os componentes usam `View`, `Pressable`, `TextInput`, `Imag
 | `getOrdersCountLabel` | `(ordersCount: number, userType: 'client' \| 'provider') => string` | `"{n} pedidos executados"` para `provider`, `"{n} pedidos feitos"` para `client` |
 | `hasProfileImage` | `(profileImage?: string \| null) => boolean` | `true` só quando a string existe e não é só espaços |
 | `getProfileImageUrl` | `(profileImage?: string \| null, _userType?) => string` | devolve a URL com `trim()`, ou string vazia. Não gera placeholder remoto — o fallback visual é o `ProfileAvatar` |
+| `useReduceMotion` | `() => boolean` | store de módulo. A primeira assinatura chama `AccessibilityInfo.isReduceMotionEnabled()` uma vez e registra um único `reduceMotionChanged`. O listener sai quando o último assinante desmonta. `PhotoSkeleton` e `AnimatedStatusIndicator` leem por aqui. O valor inicial, inclusive no snapshot de servidor, é `false` |
 
 Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 
