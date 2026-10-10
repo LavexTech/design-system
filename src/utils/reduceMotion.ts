@@ -4,6 +4,7 @@ import { AccessibilityInfo } from "react-native"
 let reduceMotion = false
 let listening = false
 let generation = 0
+let eventSeen = false
 let subscription: { remove: () => void } | null = null
 const subscribers = new Set<() => void>()
 
@@ -14,13 +15,15 @@ function notify() {
 function ensureListening() {
   if (listening) return
   listening = true
+  eventSeen = false
   const current = generation
   AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
-    if (!listening || current !== generation || reduceMotion === enabled) return
+    if (!listening || current !== generation || eventSeen || reduceMotion === enabled) return
     reduceMotion = enabled
     notify()
   })
   subscription = AccessibilityInfo.addEventListener("reduceMotionChanged", (enabled) => {
+    eventSeen = true
     if (reduceMotion === enabled) return
     reduceMotion = enabled
     notify()

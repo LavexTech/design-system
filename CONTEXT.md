@@ -1336,7 +1336,7 @@ Removida na `1.0.1`. Os componentes usam `View`, `Pressable`, `TextInput`, `Imag
 | `getOrdersCountLabel` | `(ordersCount: number, userType: 'client' \| 'provider') => string` | `"{n} pedidos executados"` para `provider`, `"{n} pedidos feitos"` para `client` |
 | `hasProfileImage` | `(profileImage?: string \| null) => boolean` | `true` só quando a string existe e não é só espaços |
 | `getProfileImageUrl` | `(profileImage?: string \| null, _userType?) => string` | devolve a URL com `trim()`, ou string vazia. Não gera placeholder remoto — o fallback visual é o `ProfileAvatar` |
-| `useReduceMotion` | `() => boolean` | store de módulo. A primeira assinatura chama `AccessibilityInfo.isReduceMotionEnabled()` uma vez e registra um único `reduceMotionChanged`. O listener sai quando o último assinante desmonta. `PhotoSkeleton` e `AnimatedStatusIndicator` leem por aqui. O valor inicial, inclusive no snapshot de servidor, é `false` |
+| `useReduceMotion` | `() => boolean` | store de módulo. A primeira assinatura chama `AccessibilityInfo.isReduceMotionEnabled()` uma vez e registra um único `reduceMotionChanged`. Se o evento chegar antes dessa leitura, o resultado atrasado é ignorado. O listener sai quando o último assinante desmonta. `PhotoSkeleton` e `AnimatedStatusIndicator` leem por aqui. O valor inicial, inclusive no snapshot de servidor, é `false` |
 
 Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 
