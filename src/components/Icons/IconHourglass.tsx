@@ -1,5 +1,5 @@
 import React from 'react'
-import { Hourglass } from 'lucide-react-native'
+import Hourglass from 'lucide-react-native/icons/hourglass'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

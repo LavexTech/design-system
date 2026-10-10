@@ -1,5 +1,5 @@
 import React from 'react'
-import { Camera } from 'lucide-react-native'
+import Camera from 'lucide-react-native/icons/camera'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

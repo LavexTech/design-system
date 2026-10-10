@@ -1,5 +1,5 @@
 import React from 'react'
-import { Plus } from 'lucide-react-native'
+import Plus from 'lucide-react-native/icons/plus'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

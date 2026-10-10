@@ -1280,7 +1280,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 ## 9. Ícones
 
-Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` (SVG via `react-native-svg`). Contrato comum (`iconProps.ts`):
+Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` `1.31.0` (SVG via `react-native-svg`). Cada arquivo importa o glifo pelo subpath `lucide-react-native/icons/<nome>`, que o `exports` do pacote aponta para `dist/esm/icons/<nome>.mjs` (export default). O barrel `lucide-react-native` não entra nesses wrappers. Na 1.31.0, `History` é alias de `RotateCcwClock` e não há `icons/history`; `IconHistory` importa `icons/rotate-ccw-clock`. `IconTrash` importa `icons/trash-2`. Contrato comum (`iconProps.ts`):
 
 | Prop | Tipo | Default |
 |---|---|---|
@@ -1319,7 +1319,7 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconChevronLeft` / `IconChevronRight` / `IconChevronDown` | `ChevronLeft` / `ChevronRight` / `ChevronDown` | `Order`, `Select`, listas |
 | `IconEdit` | `Pencil` | edição |
 
-Para adicionar um ícone: criar `src/components/Icons/Icon<Nome>.tsx` seguindo o padrão (importa o glifo, usa `resolveIconColor`/`resolveIconSize`, `strokeWidth` default), exportar no `index.ts` e registrar na tabela acima.
+Para adicionar um ícone: criar `src/components/Icons/Icon<Nome>.tsx` seguindo o padrão (import default do subpath `lucide-react-native/icons/<nome-em-kebab>`, usa `resolveIconColor`/`resolveIconSize`, `strokeWidth` default), exportar no `index.ts` e registrar na tabela acima.
 
 ---
 

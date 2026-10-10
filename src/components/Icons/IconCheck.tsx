@@ -1,5 +1,5 @@
 import React from 'react'
-import { Check } from 'lucide-react-native'
+import Check from 'lucide-react-native/icons/check'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

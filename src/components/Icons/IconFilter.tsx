@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListFilter } from 'lucide-react-native'
+import ListFilter from 'lucide-react-native/icons/list-filter'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

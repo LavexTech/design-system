@@ -1,5 +1,5 @@
 import React from 'react'
-import { Star } from 'lucide-react-native'
+import Star from 'lucide-react-native/icons/star'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

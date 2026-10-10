@@ -1,5 +1,5 @@
 import React from 'react'
-import { ShieldCheck } from 'lucide-react-native'
+import ShieldCheck from 'lucide-react-native/icons/shield-check'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

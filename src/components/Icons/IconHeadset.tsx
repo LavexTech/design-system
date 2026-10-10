@@ -1,5 +1,5 @@
 import React from 'react'
-import { Headset } from 'lucide-react-native'
+import Headset from 'lucide-react-native/icons/headset'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

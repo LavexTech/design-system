@@ -1,5 +1,5 @@
 import React from 'react'
-import { LoaderCircle } from 'lucide-react-native'
+import LoaderCircle from 'lucide-react-native/icons/loader-circle'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

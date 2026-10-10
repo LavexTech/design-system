@@ -1,5 +1,5 @@
 import React from 'react'
-import { CircleAlert } from 'lucide-react-native'
+import CircleAlert from 'lucide-react-native/icons/circle-alert'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Minus } from 'lucide-react-native'
+import Minus from 'lucide-react-native/icons/minus'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

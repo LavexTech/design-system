@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowDown } from 'lucide-react-native'
+import ArrowDown from 'lucide-react-native/icons/arrow-down'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

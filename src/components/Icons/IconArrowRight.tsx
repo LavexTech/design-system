@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowRight } from 'lucide-react-native'
+import ArrowRight from 'lucide-react-native/icons/arrow-right'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

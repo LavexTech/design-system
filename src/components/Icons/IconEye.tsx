@@ -1,5 +1,5 @@
 import React from 'react'
-import { Eye } from 'lucide-react-native'
+import Eye from 'lucide-react-native/icons/eye'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

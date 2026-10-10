@@ -1,5 +1,5 @@
 import React from 'react'
-import { Pencil } from 'lucide-react-native'
+import Pencil from 'lucide-react-native/icons/pencil'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { House } from 'lucide-react-native'
+import House from 'lucide-react-native/icons/house'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChevronLeft } from 'lucide-react-native'
+import ChevronLeft from 'lucide-react-native/icons/chevron-left'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

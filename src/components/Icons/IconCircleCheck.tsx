@@ -1,5 +1,5 @@
 import React from 'react'
-import { CircleCheckBig } from 'lucide-react-native'
+import CircleCheckBig from 'lucide-react-native/icons/circle-check-big'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

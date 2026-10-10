@@ -1,5 +1,5 @@
 import React from 'react'
-import { Circle } from 'lucide-react-native'
+import Circle from 'lucide-react-native/icons/circle'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

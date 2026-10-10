@@ -1,5 +1,5 @@
 import React from 'react'
-import { Send } from 'lucide-react-native'
+import Send from 'lucide-react-native/icons/send'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
