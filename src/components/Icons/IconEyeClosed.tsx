@@ -1,5 +1,5 @@
 import React from 'react'
-import { EyeOff } from 'lucide-react-native'
+import EyeOff from 'lucide-react-native/icons/eye-off'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

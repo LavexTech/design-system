@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
 import {
-  AccessibilityInfo,
   Animated,
   Easing,
   StyleSheet,
@@ -10,6 +9,7 @@ import {
   type ViewStyle,
 } from "react-native"
 import Constants from "../../constants/constants"
+import { useReduceMotion } from "../../utils/reduceMotion"
 
 type PhotoSkeletonProps = {
   width?: DimensionValue
@@ -30,21 +30,9 @@ export const PhotoSkeleton: React.FC<PhotoSkeletonProps> = ({
   borderRadius = C.borderRadius.XL,
   style,
 }) => {
-  const [reduceMotion, setReduceMotion] = useState(false)
+  const reduceMotion = useReduceMotion()
   const [trackWidth, setTrackWidth] = useState(0)
   const progress = useRef(new Animated.Value(0)).current
-
-  useEffect(() => {
-    let mounted = true
-    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
-      if (mounted) setReduceMotion(enabled)
-    })
-    const subscription = AccessibilityInfo.addEventListener("reduceMotionChanged", setReduceMotion)
-    return () => {
-      mounted = false
-      subscription.remove()
-    }
-  }, [])
 
   useEffect(() => {
     if (reduceMotion || trackWidth <= 0) {

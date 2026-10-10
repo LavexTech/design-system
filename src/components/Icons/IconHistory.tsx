@@ -1,5 +1,5 @@
 import React from 'react'
-import { History } from 'lucide-react-native'
+import History from 'lucide-react-native/icons/rotate-ccw-clock'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

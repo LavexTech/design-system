@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { AccessibilityInfo, StyleSheet, View } from "react-native"
+import React, { useEffect } from "react"
+import { StyleSheet, View } from "react-native"
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated"
 import Constants from "../../constants/constants"
+import { useReduceMotion } from "../../utils/reduceMotion"
 
 type AnimatedStatusIndicatorProps = {
   size?: number
@@ -37,18 +38,7 @@ export const AnimatedStatusIndicator: React.FC<AnimatedStatusIndicatorProps> = (
   icon,
   accessibilityLabel,
 }) => {
-  const [reduceMotion, setReduceMotion] = useState(false)
-  useEffect(() => {
-    let mounted = true
-    AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
-      if (mounted) setReduceMotion(enabled)
-    })
-    const subscription = AccessibilityInfo.addEventListener("reduceMotionChanged", setReduceMotion)
-    return () => {
-      mounted = false
-      subscription.remove()
-    }
-  }, [])
+  const reduceMotion = useReduceMotion()
   const animate = active && !reduceMotion
   return (
   <View accessibilityRole="progressbar" accessibilityLabel={accessibilityLabel} style={[styles.wrap, { width: size * 2.4, height: size * 2.4 }]}>

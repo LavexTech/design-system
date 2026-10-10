@@ -1,5 +1,5 @@
 import React from 'react'
-import { Search } from 'lucide-react-native'
+import Search from 'lucide-react-native/icons/search'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

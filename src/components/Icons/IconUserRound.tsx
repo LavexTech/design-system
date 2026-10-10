@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserRound } from 'lucide-react-native'
+import UserRound from 'lucide-react-native/icons/user-round'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

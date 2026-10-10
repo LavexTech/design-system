@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReceiptText } from 'lucide-react-native'
+import ReceiptText from 'lucide-react-native/icons/receipt-text'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

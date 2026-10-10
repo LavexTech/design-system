@@ -1,5 +1,5 @@
 import React from 'react'
-import { StarHalf } from 'lucide-react-native'
+import StarHalf from 'lucide-react-native/icons/star-half'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,

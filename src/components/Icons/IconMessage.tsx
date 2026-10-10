@@ -1,5 +1,5 @@
 import React from 'react'
-import { MessageCircle } from 'lucide-react-native'
+import MessageCircle from 'lucide-react-native/icons/message-circle'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
