@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { memo, useCallback, useEffect, useRef, useState } from "react"
 import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from "react-native"
 import Constants from "../../constants/constants"
 
@@ -48,16 +48,13 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
     }).start()
   }, [activeIndex, barWidth, bubbleX, pages.length])
 
-  const handlePagePress = (page: string) => {
-    if (onNavigate) {
-      onNavigate(page)
-    }
-  }
-
   return (
     <View
       style={[styles.container, darkMode ? styles.containerDark : null]}
-      onLayout={(event) => setBarWidth(event.nativeEvent.layout.width)}
+      onLayout={(event) => {
+        const w = event.nativeEvent.layout.width
+        setBarWidth((prev) => (Math.abs(prev - w) < 0.5 ? prev : w))
+      }}
     >
       <Animated.View
         pointerEvents="none"
@@ -73,7 +70,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           isActive={activePage === page}
           icon={icons?.[index]}
           fontScale={fontScale}
-          onPress={() => handlePagePress(page)}
+          onNavigate={onNavigate}
         />
       ))}
     </View>
@@ -85,10 +82,10 @@ type NavTabProps = {
   isActive: boolean
   icon?: (isActive: boolean) => React.ReactNode
   fontScale: number
-  onPress: () => void
+  onNavigate?: (page: string) => void
 }
 
-function NavTab({ page, isActive, icon, fontScale, onPress }: NavTabProps) {
+const NavTab = memo(function NavTab({ page, isActive, icon, fontScale, onNavigate }: NavTabProps) {
   const progress = useRef(new Animated.Value(isActive ? 1 : 0)).current
 
   useEffect(() => {
@@ -104,13 +101,17 @@ function NavTab({ page, isActive, icon, fontScale, onPress }: NavTabProps) {
     outputRange: [1, 0],
   })
 
+  const handlePress = useCallback(() => {
+    onNavigate?.(page)
+  }, [onNavigate, page])
+
   return (
     <TouchableOpacity
       accessibilityRole="tab"
       accessibilityState={{ selected: isActive }}
       accessibilityLabel={page}
       style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
-      onPress={onPress}
+      onPress={handlePress}
       activeOpacity={0.7}
     >
       <View style={styles.tabFace}>
@@ -123,9 +124,9 @@ function NavTab({ page, isActive, icon, fontScale, onPress }: NavTabProps) {
       </View>
     </TouchableOpacity>
   )
-}
+})
 
-function TabFace({
+const TabFace = memo(function TabFace({
   icon,
   isActive,
   label,
@@ -160,7 +161,7 @@ function TabFace({
       </Text>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {
