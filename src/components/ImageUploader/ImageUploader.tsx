@@ -12,6 +12,7 @@ type ImageUploaderProps = {
   onRemove?: (imageUrl: string, index: number) => void
   onPressImage?: (imageUrl: string, index: number) => void
   maxImages?: number
+  pendingCount?: number
   columns?: number
   addLabel?: string
   addIcon?: React.ReactNode
@@ -220,13 +221,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   onRemove,
   onPressImage,
   maxImages,
+  pendingCount = 0,
   columns = 3,
   addLabel = "Adicionar",
   addIcon,
   disabled = false,
 }) => {
   const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
-  const showAdd = maxImages == null || images.length < maxImages
+  const pending = Math.max(0, Math.floor(pendingCount))
+  const showAdd = maxImages == null || images.length + pending < maxImages
   const [containerWidth, setContainerWidth] = useState(0)
   const [zoom, setZoom] = useState<{ uri: string; origin: Frame } | null>(null)
   const columnCount = Math.max(1, columns)
@@ -271,6 +274,17 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       ),
     })
   })
+
+  for (let index = 0; index < pending; index += 1) {
+    slots.push({
+      key: `pending-${index}`,
+      node: (
+        <View accessibilityLabel="Carregando foto" style={[styles.cell, { width: itemSize, height: itemSize }]}>
+          <PhotoSkeleton borderRadius={C.borderRadius.XL} />
+        </View>
+      ),
+    })
+  }
 
   const rows: { key: string; node: React.ReactNode }[][] = []
   for (let index = 0; index < slots.length; index += columnCount) {
