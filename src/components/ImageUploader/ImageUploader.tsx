@@ -1,5 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Animated, Easing, Image as RNImage, Modal, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
+import { Image as RNImage, Modal, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
+import Animated, {
+  Easing,
+  interpolate,
+  interpolateColor,
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCamera } from "../Icons/IconCamera"
@@ -39,7 +48,7 @@ function containedFrame(imgW: number, imgH: number, screenW: number, screenH: nu
 
 function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClose: () => void }) {
   const { width: screenW, height: screenH } = useWindowDimensions()
-  const progress = useRef(new Animated.Value(0)).current
+  const progress = useSharedValue(0)
   const closing = useRef(false)
   const [target, setTarget] = useState<Frame | null>(null)
   const [ready, setReady] = useState(false)
@@ -77,15 +86,8 @@ function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClo
     if (!target) {
       return
     }
-    progress.setValue(0)
-    const animation = Animated.timing(progress, {
-      toValue: 1,
-      duration: ZOOM_MS,
-      easing: Easing.inOut(Easing.cubic),
-      useNativeDriver: false,
-    })
-    animation.start()
-    return () => animation.stop()
+    progress.value = 0
+    progress.value = withTiming(1, { duration: ZOOM_MS, easing: Easing.inOut(Easing.cubic) })
   }, [target, progress])
 
   function dismiss() {
@@ -93,42 +95,32 @@ function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClo
       return
     }
     closing.current = true
-    Animated.timing(progress, {
-      toValue: 0,
-      duration: ZOOM_MS,
-      easing: Easing.inOut(Easing.cubic),
-      useNativeDriver: false,
-    }).start(({ finished }) => {
+    progress.value = withTiming(0, { duration: ZOOM_MS, easing: Easing.inOut(Easing.cubic) }, (finished) => {
       if (finished) {
-        onClose()
+        runOnJS(onClose)()
       }
     })
   }
 
   const end = target ?? origin
-  const left = progress.interpolate({ inputRange: [0, 1], outputRange: [origin.x, end.x] })
-  const top = progress.interpolate({ inputRange: [0, 1], outputRange: [origin.y, end.y] })
-  const width = progress.interpolate({ inputRange: [0, 1], outputRange: [origin.width, end.width] })
-  const height = progress.interpolate({ inputRange: [0, 1], outputRange: [origin.height, end.height] })
-  const radius = progress.interpolate({ inputRange: [0, 1], outputRange: [C.borderRadius.XL, 0] })
+  // Tudo roda no thread de UI (Reanimated): a animação de layout não passa pelo thread JS
+  const backdropStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(progress.value, [0, 1], ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"]),
+  }))
+  const frameStyle = useAnimatedStyle(() => ({
+    left: interpolate(progress.value, [0, 1], [origin.x, end.x]),
+    top: interpolate(progress.value, [0, 1], [origin.y, end.y]),
+    width: interpolate(progress.value, [0, 1], [origin.width, end.width]),
+    height: interpolate(progress.value, [0, 1], [origin.height, end.height]),
+    borderRadius: interpolate(progress.value, [0, 1], [C.borderRadius.XL, 0]),
+  }))
 
   return (
     <Modal transparent visible animationType="none" statusBarTranslucent onRequestClose={dismiss}>
       <View style={styles.zoomRoot}>
-        <Animated.View
-          pointerEvents="none"
-          style={[
-            StyleSheet.absoluteFill,
-            {
-              backgroundColor: progress.interpolate({
-                inputRange: [0, 1],
-                outputRange: ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.5)"],
-              }),
-            },
-          ]}
-        />
+        <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, backdropStyle]} />
         <Pressable accessibilityLabel="Fechar foto" style={StyleSheet.absoluteFill} onPress={dismiss} />
-        <Animated.View style={{ position: "absolute", left, top, width, height, borderRadius: radius, overflow: "hidden" }}>
+        <Animated.View style={[styles.zoomFrame, frameStyle]}>
           <Pressable accessibilityLabel="Fechar foto" style={styles.zoomPhoto} onPress={dismiss}>
             <RNImage
               source={{ uri }}
@@ -324,4 +316,5 @@ const styles = StyleSheet.create({
   removeDot: { width: 24, height: 24, borderRadius: 12, backgroundColor: C.brand.SURFACE, alignItems: "center", justifyContent: "center" },
   zoomRoot: { flex: 1 },
   zoomPhoto: { flex: 1 },
+  zoomFrame: { position: "absolute", overflow: "hidden" },
 })
