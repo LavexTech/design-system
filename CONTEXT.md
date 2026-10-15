@@ -1073,6 +1073,8 @@ Card de oferta de um lavexer.
   ambas as linhas em space-between
 ```
 
+Em tela estreita (ex.: 320 dp) o valor cede espaço e a distância (`3km`) nunca quebra em duas linhas. Na linha do nome, se a nota não couber ao lado, ela desce para a linha de baixo (`flexWrap`), e o nome não é espremido.
+
 **Aparência:** `Card` clicável com duas linhas. No topo, em `space-between`: o valor em verde `#059669`, `Text size="large"` (20 px), no formato `"R$ {amount}"` ou o `amountLabel` recebido; à direita, a distância `"{n}km"` em `Info`. Abaixo (margem 8), outra linha em `space-between` com o nome do usuário à esquerda e, à direita, estrelas de 16 px + `"4.5/5"` — ou `"Sem avaliações"` quando `totalRatings` é 0 (ou `rating` é 0, sem `totalRatings`).
 
 #### `Stars`
