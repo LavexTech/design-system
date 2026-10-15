@@ -38,12 +38,18 @@ export const Offer: React.FC<OfferProps> = ({ amount, amountLabel, distance, use
     <Card onClick={onClick}>
       <Grid columns={1} gap={2}>
         <View style={styles.header}>
-          <Text text={amountLabel ?? ("R$ " + String(amount))} level="success" size="large" />
-          <Info text={String(distance) + "km"} />
+          <View style={styles.amount}>
+            <Text text={amountLabel ?? ("R$ " + String(amount))} level="success" size="large" fill={false} />
+          </View>
+          <View style={styles.distance}>
+            <Info text={String(distance) + "km"} />
+          </View>
         </View>
         
         <View style={styles.userInfo}>
-          <Text text={user.name} />
+          <View style={styles.name}>
+            <Text text={user.name} fill={false} />
+          </View>
           {hasRatings(user) ? (
             <View style={styles.ratingContainer}>
               <Stars rating={user.rating} size={16} />
@@ -67,10 +73,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: Constants.styles.spacing.SMALL,
   },
+  // Em tela estreita o valor cede espaço; a distância nunca quebra em duas linhas
+  amount: {
+    flexShrink: 1,
+    minWidth: 0,
+  },
+  distance: {
+    flexShrink: 0,
+    marginLeft: Constants.styles.spacing.SMALL,
+  },
+  // O nome nunca é espremido: se a nota não couber ao lado, ela desce para a linha de baixo
+  name: {
+    maxWidth: '100%',
+    marginRight: Constants.styles.spacing.SMALL,
+  },
   userInfo: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
+    rowGap: Constants.styles.spacing.TINY,
   },
   ratingContainer: {
     flexDirection: 'row',
