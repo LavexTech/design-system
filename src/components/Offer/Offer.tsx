@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: Constants.styles.spacing.SMALL,
   },
-  // Em tela estreita o valor e o nome cedem espaço; a distância e a nota nunca quebram em duas linhas
+  // Em tela estreita o valor cede espaço; a distância nunca quebra em duas linhas
   amount: {
     flexShrink: 1,
     minWidth: 0,
@@ -82,15 +82,17 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     marginLeft: Constants.styles.spacing.SMALL,
   },
+  // O nome nunca é espremido: se a nota não couber ao lado, ela desce para a linha de baixo
   name: {
-    flexShrink: 1,
-    minWidth: 0,
+    maxWidth: '100%',
     marginRight: Constants.styles.spacing.SMALL,
   },
   userInfo: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
+    rowGap: Constants.styles.spacing.TINY,
   },
   ratingContainer: {
     flexDirection: 'row',
