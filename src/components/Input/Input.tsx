@@ -135,8 +135,11 @@ export const Input: React.FC<InputProps> = ({
       <View
         style={[
           styles.field,
-          { borderColor, height: fieldHeight ?? C.componentSize.INPUT_HEIGHT },
           disabled ? styles.fieldDisabled : null,
+          {
+            borderColor: disabled && isValid ? C.border.SOFT : borderColor,
+            height: fieldHeight ?? C.componentSize.INPUT_HEIGHT,
+          },
         ]}
       >
         <TextInput
@@ -144,6 +147,7 @@ export const Input: React.FC<InputProps> = ({
           placeholder={placeholder}
           value={value}
           editable={!disabled}
+          accessibilityState={{ disabled }}
           onChangeText={handleTextChange}
           keyboardType={keyboardType}
           inputMode={
@@ -225,7 +229,6 @@ const styles = StyleSheet.create({
   },
   fieldDisabled: {
     backgroundColor: C.surface.ZINC,
-    borderColor: C.border.SOFT,
   },
   lock: {
     paddingHorizontal: 14,

@@ -25,7 +25,7 @@ const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; co
 
 const RADIUS = Constants.styles.borderRadius["2XL"]
 const BORDER = Constants.styles.borderWidth.HAIRLINE
-/** Ícone 20% menor que o original (22); o padding cobre a diferença e a caixa continua com 40. */
+/** Ícone de 18 px (era 22); o padding cobre a diferença e a caixa continua com 40. */
 const ICON_SIZE = 18
 const ICON_BOX = 40
 const ICON_PADDING = (ICON_BOX - ICON_SIZE) / 2
