@@ -1,0 +1,25 @@
+import React from 'react'
+import CreditCard from 'lucide-react-native/icons/credit-card'
+import {
+  IconProps,
+  DEFAULT_STROKE_WIDTH,
+  resolveIconColor,
+  resolveIconSize,
+} from './iconProps'
+
+export type IconCreditCardProps = IconProps
+
+export const IconCreditCard: React.FC<IconCreditCardProps> = ({
+  color,
+  fill,
+  width,
+  height,
+  size,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
+}) => (
+  <CreditCard
+    color={resolveIconColor(color, fill)}
+    size={resolveIconSize(size, width, height)}
+    strokeWidth={strokeWidth}
+  />
+)

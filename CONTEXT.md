@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.0.4`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.4.0`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -601,24 +601,38 @@ Card compacto para listas.
 
 #### `UserCardBio`
 
-Card com avatar à esquerda e bloco de dados à direita.
+Avatar à esquerda e bloco de dados à direita, sem borda e na largura total do container (não usa mais `Card`).
 
 | Prop | Tipo | Default |
 |---|---|---|
 | `user` | `User & { bio: string }` | — (obrigatória) |
-| `onClick` / `onAvatarPress` | `() => void` | — |
+| `onAvatarPress` | `() => void` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
 ```
-┌─ Card ────────────────────────┐
-│ ╭────╮  João Silva            │  avatar sm (64px) em coluna fixa de 64
-│ │ 👤 │  12 pedidos feitos     │  texto alinhado ao TOPO, não ao centro
-│ ╰────╯  ★★★★☆ 4/5             │  a bio NÃO aparece
-└───────────────────────────────┘
-   64      ←── flex: 1 ──→
+╭────╮  João Silva                         nome em negrito
+│ 👤 │  ★ 4,8  · 12 pedidos                ShortStarRating + Info
+╰────╯  Nota média dada pelos Lavexers     Info
 ```
 
-**Aparência:** `Card` com linha alinhada ao topo e gap 8: coluna fixa de 64 px com o avatar `sm` (64 px) e, à direita, coluna flexível com nome, legenda de pedidos e linha de estrelas 16 px + `"{rating arredondado}/5"`. **O campo `bio` não é renderizado** apesar de obrigatório no tipo (ver dívidas).
+**Comportamento:** sem avaliações (`rating` 0) a estrela mostra `–` e a legenda vira "Sua média será calculada após cada pedido". `· 1 pedido` no singular. `onClick` ficou na assinatura por compatibilidade, mas não é usado. A `bio` continua sem ser renderizada.
+
+#### `ShortStarRating`
+
+Uma estrela preenchida na cor DEEP (`#08706D`) e a nota com 1 casa decimal e vírgula (`4,8`). Props: `rating: number`, `size?: number` (16). `rating <= 0` mostra `–`.
+
+#### `IconButtonLarge`
+
+Botão de largura total em 3 colunas (flex 2/9/1): ícone numa caixa quadrada 40 px zinco claro (`#F4F4F5`) com cantos arredondados, título em negrito + `Info` de descrição, e `IconChevronRight`.
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `icon` | `"credit-card" \| "message-square"` | — |
+| `title` / `description` | `string` | — |
+| `onClick` | `() => void` | — |
+| `position` | `"first" \| "middle" \| "last"` | — |
+
+Borda cinza clara (`#E5E1E6`, 1 px) em volta. `first` arredonda os cantos superiores, `last` os inferiores; sem `position`, cantos retos. Botões `middle` e `last` sobem 1 px para a borda não dobrar.
 
 #### `ProfileAvatar`
 
@@ -653,6 +667,7 @@ Par rótulo/valor de um campo do usuário.
 | `type` | `string` | — (obrigatória) |
 | `label` | `string` | — (derivado de `type`) |
 | `onClick` | `() => void` | — |
+| `gap` | `number` | `2` (distância entre rótulo e valor, em unidades do `Grid`) |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
 ```
@@ -1379,3 +1394,12 @@ Atualize o `CONTEXT.md` **no mesmo commit/branch** da alteração sempre que:
 Descreva sempre o **código real**, não a intenção: comportamento indesejado vai documentado como é e registrado na seção de dívidas. Texto em pt-BR; nomes de código em inglês.
 
 Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-client-lavex`), atualize o `CONTEXT.md` de cada repositório tocado.
+
+---
+
+## Adendo — tela de Conta (1.4.0)
+
+- `Button`: variantes `link` (texto DEEP) e `link-gray` (texto cinza), sem fundo, borda, altura ou padding fixos, na largura do conteúdo; `iconPosition: "inline"` põe o ícone antes do texto, na mesma linha, como um caractere.
+- `Text`: prop `bold` (Plus Jakarta Bold).
+- Ícones novos: `IconLogOut`, `IconPencil`, `IconCreditCard`, `IconMessageSquare`.
+- Componentes novos: `ShortStarRating`, `IconButtonLarge`. `UserCardBio` e `UserInfo` (`gap`) ajustados, ver acima.

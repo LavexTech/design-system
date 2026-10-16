@@ -12,6 +12,7 @@ export interface TextProps {
   fontScale?: number;
   /** When false, text sizes to content (for use inside row layouts). Default true. */
   fill?: boolean;
+  bold?: boolean;
 }
 
 const C = Constants.styles
@@ -24,8 +25,9 @@ export const TextBox: React.FC<TextProps> = ({
   darkMode = false,
   fontScale = 1,
   fill = true,
+  bold = false,
 }) => {
-  const fontFamily = useResolvedFontFamily(C.fontFamily.REGULAR)
+  const fontFamily = useResolvedFontFamily(bold ? C.fontFamily.BOLD : C.fontFamily.REGULAR)
   const theme = darkMode ? C.theme.dark : C.theme.light
 
   const sizes = {
@@ -51,7 +53,7 @@ export const TextBox: React.FC<TextProps> = ({
         {
           textAlign: position,
           fontFamily,
-          fontWeight: fontFamily ? "normal" : "400",
+          fontWeight: fontFamily ? "normal" : bold ? "700" : "400",
           fontSize: metrics.fontSize * fontScale,
           lineHeight: metrics.lineHeight * fontScale,
           color: levels[level],

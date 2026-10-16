@@ -101,6 +101,7 @@ const Constants = {
       DEFAULT: "#FFFFFF",
       MUTED: "#E5E1E6",
       SUBTLE: "#FAF9FA",
+      ZINC: "#F4F4F5",
       INFO: "#EEFBF8",
       ACCENT: "#E2FAF6",
       ILLUSTRATION: "#E6F7F6",

@@ -1,11 +1,9 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
-import { Card } from "../Card/Card"
+import { View, StyleSheet, Pressable } from "react-native"
 import { TextBox as Text } from "../Text/Text"
-import { Stars } from "../Stars/Stars"
+import { ShortStarRating } from "../ShortStarRating/ShortStarRating"
 import { Info } from "../Info/Info"
 import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar"
-import { getOrdersCountLabel } from "../../utils/ordersCountLabel"
 
 type User = {
   id: string
@@ -25,6 +23,10 @@ type UserCardBioProps = {
   fontScale?: number
 }
 
+function getOrdersLabel(ordersCount: number): string {
+  return `· ${ordersCount} ${ordersCount === 1 ? "pedido" : "pedidos"}`
+}
+
 export const UserCardBio: React.FC<UserCardBioProps> = ({
   user,
   onClick,
@@ -32,36 +34,43 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
   darkMode = false,
   fontScale = 1,
 }: UserCardBioProps) => {
+  const hasRating = user.rating > 0
+
+  const Wrapper = onClick ? Pressable : View
+  const wrapperProps = onClick ? { onPress: onClick, accessibilityRole: "button" as const } : {}
+
   return (
-    <Card onClick={onClick} darkMode={darkMode} fontScale={fontScale}>
-      <View style={styles.row}>
-        <View style={styles.avatar}>
-          <ProfileAvatar
-            profileImage={user.profileImage}
-            alt={user.name}
-            size="sm"
-            onPress={onAvatarPress}
-            darkMode={darkMode}
-          />
-        </View>
-        <View style={styles.meta}>
-          <Text text={user.name} darkMode={darkMode} fontScale={fontScale} />
+    <Wrapper style={styles.row} {...wrapperProps}>
+      <View style={styles.avatar}>
+        <ProfileAvatar
+          profileImage={user.profileImage}
+          alt={user.name}
+          size="sm"
+          onPress={onAvatarPress}
+          darkMode={darkMode}
+        />
+      </View>
+      <View style={styles.meta}>
+        <Text text={user.name} bold darkMode={darkMode} fontScale={fontScale} />
+        <View style={styles.ratingRow}>
+          <ShortStarRating rating={user.rating} darkMode={darkMode} fontScale={fontScale} />
           <Info
-            text={getOrdersCountLabel(user.ordersCount, user.userType)}
+            text={getOrdersLabel(user.ordersCount)}
             darkMode={darkMode}
             fontScale={fontScale}
           />
-          <View style={styles.ratingRow}>
-            <Stars rating={user.rating} size={16} />
-            <Info
-              text={`${Math.round(user.rating)}/5`}
-              darkMode={darkMode}
-              fontScale={fontScale}
-            />
-          </View>
         </View>
+        <Info
+          text={
+            hasRating
+              ? "Nota média dada pelos Lavexers"
+              : "Sua média será calculada após cada pedido"
+          }
+          darkMode={darkMode}
+          fontScale={fontScale}
+        />
       </View>
-    </Card>
+    </Wrapper>
   )
 }
 
@@ -71,6 +80,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "flex-start",
+    alignSelf: "stretch",
     width: "100%",
     gap: 8,
   },
@@ -83,7 +93,7 @@ const styles = StyleSheet.create({
   meta: {
     flex: 1,
     minWidth: 0,
-    gap: 8,
+    gap: 4,
   },
   ratingRow: {
     flexDirection: "row",
