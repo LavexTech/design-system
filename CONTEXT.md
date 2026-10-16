@@ -615,7 +615,7 @@ Avatar à esquerda e bloco de dados à direita, sem borda e na largura total do 
 ╰────╯  Nota média dada pelos Lavexers     Info
 ```
 
-**Comportamento:** sem avaliações (`rating` 0) a estrela mostra `–` e a legenda vira "Sua média será calculada após cada pedido". `· 1 pedido` no singular. `onClick` ficou na assinatura por compatibilidade, mas não é usado. A `bio` continua sem ser renderizada.
+**Comportamento:** sem avaliações (`rating` 0) a estrela mostra `–` e a legenda vira "Calculado a partir do primeiro pedido". `· 1 pedido` no singular. `onClick` ficou na assinatura por compatibilidade, mas não é usado. A `bio` continua sem ser renderizada.
 
 #### `ShortStarRating`
 
