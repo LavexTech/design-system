@@ -50,6 +50,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
         size={typeof size === "number" ? "sm" : size}
         src={profileImage!.trim()}
         type="circle"
+        pixelSize={px}
         alt={alt}
         darkMode={darkMode}
         onClick={onPress}

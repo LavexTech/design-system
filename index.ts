@@ -112,3 +112,5 @@ export { IconLogOut } from "./src/components/Icons/IconLogOut";
 export { IconPencil } from "./src/components/Icons/IconPencil";
 export { IconCreditCard } from "./src/components/Icons/IconCreditCard";
 export { IconMessageSquare } from "./src/components/Icons/IconMessageSquare";
+export { IconLock } from "./src/components/Icons/IconLock";
+export { IconMapPin } from "./src/components/Icons/IconMapPin";

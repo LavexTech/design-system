@@ -25,7 +25,10 @@ const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; co
 
 const RADIUS = Constants.styles.borderRadius["2XL"]
 const BORDER = Constants.styles.borderWidth.HAIRLINE
+/** Ícone 20% menor que o original (22); o padding cobre a diferença e a caixa continua com 40. */
+const ICON_SIZE = 18
 const ICON_BOX = 40
+const ICON_PADDING = (ICON_BOX - ICON_SIZE) / 2
 
 export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
   icon,
@@ -58,7 +61,7 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
       <View style={styles.row}>
         <View style={styles.iconColumn}>
           <View style={styles.iconBox}>
-            <Icon size={22} color={Constants.styles.text.DEFAULT} />
+            <Icon size={ICON_SIZE} color={Constants.styles.text.DEFAULT} />
           </View>
         </View>
         <View style={styles.texts}>
@@ -91,8 +94,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   iconBox: {
-    width: ICON_BOX,
-    height: ICON_BOX,
+    padding: ICON_PADDING,
     borderRadius: Constants.styles.borderRadius.LARGE,
     backgroundColor: Constants.styles.surface.ZINC,
     alignItems: "center",

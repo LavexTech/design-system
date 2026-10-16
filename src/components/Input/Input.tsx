@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { IconLock } from "../Icons/IconLock"
 
 type InputProps = {
   label: string
@@ -32,6 +33,8 @@ type InputProps = {
   fieldHeight?: number
   autoCapitalize?: "none" | "sentences" | "words" | "characters"
   autoCorrect?: boolean
+  /** Somente leitura: fundo cinza claro e cadeado à direita. */
+  disabled?: boolean
 }
 
 const C = Constants.styles
@@ -56,6 +59,7 @@ export const Input: React.FC<InputProps> = ({
   autoCapitalize,
   autoCorrect,
   darkMode,
+  disabled = false,
 }) => {
   void darkMode
   const [isValid, setIsValid] = useState(true)
@@ -132,12 +136,14 @@ export const Input: React.FC<InputProps> = ({
         style={[
           styles.field,
           { borderColor, height: fieldHeight ?? C.componentSize.INPUT_HEIGHT },
+          disabled ? styles.fieldDisabled : null,
         ]}
       >
         <TextInput
           accessibilityLabel={label}
           placeholder={placeholder}
           value={value}
+          editable={!disabled}
           onChangeText={handleTextChange}
           keyboardType={keyboardType}
           inputMode={
@@ -179,12 +185,19 @@ export const Input: React.FC<InputProps> = ({
             {
               fontSize: C.fontSize.BODY * fontScale,
               fontFamily: fieldFont,
-              paddingRight: rightElement ? 4 : 16,
+              paddingRight: rightElement || disabled ? 4 : 16,
+              color: disabled ? C.text.MUTED : C.text.DEFAULT,
             },
             Platform.OS === "web" ? styles.webNoOutline : null,
           ]}
         />
-        {rightElement ? <View style={styles.right}>{rightElement}</View> : null}
+        {disabled ? (
+          <View style={[styles.right, styles.lock]}>
+            <IconLock size={18} color={C.text.MUTED} />
+          </View>
+        ) : rightElement ? (
+          <View style={styles.right}>{rightElement}</View>
+        ) : null}
       </View>
       {!isValid && errorMessage ? (
         <Text style={[styles.error, { fontSize: C.fontSize.CAPTION * fontScale }]}>
@@ -209,6 +222,13 @@ const styles = StyleSheet.create({
     minWidth: 0,
     maxWidth: "100%",
     overflow: "hidden",
+  },
+  fieldDisabled: {
+    backgroundColor: C.surface.ZINC,
+    borderColor: C.border.SOFT,
+  },
+  lock: {
+    paddingHorizontal: 14,
   },
   webNoOutline: {
     outlineStyle: "none",

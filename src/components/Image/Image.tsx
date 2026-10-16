@@ -21,6 +21,8 @@ type ImageProps = {
   onClick?: () => void
   size?: ImageSize
   type?: ImageType
+  /** Diâmetro/lado em px; substitui o de `size`. */
+  pixelSize?: number
   darkMode?: boolean
 }
 
@@ -30,11 +32,12 @@ export const Image: React.FC<ImageProps> = ({
   onClick,
   size = "md",
   type = "default",
+  pixelSize,
   darkMode = false,
 }) => {
   void darkMode
 
-  const px = IMAGE_SIZE_PX[size]
+  const px = pixelSize ?? IMAGE_SIZE_PX[size]
   const isCircle = type === "circle"
   const radius = isCircle ? px / 2 : 8
   const [ready, setReady] = useState(false)

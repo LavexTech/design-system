@@ -1403,3 +1403,10 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `Text`: prop `bold` (Plus Jakarta Bold).
 - Ícones novos: `IconLogOut`, `IconPencil`, `IconCreditCard`, `IconMessageSquare`.
 - Componentes novos: `ShortStarRating`, `IconButtonLarge`. `UserCardBio` e `UserInfo` (`gap`) ajustados, ver acima.
+
+## Adendo — edição da Conta (1.5.0)
+
+- `Input`: prop `disabled` (somente leitura, fundo `surface.ZINC`, borda suave, texto cinza e `IconLock` à direita; substitui `rightElement`).
+- `IconButtonLarge`: ícone 18 px (20% menor que 22) com padding que mantém a caixa de 40 px.
+- `Image`: prop `pixelSize` (substitui o lado de `size`). `ProfileAvatar` com `size` numérico agora renderiza a foto nesse diâmetro (antes cortava em 64 px).
+- Ícones novos: `IconLock`, `IconMapPin`.
