@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.4.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.6.0`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -1411,4 +1411,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `Image`: prop `pixelSize` (substitui o lado de `size`). `ProfileAvatar` com `size` numérico agora renderiza a foto nesse diâmetro (antes cortava em 64 px).
 - Ícones novos: `IconLock`, `IconMapPin`.
 
+## Adendo — foco e legenda (1.6.0)
+
+- `UserCardBio`: sem avaliações, a legenda é "Calculado a partir do primeiro pedido".
 - `Input`: prop `inputRef` (ref do `TextInput` interno, para `focus()`). Versão 1.6.0.
