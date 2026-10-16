@@ -11,8 +11,9 @@ type UserInfoProps = {
   onClick?: () => void,
   darkMode?: boolean,
   fontScale?: number,
+  gap?: number,
 }
-export const UserInfo: React.FC<UserInfoProps> = ({ user, type, label, onClick, darkMode = false, fontScale = 1 }) => {
+export const UserInfo: React.FC<UserInfoProps> = ({ user, type, label, onClick, darkMode = false, fontScale = 1, gap = 2 }) => {
   const getLabel = (type: string): string => {
     const labels: { [key: string]: string } = { 
       name: "Nome",
@@ -36,7 +37,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user, type, label, onClick, 
   const value = getValue(user, type)
 
   const Content = () => (
-    <Grid columns={1} gapY={2} darkMode={darkMode}>
+    <Grid columns={1} gapY={gap} darkMode={darkMode}>
       <GridItem colSpan={1}>
         <Info text={displayLabel} darkMode={darkMode} fontScale={fontScale} />
       </GridItem>

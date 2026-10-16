@@ -23,6 +23,8 @@ type ButtonVariant =
   | "secondary-outline"
   | "ghost"
   | "ghost-danger"
+  | "link"
+  | "link-gray"
 
 type ButtonBaseProps = {
   text: string
@@ -35,7 +37,7 @@ type ButtonBaseProps = {
   style?: ViewStyle
   textStyle?: TextStyle
   icon?: React.ReactNode
-  iconPosition?: "left" | "right"
+  iconPosition?: "left" | "right" | "inline"
 }
 
 type ButtonProps =
@@ -154,6 +156,18 @@ function palette(variant: ButtonVariant) {
       borderColor: "transparent",
       borderWidth: 0,
     },
+    link: {
+      backgroundColor: "transparent",
+      color: C.brand.DEEP,
+      borderColor: "transparent",
+      borderWidth: 0,
+    },
+    "link-gray": {
+      backgroundColor: "transparent",
+      color: C.text.MUTED,
+      borderColor: "transparent",
+      borderWidth: 0,
+    },
   }
   return map[variant]
 }
@@ -180,6 +194,7 @@ function ButtonComponent(props: ButtonProps) {
   const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const metrics = SIZES[size]
   const isWeb = Platform.OS === "web"
+  const isLink = variant === "link" || variant === "link-gray"
 
   useEffect(() => {
     if (!confirming) return
@@ -209,10 +224,14 @@ function ButtonComponent(props: ButtonProps) {
         const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming })
         return [
           styles.button,
+          isLink
+            ? styles.link
+            : {
+                height: metrics.height,
+                borderRadius: metrics.radius,
+                paddingHorizontal: metrics.pad,
+              },
           {
-            height: metrics.height,
-            borderRadius: metrics.radius,
-            paddingHorizontal: metrics.pad,
             backgroundColor: colors.backgroundColor,
             borderColor: colors.borderColor,
             borderWidth: colors.borderWidth,
@@ -221,11 +240,14 @@ function ButtonComponent(props: ButtonProps) {
           isWeb
             ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
             : null,
-          iconPosition === "right" && icon ? styles.withTrailingIcon : null,
+          (iconPosition === "right" || iconPosition === "inline") && icon
+            ? styles.withTrailingIcon
+            : null,
           style,
         ]
       }}
     >
+      {icon && iconPosition === "inline" ? <View>{icon}</View> : null}
       {icon && iconPosition === "left" ? <View style={[styles.icon, styles.iconLeft]}>{icon}</View> : null}
       <Text
         style={[
@@ -261,6 +283,11 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     alignItems: "center",
     justifyContent: "center",
+  },
+  link: {
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    minHeight: 24,
   },
   label: {
     textAlign: "center",

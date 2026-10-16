@@ -65,6 +65,8 @@ export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";
 export { StarRating } from "./src/components/StarRating/StarRating";
 export { Stars } from "./src/components/Stars/Stars";
+export { ShortStarRating } from "./src/components/ShortStarRating/ShortStarRating";
+export { IconButtonLarge } from "./src/components/IconButtonLarge/IconButtonLarge";
 
 // ------------------------------------------------------------
 
@@ -106,3 +108,7 @@ export { IconChevronLeft } from "./src/components/Icons/IconChevronLeft";
 export { IconChevronRight } from "./src/components/Icons/IconChevronRight";
 export { IconChevronDown } from "./src/components/Icons/IconChevronDown";
 export { IconEdit } from "./src/components/Icons/IconEdit";
+export { IconLogOut } from "./src/components/Icons/IconLogOut";
+export { IconPencil } from "./src/components/Icons/IconPencil";
+export { IconCreditCard } from "./src/components/Icons/IconCreditCard";
+export { IconMessageSquare } from "./src/components/Icons/IconMessageSquare";
