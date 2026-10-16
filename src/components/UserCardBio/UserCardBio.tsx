@@ -64,7 +64,7 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
           text={
             hasRating
               ? "Nota média dada pelos Lavexers"
-              : "Sua média será calculada após cada pedido"
+              : "Calculado a partir do primeiro pedido"
           }
           darkMode={darkMode}
           fontScale={fontScale}

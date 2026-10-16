@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.4.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.6.0`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -615,7 +615,7 @@ Avatar à esquerda e bloco de dados à direita, sem borda e na largura total do 
 ╰────╯  Nota média dada pelos Lavexers     Info
 ```
 
-**Comportamento:** sem avaliações (`rating` 0) a estrela mostra `–` e a legenda vira "Sua média será calculada após cada pedido". `· 1 pedido` no singular. `onClick` ficou na assinatura por compatibilidade, mas não é usado. A `bio` continua sem ser renderizada.
+**Comportamento:** sem avaliações (`rating` 0) a estrela mostra `–` e a legenda vira "Calculado a partir do primeiro pedido". `· 1 pedido` no singular. `onClick` ficou na assinatura por compatibilidade, mas não é usado. A `bio` continua sem ser renderizada.
 
 #### `ShortStarRating`
 
@@ -1410,3 +1410,8 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `IconButtonLarge`: ícone 18 px (era 22) com padding que mantém a caixa de 40 px.
 - `Image`: prop `pixelSize` (substitui o lado de `size`). `ProfileAvatar` com `size` numérico agora renderiza a foto nesse diâmetro (antes cortava em 64 px).
 - Ícones novos: `IconLock`, `IconMapPin`.
+
+## Adendo — foco e legenda (1.6.0)
+
+- `UserCardBio`: sem avaliações, a legenda é "Calculado a partir do primeiro pedido".
+- `Input`: prop `inputRef` (ref do `TextInput` interno, para `focus()`). Versão 1.6.0.
