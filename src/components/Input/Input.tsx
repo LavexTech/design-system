@@ -33,6 +33,8 @@ type InputProps = {
   fieldHeight?: number
   autoCapitalize?: "none" | "sentences" | "words" | "characters"
   autoCorrect?: boolean
+  /** Ref do `TextInput` interno (ex.: para chamar `focus()`). */
+  inputRef?: React.Ref<TextInput>
   /** Somente leitura: fundo cinza claro e cadeado à direita. */
   disabled?: boolean
 }
@@ -58,6 +60,7 @@ export const Input: React.FC<InputProps> = ({
   fieldHeight,
   autoCapitalize,
   autoCorrect,
+  inputRef,
   darkMode,
   disabled = false,
 }) => {
@@ -143,6 +146,7 @@ export const Input: React.FC<InputProps> = ({
         ]}
       >
         <TextInput
+          ref={inputRef}
           accessibilityLabel={label}
           placeholder={placeholder}
           value={value}

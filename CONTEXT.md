@@ -1410,3 +1410,5 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `IconButtonLarge`: ícone 18 px (era 22) com padding que mantém a caixa de 40 px.
 - `Image`: prop `pixelSize` (substitui o lado de `size`). `ProfileAvatar` com `size` numérico agora renderiza a foto nesse diâmetro (antes cortava em 64 px).
 - Ícones novos: `IconLock`, `IconMapPin`.
+
+- `Input`: prop `inputRef` (ref do `TextInput` interno, para `focus()`). Versão 1.6.0.
