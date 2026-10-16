@@ -630,9 +630,9 @@ Botão de largura total em 3 colunas (flex 2/9/1): ícone numa caixa quadrada 40
 | `icon` | `"credit-card" \| "message-square"` | — |
 | `title` / `description` | `string` | — |
 | `onClick` | `() => void` | — |
-| `position` | `"first" \| "last"` | — |
+| `position` | `"first" \| "middle" \| "last"` | — |
 
-Borda cinza clara (`#E5E1E6`, 1 px) em volta. `first` arredonda os cantos superiores, `last` os inferiores; sem `position`, cantos retos. Botões não-`first` sobem 1 px para a borda não dobrar.
+Borda cinza clara (`#E5E1E6`, 1 px) em volta. `first` arredonda os cantos superiores, `last` os inferiores; sem `position`, cantos retos. Botões `middle` e `last` sobem 1 px para a borda não dobrar.
 
 #### `ProfileAvatar`
 

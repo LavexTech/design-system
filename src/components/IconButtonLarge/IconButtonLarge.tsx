@@ -14,8 +14,8 @@ type IconButtonLargeProps = {
   title: string
   description: string
   onClick: () => void
-  /** `first` arredonda os cantos superiores; `last`, os inferiores. */
-  position?: "first" | "last"
+  /** `first` arredonda os cantos superiores; `last`, os inferiores; `middle` fica reto e cola na borda do anterior. */
+  position?: "first" | "middle" | "last"
 }
 
 const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; color?: string }>> = {
@@ -50,7 +50,7 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
           borderTopRightRadius: isFirst ? RADIUS : 0,
           borderBottomLeftRadius: isLast ? RADIUS : 0,
           borderBottomRightRadius: isLast ? RADIUS : 0,
-          marginTop: isFirst || !position ? 0 : -BORDER,
+          marginTop: position === "middle" || isLast ? -BORDER : 0,
           backgroundColor: pressed ? Constants.styles.surface.SUBTLE : Constants.styles.surface.DEFAULT,
         },
       ]}
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     width: ICON_BOX,
     height: ICON_BOX,
     borderRadius: Constants.styles.borderRadius.LARGE,
-    backgroundColor: "#F4F4F5",
+    backgroundColor: Constants.styles.surface.ZINC,
     alignItems: "center",
     justifyContent: "center",
   },

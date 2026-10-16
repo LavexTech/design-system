@@ -78,9 +78,12 @@ function getButtonColors(variant: ButtonVariant, interaction: ButtonInteraction)
     : palette(variant)
   const transparent =
     colors.backgroundColor === "transparent" || colors.backgroundColor === C.surface.DEFAULT
+  const isLink = variant === "link" || variant === "link-gray"
   const backgroundColor = interaction.disabled
     ? C.surface.MUTED
-    : interaction.pressed
+    : isLink
+      ? "transparent"
+      : interaction.pressed
       ? transparent
         ? C.surface.MUTED
         : colors.backgroundColor
@@ -92,7 +95,7 @@ function getButtonColors(variant: ButtonVariant, interaction: ButtonInteraction)
     backgroundColor,
     borderColor: interaction.disabled ? "transparent" : colors.borderColor,
     borderWidth: interaction.disabled ? 0 : colors.borderWidth,
-    opacity: interaction.pressed && !interaction.disabled && !transparent ? 0.85 : 1,
+    opacity: interaction.pressed && !interaction.disabled && (!transparent || isLink) ? 0.85 : 1,
     labelColor: interaction.disabled ? C.text.DEFAULT : colors.color,
   }
 }

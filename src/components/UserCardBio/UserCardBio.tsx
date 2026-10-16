@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Pressable } from "react-native"
 import { TextBox as Text } from "../Text/Text"
 import { ShortStarRating } from "../ShortStarRating/ShortStarRating"
 import { Info } from "../Info/Info"
@@ -29,14 +29,18 @@ function getOrdersLabel(ordersCount: number): string {
 
 export const UserCardBio: React.FC<UserCardBioProps> = ({
   user,
+  onClick,
   onAvatarPress,
   darkMode = false,
   fontScale = 1,
 }: UserCardBioProps) => {
   const hasRating = user.rating > 0
 
+  const Wrapper = onClick ? Pressable : View
+  const wrapperProps = onClick ? { onPress: onClick, accessibilityRole: "button" as const } : {}
+
   return (
-    <View style={styles.row}>
+    <Wrapper style={styles.row} {...wrapperProps}>
       <View style={styles.avatar}>
         <ProfileAvatar
           profileImage={user.profileImage}
@@ -49,7 +53,7 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
       <View style={styles.meta}>
         <Text text={user.name} bold darkMode={darkMode} fontScale={fontScale} />
         <View style={styles.ratingRow}>
-          <ShortStarRating rating={user.rating} />
+          <ShortStarRating rating={user.rating} darkMode={darkMode} fontScale={fontScale} />
           <Info
             text={getOrdersLabel(user.ordersCount)}
             darkMode={darkMode}
@@ -66,7 +70,7 @@ export const UserCardBio: React.FC<UserCardBioProps> = ({
           fontScale={fontScale}
         />
       </View>
-    </View>
+    </Wrapper>
   )
 }
 
