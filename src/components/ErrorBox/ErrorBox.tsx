@@ -18,7 +18,7 @@ export const ErrorBox: React.FC<ErrorBoxProps> = ({ title, details }) => {
   return (
     <View accessibilityRole="alert" style={styles.box}>
       <View style={styles.badge}>
-        <IconClose size={20} color={C.feedback.DANGER_SURFACE} strokeWidth={3} />
+        <IconClose size={32} color={C.feedback.DANGER_SURFACE} strokeWidth={3} />
       </View>
       <Text style={[styles.title, { fontFamily: bold, fontWeight: bold ? "normal" : "700" }]}>{title}</Text>
       <Text style={[styles.details, { fontFamily: regular, fontWeight: regular ? "normal" : "400" }]}>{details}</Text>
@@ -35,21 +35,24 @@ const styles = StyleSheet.create({
     gap: C.spacing.SMALL,
   },
   badge: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 58,
+    height: 58,
+    borderRadius: 29,
+    alignSelf: "center",
     backgroundColor: C.text.DANGER,
     alignItems: "center",
     justifyContent: "center",
   },
   title: {
-    color: C.text.DANGER,
+    color: C.color.BLACK,
+    textAlign: "center",
     fontSize: C.fontSize.TITLE,
     lineHeight: C.lineHeight.TITLE,
     flexShrink: 1,
   },
   details: {
     color: C.text.DEFAULT,
+    textAlign: "center",
     fontSize: C.fontSize.BODY,
     lineHeight: C.lineHeight.BODY,
     flexShrink: 1,
