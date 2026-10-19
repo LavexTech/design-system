@@ -31,6 +31,7 @@ export const CountBadge: React.FC<CountBadgeProps> = ({ count, max = 9, accessib
 
 const styles = StyleSheet.create({
   badge: {
+    alignSelf: "flex-start",
     minWidth: SIZE,
     height: SIZE,
     borderRadius: SIZE / 2,
