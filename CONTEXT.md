@@ -112,7 +112,7 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select` |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `DarkInformationBoxLarge` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
 | **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
@@ -1423,3 +1423,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `ErrorBox`: `title`, `details`. Fundo `feedback.DANGER_SURFACE`, raio 16; badge circular vermelho (`text.DANGER`, 58 px) centralizado, com `IconClose` claro de 32 px; título em negrito preto e detalhes em texto padrão, ambos centralizados.
 - `Input`: prop `hideDisabledIcon` (com `disabled`, esconde o cadeado).
 - Ícone novo: `IconQrCode`. `IconLock`, `IconPlus`, `IconLoader` (`loader-circle`), `IconCircleCheck`, `IconClose` e `IconCheck` já existiam.
+
+## Adendo — DarkInformationBoxLarge (1.8.0)
+
+- `DarkInformationBoxLarge`: `icon: string`, `animated: boolean`, `title: string`, `text: string`. Caixa de destaque centralizada, fundo grafite (`brand.SURFACE`), raio 16, texto branco. Círculo `brand.PRIMARY` de 72 px com o ícone (28 px, grafite) no topo; título em negrito (20/28) e texto (13/18) abaixo. Com `animated`, o círculo é o `AnimatedStatusIndicator` e emite anéis (os anéis saem do círculo, por isso a caixa tem `overflow: visible`); sem `animated`, é só o círculo, sem anéis. `icon` por nome: `check`, `circle-check`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation`; nome desconhecido não desenha ícone. Substitui o `Waiting` (`animated`, `hourglass`) e o `DarkBox` do `app-client-lavex`.
