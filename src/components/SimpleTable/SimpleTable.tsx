@@ -31,6 +31,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
         return (
           <View
             key={`${item.label}-${index}`}
+            accessible
+            accessibilityLabel={`${item.label}: ${item.value}`}
             style={[
               styles.row,
               {
@@ -46,7 +48,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
               <Text
                 style={[
                   styles.label,
-                  { fontFamily: emphasis ? bold : regular, fontWeight: "normal" },
+                  { fontFamily: emphasis ? bold : regular, fontWeight: (emphasis ? bold : regular) ? "normal" : emphasis ? "700" : "400" },
                 ]}
               >
                 {item.label}
@@ -56,7 +58,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
               <Text
                 style={[
                   emphasis ? styles.valueEmphasis : styles.value,
-                  { fontFamily: bold, fontWeight: "normal" },
+                  { fontFamily: bold, fontWeight: bold ? "normal" : "700" },
                 ]}
               >
                 {item.value}

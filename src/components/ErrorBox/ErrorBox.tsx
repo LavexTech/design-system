@@ -20,8 +20,8 @@ export const ErrorBox: React.FC<ErrorBoxProps> = ({ title, details }) => {
       <View style={styles.badge}>
         <IconClose size={20} color={C.feedback.DANGER_SURFACE} strokeWidth={3} />
       </View>
-      <Text style={[styles.title, { fontFamily: bold, fontWeight: "normal" }]}>{title}</Text>
-      <Text style={[styles.details, { fontFamily: regular, fontWeight: "normal" }]}>{details}</Text>
+      <Text style={[styles.title, { fontFamily: bold, fontWeight: bold ? "normal" : "700" }]}>{title}</Text>
+      <Text style={[styles.details, { fontFamily: regular, fontWeight: regular ? "normal" : "400" }]}>{details}</Text>
     </View>
   )
 }

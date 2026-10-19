@@ -39,7 +39,7 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({
 
   const handlePress = () => {
     const next = !selected
-    setSelected(next)
+    if (controlledSelected === undefined) setSelected(next)
     onChange?.(next)
   }
 
