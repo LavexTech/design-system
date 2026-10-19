@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react"
 import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from "react-native"
 import Constants from "../../constants/constants"
+import { CountBadge } from "../CountBadge/CountBadge"
 
 const TAB_ACTIVE_COLOR = Constants.styles.brand.DARK
 const TAB_INACTIVE_COLOR = Constants.styles.text.MUTED
@@ -13,6 +14,8 @@ const BUBBLE_HEIGHT = 30
 type NavigationBarProps = {
   pages: string[]
   icons?: ((isActive: boolean) => React.ReactNode)[]
+  /** Contagem por aba, na ordem de `pages`. Maior que zero mostra o `CountBadge` sobre o ícone. */
+  badges?: number[]
   activePage: string
   onNavigate?: (page: string) => void
   darkMode?: boolean
@@ -22,6 +25,7 @@ type NavigationBarProps = {
 export const NavigationBar: React.FC<NavigationBarProps> = ({
   pages,
   icons,
+  badges,
   activePage,
   onNavigate,
   darkMode = false,
@@ -69,6 +73,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
           page={page}
           isActive={activePage === page}
           icon={icons?.[index]}
+          badge={badges?.[index]}
           fontScale={fontScale}
           onNavigate={onNavigate}
         />
@@ -81,11 +86,12 @@ type NavTabProps = {
   page: string
   isActive: boolean
   icon?: (isActive: boolean) => React.ReactNode
+  badge?: number
   fontScale: number
   onNavigate?: (page: string) => void
 }
 
-const NavTab = memo(function NavTab({ page, isActive, icon, fontScale, onNavigate }: NavTabProps) {
+const NavTab = memo(function NavTab({ page, isActive, icon, badge, fontScale, onNavigate }: NavTabProps) {
   const progress = useRef(new Animated.Value(isActive ? 1 : 0)).current
 
   useEffect(() => {
@@ -109,7 +115,7 @@ const NavTab = memo(function NavTab({ page, isActive, icon, fontScale, onNavigat
     <TouchableOpacity
       accessibilityRole="tab"
       accessibilityState={{ selected: isActive }}
-      accessibilityLabel={page}
+      accessibilityLabel={badge && badge > 0 ? `${page}, ${badge} não lidas` : page}
       style={[styles.tab, Platform.OS === "ios" ? styles.tabIos : null]}
       onPress={handlePress}
       activeOpacity={0.7}
@@ -121,6 +127,11 @@ const NavTab = memo(function NavTab({ page, isActive, icon, fontScale, onNavigat
         <Animated.View style={[styles.tabFaceOverlay, { opacity: progress }]}>
           <TabFace icon={icon} isActive label={page} fontScale={fontScale} />
         </Animated.View>
+        {badge && badge > 0 ? (
+          <View pointerEvents="none" style={styles.badge}>
+            <CountBadge count={badge} />
+          </View>
+        ) : null}
       </View>
     </TouchableOpacity>
   )
@@ -193,6 +204,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  badge: { position: "absolute", top: -2, left: "50%", marginLeft: 6, zIndex: 2 },
   tabFaceOverlay: {
     ...StyleSheet.absoluteFillObject,
     alignItems: "center",

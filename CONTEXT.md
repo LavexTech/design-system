@@ -112,7 +112,7 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `DarkInformationBoxLarge` |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `DarkInformationBoxLarge`, `CountBadge` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
 | **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
@@ -1020,6 +1020,7 @@ Barra de abas inferior.
 | `pages` | `string[]` | — (obrigatória) |
 | `activePage` | `string` | — (obrigatória) |
 | `icons` | `((isActive: boolean) => ReactNode)[]` | — |
+| `badges` | `number[]` (na ordem de `pages`) | — |
 | `onNavigate` | `(page: string) => void` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
@@ -1427,3 +1428,8 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 ## Adendo — DarkInformationBoxLarge (1.8.0)
 
 - `DarkInformationBoxLarge`: `icon: string`, `animated: boolean`, `title: string`, `text: string`. Caixa de destaque centralizada, fundo grafite (`brand.SURFACE`), raio 16, texto branco. Círculo `brand.PRIMARY` de 72 px com o ícone (28 px, grafite) no topo; título em negrito (20/28) e texto (13/18) abaixo. Com `animated`, o círculo é o `AnimatedStatusIndicator` e emite anéis (os anéis saem do círculo, por isso a caixa tem `overflow: visible`); sem `animated`, é só o círculo, sem anéis. `icon` por nome: `check`, `circle-check`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation`; nome desconhecido não desenha ícone. Substitui o `Waiting` (`animated`, `hourglass`) e o `DarkBox` do `app-client-lavex`.
+
+## Adendo — CountBadge (1.9.0)
+
+- `CountBadge`: `count: number`, `max?: number = 9`, `accessibilityLabel?`. Círculo verde-escuro (`brand.DARK`) de 18 px, número branco em negrito (11/14). Acima de `max` mostra `9+` (pílula, `paddingHorizontal` 5). `count <= 0` não renderiza.
+- `NavigationBar`: prop `badges` (um número por aba, na ordem de `pages`). Contagem maior que zero põe o `CountBadge` no canto superior direito do ícone da aba e acrescenta “, N não lidas” ao `accessibilityLabel`. Sem `badges`, nada muda.

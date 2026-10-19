@@ -67,6 +67,7 @@ export { Timeline } from "./src/components/Timeline/Timeline";
 export { ImageUploader } from "./src/components/ImageUploader/ImageUploader";
 export { PhotoSkeleton } from "./src/components/PhotoSkeleton/PhotoSkeleton";
 export { AnimatedStatusIndicator } from "./src/components/AnimatedStatusIndicator/AnimatedStatusIndicator";
+export { CountBadge } from "./src/components/CountBadge/CountBadge";
 export { DarkInformationBoxLarge } from "./src/components/DarkInformationBoxLarge/DarkInformationBoxLarge";
 export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";

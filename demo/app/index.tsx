@@ -87,6 +87,7 @@ import { EmptyState } from "@src/components/EmptyState/EmptyState"
 import { Timeline } from "@src/components/Timeline/Timeline"
 import { ImageUploader } from "@src/components/ImageUploader/ImageUploader"
 import { AnimatedStatusIndicator } from "@src/components/AnimatedStatusIndicator/AnimatedStatusIndicator"
+import { CountBadge } from "@src/components/CountBadge/CountBadge"
 import { DarkInformationBoxLarge } from "@src/components/DarkInformationBoxLarge/DarkInformationBoxLarge"
 import { Tag } from "@src/components/Tag/Tag"
 import { StarRating } from "@src/components/StarRating/StarRating"
@@ -819,6 +820,8 @@ export default function Index() {
         ]} />
         <ImageUploader images={photos} onAdd={() => setPhotos((current) => [...current, "https://picsum.photos/id/20/200/200"])} onRemove={(_, index) => setPhotos((current) => current.filter((__, i) => i !== index))} />
         <AnimatedStatusIndicator accessibilityLabel="Aguardando ofertas" />
+        <CountBadge count={4} />
+        <CountBadge count={25} />
         <DarkInformationBoxLarge animated icon="hourglass" title="Aguardando ofertas" text="As Lavexers estão analisando seu pedido." />
         <DarkInformationBoxLarge animated={false} icon="check" title="Pedido confirmado" text="Agora é só combinar a retirada das peças." />
         <Tag text="Confirmado" variant="primary-outline" />
@@ -828,6 +831,7 @@ export default function Index() {
     <NavigationBar
       pages={tabs}
       icons={icons}
+      badges={[3, 0, 12]}
       activePage={activePage}
       onNavigate={(page: string) => {
         setActivePage(page);
