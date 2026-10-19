@@ -37,6 +37,12 @@ export { SwipeableListItem } from "./src/components/SwipeableListItem/SwipeableL
 // Others
 export { Card } from "./src/components/Card/Card";
 export { Alert } from "./src/components/Alert/Alert";
+export { SimpleTable } from "./src/components/SimpleTable/SimpleTable";
+export type { SimpleTableItem, SimpleTableProps } from "./src/components/SimpleTable/SimpleTable";
+export { PaymentButton } from "./src/components/PaymentButton/PaymentButton";
+export type { PaymentButtonProps } from "./src/components/PaymentButton/PaymentButton";
+export { ErrorBox } from "./src/components/ErrorBox/ErrorBox";
+export type { ErrorBoxProps } from "./src/components/ErrorBox/ErrorBox";
 export { Button } from "./src/components/Button/Button";
 export { CheckButton } from "./src/components/CheckButton/CheckButton";
 export { FAB } from "./src/components/FAB/FAB";
@@ -113,4 +119,5 @@ export { IconPencil } from "./src/components/Icons/IconPencil";
 export { IconCreditCard } from "./src/components/Icons/IconCreditCard";
 export { IconMessageSquare } from "./src/components/Icons/IconMessageSquare";
 export { IconLock } from "./src/components/Icons/IconLock";
+export { IconQrCode } from "./src/components/Icons/IconQrCode";
 export { IconMapPin } from "./src/components/Icons/IconMapPin";
