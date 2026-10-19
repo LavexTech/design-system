@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.6.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.7.0`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -1415,3 +1415,11 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 - `UserCardBio`: sem avaliações, a legenda é "Calculado a partir do primeiro pedido".
 - `Input`: prop `inputRef` (ref do `TextInput` interno, para `focus()`). Versão 1.6.0.
+
+## Adendo — telas de pagamento (1.7.0)
+
+- `SimpleTable`: `items: { label, value, emphasis? }[]`. Cada item é uma linha com borda cinza clara (`border.SOFT`) e duas colunas de 50%; rótulo normal e valor em negrito alinhado à direita. Com `emphasis`, rótulo em negrito e valor no tamanho de título (`fontSize.TITLE`). Primeiro item com cantos superiores arredondados e último com os inferiores (item único: os quatro).
+- `PaymentButton`: `graphic` (imagem ou ícone, sobre miniatura branca), `title`, `subtitle`, `initiallySelected`, `selected` (modo controlado opcional: quando informado vale no lugar do estado interno), `onChange(selected)` e `disabled`. Estado `selected` interno (sincroniza quando `initiallySelected` muda). Não selecionado: borda cinza escura (`border.INTERACTIVE`) e fundo branco. Selecionado: borda `brand.DARK`, fundo `surface.ACCENT` e badge circular verde-escuro com `IconCheck` branco. Colunas 3/12 (miniatura), 8/12 (título negrito e subtítulo, uma linha cada, truncados) e 1/12 (check). `accessibilityRole="radio"`.
+- `ErrorBox`: `title`, `details`. Fundo `feedback.DANGER_SURFACE`, raio 16; badge circular vermelho (`text.DANGER`) com `IconClose` claro; título em negrito vermelho e detalhes em texto padrão.
+- `Input`: prop `hideDisabledIcon` (com `disabled`, esconde o cadeado).
+- Ícone novo: `IconQrCode`. `IconLock`, `IconPlus`, `IconLoader` (`loader-circle`), `IconCircleCheck`, `IconClose` e `IconCheck` já existiam.

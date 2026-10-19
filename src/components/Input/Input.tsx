@@ -37,6 +37,8 @@ type InputProps = {
   inputRef?: React.Ref<TextInput>
   /** Somente leitura: fundo cinza claro e cadeado à direita. */
   disabled?: boolean
+  /** Com `disabled`, esconde o cadeado (ex.: campo só para exibir um código). */
+  hideDisabledIcon?: boolean
 }
 
 const C = Constants.styles
@@ -63,6 +65,7 @@ export const Input: React.FC<InputProps> = ({
   inputRef,
   darkMode,
   disabled = false,
+  hideDisabledIcon = false,
 }) => {
   void darkMode
   const [isValid, setIsValid] = useState(true)
@@ -193,13 +196,13 @@ export const Input: React.FC<InputProps> = ({
             {
               fontSize: C.fontSize.BODY * fontScale,
               fontFamily: fieldFont,
-              paddingRight: rightElement || disabled ? 4 : 16,
+              paddingRight: rightElement || (disabled && !hideDisabledIcon) ? 4 : 16,
               color: disabled ? C.text.MUTED : C.text.DEFAULT,
             },
             Platform.OS === "web" ? styles.webNoOutline : null,
           ]}
         />
-        {disabled ? (
+        {disabled && hideDisabledIcon ? null : disabled ? (
           <View style={[styles.right, styles.lock]}>
             <IconLock size={18} color={C.text.MUTED} />
           </View>

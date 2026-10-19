@@ -12,6 +12,10 @@ import { TextBox as Text } from "@src/components/Text/Text";
 import { UserInfo } from "@src/components/UserInfo/UserInfo"
 import { TextArea } from "@src/components/TextArea/TextArea"
 import { Info } from "@src/components/Info/Info"
+import { SimpleTable } from "@src/components/SimpleTable/SimpleTable"
+import { PaymentButton } from "@src/components/PaymentButton/PaymentButton"
+import { ErrorBox } from "@src/components/ErrorBox/ErrorBox"
+import { IconQrCode } from "@src/components/Icons/IconQrCode"
 
 // Inputs
 import { Input } from "@src/components/Input/Input"
@@ -321,6 +325,40 @@ export default function Index() {
           <Subtitle text="Subtitle" />
           <Text text="TextBox" />
           <Info text="Info" />
+        </Grid>
+      </Card>
+
+{/* Pagamento */}
+
+      <View style={{ marginTop: 20, marginBottom: 20 }}>
+        <Subtitle text="Pagamento" />
+      </View>
+
+      <Card>
+        <Grid columns={1} gap={12}>
+          <SimpleTable
+            items={[
+              { label: "Pedido #278", value: "3 peças" },
+              { label: "Lavexer", value: "Maria Aparecida da Silva" },
+              { label: "Total", value: "R$ 54,90", emphasis: true },
+            ]}
+          />
+          <SimpleTable items={[{ label: "Total", value: "R$ 54,90" }]} />
+          <PaymentButton
+            graphic={<IconQrCode size={28} color="#0B7566" />}
+            title="Pix"
+            subtitle="Aprovação na hora"
+            initiallySelected
+          />
+          <PaymentButton
+            graphic={<IconQrCode size={28} color="#0B7566" />}
+            title="Crédito · · · · · 1234 com título muito longo"
+            subtitle="Vence em 12/2030 e um subtítulo muito longo"
+          />
+          <ErrorBox
+            title="Pagamento não aprovado"
+            details="O cartão final 1235 foi recusado. Nada foi cobrado e seu pedido continua guardado."
+          />
         </Grid>
       </Card>
 
