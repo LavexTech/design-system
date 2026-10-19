@@ -43,7 +43,7 @@ const ICON_SIZE = 28
 export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = ({ icon, animated, title, text }) => {
   const titleFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const bodyFont = useResolvedFontFamily(C.fontFamily.REGULAR)
-  const Icon = ICONS[icon]
+  const Icon = Object.prototype.hasOwnProperty.call(ICONS, icon) ? ICONS[icon] : undefined
   const glyph = Icon ? <Icon size={ICON_SIZE} color={C.brand.SURFACE} /> : null
   return (
     <View accessibilityRole="summary" style={styles.box}>

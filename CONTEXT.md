@@ -112,7 +112,7 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select` |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `DarkInformationBoxLarge` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
 | **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
