@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.12.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.13.2`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -1456,7 +1456,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 ## Adendo — DarkInformationBox e Modal empilhado (1.11.0)
 
-- `DarkInformationBox`: mesmas props do `DarkInformationBoxLarge` (`icon`, `animated`, `title`, `text`) e o mesmo conjunto de ícones. Caixa de largura total, fundo `#2D3B42`, raio 16, padding 12 horizontal e 16 vertical, `overflow: visible`. Duas colunas (`flex` 3 e 9), alinhadas ao centro na vertical. Esquerda: círculo `#3CDBC0` de 50 px com o ícone de 20 px em `#2D3B42` (com `animated`, o `AnimatedStatusIndicator` de 50 px emite anéis). Direita: título Plus Jakarta Bold 20/28 branco e, abaixo (gap 4), texto Plus Jakarta Regular 13/18 branco, os dois alinhados à esquerda.
+- `DarkInformationBox`: props `icon`, `animated`, `title` e `text`. Ícones: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt` e `exclamation`. Sem `iconColor` e sem o nome `x`. Caixa de largura total, fundo `#2D3B42`, raio 16, padding 12 horizontal e 16 vertical, `overflow: visible`. Duas colunas (`flex` 3 e 9), alinhadas ao centro na vertical. Esquerda: círculo `#3CDBC0` de 50 px com o ícone de 20 px em `#2D3B42` (com `animated`, o `AnimatedStatusIndicator` de 50 px emite anéis). Direita: título Plus Jakarta Bold 20/28 branco e, abaixo (gap 4), texto Plus Jakarta Regular 13/18 branco, os dois alinhados à esquerda.
 
 ```
 ┌──────────────────────────────────────────┐

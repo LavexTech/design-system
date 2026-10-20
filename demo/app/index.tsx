@@ -322,6 +322,7 @@ export default function Index() {
         <Grid columns={1} gap={4}>
           <Heading level="h1" text="lavex" />
           <Heading level="h2" text="Criar conta" />
+          <Heading level="h3" text="Avalie o pedido" />
           <Heading level="h4" text="Dados pessoais" />
           <MainTitle text="Main Title" />
           <Title text="Title" />
