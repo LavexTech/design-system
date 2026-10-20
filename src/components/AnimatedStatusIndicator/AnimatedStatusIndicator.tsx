@@ -9,6 +9,8 @@ type AnimatedStatusIndicatorProps = {
   active?: boolean
   icon?: React.ReactNode
   accessibilityLabel?: string
+  /** Fundo do círculo. Sem valor, verde-água `#3CDBC0`. */
+  coreColor?: string
 }
 
 const C = Constants.styles
@@ -37,6 +39,7 @@ export const AnimatedStatusIndicator: React.FC<AnimatedStatusIndicatorProps> = (
   active = true,
   icon,
   accessibilityLabel,
+  coreColor,
 }) => {
   const reduceMotion = useReduceMotion()
   const animate = active && !reduceMotion
@@ -44,7 +47,7 @@ export const AnimatedStatusIndicator: React.FC<AnimatedStatusIndicatorProps> = (
   <View accessibilityRole="progressbar" accessibilityLabel={accessibilityLabel} style={[styles.wrap, { width: size * 2.4, height: size * 2.4 }]}>
     <Ring size={size} delay={0} active={animate} />
     <Ring size={size} delay={1000} active={animate} />
-    <View style={[styles.core, { width: size, height: size, borderRadius: size / 2 }]}>{icon}</View>
+    <View style={[styles.core, { width: size, height: size, borderRadius: size / 2, backgroundColor: coreColor ?? C.brand.PRIMARY }]}>{icon}</View>
   </View>
   )
 }
