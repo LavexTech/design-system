@@ -1447,3 +1447,4 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 ```
 
 - `IconWaves` (lucide `waves-horizontal`) e `IconCircleWaves` (círculo com ondas a 60% do lado, centralizadas) exportados no `index.ts` e na tabela da seção 9. `DarkInformationBoxLarge` aceita `icon="circle-waves"`.
+- `Modal`: `buttonVariant`/`confirmVariant` aceitam também `link` (ex.: botão "Voltar" em link ao lado de uma confirmação).
