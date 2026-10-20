@@ -41,6 +41,8 @@ type ModalProps = {
     confirmDisabled?: boolean,
     /** When true (default), calling confirm also invokes onClose. */
     closeOnConfirm?: boolean,
+    /** With confirm: stacks the buttons, confirm on top and cancel below. */
+    stackedButtons?: boolean,
     darkMode?: boolean,
     fontScale?: number,
     /** Minimum height of the modal card (content + chrome). */
@@ -60,6 +62,7 @@ export const Modal: React.FC<ModalProps> = ({
     confirmVariant = 'success',
     confirmDisabled = false,
     closeOnConfirm = true,
+    stackedButtons = false,
     darkMode = false,
     fontScale = 1,
     contentMinHeight,
@@ -114,7 +117,7 @@ export const Modal: React.FC<ModalProps> = ({
                     <ScrollView style={{ maxHeight: maxHeight * 0.7 }} contentContainerStyle={styles.body}>
                         {children}
                     </ScrollView>
-                    <View style={[styles.footer, hasConfirm ? styles.footerConfirm : styles.footerSingle]}>
+                    <View style={[styles.footer, hasConfirm ? (stackedButtons ? styles.footerStacked : styles.footerConfirm) : styles.footerSingle]}>
                         <Button
                             text={hasConfirm ? (buttonText === 'OK' ? 'Cancelar' : buttonText) : buttonText}
                             onClick={onClose}
@@ -122,7 +125,7 @@ export const Modal: React.FC<ModalProps> = ({
                             size={buttonSize}
                             darkMode={darkMode}
                             fontScale={fontScale}
-                            style={hasConfirm ? styles.footerButton : undefined}
+                            style={hasConfirm && !stackedButtons ? styles.footerButton : undefined}
                         />
                         {hasConfirm ? (
                             <Button
@@ -133,7 +136,7 @@ export const Modal: React.FC<ModalProps> = ({
                                 disabled={confirmDisabled}
                                 darkMode={darkMode}
                                 fontScale={fontScale}
-                                style={styles.footerButton}
+                                style={stackedButtons ? undefined : styles.footerButton}
                             />
                         ) : null}
                     </View>
@@ -178,6 +181,10 @@ const styles = StyleSheet.create({
     },
     footerConfirm: {
         justifyContent: "space-between",
+    },
+    footerStacked: {
+        flexDirection: "column-reverse",
+        alignItems: "stretch",
     },
     footerSingle: {
         justifyContent: "flex-end",
