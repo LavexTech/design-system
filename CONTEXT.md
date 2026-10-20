@@ -1473,7 +1473,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `IconStar`: `color` e `fill` juntos separam traço e miolo. Só `fill` continua estrela sólida na mesma cor.
 - `DarkInformationBox`: círculo de 50 px e ícone de 20 px.
 
-## Adendo — cor do ícone e `x` na caixa grande (1.13.0)
+## Adendo — cor do ícone e `x` na caixa grande (1.13.1)
 
 - `DarkInformationBoxLarge` ganha `iconColor?: string`. Sem a prop, o ícone continua `#2D3B42`. Com a prop, só o traço do ícone muda; círculo, fundo e texto ficam iguais.
 - O nome `x` desenha `IconClose` a 28 px. Os outros nomes não mudam. Nome desconhecido continua sem ícone.
