@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.7.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.11.0`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -112,7 +112,7 @@ Determina se dois componentes cabem lado a lado e se um bloco estica até as bor
 
 | Comportamento | Componentes |
 |---|---|
-| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `DarkInformationBoxLarge` |
+| **Largura total** (`width: 100%` ou `alignSelf: stretch`) | `Card`, `List`, `TextList`, `UserList`, `OfferList`, `Grid`, `Divider`, `Toggle`, `Stepper`, `NavigationBar`, `SwipeableListItem`, `InputChat`, `Message`, `Order`, `Info`, `Text` (com `fill: true`, o default), `Button`, `Input`, `TextArea`, `Accordion`, `Select`, `DarkInformationBoxLarge`, `DarkInformationBox` |
 | **Mede pelo conteúdo** (`alignSelf: flex-start`) | `CountBadge`, `Tag`, `FAB`, `CheckButton`, `ProfileAvatar`, `Image`, `Text` com `fill={false}` |
 | **Cobre a tela** | `Modal` (`Modal` nativo transparente, overlay `flex: 1`) |
 
@@ -844,6 +844,7 @@ Diálogo centralizado com rodapé de ações.
 | `confirmVariant` | variante de `Button` | `'success'` |
 | `confirmDisabled` | `boolean` | `false` |
 | `closeOnConfirm` | `boolean` | `true` |
+| `stackedButtons` | `boolean` | `false` |
 | `contentMinHeight` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
@@ -857,12 +858,15 @@ Diálogo centralizado com rodapé de ações.
    ├─────────────────────────────────┤
    │ [Cancelar]         [Confirmar]  │  space-between (só com onConfirm)
    └─────────────────────────────────┘  senão: botão único à direita
+   stackedButtons:
+   │ [      Confirmar       ]        │
+   │            Voltar               │  link centralizado; senão, largura do cartão
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ```
 
-**Aparência:** `Modal` nativo transparente. Backdrop `rgba(0,0,0,0.5)` cobre a tela e o toque chama `onClose`. O cartão fica centralizado, com 80% da largura (máximo 510), raio 6, borda 1 px, padding 24 e fundo da superfície do tema (`#FFFFFF` no claro, `#121821` no escuro). Altura máxima = altura da janela − `NAVIGATION_BAR_HEIGHT` (76) − safe area inferior. O corpo rola e fica limitado a 70% desse máximo. Com `title`, o texto fica centralizado. Rodapé em linha com gap 8. Com dois botões, cada um cresce para dividir a largura do cartão.
+**Aparência:** `Modal` nativo transparente. Backdrop `rgba(0,0,0,0.5)` cobre a tela e o toque chama `onClose`. O cartão fica centralizado, com 80% da largura (máximo 510), raio 6, borda 1 px, padding 24 e fundo da superfície do tema (`#FFFFFF` no claro, `#121821` no escuro). Altura máxima = altura da janela − `NAVIGATION_BAR_HEIGHT` (76) − safe area inferior. O corpo rola e fica limitado a 70% desse máximo. Com `title`, o texto fica centralizado. Rodapé em linha com gap 8. Com dois botões, cada um cresce para dividir a largura do cartão. Com `stackedButtons`, o rodapé vira coluna (`column-reverse`, gap 8): confirmar em cima, na largura do cartão, e o botão de fechar embaixo. Se esse botão for `link`, fica centrado na linha; as outras variantes esticam.
 
-**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão esquerdo vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. O modal nativo cobre a stack de navegação. `onRequestClose` (botão voltar do Android) chama `onClose`.
+**Comportamento:** modo confirmação é ativado por passar `onConfirm`. Nele, se `buttonText` ainda for o default `'OK'`, o botão de fechar vira `"Cancelar"`, e um `buttonVariant` `'default'` vira `'default-outline'`. `handleConfirm` chama `onConfirm` e, com `closeOnConfirm` (padrão), também `onClose`. O modal nativo cobre a stack de navegação. `onRequestClose` (botão voltar do Android) chama `onClose`. Sem `stackedButtons`, o rodapé continua em linha.
 
 #### `Accordion` / `AccordionItem`
 
@@ -1448,3 +1452,16 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 - `IconWaves` (lucide `waves-horizontal`) e `IconCircleWaves` (círculo com ondas a 60% do lado, centralizadas) exportados no `index.ts` e na tabela da seção 9. `DarkInformationBoxLarge` aceita `icon="circle-waves"`.
 - `Modal`: `buttonVariant`/`confirmVariant` aceitam também `link` (ex.: botão "Voltar" em link ao lado de uma confirmação).
+
+## Adendo — DarkInformationBox e Modal empilhado (1.11.0)
+
+- `DarkInformationBox`: mesmas props do `DarkInformationBoxLarge` (`icon`, `animated`, `title`, `text`) e o mesmo conjunto de ícones. Caixa de largura total, fundo `#2D3B42`, raio 16, padding 12 horizontal e 16 vertical, `overflow: visible`. Duas colunas (`flex` 3 e 9), alinhadas ao centro na vertical. Esquerda: círculo `#3CDBC0` de 72 px com o ícone de 28 px em `#2D3B42` (com `animated`, o `AnimatedStatusIndicator` de 72 px emite anéis). Direita: título Plus Jakarta Bold 20/28 branco e, abaixo (gap 4), texto Plus Jakarta Regular 13/18 branco, os dois alinhados à esquerda.
+
+```
+┌──────────────────────────────────────────┐
+│  ( ícone )   Título                      │
+│   3/12       Texto do aviso              │  9/12
+└──────────────────────────────────────────┘
+```
+
+- `Modal`: prop `stackedButtons` (default `false`). Com confirmação, confirmar fica na linha de cima e o botão de fechar na de baixo. `link` nessa linha fica centralizado.

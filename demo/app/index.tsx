@@ -88,6 +88,7 @@ import { Timeline } from "@src/components/Timeline/Timeline"
 import { ImageUploader } from "@src/components/ImageUploader/ImageUploader"
 import { AnimatedStatusIndicator } from "@src/components/AnimatedStatusIndicator/AnimatedStatusIndicator"
 import { CountBadge } from "@src/components/CountBadge/CountBadge"
+import { DarkInformationBox } from "@src/components/DarkInformationBox/DarkInformationBox"
 import { DarkInformationBoxLarge } from "@src/components/DarkInformationBoxLarge/DarkInformationBoxLarge"
 import { Tag } from "@src/components/Tag/Tag"
 import { StarRating } from "@src/components/StarRating/StarRating"
@@ -825,6 +826,8 @@ export default function Index() {
         <DarkInformationBoxLarge animated icon="hourglass" title="Aguardando ofertas" text="As Lavexers estão analisando seu pedido." />
         <DarkInformationBoxLarge animated={false} icon="check" title="Pedido confirmado" text="Agora é só combinar a retirada das peças." />
         <DarkInformationBoxLarge animated={false} icon="circle-waves" title="Lavagem em andamento" text="Suas peças estão sendo lavadas." />
+        <DarkInformationBox animated={false} icon="circle-waves" title="Em andamento" text="A Lavexer está cuidando das suas peças." />
+        <DarkInformationBox animated={false} icon="check" title="Pronto para retirada" text="Suas peças estão prontas. Combine a retirada pelo chat." />
         <Tag text="Confirmado" variant="primary-outline" />
         <Button text="Primário" onClick={() => undefined} variant="primary" size="xl" />
       </Card>

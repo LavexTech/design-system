@@ -70,6 +70,7 @@ export { PhotoSkeleton } from "./src/components/PhotoSkeleton/PhotoSkeleton";
 export { AnimatedStatusIndicator } from "./src/components/AnimatedStatusIndicator/AnimatedStatusIndicator";
 export { CountBadge } from "./src/components/CountBadge/CountBadge";
 export { DarkInformationBoxLarge } from "./src/components/DarkInformationBoxLarge/DarkInformationBoxLarge";
+export { DarkInformationBox } from "./src/components/DarkInformationBox/DarkInformationBox";
 export { Order } from "./src/components/Order/Order";
 export { Offer } from "./src/components/Offer/Offer";
 export { StarRating } from "./src/components/StarRating/StarRating";
