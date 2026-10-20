@@ -18,11 +18,12 @@ export const IconStar: React.FC<IconStarProps> = ({
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => {
-  const resolved = resolveIconColor(color, fill)
+  const stroke = resolveIconColor(color, fill)
+  const solid = fill != null ? (color != null ? fill : stroke) : 'none'
   return (
     <Star
-      color={resolved}
-      fill={fill != null ? resolved : 'none'}
+      color={stroke}
+      fill={solid}
       size={resolveIconSize(size, width, height)}
       strokeWidth={strokeWidth}
     />
