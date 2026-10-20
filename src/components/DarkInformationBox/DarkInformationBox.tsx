@@ -39,8 +39,8 @@ const ICONS: Record<string, IconComponent> = {
 }
 
 const C = Constants.styles
-const CORE = 72
-const ICON_SIZE = 28
+const CORE = 50
+const ICON_SIZE = 20
 
 /** Caixa de status horizontal: ícone à esquerda (3/12) e título + texto à direita (9/12). */
 export const DarkInformationBox: React.FC<DarkInformationBoxProps> = ({ icon, animated, title, text }) => {

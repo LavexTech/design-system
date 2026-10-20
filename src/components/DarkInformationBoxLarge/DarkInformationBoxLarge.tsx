@@ -6,6 +6,7 @@ import { AnimatedStatusIndicator } from "../AnimatedStatusIndicator/AnimatedStat
 import { IconCheck } from "../Icons/IconCheck"
 import { IconCircleCheck } from "../Icons/IconCircleCheck"
 import { IconCircleWaves } from "../Icons/IconCircleWaves"
+import { IconClose } from "../Icons/IconClose"
 import { IconCreditCard } from "../Icons/IconCreditCard"
 import { IconExclamation } from "../Icons/IconExclamation"
 import { IconHourglass } from "../Icons/IconHourglass"
@@ -15,12 +16,14 @@ import { IconReceipt } from "../Icons/IconReceipt"
 import { IconShieldCheck } from "../Icons/IconShieldCheck"
 
 type DarkInformationBoxLargeProps = {
-  /** Nome do ícone: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt` ou `exclamation`. Nome desconhecido não desenha ícone. */
+  /** Nome do ícone: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation` ou `x`. Nome desconhecido não desenha ícone. */
   icon: string
   /** Com `true`, o círculo emite anéis de pulso. */
   animated: boolean
   title: string
   text: string
+  /** Cor do ícone. Sem valor, grafite `#2D3B42`. */
+  iconColor?: string
 }
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string }>
@@ -36,17 +39,18 @@ const ICONS: Record<string, IconComponent> = {
   "credit-card": IconCreditCard,
   receipt: IconReceipt,
   exclamation: IconExclamation,
+  x: IconClose,
 }
 
 const C = Constants.styles
 const CORE = 72
 const ICON_SIZE = 28
 
-export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = ({ icon, animated, title, text }) => {
+export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = ({ icon, animated, title, text, iconColor }) => {
   const titleFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const bodyFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const Icon = Object.prototype.hasOwnProperty.call(ICONS, icon) ? ICONS[icon] : undefined
-  const glyph = Icon ? <Icon size={ICON_SIZE} color={C.brand.SURFACE} /> : null
+  const glyph = Icon ? <Icon size={ICON_SIZE} color={iconColor ?? C.brand.SURFACE} /> : null
   return (
     <View accessibilityRole="summary" style={styles.box}>
       {animated ? (

@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.11.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.13.2`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -233,21 +233,22 @@ Formato de cada entrada: **para que serve**, **contrato** (props), **aparência*
 
 #### `Heading`
 
-Título semântico da hierarquia da marca (`h1`, `h2`, `h4`). O `h4` sai em caixa alta mesmo quando o `text` chega em caixa normal.
+Título semântico da hierarquia da marca (`h1`, `h2`, `h3`, `h4`). O `h4` sai em caixa alta mesmo quando o `text` chega em caixa normal.
 
 | Prop | Tipo | Default | Obrigatória |
 |---|---|---|---|
 | `text` | `string` | — | sim |
-| `level` | `'h1' \| 'h2' \| 'h4'` | — | sim |
+| `level` | `'h1' \| 'h2' \| 'h3' \| 'h4'` | — | sim |
 | `position` | `'left' \| 'center' \| 'right'` | `'left'` | não |
 
 **Aparência:** quebra linha, sem margem nem padding. Com a fonte carregada, `fontWeight` fica `"normal"`.
 
 - `h1`: Plus Jakarta SemiBold, 30 px / 36 px (`WORDMARK`), `letterSpacing` -0,5, cor verde-água `#3CDBC0` (`brand.PRIMARY`).
 - `h2`: Plus Jakarta Bold, 21 px / 25,5 px (75% do `DISPLAY` 28/34), `letterSpacing` -0,4, cor grafite azulado `#2D3B42` (`color.PRIMARY_DARK`).
+- `h3`: Plus Jakarta Bold, 18 px / 24 px (`MEDIUM` / `BODY`), `letterSpacing` -0,2, cor `#2D3B42`, sem caixa alta.
 - `h4`: Plus Jakarta Bold, 13 px / 18 px (`CAPTION`), `letterSpacing` 0,6, cor verde-escuro `#0B7566` (`brand.DARK`), `textTransform: "uppercase"`.
 
-**Comportamento:** estático. `accessibilityRole="header"` e `aria-level` 1, 2 ou 4. Na web o react-native-web usa esse nível para a tag (`h1`, `h2`, `h4`). Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
+**Comportamento:** estático. `accessibilityRole="header"` e `aria-level` 1, 2, 3 ou 4. Na web o react-native-web usa esse nível para a tag (`h1`, `h2`, `h3`, `h4`). Não aceita `darkMode` nem `fontScale`. Não define `width`; em coluna, acompanha o `alignItems` do pai, como o `MainTitle`. Não substitui `MainTitle`: o título de tela "Entrar" continua no `MainTitle`, em grafite.
 
 #### `MainTitle`
 
@@ -1307,7 +1308,7 @@ Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` `1.
 | Prop | Tipo | Default |
 |---|---|---|
 | `color` | `string` | `#2D3B42` (cinza escuro; cor de traço, preferida) |
-| `fill` | `string` | — (alias legado de `color`; em `IconStar`/`IconStarHalf` também preenche a forma) |
+| `fill` | `string` | — (alias legado de `color`; em `IconStar`/`IconStarHalf` também preenche a forma). Em `IconStar`, se `color` e `fill` vêm juntos, o traço é `color` e o miolo é `fill` |
 | `size` | `number` | `24` (preferida) |
 | `width` / `height` | `number` | — (fallback quando `size` não é passado) |
 | `strokeWidth` | `number` | `2` |
@@ -1455,7 +1456,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 ## Adendo — DarkInformationBox e Modal empilhado (1.11.0)
 
-- `DarkInformationBox`: mesmas props do `DarkInformationBoxLarge` (`icon`, `animated`, `title`, `text`) e o mesmo conjunto de ícones. Caixa de largura total, fundo `#2D3B42`, raio 16, padding 12 horizontal e 16 vertical, `overflow: visible`. Duas colunas (`flex` 3 e 9), alinhadas ao centro na vertical. Esquerda: círculo `#3CDBC0` de 72 px com o ícone de 28 px em `#2D3B42` (com `animated`, o `AnimatedStatusIndicator` de 72 px emite anéis). Direita: título Plus Jakarta Bold 20/28 branco e, abaixo (gap 4), texto Plus Jakarta Regular 13/18 branco, os dois alinhados à esquerda.
+- `DarkInformationBox`: props `icon`, `animated`, `title` e `text`. Ícones: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt` e `exclamation`. Sem `iconColor` e sem o nome `x`. Caixa de largura total, fundo `#2D3B42`, raio 16, padding 12 horizontal e 16 vertical, `overflow: visible`. Duas colunas (`flex` 3 e 9), alinhadas ao centro na vertical. Esquerda: círculo `#3CDBC0` de 50 px com o ícone de 20 px em `#2D3B42` (com `animated`, o `AnimatedStatusIndicator` de 50 px emite anéis). Direita: título Plus Jakarta Bold 20/28 branco e, abaixo (gap 4), texto Plus Jakarta Regular 13/18 branco, os dois alinhados à esquerda.
 
 ```
 ┌──────────────────────────────────────────┐
@@ -1465,3 +1466,21 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 ```
 
 - `Modal`: prop `stackedButtons` (default `false`). Com confirmação, confirmar fica na linha de cima e o botão de fechar na de baixo. `link` nessa linha fica centralizado.
+
+## Adendo — h3, estrela com miolo e círculo menor (1.12.0)
+
+- `Heading` aceita `level="h3"`: Plus Jakarta Bold 18/24, `#2D3B42`, `letterSpacing` -0,2, `aria-level` 3.
+- `IconStar`: `color` e `fill` juntos separam traço e miolo. Só `fill` continua estrela sólida na mesma cor.
+- `DarkInformationBox`: círculo de 50 px e ícone de 20 px.
+
+## Adendo — cor do ícone e `x` na caixa grande (1.13.1)
+
+- `DarkInformationBoxLarge` ganha `iconColor?: string`. Sem a prop, o ícone continua `#2D3B42`. Com a prop, só o traço do ícone muda; círculo, fundo e texto ficam iguais.
+- O nome `x` desenha `IconClose` a 28 px. Os outros nomes não mudam. Nome desconhecido continua sem ícone.
+- `DarkInformationBox` não tem `iconColor` nem o nome `x`.
+
+```
+        (  X  )
+   Pedido cancelado
+   texto centralizado
+```

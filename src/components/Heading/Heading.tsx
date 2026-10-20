@@ -3,7 +3,7 @@ import { Text, StyleSheet, TextStyle } from "react-native";
 import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
 
-export type HeadingLevel = "h1" | "h2" | "h4";
+export type HeadingLevel = "h1" | "h2" | "h3" | "h4";
 
 export interface HeadingProps {
   text: string;
@@ -26,6 +26,7 @@ const C = Constants.styles;
 const ARIA_LEVEL: Record<HeadingLevel, number> = {
   h1: 1,
   h2: 2,
+  h3: 3,
   h4: 4,
 };
 
@@ -44,6 +45,15 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
     lineHeight: C.lineHeight.DISPLAY * 0.75,
     color: C.color.PRIMARY_DARK,
     letterSpacing: -0.4,
+    font: C.fontFamily.BOLD,
+    fallbackWeight: "700",
+    uppercase: false,
+  },
+  h3: {
+    fontSize: C.fontSize.MEDIUM,
+    lineHeight: C.lineHeight.BODY,
+    color: C.color.PRIMARY_DARK,
+    letterSpacing: -0.2,
     font: C.fontFamily.BOLD,
     fallbackWeight: "700",
     uppercase: false,
