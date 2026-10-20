@@ -814,9 +814,9 @@ export default function Index() {
         <StatusBanner text="Aguardando a coleta" />
         <EmptyState title="Nenhum pedido" description="Quando você fizer um pedido, ele aparece aqui." />
         <Timeline steps={[
-          { id: "1", title: "Pedido criado", status: "done" },
-          { id: "2", title: "Em lavagem", status: "current" },
-          { id: "3", title: "Entrega", status: "pending" },
+          { id: "1", title: "Pedido criado", status: "DONE", extra: "14:32" },
+          { id: "2", title: "Em lavagem", status: "CURRENT", extra: "Agora" },
+          { id: "3", title: "Entrega", status: "EMPTY" },
         ]} />
         <ImageUploader images={photos} onAdd={() => setPhotos((current) => [...current, "https://picsum.photos/id/20/200/200"])} onRemove={(_, index) => setPhotos((current) => current.filter((__, i) => i !== index))} />
         <AnimatedStatusIndicator accessibilityLabel="Aguardando ofertas" />

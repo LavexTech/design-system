@@ -1282,7 +1282,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
 
-**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `PhotoSkeleton` (bloco `#E5E1E6` no tamanho do pai, faixa clara em 1200 ms; para se o sistema pede reduzir movimento), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `DONE` | `CURRENT` | `EMPTY`; ver Adendo 1.10.0), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `PhotoSkeleton` (bloco `#E5E1E6` no tamanho do pai, faixa clara em 1200 ms; para se o sistema pede reduzir movimento), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
 
 `Button` aceita `iconPosition` `"left"` (padrão) ou `"right"`. À esquerda, o ícone fica absoluto, a 16 px da borda, e o rótulo continua centralizado. À direita, o ícone entra na fileira do rótulo, 6 px depois do texto, e os dois ficam centralizados juntos.
 
@@ -1433,3 +1433,8 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 - `CountBadge`: `count: number`, `max?: number = 9`, `accessibilityLabel?`. Círculo verde-escuro (`brand.DARK`) de 18 px, número branco em negrito (11/14). Acima de `max` mostra `9+` (pílula, `paddingHorizontal` 5). `count <= 0` não renderiza.
 - `NavigationBar`: prop `badges` (um número por aba, na ordem de `pages`). Contagem maior que zero põe o `CountBadge` no canto superior direito do ícone da aba e acrescenta “, N não lidas” ao `accessibilityLabel`. Sem `badges`, nada muda.
+
+## Adendo — Timeline com `extra` e ícone `circle-waves` (1.10.0)
+
+- `Timeline`: `TimelineStep.status` passa de `done | current | pending` para `DONE | CURRENT | EMPTY` (quebra de contrato). `TimelineStep.extra?: string` é renderizado à direita, na mesma linha do título. `DONE`: círculo `brand.DARK` com borda `brand.DARK` e `IconCheck` branco. `CURRENT`: fundo `brand.PRIMARY`, borda `brand.DARK`, sem ícone. `EMPTY`: fundo branco, borda cinza, sem ícone, título em cor mutada. Todos os títulos em negrito.
+- `IconWaves` (lucide `waves-horizontal`) e `IconCircleWaves` (círculo com ondas a 60% do tamanho, centralizadas dentro) exportados no `index.ts`. `DarkInformationBoxLarge` aceita `icon="circle-waves"`.
