@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCheck } from "../Icons/IconCheck"
+import { Info } from "../Info/Info"
 
 export type TimelineStepStatus = "DONE" | "CURRENT" | "EMPTY"
 
@@ -21,8 +22,8 @@ type TimelineProps = { steps: TimelineStep[]; fontScale?: number }
 const C = Constants.styles
 
 export const Timeline: React.FC<TimelineProps> = ({ steps, fontScale = 1 }) => {
-  const titleFont = useResolvedFontFamily(C.fontFamily.BOLD)
-  const metaFont = useResolvedFontFamily(C.fontFamily.REGULAR)
+  const boldFont = useResolvedFontFamily(C.fontFamily.BOLD)
+  const regularFont = useResolvedFontFamily(C.fontFamily.REGULAR)
 
   return (
   <View accessibilityRole="list" style={styles.list}>
@@ -41,15 +42,15 @@ export const Timeline: React.FC<TimelineProps> = ({ steps, fontScale = 1 }) => {
             <View style={styles.titleRow}>
               <Text style={{
                 flex: 1,
-                fontFamily: titleFont,
+                fontFamily: step.status === "CURRENT" ? boldFont : regularFont,
                 fontWeight: "normal",
                 fontSize: 15 * fontScale,
                 color: step.status === "EMPTY" ? C.text.MUTED : C.text.DEFAULT,
               }}>{step.title}</Text>
-              {step.extra ? <Text style={[styles.meta, { fontFamily: metaFont, fontWeight: "normal" }]}>{step.extra}</Text> : null}
+              {step.extra ? <Info text={step.extra} tone="default" /> : null}
             </View>
-            {step.description ? <Text style={[styles.meta, { fontFamily: metaFont, fontWeight: "normal" }]}>{step.description}</Text> : null}
-            {step.timestamp ? <Text style={[styles.meta, { fontFamily: metaFont, fontWeight: "normal" }]}>{step.timestamp}</Text> : null}
+            {step.description ? <Text style={[styles.meta, { fontFamily: regularFont, fontWeight: "normal" }]}>{step.description}</Text> : null}
+            {step.timestamp ? <Text style={[styles.meta, { fontFamily: regularFont, fontWeight: "normal" }]}>{step.timestamp}</Text> : null}
           </View>
         </View>
       )
