@@ -1491,3 +1491,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - Com `animated`, a cor vai para o núcleo do `AnimatedStatusIndicator` (`coreColor`). Os anéis continuam `#3CDBC0`.
 - `AnimatedStatusIndicator` aceita `coreColor?: string` (default `#3CDBC0`). Sem a prop, o círculo não muda.
 - `DarkInformationBox` não tem `circleColor`.
+
+## Adendo — caixa grande sem texto (1.14.1)
+
+- `DarkInformationBoxLarge`: `text` passa a ser opcional. Sem a prop, ou com string vazia (ou só espaços), a linha do corpo não é desenhada. Ícone, título, círculo e anéis ficam iguais. Texto preenchido continua Plus Jakarta Regular 13/18, branco, centralizado.
