@@ -826,6 +826,7 @@ export default function Index() {
         <DarkInformationBoxLarge animated icon="hourglass" title="Aguardando ofertas" text="As Lavexers estão analisando seu pedido." />
         <DarkInformationBoxLarge animated={false} icon="check" title="Pedido confirmado" text="Agora é só combinar a retirada das peças." />
         <DarkInformationBoxLarge animated={false} icon="circle-waves" title="Lavagem em andamento" text="Suas peças estão sendo lavadas." />
+        <DarkInformationBoxLarge animated={false} icon="x" iconColor="#E5E1E6" title="Pedido cancelado" text="Você cancelou antes de aceitar uma oferta. Nada foi cobrado." />
         <DarkInformationBox animated={false} icon="circle-waves" title="Em andamento" text="A Lavexer está cuidando das suas peças." />
         <DarkInformationBox animated={false} icon="check" title="Pronto para retirada" text="Suas peças estão prontas. Combine a retirada pelo chat." />
         <Tag text="Confirmado" variant="primary-outline" />
