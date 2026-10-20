@@ -30,7 +30,7 @@ export const Timeline: React.FC<TimelineProps> = ({ steps, fontScale = 1 }) => {
       const last = index === steps.length - 1
       const lineColor = step.status === "EMPTY" ? C.border.SOFT : C.brand.DARK
       return (
-        <View key={step.id} style={styles.row} accessibilityLabel={`${step.title}, ${step.status === "DONE" ? "concluída" : step.status === "CURRENT" ? "em andamento" : "pendente"}`}>
+        <View key={step.id} style={styles.row} accessibilityLabel={`${step.title}${step.extra ? `, ${step.extra}` : ""}, ${step.status === "DONE" ? "concluída" : step.status === "CURRENT" ? "em andamento" : "pendente"}`}>
           <View style={styles.rail}>
             <View style={[styles.node, step.status === "DONE" ? styles.done : step.status === "CURRENT" ? styles.current : styles.empty]}>
               {step.status === "DONE" ? <IconCheck size={13} color={C.color.WHITE} /> : null}

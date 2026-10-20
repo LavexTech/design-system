@@ -1330,6 +1330,8 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconClose` | `X` | fechar |
 | `IconCheck` | `Check` | confirmação |
 | `IconCircle` / `IconCircleCheck` | `Circle` / `CircleCheckBig` | `CheckButton` |
+| `IconWaves` | `waves-horizontal` | ondas |
+| `IconCircleWaves` | composto: `IconCircle` + `IconWaves` a 60% do lado, centralizado | `DarkInformationBoxLarge` `icon="circle-waves"` |
 | `IconSearch` | `Search` | busca |
 | `IconFilter` | `ListFilter` | filtros |
 | `IconMessage` | `MessageCircle` | chat |
@@ -1427,7 +1429,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 ## Adendo — DarkInformationBoxLarge (1.8.0)
 
-- `DarkInformationBoxLarge`: `icon: string`, `animated: boolean`, `title: string`, `text: string`. Caixa de destaque centralizada, fundo grafite (`brand.SURFACE`), raio 16, texto branco. Círculo `brand.PRIMARY` de 72 px com o ícone (28 px, grafite) no topo; título em negrito (20/28) e texto (13/18) abaixo. Com `animated`, o círculo é o `AnimatedStatusIndicator` e emite anéis (os anéis saem do círculo, por isso a caixa tem `overflow: visible`); sem `animated`, é só o círculo, sem anéis. `icon` por nome: `check`, `circle-check`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation`; nome desconhecido não desenha ícone. Substitui o `Waiting` (`animated`, `hourglass`) e o `DarkBox` do `app-client-lavex`.
+- `DarkInformationBoxLarge`: `icon: string`, `animated: boolean`, `title: string`, `text: string`. Caixa de destaque centralizada, fundo grafite (`brand.SURFACE`), raio 16, texto branco. Círculo `brand.PRIMARY` de 72 px com o ícone (28 px, grafite) no topo; título em negrito (20/28) e texto (13/18) abaixo. Com `animated`, o círculo é o `AnimatedStatusIndicator` e emite anéis (os anéis saem do círculo, por isso a caixa tem `overflow: visible`); sem `animated`, é só o círculo, sem anéis. `icon` por nome: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation`; nome desconhecido não desenha ícone. Substitui o `Waiting` (`animated`, `hourglass`) e o `DarkBox` do `app-client-lavex`.
 
 ## Adendo — CountBadge (1.9.0)
 
@@ -1436,5 +1438,12 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 ## Adendo — Timeline com `extra` e ícone `circle-waves` (1.10.0)
 
-- `Timeline`: `TimelineStep.status` passa de `done | current | pending` para `DONE | CURRENT | EMPTY` (quebra de contrato). `TimelineStep.extra?: string` é renderizado à direita, na mesma linha do título. `DONE`: círculo `brand.DARK` com borda `brand.DARK` e `IconCheck` branco. `CURRENT`: fundo `brand.PRIMARY`, borda `brand.DARK`, sem ícone. `EMPTY`: fundo branco, borda cinza, sem ícone, título em cor mutada. Todos os títulos em negrito.
-- `IconWaves` (lucide `waves-horizontal`) e `IconCircleWaves` (círculo com ondas a 60% do tamanho, centralizadas dentro) exportados no `index.ts`. `DarkInformationBoxLarge` aceita `icon="circle-waves"`.
+- `Timeline`: `steps: TimelineStep[]` (obrigatório), `fontScale?: number = 1`. `TimelineStep`: `id`, `title`, `status` (`DONE` | `CURRENT` | `EMPTY`), `extra?`, `description?`, `timestamp?`. `status` quebra o contrato antigo `done | current | pending`. Nó de 22 px. `DONE`: fundo e borda 2 px `#0B7566`, `IconCheck` branco de 13 px. `CURRENT`: fundo `#3CDBC0`, borda 2 px `#0B7566`, sem ícone. `EMPTY`: fundo `#FFFFFF`, borda 1,5 px `#869199`, sem ícone. Título Plus Jakarta Bold 15 px (`fontScale`); `EMPTY` em `#5A6A72`, os outros em `#2D3B42`. `extra` fica na mesma linha, à direita (gap 8), caption 13/18 `#5A6A72`. `description` e `timestamp` continuam abaixo, no mesmo caption. A linha sob o nó é `#0B7566`, exceto em `EMPTY`, que usa `#E5E1E6`. O `accessibilityLabel` lê título, `extra` (se houver) e “concluída” / “em andamento” / “pendente”.
+
+```
+(*) Titulo                 extra
+ |  descricao
+( ) Titulo
+```
+
+- `IconWaves` (lucide `waves-horizontal`) e `IconCircleWaves` (círculo com ondas a 60% do lado, centralizadas) exportados no `index.ts` e na tabela da seção 9. `DarkInformationBoxLarge` aceita `icon="circle-waves"`.
