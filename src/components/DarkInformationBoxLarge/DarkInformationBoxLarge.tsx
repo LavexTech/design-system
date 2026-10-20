@@ -21,7 +21,8 @@ type DarkInformationBoxLargeProps = {
   /** Com `true`, o círculo emite anéis de pulso. */
   animated: boolean
   title: string
-  text: string
+  /** Corpo abaixo do título. Ausente ou vazio não desenha a linha. */
+  text?: string
   /** Cor do ícone. Sem valor, grafite `#2D3B42`. */
   iconColor?: string
   /** Fundo do círculo. Sem valor, verde-água `#3CDBC0`. */
@@ -62,7 +63,9 @@ export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = (
         <View style={[styles.core, { backgroundColor: circle }]}>{glyph}</View>
       )}
       <Text style={[styles.title, { fontFamily: titleFont, fontWeight: "normal" }]}>{title}</Text>
-      <Text style={[styles.text, { fontFamily: bodyFont, fontWeight: "normal" }]}>{text}</Text>
+      {text?.trim() ? (
+        <Text style={[styles.text, { fontFamily: bodyFont, fontWeight: "normal" }]}>{text}</Text>
+      ) : null}
     </View>
   )
 }
