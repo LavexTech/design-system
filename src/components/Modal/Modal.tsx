@@ -24,6 +24,7 @@ type ButtonVariant =
     | 'danger-outline'
     | 'ghost'
     | 'ghost-danger'
+    | 'link'
 
 type ModalProps = {
     title?: string,

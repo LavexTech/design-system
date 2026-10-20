@@ -5,6 +5,7 @@ import { useResolvedFontFamily } from "../../fontSetup"
 import { AnimatedStatusIndicator } from "../AnimatedStatusIndicator/AnimatedStatusIndicator"
 import { IconCheck } from "../Icons/IconCheck"
 import { IconCircleCheck } from "../Icons/IconCircleCheck"
+import { IconCircleWaves } from "../Icons/IconCircleWaves"
 import { IconCreditCard } from "../Icons/IconCreditCard"
 import { IconExclamation } from "../Icons/IconExclamation"
 import { IconHourglass } from "../Icons/IconHourglass"
@@ -14,7 +15,7 @@ import { IconReceipt } from "../Icons/IconReceipt"
 import { IconShieldCheck } from "../Icons/IconShieldCheck"
 
 type DarkInformationBoxLargeProps = {
-  /** Nome do ícone: `check`, `circle-check`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt` ou `exclamation`. Nome desconhecido não desenha ícone. */
+  /** Nome do ícone: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt` ou `exclamation`. Nome desconhecido não desenha ícone. */
   icon: string
   /** Com `true`, o círculo emite anéis de pulso. */
   animated: boolean
@@ -27,6 +28,7 @@ type IconComponent = React.ComponentType<{ size?: number; color?: string }>
 const ICONS: Record<string, IconComponent> = {
   check: IconCheck,
   "circle-check": IconCircleCheck,
+  "circle-waves": IconCircleWaves,
   hourglass: IconHourglass,
   "map-pin": IconMapPin,
   "message-square": IconMessageSquare,

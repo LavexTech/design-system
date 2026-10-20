@@ -1282,7 +1282,7 @@ Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. 
 
 **`AccordionItem`.** Props novas: `trailingAccessory` e `contentBackground`.
 
-**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `done` | `current` | `pending`), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `PhotoSkeleton` (bloco `#E5E1E6` no tamanho do pai, faixa clara em 1200 ms; para se o sistema pede reduzir movimento), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
+**Novos, todos exportados no `index.ts`.** `SearchInput`, `TopHeader`, `RadioCard` (callback `onSelect`), `CheckboxListItem`, `QuantityStepper`, `StatusBanner` (`info` | `dark`), `EmptyState`, `Timeline` (`TimelineStep.status`: `DONE` | `CURRENT` | `EMPTY`; ver Adendo 1.10.0), `ImageUploader` (não abre câmera; a tela chama `onAdd`), `PhotoSkeleton` (bloco `#E5E1E6` no tamanho do pai, faixa clara em 1200 ms; para se o sistema pede reduzir movimento), `AnimatedStatusIndicator` (reanimated; para se `active` é falso ou se o sistema pede reduzir movimento). `IconArrowDown` é o glifo lucide `ArrowDown`. `IconCamera` é `Camera`, `IconShieldCheck` é `ShieldCheck` e `IconHourglass` é `Hourglass`.
 
 `Button` aceita `iconPosition` `"left"` (padrão) ou `"right"`. À esquerda, o ícone fica absoluto, a 16 px da borda, e o rótulo continua centralizado. À direita, o ícone entra na fileira do rótulo, 6 px depois do texto, e os dois ficam centralizados juntos.
 
@@ -1330,6 +1330,8 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconClose` | `X` | fechar |
 | `IconCheck` | `Check` | confirmação |
 | `IconCircle` / `IconCircleCheck` | `Circle` / `CircleCheckBig` | `CheckButton` |
+| `IconWaves` | `waves-horizontal` | ondas |
+| `IconCircleWaves` | composto: `IconCircle` + `IconWaves` a 60% do lado, centralizado | `DarkInformationBoxLarge` `icon="circle-waves"` |
 | `IconSearch` | `Search` | busca |
 | `IconFilter` | `ListFilter` | filtros |
 | `IconMessage` | `MessageCircle` | chat |
@@ -1427,9 +1429,22 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 
 ## Adendo — DarkInformationBoxLarge (1.8.0)
 
-- `DarkInformationBoxLarge`: `icon: string`, `animated: boolean`, `title: string`, `text: string`. Caixa de destaque centralizada, fundo grafite (`brand.SURFACE`), raio 16, texto branco. Círculo `brand.PRIMARY` de 72 px com o ícone (28 px, grafite) no topo; título em negrito (20/28) e texto (13/18) abaixo. Com `animated`, o círculo é o `AnimatedStatusIndicator` e emite anéis (os anéis saem do círculo, por isso a caixa tem `overflow: visible`); sem `animated`, é só o círculo, sem anéis. `icon` por nome: `check`, `circle-check`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation`; nome desconhecido não desenha ícone. Substitui o `Waiting` (`animated`, `hourglass`) e o `DarkBox` do `app-client-lavex`.
+- `DarkInformationBoxLarge`: `icon: string`, `animated: boolean`, `title: string`, `text: string`. Caixa de destaque centralizada, fundo grafite (`brand.SURFACE`), raio 16, texto branco. Círculo `brand.PRIMARY` de 72 px com o ícone (28 px, grafite) no topo; título em negrito (20/28) e texto (13/18) abaixo. Com `animated`, o círculo é o `AnimatedStatusIndicator` e emite anéis (os anéis saem do círculo, por isso a caixa tem `overflow: visible`); sem `animated`, é só o círculo, sem anéis. `icon` por nome: `check`, `circle-check`, `circle-waves`, `hourglass`, `map-pin`, `message-square`, `shield-check`, `credit-card`, `receipt`, `exclamation`; nome desconhecido não desenha ícone. Substitui o `Waiting` (`animated`, `hourglass`) e o `DarkBox` do `app-client-lavex`.
 
 ## Adendo — CountBadge (1.9.0)
 
 - `CountBadge`: `count: number`, `max?: number = 9`, `accessibilityLabel?`. Círculo verde-escuro (`brand.DARK`) de 18 px, número branco em negrito (11/14). Acima de `max` mostra `9+` (pílula, `paddingHorizontal` 5). `count <= 0` não renderiza.
 - `NavigationBar`: prop `badges` (um número por aba, na ordem de `pages`). Contagem maior que zero põe o `CountBadge` no canto superior direito do ícone da aba e acrescenta “, N não lidas” ao `accessibilityLabel`. Sem `badges`, nada muda.
+
+## Adendo — Timeline com `extra` e ícone `circle-waves` (1.10.0)
+
+- `Timeline`: `steps: TimelineStep[]` (obrigatório), `fontScale?: number = 1`. `TimelineStep`: `id`, `title`, `status` (`DONE` | `CURRENT` | `EMPTY`), `extra?`, `description?`, `timestamp?`. `status` quebra o contrato antigo `done | current | pending`. Nó de 22 px. `DONE`: fundo e borda 2 px `#0B7566`, `IconCheck` branco de 13 px. `CURRENT`: fundo `#3CDBC0`, borda 2 px `#0B7566`, sem ícone. `EMPTY`: fundo `#FFFFFF`, borda 1,5 px `#869199`, sem ícone. Título Plus Jakarta Bold 15 px (`fontScale`); `EMPTY` em `#5A6A72`, os outros em `#2D3B42`. `extra` fica na mesma linha, à direita (gap 8), caption 13/18 `#5A6A72`. `description` e `timestamp` continuam abaixo, no mesmo caption. A linha sob o nó é `#0B7566`, exceto em `EMPTY`, que usa `#E5E1E6`. O `accessibilityLabel` lê título, `extra` (se houver) e “concluída” / “em andamento” / “pendente”.
+
+```
+(*) Titulo                 extra
+ |  descricao
+( ) Titulo
+```
+
+- `IconWaves` (lucide `waves-horizontal`) e `IconCircleWaves` (círculo com ondas a 60% do lado, centralizadas) exportados no `index.ts` e na tabela da seção 9. `DarkInformationBoxLarge` aceita `icon="circle-waves"`.
+- `Modal`: `buttonVariant`/`confirmVariant` aceitam também `link` (ex.: botão "Voltar" em link ao lado de uma confirmação).

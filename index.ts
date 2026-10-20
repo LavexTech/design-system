@@ -64,6 +64,7 @@ export { QuantityStepper } from "./src/components/QuantityStepper/QuantitySteppe
 export { StatusBanner } from "./src/components/StatusBanner/StatusBanner";
 export { EmptyState } from "./src/components/EmptyState/EmptyState";
 export { Timeline } from "./src/components/Timeline/Timeline";
+export type { TimelineStep, TimelineStepStatus } from "./src/components/Timeline/Timeline";
 export { ImageUploader } from "./src/components/ImageUploader/ImageUploader";
 export { PhotoSkeleton } from "./src/components/PhotoSkeleton/PhotoSkeleton";
 export { AnimatedStatusIndicator } from "./src/components/AnimatedStatusIndicator/AnimatedStatusIndicator";
@@ -103,6 +104,8 @@ export { IconClose } from "./src/components/Icons/IconClose";
 export { IconCheck } from "./src/components/Icons/IconCheck";
 export { IconCircle } from "./src/components/Icons/IconCircle";
 export { IconCircleCheck } from "./src/components/Icons/IconCircleCheck";
+export { IconCircleWaves } from "./src/components/Icons/IconCircleWaves";
+export { IconWaves } from "./src/components/Icons/IconWaves";
 export { IconSearch } from "./src/components/Icons/IconSearch";
 export { IconFilter } from "./src/components/Icons/IconFilter";
 export { IconMessage } from "./src/components/Icons/IconMessage";
