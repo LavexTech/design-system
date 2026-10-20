@@ -24,6 +24,8 @@ type DarkInformationBoxLargeProps = {
   text: string
   /** Cor do ícone. Sem valor, grafite `#2D3B42`. */
   iconColor?: string
+  /** Fundo do círculo. Sem valor, verde-água `#3CDBC0`. */
+  circleColor?: string
 }
 
 type IconComponent = React.ComponentType<{ size?: number; color?: string }>
@@ -46,17 +48,18 @@ const C = Constants.styles
 const CORE = 72
 const ICON_SIZE = 28
 
-export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = ({ icon, animated, title, text, iconColor }) => {
+export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = ({ icon, animated, title, text, iconColor, circleColor }) => {
   const titleFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const bodyFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const Icon = Object.prototype.hasOwnProperty.call(ICONS, icon) ? ICONS[icon] : undefined
   const glyph = Icon ? <Icon size={ICON_SIZE} color={iconColor ?? C.brand.SURFACE} /> : null
+  const circle = circleColor ?? C.brand.PRIMARY
   return (
     <View accessibilityRole="summary" style={styles.box}>
       {animated ? (
-        <AnimatedStatusIndicator accessibilityLabel={title} icon={glyph} />
+        <AnimatedStatusIndicator accessibilityLabel={title} icon={glyph} coreColor={circle} />
       ) : (
-        <View style={styles.core}>{glyph}</View>
+        <View style={[styles.core, { backgroundColor: circle }]}>{glyph}</View>
       )}
       <Text style={[styles.title, { fontFamily: titleFont, fontWeight: "normal" }]}>{title}</Text>
       <Text style={[styles.text, { fontFamily: bodyFont, fontWeight: "normal" }]}>{text}</Text>
