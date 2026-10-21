@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.14.0`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.14.2`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -1340,6 +1340,7 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconSearch` | `Search` | busca |
 | `IconFilter` | `ListFilter` | filtros |
 | `IconMessage` | `MessageCircle` | chat |
+| `IconMessageSquareText` | `MessageSquareText` | estado vazio do chat de suporte |
 | `IconArrowLeft` / `IconArrowRight` | `ArrowLeft` / `ArrowRight` | navegação |
 | `IconChevronLeft` / `IconChevronRight` / `IconChevronDown` | `ChevronLeft` / `ChevronRight` / `ChevronDown` | `Order`, `Select`, listas |
 | `IconEdit` | `Pencil` | edição |
@@ -1495,3 +1496,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 ## Adendo — caixa grande sem texto (1.14.1)
 
 - `DarkInformationBoxLarge`: `text` passa a ser opcional. Sem a prop, ou com string vazia (ou só espaços), a linha do corpo não é desenhada. Ícone, título, círculo e anéis ficam iguais. Texto preenchido continua Plus Jakarta Regular 13/18, branco, centralizado.
+
+## Adendo — ícone message-square-text (1.14.2)
+
+- `IconMessageSquareText`: wrapper de `lucide-react-native/icons/message-square-text`. Mesmo contrato de `iconProps.ts`. Traço, sem preenchimento. Default: 24 px, traço 2, cor `#2D3B42`.
