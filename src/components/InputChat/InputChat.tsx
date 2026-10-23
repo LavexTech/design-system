@@ -1,6 +1,7 @@
 import React from "react"
 import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconSend } from "../Icons/IconSend"
 
@@ -19,6 +20,7 @@ export function InputChat({
   onChange,
   onSend,
 }: InputChatProps) {
+  const { mode, colors } = useLavexTheme()
   const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const canSend = value.trim().length > 0
   const handleSend = () => {
@@ -33,11 +35,18 @@ export function InputChat({
         onChangeText={onChange}
         placeholder={placeholder}
         placeholderTextColor={C.text.PLACEHOLDER}
+        keyboardAppearance={mode === "dark" ? "dark" : "light"}
         returnKeyType="send"
         onSubmitEditing={handleSend}
         style={[
           styles.field,
-          { fontFamily: fieldFont, fontWeight: "normal" },
+          {
+            borderColor: colors.borderInteractive,
+            backgroundColor: colors.surface,
+            color: colors.text,
+            fontFamily: fieldFont,
+            fontWeight: "normal",
+          },
           Platform.OS === "web" ? styles.webNoOutline : null,
         ]}
       />
@@ -47,9 +56,9 @@ export function InputChat({
         accessibilityState={{ disabled: !canSend }}
         disabled={!canSend}
         onPress={handleSend}
-        style={[styles.send, { backgroundColor: canSend ? C.brand.PRIMARY : C.surface.MUTED }]}
+        style={[styles.send, { backgroundColor: canSend ? colors.primary : colors.surfaceMuted }]}
       >
-        <IconSend size={20} color={canSend ? C.brand.SURFACE : C.text.MUTED} />
+        <IconSend size={20} color={canSend ? colors.onPrimary : colors.textMuted} />
       </Pressable>
     </View>
   )
@@ -71,10 +80,7 @@ const styles = StyleSheet.create({
     height: 48,
     paddingHorizontal: 18,
     borderWidth: C.borderWidth.INTERACTIVE,
-    borderColor: C.border.INTERACTIVE,
     borderRadius: C.borderRadius.PILL,
-    backgroundColor: C.surface.DEFAULT,
-    color: C.text.DEFAULT,
     fontSize: C.fontSize.BODY,
   },
   send: {
