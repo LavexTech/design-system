@@ -73,6 +73,7 @@ design-system/
   docs/README.md
   docs/migracao-2.0.md            # guia de impacto da migração 2.0 para os apps consumidores
   docs/prototipos/                # 21 telas HTML de alta fidelidade — especificação visual do 2.0
+  docs/tema-escuro/               # refinamento da #280 e prints do demo nos dois temas
   demo/                           # app Expo de testes manuais
   README.md, DesignSystemUsage.md
 ```
