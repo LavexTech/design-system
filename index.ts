@@ -133,4 +133,5 @@ export { IconMessageSquare } from "./src/components/Icons/IconMessageSquare";
 export { IconMessageSquareText } from "./src/components/Icons/IconMessageSquareText";
 export { IconLock } from "./src/components/Icons/IconLock";
 export { IconQrCode } from "./src/components/Icons/IconQrCode";
+export { IconTruck } from "./src/components/Icons/IconTruck";
 export { IconMapPin } from "./src/components/Icons/IconMapPin";

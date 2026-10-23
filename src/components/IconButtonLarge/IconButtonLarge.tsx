@@ -6,9 +6,17 @@ import { TextBox as Text } from "../Text/Text"
 import { Info } from "../Info/Info"
 import { IconCreditCard } from "../Icons/IconCreditCard"
 import { IconMessageSquare } from "../Icons/IconMessageSquare"
+import { IconMessageSquareText } from "../Icons/IconMessageSquareText"
+import { IconQrCode } from "../Icons/IconQrCode"
+import { IconTruck } from "../Icons/IconTruck"
 import { IconChevronRight } from "../Icons/IconChevronRight"
 
-type IconButtonLargeName = "credit-card" | "message-square"
+type IconButtonLargeName =
+  | "credit-card"
+  | "message-square"
+  | "message-square-text"
+  | "qr-code"
+  | "truck"
 
 type IconButtonLargeProps = {
   icon: IconButtonLargeName
@@ -22,6 +30,9 @@ type IconButtonLargeProps = {
 const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; color?: string }>> = {
   "credit-card": IconCreditCard,
   "message-square": IconMessageSquare,
+  "message-square-text": IconMessageSquareText,
+  "qr-code": IconQrCode,
+  truck: IconTruck,
 }
 
 const RADIUS = Constants.styles.borderRadius["2XL"]
