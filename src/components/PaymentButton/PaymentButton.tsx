@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import { useResolvedFontFamily } from "../../fontSetup"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { IconCheck } from "../Icons/IconCheck"
 
 export interface PaymentButtonProps {
@@ -28,6 +29,7 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({
   onChange,
   disabled = false,
 }) => {
+  const { colors } = useLavexTheme()
   const [internalSelected, setSelected] = useState(initiallySelected)
   const selected = controlledSelected ?? internalSelected
   const regular = useResolvedFontFamily(C.fontFamily.REGULAR)
@@ -53,33 +55,33 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({
       style={({ pressed }) => [
         styles.button,
         {
-          borderColor: selected ? C.brand.DARK : C.border.INTERACTIVE,
-          backgroundColor: selected ? C.surface.ACCENT : C.surface.DEFAULT,
+          borderColor: selected ? colors.accent : colors.borderInteractive,
+          backgroundColor: selected ? colors.surfaceAccent : colors.surface,
           opacity: pressed && !disabled ? 0.85 : disabled ? C.opacity.LOW : 1,
         },
       ]}
     >
       <View style={styles.thumbColumn}>
-        <View style={styles.thumb}>{graphic}</View>
+        <View style={[styles.thumb, { borderColor: colors.border }]}>{graphic}</View>
       </View>
       <View style={styles.textColumn}>
         <Text
           numberOfLines={1}
-          style={[styles.title, { fontFamily: bold, fontWeight: bold ? "normal" : "700" }]}
+          style={[styles.title, { color: colors.text, fontFamily: bold, fontWeight: bold ? "normal" : "700" }]}
         >
           {title}
         </Text>
         <Text
           numberOfLines={1}
-          style={[styles.subtitle, { fontFamily: regular, fontWeight: regular ? "normal" : "400" }]}
+          style={[styles.subtitle, { color: colors.textMuted, fontFamily: regular, fontWeight: regular ? "normal" : "400" }]}
         >
           {subtitle}
         </Text>
       </View>
       <View style={styles.checkColumn}>
         {selected ? (
-          <View style={styles.check}>
-            <IconCheck size={14} color={C.color.WHITE} strokeWidth={3} />
+          <View style={[styles.check, { backgroundColor: colors.accent }]}>
+            <IconCheck size={14} color={colors.background} strokeWidth={3} />
           </View>
         ) : null}
       </View>
@@ -105,19 +107,16 @@ const styles = StyleSheet.create({
     borderRadius: C.borderRadius.MEDIUM,
     backgroundColor: C.surface.DEFAULT,
     borderWidth: C.borderWidth.HAIRLINE,
-    borderColor: C.border.SOFT,
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
   },
   textColumn: { flex: 8, paddingLeft: 12, justifyContent: "center" },
   title: {
-    color: C.text.DEFAULT,
     fontSize: C.fontSize.BODY,
     lineHeight: C.lineHeight.BODY,
   },
   subtitle: {
-    color: C.text.MUTED,
     fontSize: C.fontSize.LABEL,
     lineHeight: C.lineHeight.LABEL,
   },
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
     borderRadius: 11,
-    backgroundColor: C.brand.DARK,
     alignItems: "center",
     justifyContent: "center",
   },

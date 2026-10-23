@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { AnimatedStatusIndicator } from "../AnimatedStatusIndicator/AnimatedStatusIndicator"
 import { IconCheck } from "../Icons/IconCheck"
@@ -50,21 +51,22 @@ const CORE = 72
 const ICON_SIZE = 28
 
 export const DarkInformationBoxLarge: React.FC<DarkInformationBoxLargeProps> = ({ icon, animated, title, text, iconColor, circleColor }) => {
+  const { colors } = useLavexTheme()
   const titleFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const bodyFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const Icon = Object.prototype.hasOwnProperty.call(ICONS, icon) ? ICONS[icon] : undefined
-  const glyph = Icon ? <Icon size={ICON_SIZE} color={iconColor ?? C.brand.SURFACE} /> : null
-  const circle = circleColor ?? C.brand.PRIMARY
+  const glyph = Icon ? <Icon size={ICON_SIZE} color={iconColor ?? colors.onPrimary} /> : null
+  const circle = circleColor ?? colors.primary
   return (
-    <View accessibilityRole="summary" style={styles.box}>
+    <View accessibilityRole="summary" style={[styles.box, { backgroundColor: colors.inverseSurface }]}>
       {animated ? (
         <AnimatedStatusIndicator accessibilityLabel={title} icon={glyph} coreColor={circle} />
       ) : (
         <View style={[styles.core, { backgroundColor: circle }]}>{glyph}</View>
       )}
-      <Text style={[styles.title, { fontFamily: titleFont, fontWeight: "normal" }]}>{title}</Text>
+      <Text style={[styles.title, { color: colors.onInverse, fontFamily: titleFont, fontWeight: "normal" }]}>{title}</Text>
       {text?.trim() ? (
-        <Text style={[styles.text, { fontFamily: bodyFont, fontWeight: "normal" }]}>{text}</Text>
+        <Text style={[styles.text, { color: colors.onInverse, fontFamily: bodyFont, fontWeight: "normal" }]}>{text}</Text>
       ) : null}
     </View>
   )
@@ -74,7 +76,6 @@ const styles = StyleSheet.create({
   box: {
     alignSelf: "stretch",
     alignItems: "center",
-    backgroundColor: C.brand.SURFACE,
     borderRadius: C.borderRadius["2XL"],
     paddingHorizontal: 20,
     paddingVertical: 24,
@@ -85,10 +86,9 @@ const styles = StyleSheet.create({
     width: CORE,
     height: CORE,
     borderRadius: CORE / 2,
-    backgroundColor: C.brand.PRIMARY,
     alignItems: "center",
     justifyContent: "center",
   },
-  title: { fontSize: C.fontSize.LARGE, lineHeight: C.lineHeight.TITLE, color: C.color.WHITE, textAlign: "center" },
-  text: { fontSize: C.fontSize.CAPTION, lineHeight: C.lineHeight.CAPTION, color: C.color.WHITE, textAlign: "center" },
+  title: { fontSize: C.fontSize.LARGE, lineHeight: C.lineHeight.TITLE, textAlign: "center" },
+  text: { fontSize: C.fontSize.CAPTION, lineHeight: C.lineHeight.CAPTION, textAlign: "center" },
 })

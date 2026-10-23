@@ -9,6 +9,7 @@ import {
   type ViewStyle,
 } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { useReduceMotion } from "../../utils/reduceMotion"
 
 type PhotoSkeletonProps = {
@@ -30,6 +31,7 @@ export const PhotoSkeleton: React.FC<PhotoSkeletonProps> = ({
   borderRadius = C.borderRadius.XL,
   style,
 }) => {
+  const { colors } = useLavexTheme()
   const reduceMotion = useReduceMotion()
   const [trackWidth, setTrackWidth] = useState(0)
   const progress = useRef(new Animated.Value(0)).current
@@ -66,7 +68,7 @@ export const PhotoSkeleton: React.FC<PhotoSkeletonProps> = ({
         const next = event.nativeEvent.layout.width
         setTrackWidth((current) => (Math.abs(current - next) < 1 ? current : next))
       }}
-      style={[styles.base, { width, height, borderRadius }, style]}
+      style={[styles.base, { backgroundColor: colors.surfaceMuted, width, height, borderRadius }, style]}
     >
       {showBand ? (
         <Animated.View
@@ -84,7 +86,6 @@ export const PhotoSkeleton: React.FC<PhotoSkeletonProps> = ({
 const styles = StyleSheet.create({
   base: {
     overflow: "hidden",
-    backgroundColor: C.surface.MUTED,
   },
   band: {
     position: "absolute",
