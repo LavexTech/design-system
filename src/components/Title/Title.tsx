@@ -2,6 +2,7 @@ import React from "react";
 import { Text, StyleSheet } from "react-native";
 import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
+import { useLavexTheme } from "../../theme/LavexThemeProvider";
 
 export interface TitleProps {
   text: string;
@@ -12,9 +13,9 @@ export interface TitleProps {
 
 const C = Constants.styles
 
-export const Title: React.FC<TitleProps> = ({ text, position = 'left', darkMode = false, fontScale = 1 }) => {
+export const Title: React.FC<TitleProps> = ({ text, position = 'left', fontScale = 1 }) => {
   const fontFamily = useResolvedFontFamily(C.fontFamily.BOLD)
-  const color = darkMode ? C.theme.dark.text.default : C.text.DEFAULT
+  const { colors } = useLavexTheme()
 
   return (
     <Text
@@ -22,7 +23,7 @@ export const Title: React.FC<TitleProps> = ({ text, position = 'left', darkMode 
         styles.title,
         {
           textAlign: position,
-          color,
+          color: colors.text,
           fontFamily,
           fontWeight: fontFamily ? "normal" : "700",
           fontSize: C.fontSize.TITLE * fontScale,

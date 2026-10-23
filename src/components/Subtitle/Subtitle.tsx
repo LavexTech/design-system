@@ -2,6 +2,7 @@ import React from "react";
 import { Text, StyleSheet } from "react-native";
 import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
+import { useLavexTheme } from "../../theme/LavexThemeProvider";
 
 export interface SubtitleProps {
   text: string;
@@ -11,6 +12,7 @@ export interface SubtitleProps {
 const C = Constants.styles
 
 export const Subtitle: React.FC<SubtitleProps> = ({ text, position = 'left' }) => {
+  const { colors } = useLavexTheme()
   const fontFamily = useResolvedFontFamily(C.fontFamily.SEMIBOLD)
 
   return (
@@ -19,6 +21,7 @@ export const Subtitle: React.FC<SubtitleProps> = ({ text, position = 'left' }) =
         styles.subtitle,
         {
           textAlign: position,
+          color: colors.text,
           fontFamily,
           fontWeight: fontFamily ? "normal" : "600",
         },
@@ -33,7 +36,6 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: C.fontSize.SUBTITLE,
     lineHeight: C.lineHeight.SUBTITLE,
-    color: C.text.DEFAULT,
     flexWrap: "wrap",
     flexShrink: 1,
   },

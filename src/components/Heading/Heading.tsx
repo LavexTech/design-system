@@ -2,6 +2,8 @@ import React from "react";
 import { Text, StyleSheet, TextStyle } from "react-native";
 import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
+import { useLavexTheme } from "../../theme/LavexThemeProvider";
+import { ThemeColors } from "../../theme/tokens";
 
 export type HeadingLevel = "h1" | "h2" | "h3" | "h4";
 
@@ -14,7 +16,7 @@ export interface HeadingProps {
 type HeadingSpec = {
   fontSize: number;
   lineHeight: number;
-  color: string;
+  color: keyof ThemeColors;
   letterSpacing: number;
   font: string;
   fallbackWeight: TextStyle["fontWeight"];
@@ -34,7 +36,7 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
   h1: {
     fontSize: C.fontSize.WORDMARK,
     lineHeight: C.lineHeight.WORDMARK,
-    color: C.brand.PRIMARY,
+    color: "primary",
     letterSpacing: -0.5,
     font: C.fontFamily.SEMIBOLD,
     fallbackWeight: "600",
@@ -43,7 +45,7 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
   h2: {
     fontSize: C.fontSize.DISPLAY * 0.75,
     lineHeight: C.lineHeight.DISPLAY * 0.75,
-    color: C.color.PRIMARY_DARK,
+    color: "text",
     letterSpacing: -0.4,
     font: C.fontFamily.BOLD,
     fallbackWeight: "700",
@@ -52,7 +54,7 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
   h3: {
     fontSize: C.fontSize.MEDIUM,
     lineHeight: C.lineHeight.BODY,
-    color: C.color.PRIMARY_DARK,
+    color: "text",
     letterSpacing: -0.2,
     font: C.fontFamily.BOLD,
     fallbackWeight: "700",
@@ -61,7 +63,7 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
   h4: {
     fontSize: C.fontSize.CAPTION,
     lineHeight: C.lineHeight.CAPTION,
-    color: C.brand.DARK,
+    color: "accent",
     letterSpacing: 0.6,
     font: C.fontFamily.BOLD,
     fallbackWeight: "700",
@@ -72,6 +74,7 @@ const LEVELS: Record<HeadingLevel, HeadingSpec> = {
 export const Heading: React.FC<HeadingProps> = ({ text, level, position = "left" }) => {
   const spec = LEVELS[level];
   const fontFamily = useResolvedFontFamily(spec.font);
+  const { colors } = useLavexTheme();
 
   return (
     <Text
@@ -85,7 +88,7 @@ export const Heading: React.FC<HeadingProps> = ({ text, level, position = "left"
           fontWeight: fontFamily ? "normal" : spec.fallbackWeight,
           fontSize: spec.fontSize,
           lineHeight: spec.lineHeight,
-          color: spec.color,
+          color: colors[spec.color],
           letterSpacing: spec.letterSpacing,
           textTransform: spec.uppercase ? "uppercase" : "none",
         },
