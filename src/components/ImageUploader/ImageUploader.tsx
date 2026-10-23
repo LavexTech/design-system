@@ -10,6 +10,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCamera } from "../Icons/IconCamera"
 import { IconClose } from "../Icons/IconClose"
@@ -47,6 +48,7 @@ function containedFrame(imgW: number, imgH: number, screenW: number, screenH: nu
 }
 
 function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClose: () => void }) {
+  const { colors } = useLavexTheme()
   const { width: screenW, height: screenH } = useWindowDimensions()
   const progress = useSharedValue(0)
   const closing = useRef(false)
@@ -125,7 +127,7 @@ function PhotoZoom({ uri, origin, onClose }: { uri: string; origin: Frame; onClo
             <RNImage
               source={{ uri }}
               resizeMode="cover"
-              style={styles.photo}
+              style={[styles.photo, { backgroundColor: colors.surfaceMuted }]}
               onLoad={() => setReady(true)}
               onError={() => setFailed(true)}
             />
@@ -156,6 +158,7 @@ function PhotoCell({
   onRemove?: (imageUrl: string, index: number) => void
   showRemove: boolean
 }) {
+  const { colors } = useLavexTheme()
   const cellRef = useRef<View>(null)
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
@@ -178,7 +181,7 @@ function PhotoCell({
     <Pressable ref={cellRef} style={[styles.cell, { width: size, height: size }]} onPress={open}>
       <RNImage
         source={{ uri }}
-        style={styles.photo}
+        style={[styles.photo, { backgroundColor: colors.surfaceMuted }]}
         onLoad={() => setReady(true)}
         onError={() => setFailed(true)}
       />
@@ -198,8 +201,8 @@ function PhotoCell({
           }}
           style={styles.remove}
         >
-          <View style={styles.removeDot}>
-            <IconClose size={14} color={C.color.WHITE} />
+          <View style={[styles.removeDot, { backgroundColor: colors.inverseSurface }]}>
+            <IconClose size={14} color={colors.onInverse} />
           </View>
         </Pressable>
       ) : null}
@@ -219,6 +222,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   addIcon,
   disabled = false,
 }) => {
+  const { colors } = useLavexTheme()
   const labelFont = useResolvedFontFamily(C.fontFamily.BOLD)
   const pending = Math.max(0, Math.floor(pendingCount))
   const showAdd = maxImages == null || images.length + pending < maxImages
@@ -238,11 +242,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           accessibilityLabel={addLabel || "Adicionar foto"}
           disabled={disabled}
           onPress={onAdd}
-          style={[styles.cell, styles.add, { width: itemSize, height: itemSize }]}
+          style={[styles.cell, styles.add, { borderColor: colors.accent, backgroundColor: colors.surface, width: itemSize, height: itemSize }]}
         >
-          {addIcon ?? <IconCamera size={24} color={C.brand.DARK} />}
+          {addIcon ?? <IconCamera size={24} color={colors.accent} />}
           {addLabel ? (
-            <Text style={[styles.addLabel, { fontFamily: labelFont, fontWeight: "normal" }]}>{addLabel}</Text>
+            <Text style={[styles.addLabel, { color: colors.accent, fontFamily: labelFont, fontWeight: "normal" }]}>{addLabel}</Text>
           ) : null}
         </Pressable>
       ),
@@ -308,12 +312,12 @@ const styles = StyleSheet.create({
   rowFull: { justifyContent: "space-between" },
   rowStart: { justifyContent: "flex-start" },
   cell: { borderRadius: C.borderRadius.XL, overflow: "visible" },
-  photo: { width: "100%", height: "100%", borderRadius: C.borderRadius.XL, backgroundColor: C.border.SOFT },
+  photo: { width: "100%", height: "100%", borderRadius: C.borderRadius.XL },
   skeleton: { ...StyleSheet.absoluteFillObject },
-  add: { borderWidth: 2, borderStyle: "dashed", borderColor: C.brand.DARK, backgroundColor: C.surface.DEFAULT, alignItems: "center", justifyContent: "center", gap: 6 },
-  addLabel: { color: C.brand.DARK, fontSize: C.fontSize.LABEL, textAlign: "center" },
+  add: { borderWidth: 2, borderStyle: "dashed", alignItems: "center", justifyContent: "center", gap: 6 },
+  addLabel: { fontSize: C.fontSize.LABEL, textAlign: "center" },
   remove: { position: "absolute", top: -6, right: -6, width: 44, height: 44, alignItems: "center", justifyContent: "center" },
-  removeDot: { width: 24, height: 24, borderRadius: 12, backgroundColor: C.brand.SURFACE, alignItems: "center", justifyContent: "center" },
+  removeDot: { width: 24, height: 24, borderRadius: 12, alignItems: "center", justifyContent: "center" },
   zoomRoot: { flex: 1 },
   zoomPhoto: { flex: 1 },
   zoomFrame: { position: "absolute", overflow: "hidden" },

@@ -10,6 +10,7 @@ import {
 } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { IconLock } from "../Icons/IconLock"
 
 type InputProps = {
@@ -68,6 +69,7 @@ export const Input: React.FC<InputProps> = ({
   hideDisabledIcon = false,
 }) => {
   void darkMode
+  const { mode, colors } = useLavexTheme()
   const [isValid, setIsValid] = useState(true)
   const [focused, setFocused] = useState(false)
   const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
@@ -116,10 +118,10 @@ export const Input: React.FC<InputProps> = ({
           : "default"
 
   const borderColor = !isValid
-    ? C.text.DANGER
+    ? colors.danger
     : focused
-      ? C.brand.DARK
-      : C.border.INTERACTIVE
+      ? colors.accent
+      : colors.borderInteractive
 
   return (
     <View style={styles.wrap}>
@@ -132,6 +134,7 @@ export const Input: React.FC<InputProps> = ({
               lineHeight: C.lineHeight.LABEL * fontScale,
               fontFamily: labelFont,
               fontWeight: labelFont ? "normal" : "700",
+              color: colors.text,
             },
           ]}
         >
@@ -141,9 +144,9 @@ export const Input: React.FC<InputProps> = ({
       <View
         style={[
           styles.field,
-          disabled ? styles.fieldDisabled : null,
           {
-            borderColor: disabled && isValid ? C.border.SOFT : borderColor,
+            backgroundColor: disabled ? C.surface.ZINC : colors.surface,
+            borderColor: disabled && isValid ? colors.border : borderColor,
             height: fieldHeight ?? C.componentSize.INPUT_HEIGHT,
           },
         ]}
@@ -168,7 +171,7 @@ export const Input: React.FC<InputProps> = ({
           }
           autoComplete={mobileKeyboard === "email" ? "email" : undefined}
           textContentType={mobileKeyboard === "email" ? "emailAddress" : undefined}
-          keyboardAppearance="light"
+          keyboardAppearance={mode === "dark" ? "dark" : "light"}
           autoCapitalize={autoCapitalize ?? (mobileKeyboard === "email" ? "none" : undefined)}
           autoCorrect={autoCorrect ?? (mobileKeyboard === "email" ? false : undefined)}
           placeholderTextColor={placeholderTextColor}
@@ -197,7 +200,7 @@ export const Input: React.FC<InputProps> = ({
               fontSize: C.fontSize.BODY * fontScale,
               fontFamily: fieldFont,
               paddingRight: rightElement || (disabled && !hideDisabledIcon) ? 4 : 16,
-              color: disabled ? C.text.MUTED : C.text.DEFAULT,
+              color: disabled ? C.text.MUTED : colors.text,
             },
             Platform.OS === "web" ? styles.webNoOutline : null,
           ]}
@@ -211,7 +214,7 @@ export const Input: React.FC<InputProps> = ({
         ) : null}
       </View>
       {!isValid && errorMessage ? (
-        <Text style={[styles.error, { fontSize: C.fontSize.CAPTION * fontScale }]}>
+        <Text style={[styles.error, { fontSize: C.fontSize.CAPTION * fontScale, color: colors.danger }]}>
           {errorMessage}
         </Text>
       ) : null}
@@ -221,21 +224,17 @@ export const Input: React.FC<InputProps> = ({
 
 const styles = StyleSheet.create({
   wrap: { alignSelf: "stretch", gap: 6 },
-  label: { color: C.text.DEFAULT },
+  label: {},
   field: {
     height: C.componentSize.INPUT_HEIGHT,
     borderWidth: C.borderWidth.INTERACTIVE,
     borderRadius: C.borderRadius.LARGE,
-    backgroundColor: C.surface.DEFAULT,
     flexDirection: "row",
     alignItems: "center",
     paddingLeft: 16,
     minWidth: 0,
     maxWidth: "100%",
     overflow: "hidden",
-  },
-  fieldDisabled: {
-    backgroundColor: C.surface.ZINC,
   },
   lock: {
     paddingHorizontal: 14,
@@ -250,12 +249,11 @@ const styles = StyleSheet.create({
     flexBasis: 0,
     minWidth: 0,
     height: 44,
-    color: C.text.DEFAULT,
     padding: 0,
   },
   right: {
     flexGrow: 0,
     flexShrink: 0,
   },
-  error: { color: C.text.DANGER },
+  error: {},
 })

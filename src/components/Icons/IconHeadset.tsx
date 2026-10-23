@@ -3,7 +3,7 @@ import Headset from 'lucide-react-native/icons/headset'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconHeadset: React.FC<IconHeadsetProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Headset
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

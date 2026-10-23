@@ -3,7 +3,7 @@ import Hourglass from 'lucide-react-native/icons/hourglass'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconHourglass: React.FC<IconHourglassProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Hourglass
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

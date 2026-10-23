@@ -80,6 +80,12 @@ export { IconButtonLarge } from "./src/components/IconButtonLarge/IconButtonLarg
 
 // ------------------------------------------------------------
 
+// Theme
+export { LavexThemeProvider, useLavexTheme } from "./src/theme/LavexThemeProvider";
+export type { LavexTheme, LavexThemeProviderProps } from "./src/theme/LavexThemeProvider";
+export { lightColors, darkColors } from "./src/theme/tokens";
+export type { ThemeColors, ThemeMode } from "./src/theme/tokens";
+
 // Fonts
 export { useFonts } from "./src/fontSetup";
 
@@ -127,4 +133,5 @@ export { IconMessageSquare } from "./src/components/Icons/IconMessageSquare";
 export { IconMessageSquareText } from "./src/components/Icons/IconMessageSquareText";
 export { IconLock } from "./src/components/Icons/IconLock";
 export { IconQrCode } from "./src/components/Icons/IconQrCode";
+export { IconTruck } from "./src/components/Icons/IconTruck";
 export { IconMapPin } from "./src/components/Icons/IconMapPin";

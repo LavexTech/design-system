@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native"
 import { ProfileAvatar } from "../ProfileAvatar/ProfileAvatar"
 import { IconHeadset } from "../Icons/IconHeadset"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 type MessageSentProps = {
     text: string
@@ -24,19 +25,20 @@ export const MessageSent: React.FC<MessageSentProps> = ({
     isGrouped = false,
     avatarVariant = 'image',
 }: MessageSentProps) => {
+    const { colors } = useLavexTheme()
     return (
         <View style={[styles.container, isGrouped && styles.containerGrouped]}>
             <View style={styles.row}>
                 {timestamp ? (
                     <Text style={styles.timestamp}>{timestamp}</Text>
                 ) : null}
-                <View style={styles.messageBubble}>
-                    <Text style={styles.bubbleText}>{text}</Text>
+                <View style={[styles.messageBubble, { backgroundColor: colors.inverseSurface }]}>
+                    <Text style={[styles.bubbleText, { color: colors.onInverse }]}>{text}</Text>
                 </View>
                 <View style={styles.avatarContainer}>
                     {showAvatar ? (
                         avatarVariant === 'headset' ? (
-                            <View style={styles.headsetAvatar}>
+                            <View style={[styles.headsetAvatar, { backgroundColor: colors.surfaceMuted }]}>
                                 <IconHeadset
                                     size={22}
                                     color={Constants.styles.textColor.INFO}
@@ -72,7 +74,6 @@ const styles = StyleSheet.create({
         gap: Constants.styles.spacing.TINY,
     },
     messageBubble: {
-        backgroundColor: Constants.styles.brand.SURFACE,
         borderRadius: 18,
         paddingHorizontal: Constants.styles.spacing.MEDIUM,
         paddingVertical: Constants.styles.spacing.SMALL,
@@ -85,7 +86,6 @@ const styles = StyleSheet.create({
         fontFamily: Constants.styles.fontFamily.REGULAR,
         fontSize: Constants.styles.fontSize.MEDIUM,
         lineHeight: Constants.styles.lineHeight.LARGE,
-        color: Constants.styles.color.WHITE,
         flexShrink: 1,
     },
     timestamp: {
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
         width: 32,
         height: 32,
         borderRadius: 16,
-        backgroundColor: Constants.styles.backgroundColor.GRAY,
         alignItems: 'center',
         justifyContent: 'center',
     },

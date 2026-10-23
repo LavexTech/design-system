@@ -2,6 +2,7 @@ import React from "react";
 import { Text, StyleSheet } from "react-native";
 import { useResolvedFontFamily } from "../../fontSetup";
 import Constants from "../../constants/constants";
+import { useLavexTheme } from "../../theme/LavexThemeProvider";
 
 export interface TextProps {
   text: string;
@@ -22,13 +23,12 @@ export const TextBox: React.FC<TextProps> = ({
   size = "medium",
   level = "default",
   position = "left",
-  darkMode = false,
   fontScale = 1,
   fill = true,
   bold = false,
 }) => {
   const fontFamily = useResolvedFontFamily(bold ? C.fontFamily.BOLD : C.fontFamily.REGULAR)
-  const theme = darkMode ? C.theme.dark : C.theme.light
+  const { colors } = useLavexTheme()
 
   const sizes = {
     small: { fontSize: C.fontSize.LABEL, lineHeight: C.lineHeight.LABEL },
@@ -37,11 +37,11 @@ export const TextBox: React.FC<TextProps> = ({
   }
 
   const levels = {
-    success: C.brand.DARK,
-    error: C.text.DANGER,
+    success: colors.accent,
+    error: colors.danger,
     warning: C.feedback.WARNING_TEXT,
-    default: darkMode ? theme.text.default : C.text.DEFAULT,
-    primary: darkMode ? theme.text.primary : C.brand.DARK,
+    default: colors.text,
+    primary: colors.accent,
   }
 
   const metrics = sizes[size]

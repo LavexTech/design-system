@@ -3,7 +3,7 @@ import Trash2 from 'lucide-react-native/icons/trash-2'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconTrash: React.FC<IconTrashProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Trash2
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

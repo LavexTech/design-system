@@ -3,7 +3,7 @@ import EyeOff from 'lucide-react-native/icons/eye-off'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconEyeClosed: React.FC<IconEyeClosedProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <EyeOff
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

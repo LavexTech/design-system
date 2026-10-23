@@ -3,7 +3,7 @@ import ListFilter from 'lucide-react-native/icons/list-filter'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconFilter: React.FC<IconFilterProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ListFilter
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

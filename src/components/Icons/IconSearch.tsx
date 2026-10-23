@@ -3,7 +3,7 @@ import Search from 'lucide-react-native/icons/search'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconSearch: React.FC<IconSearchProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Search
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

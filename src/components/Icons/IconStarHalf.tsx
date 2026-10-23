@@ -3,7 +3,7 @@ import StarHalf from 'lucide-react-native/icons/star-half'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconStarHalf: React.FC<IconStarHalfProps> = ({
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => {
-  const resolved = resolveIconColor(color, fill)
+  const resolved = useIconColor(color, fill)
   return (
     <StarHalf
       color={resolved}

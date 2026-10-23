@@ -3,7 +3,7 @@ import Send from 'lucide-react-native/icons/send'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconSend: React.FC<IconSendProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Send
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

@@ -3,7 +3,7 @@ import User from 'lucide-react-native/icons/user'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconProfile: React.FC<IconProfileProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <User
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

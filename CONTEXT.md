@@ -4,7 +4,7 @@ Documento único de contexto técnico do design system da Lavex. Descreve **o c�
 
 O objetivo é que este arquivo seja suficiente, sozinho, para entender **para que serve**, **como se parece quando renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
 
-Versão de referência: `package.json` `1.14.2`. Data de referência do código: outubro de 2026.
+Versão de referência: `package.json` `1.15.0`. Data de referência do código: outubro de 2026.
 
 > A linguagem visual 2.0 está no código (épico [#205](https://github.com/LavexTech/design-system/issues/205)). A especificação visual está em `docs/prototipos/` e o impacto nos apps, em `docs/migracao-2.0.md`. Este documento descreve o **código atual**.
 
@@ -64,6 +64,8 @@ design-system/
     components/Icons/*.tsx        # wrappers finos de lucide-react-native
     components/Icons/iconProps.ts # contrato comum dos ícones
     constants/constants.ts        # design tokens em JS (fonte principal de estilo)
+    theme/tokens.ts               # tokens semânticos de cor, light e dark
+    theme/LavexThemeProvider.tsx  # LavexThemeProvider e useLavexTheme
     utils/                        # helpers puros
     assets/fonts/PlusJakartaSans/static/  # TTFs Regular, Medium, SemiBold e Bold
     fontSetup.ts                  # useFonts / useGlobalFonts
@@ -71,6 +73,7 @@ design-system/
   docs/README.md
   docs/migracao-2.0.md            # guia de impacto da migração 2.0 para os apps consumidores
   docs/prototipos/                # 21 telas HTML de alta fidelidade — especificação visual do 2.0
+  docs/tema-escuro/               # refinamento da #280 e prints do demo nos dois temas
   demo/                           # app Expo de testes manuais
   README.md, DesignSystemUsage.md
 ```
@@ -87,7 +90,7 @@ design-system/
 ### Estilo
 
 3. A fonte de verdade de estilo é `src/constants/constants.ts` (importado como `Constants`). Valores numéricos/cores crus no `StyleSheet` são exceção; o padrão é `Constants.styles.*`.
-4. Os componentes usam `StyleSheet.create` + `Constants`. Não há `className` nem provider de tema de terceiros na árvore.
+4. Os componentes usam `StyleSheet.create` + `Constants`. A cor vem de `useLavexTheme()` como estilo inline; o `StyleSheet` guarda o que não é cor. Não há `className` nem provider de tema de terceiros na árvore.
 
 ### Texto e dimensão (regras transversais)
 
@@ -98,7 +101,7 @@ design-system/
 
 7. Texto entra como prop `text: string`, não como `children`. `children` é reservado para composição (`Card`, `List`, `Modal`, `Accordion`, `SwipeableListItem`, `Grid`).
 8. Callback de interação principal é `onClick` (não `onPress`), exceto em primitivos de baixo nível (`ProfileAvatar.onPress`, `Image.onClick`).
-9. Props de tema/escala são opcionais e com default: `darkMode?: boolean = false`, `fontScale?: number = 1`. `fontScale` multiplica `fontSize`/`lineHeight`.
+9. `darkMode?: boolean` continua na assinatura e é ignorada. O tema vem do `LavexThemeProvider` (ver "Tema" em §5). `fontScale?: number = 1` multiplica `fontSize`/`lineHeight`.
 10. Identificadores de código em inglês; textos visíveis padrão e comentários voltados a humanos em pt-BR.
 
 ### Manutenção obrigatória
@@ -171,7 +174,70 @@ O Tailwind repete esses hex em `brand.DEFAULT`, `brand.dark`, `brand.deep` e `br
 
 **Cinza-claro** é `#E5E1E6` (`surface.MUTED`, `backgroundColor.LIGHT_GRAY`, `color.GRAY`, `border.SOFT`). **Cinza-claríssimo** é `#FAF9FA` (`surface.SUBTLE`).
 
-### Tema light/dark (`Constants.styles.theme`)
+### Tema (`src/theme/`, 1.15.0)
+
+Os componentes leem as cores de `useLavexTheme()`, que devolve `{ mode, colors }`. O `LavexThemeProvider` define o modo:
+
+```tsx
+<LavexThemeProvider mode="dark">{/* app do Lavexer */}</LavexThemeProvider>
+```
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `mode` | `"light" \| "dark"` | `"light"` |
+| `children` | `ReactNode` | — |
+
+Sem provider na árvore, `useLavexTheme()` devolve o tema `light`, com os mesmos hex de antes do tema. O app do cliente não usa o provider. Exportados no `index.ts` (seção `// Theme`): `LavexThemeProvider`, `useLavexTheme`, `lightColors`, `darkColors` e os tipos `ThemeColors`, `ThemeMode`, `LavexTheme`, `LavexThemeProviderProps`.
+
+Tokens semânticos (`src/theme/tokens.ts`):
+
+| Token | Uso | light | dark |
+|---|---|---|---|
+| `background` | fundo de tela, `TopHeader` | `#FFFFFF` | `#1B252A` |
+| `surface` | cards, campos, caixas com borda | `#FFFFFF` | `#24323A` |
+| `surfaceSubtle` | listas, fundo de linha, `IconButtonLarge` pressionado | `#FAF9FA` | `#24323A` |
+| `surfaceMuted` | cinza-claro de preenchimento, botão desabilitado, bolha recebida, skeleton | `#E5E1E6` | `#34444C` |
+| `surfaceAccent` | pílula ativa, caixa verde clara | `#E2FAF6` | `#14433D` |
+| `surfaceDanger` | caixa de erro | `#FDECEC` | `#4A2326` |
+| `border` | divisores, bordas suaves | `#E5E1E6` | `#34444C` |
+| `borderInteractive` | borda de campo e de stepper | `#869199` | `#6E7E86` |
+| `text` | texto padrão, `h2`, `h3`, cor padrão dos ícones | `#2D3B42` | `#F2F5F6` |
+| `textMuted` | apoio, `Info`, ícone inativo | `#5A6A72` | `#A9B6BC` |
+| `accent` | links, `h4`, ícone ativo, foco | `#0B7566` | `#3CDBC0` |
+| `accentDeep` | link `#08706D`, estrela do `ShortStarRating` | `#08706D` | `#3CDBC0` |
+| `primary` | fundo do botão principal, `h1` | `#3CDBC0` | `#3CDBC0` |
+| `onPrimary` | texto e ícone sobre `primary` | `#2D3B42` | `#1B252A` |
+| `danger` | erro, lixeira | `#C62828` | `#FF6B6B` |
+| `inverseSurface` | `DarkInformationBox(Large)`, bolha enviada, `Button secondary` | `#2D3B42` | `#E2FAF6` |
+| `onInverse` | texto sobre `inverseSurface` | `#FFFFFF` | `#1B252A` |
+| `star` | estrela preenchida | `#FFD700` | `#FFD700` |
+
+Check e número sobre `accent` (`CheckboxListItem`, `Timeline`, `PaymentButton`, `CountBadge`) usam `background`: branco no claro, `#1B252A` no escuro.
+
+**Cores que não estão na tabela ficam fixas nos dois temas.** Quando o fundo é fixo, o texto e o ícone sobre ele também ficam fixos, para não virar texto claro sobre fundo claro:
+
+| Componente | Cor fixa |
+|---|---|
+| `Input` | placeholder `#66757D`. Desabilitado: fundo `#F4F4F5`, texto e cadeado `#5A6A72` |
+| `TextArea`, `SearchInput`, `InputChat` | placeholder `#66757D` |
+| `Select` | chevron `#8F98AD` |
+| `Toggle` | trilho desligado `#CED4DA`, botão `#FFFFFF` |
+| `Button` | texto branco em `danger` e na confirmação |
+| `Tag` | `warning-outline`: `#FFF4E5` / `#8A5A00` |
+| `StatusBanner` | `info`: fundo `#EEFBF8`, ícone `#0B7566`, texto `#2D3B42`. `dark`: ícone `#3CDBC0` |
+| `ErrorBox` | título `#000000` no claro. No escuro o título usa `text`, para não ficar preto sobre `surfaceDanger` |
+| `EmptyState` | círculo `#E6F7F6` |
+| `SwipeableListItem` | trilho de excluir `#DC2626`, lixeira branca |
+| `IconButtonLarge` | caixa do ícone `#F4F4F5`, ícone `#2D3B42` |
+| `ProfileAvatar` | ícone do placeholder `#8F98AD` |
+| `PaymentButton` | fundo da miniatura `#FFFFFF` (logos) |
+| `PhotoSkeleton` | faixa `#FFFFFF` |
+| `Message` | horário e ícone do avatar de suporte `#8F98AD` |
+| `Modal`, `ImageUploader` | overlay `rgba(0, 0, 0, 0.5)` |
+
+`Constants.styles.theme` (abaixo) não é mais lido pelos componentes convertidos.
+
+### Tema light/dark legado (`Constants.styles.theme`)
 
 | Caminho | light | dark |
 |---|---|---|
@@ -628,7 +694,7 @@ Botão de largura total em 3 colunas (flex 2/9/1): ícone numa caixa quadrada 40
 
 | Prop | Tipo | Default |
 |---|---|---|
-| `icon` | `"credit-card" \| "message-square"` | — |
+| `icon` | `"credit-card" \| "message-square" \| "message-square-text" \| "qr-code" \| "truck"` | — |
 | `title` / `description` | `string` | — |
 | `onClick` | `() => void` | — |
 | `position` | `"first" \| "middle" \| "last"` | — |
@@ -1261,7 +1327,7 @@ Componente de exemplo que renderiza o texto `"Hello World"`. **Não é exportado
 
 ### 8.10 Linguagem 2.0 — o que o código faz agora
 
-Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. `darkMode` continua aceita e é ignorada nos componentes reescritos.
+Esta seção prevalece sobre qualquer descrição anterior do mesmo componente. `darkMode` continua aceita e é ignorada; as cores vêm do `LavexThemeProvider`. Os hex citados aqui são os do tema `light`.
 
 **Tipografia.** Plus Jakarta Sans (400/500/600/700). Não há segunda família.
 
@@ -1307,13 +1373,13 @@ Todos em `src/components/Icons/`, wrappers finos sobre `lucide-react-native` `1.
 
 | Prop | Tipo | Default |
 |---|---|---|
-| `color` | `string` | `#2D3B42` (cinza escuro; cor de traço, preferida) |
+| `color` | `string` | `colors.text` do tema: `#2D3B42` no claro, `#F2F5F6` no escuro (cor de traço, preferida) |
 | `fill` | `string` | — (alias legado de `color`; em `IconStar`/`IconStarHalf` também preenche a forma). Em `IconStar`, se `color` e `fill` vêm juntos, o traço é `color` e o miolo é `fill` |
 | `size` | `number` | `24` (preferida) |
 | `width` / `height` | `number` | — (fallback quando `size` não é passado) |
 | `strokeWidth` | `number` | `2` |
 
-Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? height ?? 24`. Exceto nas estrelas, os ícones são **somente traço** (`fill: none`).
+Resolução: cor = `color ?? fill ?? colors.text` (hook `useIconColor`; `resolveIconColor` continua com `#2D3B42`); tamanho = `size ?? width ?? height ?? 24`. Exceto nas estrelas, os ícones são **somente traço** (`fill: none`).
 
 | Export | Glifo lucide | Uso típico |
 |---|---|---|
@@ -1344,6 +1410,8 @@ Resolução: cor = `color ?? fill ?? '#2D3B42'`; tamanho = `size ?? width ?? hei
 | `IconArrowLeft` / `IconArrowRight` | `ArrowLeft` / `ArrowRight` | navegação |
 | `IconChevronLeft` / `IconChevronRight` / `IconChevronDown` | `ChevronLeft` / `ChevronRight` / `ChevronDown` | `Order`, `Select`, listas |
 | `IconEdit` | `Pencil` | edição |
+| `IconQrCode` | `QrCode` | Pix, `IconButtonLarge` `icon="qr-code"` |
+| `IconTruck` | `Truck` | entrega, `IconButtonLarge` `icon="truck"` |
 
 Para adicionar um ícone: criar `src/components/Icons/Icon<Nome>.tsx` seguindo o padrão (import default do subpath `lucide-react-native/icons/<nome-em-kebab>`, usa `resolveIconColor`/`resolveIconSize`, `strokeWidth` default), exportar no `index.ts` e registrar na tabela acima.
 
@@ -1374,13 +1442,13 @@ Nenhum utilitário é exportado no `index.ts`; são de consumo interno.
 2. **Docs por componente removidas.** Permanecem `docs/README.md`, `docs/migracao-2.0.md` e `docs/prototipos/`. Este `CONTEXT.md` é a fonte canônica do contrato.
 3. **`checklist.md` removido.** A lista antiga citava componentes que não existem (`TabBar`, `OrderList`, `OfferCard`).
 4. **Escalas Tailwind antigas apontam para a paleta 2.0.** `primary-500` é `#3CDBC0`, não um azul. Nenhum componente usa essas classes; a cor da tela continua em `Constants.styles`.
-5. **Dark mode parcial.** `MainTitle`, `Subtitle`, `Tag`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `List`, `Message*`, `InputChat`, `Button`, `Input` e `TextArea` não reagem a `darkMode`. `Modal`, `Accordion`, `Select` (texto) e `Divider` ainda usam o tema claro/escuro. `FAB`, `Image` e `Grid` aceitam a prop e a descartam.
+5. ~~**Dark mode parcial.**~~ Quitada na 1.15.0: o tema vem do `LavexThemeProvider` e `darkMode` é ignorada. Fora da regra 4 da issue #280 (`Accordion`, `FAB`, `Stepper`, `Stars`, `StarRating`, `Gallery`, `Alert`, `Order`, `Offer`, `UserCard*`, `TextList`, `UserList`, `OfferList`, `CheckButton`, `Image`) ainda não leem o tema.
 6. **`UserCardHorizontal` não é horizontal** — empilha os dados em coluna e não mostra avatar.
 7. **`UserCardBio` não renderiza a `bio`**, embora o campo seja obrigatório no tipo.
 8. **`OfferList` e `UserList` não passam `key`** no `GridItem` mapeado (o `key` do `OfferList` está no `Offer` interno, não no item da lista) e `OfferList` não repassa `amountLabel` nem `totalRatings`.
 9. **`UserList` tem o `Divider` entre itens comentado** no código.
 10. **`Grid.gap` não é pixel.** Cai em faixas de 4, 8, 12, 16, 24, 32 ou 48 px. Um valor como `5` vira 16 px.
-11. **`Text` no `darkMode` ainda usa o azul `#4EA8FF` em `level="primary"`.** O tema claro já usa `#0B7566`. O app do prestador depende dessas cores escuras.
+11. ~~**`Text` no `darkMode` usa o azul `#4EA8FF`.**~~ Quitada na 1.15.0: `Text` ignora `darkMode` e `level="primary"` usa `accent`.
 12. **`Alert` importa `Constants` e `Dimensions` sem usar**; `Modal` importa `Dimensions` via `useWindowDimensions` (ok) mas `Order` importa `Constants` para poucos usos.
 13. **Pin por branch.** Os apps consomem `#main`, então qualquer merge aqui muda o pacote dos apps sem bump controlado.
 14. **`HelloWorld`** permanece no repositório sem uso nem export.
@@ -1500,3 +1568,16 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 ## Adendo — ícone message-square-text (1.14.2)
 
 - `IconMessageSquareText`: wrapper de `lucide-react-native/icons/message-square-text`. Mesmo contrato de `iconProps.ts`. Traço, sem preenchimento. Default: 24 px, traço 2, cor `#2D3B42`.
+
+## Adendo — tema escuro e ícones de Lavexer (1.15.0)
+
+- `LavexThemeProvider` (`mode: "light" | "dark"`, padrão `"light"`) e `useLavexTheme()`. Tokens em `src/theme/tokens.ts`. Ver "Tema" em §5.
+- Sem provider, as cores são as de antes. Com `mode="dark"`, leem o tema: textos (`Heading`, `Text`, `Info`, `Title`, `Subtitle`, `MainTitle`), campos (`Input` e derivados, `TextArea`, `Select`, `SearchInput`, `Toggle`), `Button`, `NavigationBar`, `TopHeader`, `CountBadge`, `Tag`, `Modal`, `Divider`, `Card`, `List`, `SimpleTable`, `EmptyState`, `StatusBanner`, `ErrorBox`, `RadioCard`, `CheckboxListItem`, `QuantityStepper`, `SwipeableListItem`, `IconButtonLarge`, `ProfileAvatar`, `ShortStarRating`, `DarkInformationBox`, `DarkInformationBoxLarge`, `Timeline`, `ImageUploader`, `PhotoSkeleton`, `PaymentButton`, `Message`, `InputChat` e os ícones. `Grid`, `UserCardBio` e `UserInfo` herdam pelos filhos.
+- `darkMode` fica na assinatura e é ignorada. `Text`, `Info`, `Title`, `Card`, `Modal`, `Divider`, `NavigationBar`, `Select`, `Toggle` e `ProfileAvatar` deixaram de ler `Constants.styles.theme.dark`.
+- `Input`, `TextArea`, `SearchInput` e `InputChat` pedem `keyboardAppearance="dark"` no tema escuro. No claro, `Input` segue com `"light"` e os outros três seguem sem a prop (o teclado acompanha o sistema), como antes.
+- `IconTruck`: wrapper de `lucide-react-native/icons/truck`, exportado no `index.ts`.
+- `IconButtonLarge`: `icon` aceita `message-square-text`, `qr-code` e `truck`.
+- Ícones: sem `color`/`fill`, a cor é `colors.text` (`useIconColor`).
+- `demo/`: toggle "Tema escuro" no topo envolve a vitrine em `LavexThemeProvider`. Seção "Tema" com os componentes da regra 4 que faltavam.
+- `tailwind.config.js`: as cores da escala estavam com aspas duplicadas (`''#E6F7F6''`), sintaxe inválida que impedia o Metro do `demo/` de carregar a config. Agora é uma string simples; os valores não mudaram.
+- Web: o texto digitado em `TextArea`, `SearchInput` e `InputChat` passa a aparecer em `#2D3B42`. Antes, a cor ficava só no `StyleSheet` e o CSS da web a sobrescrevia com `#9CA3AF`. No nativo a cor não muda.

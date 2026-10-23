@@ -3,7 +3,7 @@ import Camera from 'lucide-react-native/icons/camera'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconCamera: React.FC<IconCameraProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Camera
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

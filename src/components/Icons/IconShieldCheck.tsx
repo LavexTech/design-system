@@ -3,7 +3,7 @@ import ShieldCheck from 'lucide-react-native/icons/shield-check'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconShieldCheck: React.FC<IconShieldCheckProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ShieldCheck
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

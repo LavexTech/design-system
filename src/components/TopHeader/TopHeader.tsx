@@ -2,6 +2,7 @@ import React from "react"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { IconChevronLeft } from "../Icons/IconChevronLeft"
 
 type TopHeaderProps = {
@@ -27,14 +28,15 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   titleAccessory,
   fontScale = 1,
 }) => {
+  const { colors } = useLavexTheme()
   const bold = useResolvedFontFamily(C.fontFamily.BOLD)
   const centered = align === "center"
   return (
-    <View style={[styles.wrap, { paddingLeft: onBack || leading ? 12 : 24 }]}>
+    <View style={[styles.wrap, { backgroundColor: colors.background, paddingLeft: onBack || leading ? 12 : 24 }]}>
       <View style={styles.row}>
         {leading ?? (onBack ? (
           <Pressable accessibilityRole="button" accessibilityLabel="Voltar" onPress={onBack} style={styles.back}>
-            <IconChevronLeft size={24} color={C.text.DEFAULT} />
+            <IconChevronLeft size={24} color={colors.text} />
           </Pressable>
         ) : null)}
         <View style={[styles.titles, centered ? styles.center : null]}>
@@ -47,7 +49,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 fontFamily: bold,
                 fontWeight: bold ? "normal" : "700",
                 letterSpacing: -0.4,
-                color: C.text.DEFAULT,
+                color: colors.text,
                 textAlign: centered ? "center" : "left",
               }}
             >
@@ -56,7 +58,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
             {titleAccessory}
           </View>
           {subtitle ? (
-            <Text style={[styles.subtitle, { textAlign: centered ? "center" : "left", fontSize: C.fontSize.SUBTITLE * fontScale }]}>
+            <Text style={[styles.subtitle, { color: colors.textMuted, textAlign: centered ? "center" : "left", fontSize: C.fontSize.SUBTITLE * fontScale }]}>
               {subtitle}
             </Text>
           ) : null}
@@ -68,11 +70,11 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
 }
 
 const styles = StyleSheet.create({
-  wrap: { alignSelf: "stretch", backgroundColor: C.surface.DEFAULT, paddingRight: 24 },
+  wrap: { alignSelf: "stretch", paddingRight: 24 },
   row: { flexDirection: "row", alignItems: "center" },
   back: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
   titles: { flex: 1, gap: 6 },
   center: { alignItems: "center" },
   titleRow: { flexDirection: "row", alignItems: "center", gap: 8, flexWrap: "wrap" },
-  subtitle: { color: C.text.MUTED, lineHeight: C.lineHeight.SUBTITLE },
+  subtitle: { lineHeight: C.lineHeight.SUBTITLE },
 })

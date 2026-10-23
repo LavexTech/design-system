@@ -3,7 +3,7 @@ import QrCode from 'lucide-react-native/icons/qr-code'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconQrCode: React.FC<IconQrCodeProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <QrCode
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

@@ -3,7 +3,7 @@ import Check from 'lucide-react-native/icons/check'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconCheck: React.FC<IconCheckProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Check
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

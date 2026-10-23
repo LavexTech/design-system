@@ -3,7 +3,7 @@ import ReceiptText from 'lucide-react-native/icons/receipt-text'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconReceipt: React.FC<IconReceiptProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ReceiptText
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

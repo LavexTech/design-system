@@ -1,6 +1,7 @@
 import React from "react"
 import { View, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { Subtitle } from "../Subtitle/Subtitle"
 
 type ListProps = {
@@ -14,6 +15,7 @@ export const List: React.FC<ListProps> = ({
   children,
   divider = true,
 }) => {
+  const { colors } = useLavexTheme()
   const childrenArray = React.Children.toArray(children)
 
   return (
@@ -21,7 +23,7 @@ export const List: React.FC<ListProps> = ({
       {title ? <Subtitle text={title} /> : null}
       {childrenArray.map((child, index) => (
         <React.Fragment key={index}>
-          {index > 0 && divider ? <View style={styles.separator} /> : null}
+          {index > 0 && divider ? <View style={[styles.separator, { backgroundColor: colors.border }]} /> : null}
           <View style={styles.itemContainer}>{child}</View>
         </React.Fragment>
       ))}
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: Constants.styles.borderColor.LIGHT,
     marginVertical: Constants.styles.spacing.SMALL,
   },
 })

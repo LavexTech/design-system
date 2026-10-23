@@ -3,7 +3,7 @@ import Star from 'lucide-react-native/icons/star'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconStar: React.FC<IconStarProps> = ({
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => {
-  const stroke = resolveIconColor(color, fill)
+  const stroke = useIconColor(color, fill)
   const solid = fill != null ? (color != null ? fill : stroke) : 'none'
   return (
     <Star

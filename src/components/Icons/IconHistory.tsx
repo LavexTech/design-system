@@ -3,7 +3,7 @@ import History from 'lucide-react-native/icons/rotate-ccw-clock'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconHistory: React.FC<IconHistoryProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <History
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

@@ -3,7 +3,7 @@ import ArrowLeft from 'lucide-react-native/icons/arrow-left'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconArrowLeft: React.FC<IconArrowLeftProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ArrowLeft
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

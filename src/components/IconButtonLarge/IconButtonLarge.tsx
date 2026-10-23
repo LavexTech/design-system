@@ -1,13 +1,22 @@
 import React from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { TextBox as Text } from "../Text/Text"
 import { Info } from "../Info/Info"
 import { IconCreditCard } from "../Icons/IconCreditCard"
 import { IconMessageSquare } from "../Icons/IconMessageSquare"
+import { IconMessageSquareText } from "../Icons/IconMessageSquareText"
+import { IconQrCode } from "../Icons/IconQrCode"
+import { IconTruck } from "../Icons/IconTruck"
 import { IconChevronRight } from "../Icons/IconChevronRight"
 
-type IconButtonLargeName = "credit-card" | "message-square"
+type IconButtonLargeName =
+  | "credit-card"
+  | "message-square"
+  | "message-square-text"
+  | "qr-code"
+  | "truck"
 
 type IconButtonLargeProps = {
   icon: IconButtonLargeName
@@ -21,6 +30,9 @@ type IconButtonLargeProps = {
 const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; color?: string }>> = {
   "credit-card": IconCreditCard,
   "message-square": IconMessageSquare,
+  "message-square-text": IconMessageSquareText,
+  "qr-code": IconQrCode,
+  truck: IconTruck,
 }
 
 const RADIUS = Constants.styles.borderRadius["2XL"]
@@ -37,6 +49,7 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
   onClick,
   position,
 }) => {
+  const { colors } = useLavexTheme()
   const Icon = ICONS[icon]
   const isFirst = position === "first"
   const isLast = position === "last"
@@ -54,7 +67,8 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
           borderBottomLeftRadius: isLast ? RADIUS : 0,
           borderBottomRightRadius: isLast ? RADIUS : 0,
           marginTop: position === "middle" || isLast ? -BORDER : 0,
-          backgroundColor: pressed ? Constants.styles.surface.SUBTLE : Constants.styles.surface.DEFAULT,
+          backgroundColor: pressed ? colors.surfaceSubtle : colors.surface,
+          borderColor: colors.border,
         },
       ]}
     >
@@ -69,7 +83,7 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
           <Info text={description} />
         </View>
         <View style={styles.chevron}>
-          <IconChevronRight size={20} color={Constants.styles.text.MUTED} />
+          <IconChevronRight size={20} color={colors.textMuted} />
         </View>
       </View>
     </Pressable>
@@ -80,7 +94,6 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: "stretch",
     borderWidth: BORDER,
-    borderColor: Constants.styles.border.SOFT,
     paddingVertical: Constants.styles.spacing.MEDIUM,
     paddingHorizontal: Constants.styles.spacing.SMALL,
   },

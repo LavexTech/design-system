@@ -2,6 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View } from "react-native"
 import { useResolvedFontFamily } from "../../fontSetup"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 export type SimpleTableItem = {
   label: string
@@ -18,6 +19,7 @@ const C = Constants.styles
 const RADIUS = C.borderRadius.LARGE
 
 export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
+  const { colors } = useLavexTheme()
   const regular = useResolvedFontFamily(C.fontFamily.REGULAR)
   const bold = useResolvedFontFamily(C.fontFamily.BOLD)
 
@@ -36,6 +38,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
             style={[
               styles.row,
               {
+                borderColor: colors.border,
+                backgroundColor: colors.surface,
                 borderTopLeftRadius: isFirst ? RADIUS : 0,
                 borderTopRightRadius: isFirst ? RADIUS : 0,
                 borderBottomLeftRadius: isLast ? RADIUS : 0,
@@ -48,7 +52,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
               <Text
                 style={[
                   styles.label,
-                  { fontFamily: emphasis ? bold : regular, fontWeight: (emphasis ? bold : regular) ? "normal" : emphasis ? "700" : "400" },
+                  { color: colors.text, fontFamily: emphasis ? bold : regular, fontWeight: (emphasis ? bold : regular) ? "normal" : emphasis ? "700" : "400" },
                 ]}
               >
                 {item.label}
@@ -58,7 +62,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items }) => {
               <Text
                 style={[
                   emphasis ? styles.valueEmphasis : styles.value,
-                  { fontFamily: bold, fontWeight: bold ? "normal" : "700" },
+                  { color: colors.text, fontFamily: bold, fontWeight: bold ? "normal" : "700" },
                 ]}
               >
                 {item.value}
@@ -77,26 +81,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: C.borderWidth.HAIRLINE,
-    borderColor: C.border.SOFT,
-    backgroundColor: C.surface.DEFAULT,
     paddingVertical: 12,
     paddingHorizontal: 16,
   },
   cell: { width: "50%" },
   valueCell: { alignItems: "flex-end" },
   label: {
-    color: C.text.DEFAULT,
     fontSize: C.fontSize.BODY,
     lineHeight: C.lineHeight.BODY,
   },
   value: {
-    color: C.text.DEFAULT,
     fontSize: C.fontSize.BODY,
     lineHeight: C.lineHeight.BODY,
     textAlign: "right",
   },
   valueEmphasis: {
-    color: C.text.DEFAULT,
     fontSize: C.fontSize.TITLE,
     lineHeight: C.lineHeight.TITLE,
     textAlign: "right",

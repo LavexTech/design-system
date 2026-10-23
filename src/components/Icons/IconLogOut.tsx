@@ -3,7 +3,7 @@ import LogOut from 'lucide-react-native/icons/log-out'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconLogOut: React.FC<IconLogOutProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <LogOut
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

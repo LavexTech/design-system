@@ -10,6 +10,8 @@ import {
 } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
+import { ThemeColors } from "../../theme/tokens"
 
 type ButtonVariant =
   | "default"
@@ -67,28 +69,32 @@ type ButtonInteraction = {
   confirming: boolean
 }
 
-function getButtonColors(variant: ButtonVariant, interaction: ButtonInteraction) {
+function getButtonColors(
+  variant: ButtonVariant,
+  interaction: ButtonInteraction,
+  theme: ThemeColors,
+) {
   const colors = interaction.confirming
     ? {
-        backgroundColor: C.text.DANGER,
+        backgroundColor: theme.danger,
         color: C.color.WHITE,
         borderColor: "transparent",
         borderWidth: 0,
       }
-    : palette(variant)
+    : palette(variant, theme)
   const transparent =
-    colors.backgroundColor === "transparent" || colors.backgroundColor === C.surface.DEFAULT
+    colors.backgroundColor === "transparent" || colors.backgroundColor === theme.surface
   const isLink = variant === "link" || variant === "link-gray"
   const backgroundColor = interaction.disabled
-    ? C.surface.MUTED
+    ? theme.surfaceMuted
     : isLink
       ? "transparent"
       : interaction.pressed
       ? transparent
-        ? C.surface.MUTED
+        ? theme.surfaceMuted
         : colors.backgroundColor
       : interaction.hovered && transparent
-        ? C.surface.MUTED
+        ? theme.surfaceMuted
         : colors.backgroundColor
 
   return {
@@ -96,14 +102,14 @@ function getButtonColors(variant: ButtonVariant, interaction: ButtonInteraction)
     borderColor: interaction.disabled ? "transparent" : colors.borderColor,
     borderWidth: interaction.disabled ? 0 : colors.borderWidth,
     opacity: interaction.pressed && !interaction.disabled && (!transparent || isLink) ? 0.85 : 1,
-    labelColor: interaction.disabled ? C.text.DEFAULT : colors.color,
+    labelColor: interaction.disabled ? theme.text : colors.color,
   }
 }
 
-function palette(variant: ButtonVariant) {
+function palette(variant: ButtonVariant, theme: ThemeColors) {
   const filled = {
-    backgroundColor: C.brand.PRIMARY,
-    color: C.text.DEFAULT,
+    backgroundColor: theme.primary,
+    color: theme.onPrimary,
     borderColor: "transparent",
     borderWidth: 0,
   }
@@ -112,62 +118,62 @@ function palette(variant: ButtonVariant) {
     primary: filled,
     success: filled,
     "default-outline": {
-      backgroundColor: C.surface.DEFAULT,
-      color: C.text.DEFAULT,
-      borderColor: C.border.INTERACTIVE,
+      backgroundColor: theme.surface,
+      color: theme.text,
+      borderColor: theme.borderInteractive,
       borderWidth: C.borderWidth.INTERACTIVE,
     },
     "success-outline": {
-      backgroundColor: C.surface.ACCENT,
-      color: C.brand.DARK,
-      borderColor: C.brand.DARK,
+      backgroundColor: theme.surfaceAccent,
+      color: theme.accent,
+      borderColor: theme.accent,
       borderWidth: C.borderWidth.INTERACTIVE,
     },
     secondary: {
-      backgroundColor: C.brand.SURFACE,
-      color: C.color.WHITE,
+      backgroundColor: theme.inverseSurface,
+      color: theme.onInverse,
       borderColor: "transparent",
       borderWidth: 0,
     },
     "secondary-outline": {
-      backgroundColor: C.surface.DEFAULT,
-      color: C.text.DEFAULT,
-      borderColor: C.brand.SURFACE,
+      backgroundColor: theme.surface,
+      color: theme.text,
+      borderColor: theme.text,
       borderWidth: C.borderWidth.INTERACTIVE,
     },
     danger: {
-      backgroundColor: C.text.DANGER,
+      backgroundColor: theme.danger,
       color: C.color.WHITE,
       borderColor: "transparent",
       borderWidth: 0,
     },
     "danger-outline": {
-      backgroundColor: C.surface.DEFAULT,
-      color: C.text.DANGER,
-      borderColor: C.text.DANGER,
+      backgroundColor: theme.surface,
+      color: theme.danger,
+      borderColor: theme.danger,
       borderWidth: C.borderWidth.INTERACTIVE,
     },
     ghost: {
       backgroundColor: "transparent",
-      color: C.brand.DARK,
+      color: theme.accent,
       borderColor: "transparent",
       borderWidth: 0,
     },
     "ghost-danger": {
       backgroundColor: "transparent",
-      color: C.text.DANGER,
+      color: theme.danger,
       borderColor: "transparent",
       borderWidth: 0,
     },
     link: {
       backgroundColor: "transparent",
-      color: C.brand.DEEP,
+      color: theme.accentDeep,
       borderColor: "transparent",
       borderWidth: 0,
     },
     "link-gray": {
       backgroundColor: "transparent",
-      color: C.text.MUTED,
+      color: theme.textMuted,
       borderColor: "transparent",
       borderWidth: 0,
     },
@@ -191,6 +197,7 @@ function ButtonComponent(props: ButtonProps) {
     confirmationText,
   } = props
   void props.darkMode
+  const { colors: theme } = useLavexTheme()
 
   const [confirming, setConfirming] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -224,7 +231,7 @@ function ButtonComponent(props: ButtonProps) {
       onHoverIn={isWeb ? () => setHovered(true) : undefined}
       onHoverOut={isWeb ? () => setHovered(false) : undefined}
       style={({ pressed }) => {
-        const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming })
+        const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming }, theme)
         return [
           styles.button,
           isLink
@@ -241,7 +248,7 @@ function ButtonComponent(props: ButtonProps) {
             opacity: colors.opacity,
           },
           isWeb
-            ? ({ outlineColor: C.brand.SURFACE, outlineWidth: 0 } as ViewStyle)
+            ? ({ outlineColor: theme.text, outlineWidth: 0 } as ViewStyle)
             : null,
           (iconPosition === "right" || iconPosition === "inline") && icon
             ? styles.withTrailingIcon
@@ -261,7 +268,7 @@ function ButtonComponent(props: ButtonProps) {
               hovered,
               disabled,
               confirming,
-            }).labelColor,
+            }, theme).labelColor,
             fontSize: metrics.font * fontScale,
             lineHeight: metrics.font * 1.2 * fontScale,
             fontFamily: labelFont,

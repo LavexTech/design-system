@@ -92,9 +92,21 @@ import { DarkInformationBox } from "@src/components/DarkInformationBox/DarkInfor
 import { DarkInformationBoxLarge } from "@src/components/DarkInformationBoxLarge/DarkInformationBoxLarge"
 import { Tag } from "@src/components/Tag/Tag"
 import { StarRating } from "@src/components/StarRating/StarRating"
+import { InputEmail } from "@src/components/InputEmail/InputEmail"
+import { InputCPF } from "@src/components/InputCPF/InputCPF"
+import { Divider } from "@src/components/Divider/Divider"
+import { SwipeableListItem } from "@src/components/SwipeableListItem/SwipeableListItem"
+import { IconButtonLarge } from "@src/components/IconButtonLarge/IconButtonLarge"
+import { ProfileAvatar } from "@src/components/ProfileAvatar/ProfileAvatar"
+import { ShortStarRating } from "@src/components/ShortStarRating/ShortStarRating"
+import { PhotoSkeleton } from "@src/components/PhotoSkeleton/PhotoSkeleton"
+
+// Theme
+import { LavexThemeProvider, useLavexTheme } from "@src/theme/LavexThemeProvider"
 
 
-export default function Index() {
+function Showcase() {
+  const { colors } = useLavexTheme();
   const [showModal, setShowModal] = useState(false);
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [showCompareModal, setShowCompareModal] = useState(false);
@@ -148,13 +160,13 @@ export default function Index() {
   const tabs = ['Pedido', 'Histórico', 'Conta'];
   const icons = [
     (isActive: boolean) => (
-      <IconMessage fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
+      <IconMessage color={isActive ? colors.accent : colors.textMuted} width={24} height={24} />
     ),
     (isActive: boolean) => (
-      <IconHistory fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
+      <IconHistory color={isActive ? colors.accent : colors.textMuted} width={24} height={24} />
     ),
     (isActive: boolean) => (
-      <IconProfile fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
+      <IconProfile color={isActive ? colors.accent : colors.textMuted} width={24} height={24} />
     ),
   ];
 
@@ -201,10 +213,44 @@ export default function Index() {
   return (
     <>
       <ScrollView
-        style={{ flex: 1, padding: 20 }}
+        style={{ flex: 1, padding: 20, backgroundColor: colors.background }}
         contentContainerStyle={{ paddingBottom: 40, paddingTop: 40 }}
         showsVerticalScrollIndicator={true}
       >
+{/* Tema: componentes da regra 4 que não apareciam na vitrine */}
+
+      <View style={{ marginBottom: 20 }}>
+        <Subtitle text="Tema" />
+      </View>
+
+      <Card>
+        <Grid columns={1} gap={12}>
+          <InputEmail value={value} onChange={setValue} />
+          <InputCPF value={numberValue} onChange={setNumberValue} />
+          <Divider />
+          <SwipeableListItem onDelete={() => undefined}>
+            <View style={{ padding: 16 }}>
+              <Text text="Arraste para a esquerda" />
+            </View>
+          </SwipeableListItem>
+          <View>
+            <IconButtonLarge icon="truck" title="Entrega" description="Raio e taxa de busca" onClick={() => undefined} position="first" />
+            <IconButtonLarge icon="qr-code" title="Chave Pix" description="Onde você recebe" onClick={() => undefined} position="middle" />
+            <IconButtonLarge icon="message-square-text" title="Mensagem de boas-vindas" description="Enviada no início do chat" onClick={() => undefined} position="middle" />
+            <IconButtonLarge icon="credit-card" title="Pagamentos" description="Cartões salvos" onClick={() => undefined} position="middle" />
+            <IconButtonLarge icon="message-square" title="Suporte" description="Fale com a Lavex" onClick={() => undefined} position="last" />
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+            <ProfileAvatar alt="Sem foto" size="sm" />
+            <ShortStarRating rating={4.8} />
+            <ShortStarRating rating={0} />
+          </View>
+          <View style={{ width: 120, height: 120 }}>
+            <PhotoSkeleton />
+          </View>
+        </Grid>
+      </Card>
+
 {/* NavigationBar */}
 
       <View style={{ marginTop: 20, marginBottom: 20 }}>
@@ -585,7 +631,7 @@ export default function Index() {
         <Subtitle text="Message" />
       </View>
 
-      <View style={{ backgroundColor: Constants.styles.backgroundColor.WHITE, borderRadius: 8 }}>
+      <View style={{ backgroundColor: colors.background, borderRadius: 8 }}>
         <Message
           text="Blah?"
           onClick={() => console.log("Mensagem clicada!")}
@@ -949,6 +995,29 @@ export default function Index() {
     }
     </>
   )
+}
+
+export default function Index() {
+  const [darkTheme, setDarkTheme] = useState(false);
+
+  return (
+    <LavexThemeProvider mode={darkTheme ? "dark" : "light"}>
+      <ThemedRoot darkTheme={darkTheme} onToggle={setDarkTheme} />
+    </LavexThemeProvider>
+  );
+}
+
+function ThemedRoot({ darkTheme, onToggle }: { darkTheme: boolean; onToggle: (value: boolean) => void }) {
+  const { colors } = useLavexTheme();
+
+  return (
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <View style={{ paddingHorizontal: 20, paddingTop: 40, paddingBottom: 8, borderBottomWidth: 1, borderBottomColor: colors.border }}>
+        <Toggle label="Tema escuro" value={darkTheme} onChange={onToggle} />
+      </View>
+      <Showcase />
+    </View>
+  );
 }
 
 const validateInput = (value: string) => {

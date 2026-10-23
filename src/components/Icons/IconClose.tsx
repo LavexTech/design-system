@@ -3,7 +3,7 @@ import X from 'lucide-react-native/icons/x'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconClose: React.FC<IconCloseProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <X
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />
