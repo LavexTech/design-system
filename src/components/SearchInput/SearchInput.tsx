@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Platform, Pressable, StyleSheet, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { IconClose } from "../Icons/IconClose"
 import { IconSearch } from "../Icons/IconSearch"
 
@@ -26,6 +27,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
   autoFocus = false,
   fontScale = 1,
 }) => {
+  const { mode, colors } = useLavexTheme()
   const [focused, setFocused] = useState(false)
   const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   return (
@@ -34,13 +36,14 @@ export const SearchInput: React.FC<SearchInputProps> = ({
       style={[
         styles.box,
         {
-          borderColor: focused ? C.brand.DARK : C.border.INTERACTIVE,
+          borderColor: focused ? colors.accent : colors.borderInteractive,
+          backgroundColor: colors.surface,
           height: C.componentSize.INPUT_HEIGHT * fontScale,
         },
       ]}
     >
       <View style={styles.icon}>
-        <IconSearch size={20} color={C.text.MUTED} />
+        <IconSearch size={20} color={colors.textMuted} />
       </View>
       <TextInput
         accessibilityLabel={placeholder}
@@ -48,6 +51,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         onChangeText={onChange}
         placeholder={placeholder}
         placeholderTextColor={C.text.PLACEHOLDER}
+        keyboardAppearance={mode === "dark" ? "dark" : "light"}
         autoFocus={autoFocus}
         returnKeyType="search"
         onSubmitEditing={onSubmit}
@@ -58,6 +62,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           {
             fontFamily: fieldFont,
             fontWeight: "normal",
+            color: colors.text,
             fontSize: C.fontSize.BODY * fontScale,
             height: 44 * fontScale,
           },
@@ -74,7 +79,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
           }}
           style={[styles.clear, { width: 44 * fontScale, height: 44 * fontScale }]}
         >
-          <IconClose size={18 * fontScale} color={C.text.MUTED} />
+          <IconClose size={18 * fontScale} color={colors.textMuted} />
         </Pressable>
       ) : null}
     </View>
@@ -87,7 +92,6 @@ const styles = StyleSheet.create({
     height: C.componentSize.INPUT_HEIGHT,
     borderWidth: C.borderWidth.INTERACTIVE,
     borderRadius: C.borderRadius.LARGE,
-    backgroundColor: C.surface.DEFAULT,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -96,6 +100,6 @@ const styles = StyleSheet.create({
     outlineStyle: "none",
     outlineWidth: 0,
   } as object,
-  input: { flex: 1, height: 44, marginLeft: 44, color: C.text.DEFAULT, padding: 0 },
+  input: { flex: 1, height: 44, marginLeft: 44, padding: 0 },
   clear: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
 })

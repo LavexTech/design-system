@@ -2,6 +2,7 @@ import React from "react"
 import { Switch, StyleSheet, View } from "react-native"
 import { TextBox as Text } from "../Text/Text"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 type ToggleProps = {
   label: string
@@ -18,6 +19,8 @@ export const Toggle: React.FC<ToggleProps> = ({
   darkMode = false,
   fontScale = 1,
 }) => {
+  const { colors } = useLavexTheme()
+
   return (
     <View style={styles.row}>
       <View style={styles.label}>
@@ -27,10 +30,8 @@ export const Toggle: React.FC<ToggleProps> = ({
         value={value}
         onValueChange={onChange}
         trackColor={{
-          false: darkMode
-            ? Constants.styles.theme.dark.border.default
-            : Constants.styles.borderColor.MEDIUM,
-          true: Constants.styles.color.PRIMARY_LIGHT,
+          false: Constants.styles.borderColor.MEDIUM,
+          true: colors.primary,
         }}
         thumbColor={Constants.styles.color.WHITE}
         accessibilityLabel={label}

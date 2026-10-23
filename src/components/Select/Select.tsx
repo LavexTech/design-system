@@ -6,6 +6,7 @@ import { Modal } from "../Modal/Modal"
 import { CheckboxListItem } from "../CheckboxListItem/CheckboxListItem"
 import { IconChevronDown } from "../Icons/IconChevronDown"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 const OPTION_GAP = Constants.styles.spacing.MEDIUM
 
@@ -37,6 +38,7 @@ export const Select: React.FC<SelectProps> = ({
   fontScale = 1,
   triggerFontScale = 1,
 }) => {
+  const { colors } = useLavexTheme()
   const [isOpen, setIsOpen] = useState(false)
   const selectedOption = options.find((option) => option.value === value)
   const displayText = selectedOption?.label ?? placeholder
@@ -60,8 +62,10 @@ export const Select: React.FC<SelectProps> = ({
             onPress={() => setIsOpen(true)}
             style={[
               styles.trigger,
-              null,
-              hasError ? styles.triggerError : null,
+              {
+                backgroundColor: colors.surface,
+                borderColor: hasError ? colors.danger : colors.borderInteractive,
+              },
             ]}
             accessibilityRole="button"
             accessibilityLabel={label}
@@ -78,11 +82,7 @@ export const Select: React.FC<SelectProps> = ({
             <View style={styles.chevron}>
               <IconChevronDown
                 size={Constants.styles.fontSize.MEDIUM * fontScale}
-                color={
-                  darkMode
-                    ? Constants.styles.theme.dark.text.muted
-                    : Constants.styles.textColor.INFO
-                }
+                color={Constants.styles.textColor.INFO}
               />
             </View>
           </Pressable>
@@ -144,17 +144,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: Constants.styles.spacing.MEDIUM,
-    backgroundColor: Constants.styles.surface.DEFAULT,
     borderRadius: Constants.styles.borderRadius.LARGE,
     borderWidth: Constants.styles.borderWidth.INTERACTIVE,
-    borderColor: Constants.styles.border.INTERACTIVE,
-  },
-  triggerDark: {
-    backgroundColor: Constants.styles.theme.dark.background.subtle,
-    borderColor: Constants.styles.theme.dark.border.default,
-  },
-  triggerError: {
-    borderColor: Constants.styles.text.DANGER,
   },
   chevron: {
     marginLeft: Constants.styles.spacing.SMALL,

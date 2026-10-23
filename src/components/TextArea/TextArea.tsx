@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Platform, StyleSheet, Text, TextInput, View } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 type TextAreaProps = {
   label: string
@@ -27,6 +28,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   darkMode,
 }) => {
   void darkMode
+  const { mode, colors } = useLavexTheme()
   const [focused, setFocused] = useState(false)
   const fieldFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   const labelFont = useResolvedFontFamily(C.fontFamily.SEMIBOLD)
@@ -42,6 +44,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
               fontSize: C.fontSize.LABEL * fontScale,
               fontFamily: labelFont,
               fontWeight: labelFont ? "normal" : "600",
+              color: colors.text,
             },
           ]}
         >
@@ -54,6 +57,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
         value={value}
         placeholder={placeholder}
         placeholderTextColor={C.text.PLACEHOLDER}
+        keyboardAppearance={mode === "dark" ? "dark" : "light"}
         onChangeText={(text) => {
           if (maxLength && text.length > maxLength) return
           onChange(text)
@@ -64,7 +68,9 @@ export const TextArea: React.FC<TextAreaProps> = ({
         style={[
           styles.field,
           {
-            borderColor: focused ? C.brand.DARK : C.border.INTERACTIVE,
+            borderColor: focused ? colors.accent : colors.borderInteractive,
+            backgroundColor: colors.surface,
+            color: colors.text,
             fontFamily: fieldFont,
             fontSize: C.fontSize.BODY * fontScale,
           },
@@ -72,7 +78,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
         ]}
       />
       {maxLength ? (
-        <Text style={styles.counter}>
+        <Text style={[styles.counter, { color: colors.textMuted }]}>
           {currentLength}/{maxLength}{counterSuffix}
         </Text>
       ) : null}
@@ -82,7 +88,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
 
 const styles = StyleSheet.create({
   wrap: { alignSelf: "stretch", gap: 6 },
-  label: { color: C.text.DEFAULT, lineHeight: C.lineHeight.LABEL },
+  label: { lineHeight: C.lineHeight.LABEL },
   webNoOutline: {
     outlineStyle: "none",
     outlineWidth: 0,
@@ -91,13 +97,10 @@ const styles = StyleSheet.create({
     minHeight: 120,
     borderWidth: C.borderWidth.INTERACTIVE,
     borderRadius: C.borderRadius.LARGE,
-    backgroundColor: C.surface.DEFAULT,
-    color: C.text.DEFAULT,
     padding: 16,
   },
   counter: {
     alignSelf: "flex-end",
-    color: C.text.MUTED,
     fontSize: C.fontSize.CAPTION,
   },
 })
