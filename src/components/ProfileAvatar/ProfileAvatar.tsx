@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View } from "react-native"
 import { Image } from "../Image/Image"
 import { IconProfile } from "../Icons/IconProfile"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { hasProfileImage } from "../../utils/profileImage"
 
 type AvatarSize = "2xs" | "xs" | "sm" | "md" | number
@@ -29,6 +30,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
   onPress,
   darkMode = false,
 }) => {
+  const { colors } = useLavexTheme()
   const px =
     typeof size === "number"
       ? Math.max(24, size < 24 ? (console.warn("ProfileAvatar: tamanho mínimo é 24"), 24) : size)
@@ -64,19 +66,13 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
           width: px,
           height: px,
           borderRadius: px / 2,
-          backgroundColor: darkMode
-            ? Constants.styles.theme.dark.background.subtle
-            : Constants.styles.backgroundColor.GRAY,
+          backgroundColor: colors.surfaceMuted,
         },
       ]}
     >
       <IconProfile
         size={Math.round(px * 0.45)}
-        color={
-          darkMode
-            ? Constants.styles.theme.dark.text.muted
-            : Constants.styles.textColor.INFO
-        }
+        color={Constants.styles.textColor.INFO}
       />
     </View>
   )
