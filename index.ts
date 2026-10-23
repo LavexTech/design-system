@@ -80,6 +80,12 @@ export { IconButtonLarge } from "./src/components/IconButtonLarge/IconButtonLarg
 
 // ------------------------------------------------------------
 
+// Theme
+export { LavexThemeProvider, useLavexTheme } from "./src/theme/LavexThemeProvider";
+export type { LavexTheme, LavexThemeProviderProps } from "./src/theme/LavexThemeProvider";
+export { lightColors, darkColors } from "./src/theme/tokens";
+export type { ThemeColors, ThemeMode } from "./src/theme/tokens";
+
 // Fonts
 export { useFonts } from "./src/fontSetup";
 
