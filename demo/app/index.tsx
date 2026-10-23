@@ -160,13 +160,13 @@ function Showcase() {
   const tabs = ['Pedido', 'Histórico', 'Conta'];
   const icons = [
     (isActive: boolean) => (
-      <IconMessage fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
+      <IconMessage color={isActive ? colors.accent : colors.textMuted} width={24} height={24} />
     ),
     (isActive: boolean) => (
-      <IconHistory fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
+      <IconHistory color={isActive ? colors.accent : colors.textMuted} width={24} height={24} />
     ),
     (isActive: boolean) => (
-      <IconProfile fill={isActive ? Constants.styles.color.BLUE : Constants.styles.textColor.DEFAULT} width={24} height={24} />
+      <IconProfile color={isActive ? colors.accent : colors.textMuted} width={24} height={24} />
     ),
   ];
 
