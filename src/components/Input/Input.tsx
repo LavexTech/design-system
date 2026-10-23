@@ -200,14 +200,14 @@ export const Input: React.FC<InputProps> = ({
               fontSize: C.fontSize.BODY * fontScale,
               fontFamily: fieldFont,
               paddingRight: rightElement || (disabled && !hideDisabledIcon) ? 4 : 16,
-              color: disabled ? colors.textMuted : colors.text,
+              color: disabled ? C.text.MUTED : colors.text,
             },
             Platform.OS === "web" ? styles.webNoOutline : null,
           ]}
         />
         {disabled && hideDisabledIcon ? null : disabled ? (
           <View style={[styles.right, styles.lock]}>
-            <IconLock size={18} color={colors.textMuted} />
+            <IconLock size={18} color={C.text.MUTED} />
           </View>
         ) : rightElement ? (
           <View style={styles.right}>{rightElement}</View>
