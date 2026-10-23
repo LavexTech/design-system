@@ -1,10 +1,9 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react"
 import { View, TouchableOpacity, Text, StyleSheet, Platform, Animated } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { CountBadge } from "../CountBadge/CountBadge"
 
-const TAB_ACTIVE_COLOR = Constants.styles.brand.DARK
-const TAB_INACTIVE_COLOR = Constants.styles.text.MUTED
 const TAB_TRANSITION_MS = 400
 const BUBBLE_TRANSITION_MS = 300
 const BUBBLE_TOP = 12
@@ -28,9 +27,9 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   badges,
   activePage,
   onNavigate,
-  darkMode = false,
   fontScale = 1,
 }: NavigationBarProps) => {
+  const { colors } = useLavexTheme()
   const [barWidth, setBarWidth] = useState(0)
   const bubbleX = useRef(new Animated.Value(0)).current
   const bubbleReady = useRef(false)
@@ -54,7 +53,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <View
-      style={[styles.container, darkMode ? styles.containerDark : null]}
+      style={[styles.container, { backgroundColor: colors.surface, borderTopColor: colors.border }]}
       onLayout={(event) => {
         const w = event.nativeEvent.layout.width
         setBarWidth((prev) => (Math.abs(prev - w) < 0.5 ? prev : w))
@@ -64,7 +63,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
         pointerEvents="none"
         style={[
           styles.bubble,
-          { top: BUBBLE_TOP, transform: [{ translateX: bubbleX }] },
+          { backgroundColor: colors.surfaceAccent, top: BUBBLE_TOP, transform: [{ translateX: bubbleX }] },
         ]}
       />
       {pages.map((page, index) => (
@@ -148,7 +147,8 @@ const TabFace = memo(function TabFace({
   label: string
   fontScale: number
 }) {
-  const color = isActive ? TAB_ACTIVE_COLOR : TAB_INACTIVE_COLOR
+  const { colors } = useLavexTheme()
+  const color = isActive ? colors.accent : colors.textMuted
 
   return (
     <View style={styles.face}>
@@ -179,14 +179,8 @@ const styles = StyleSheet.create({
     width: "100%",
     minHeight: Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT,
     flexDirection: "row",
-    backgroundColor: Constants.styles.surface.DEFAULT,
     borderTopWidth: Constants.styles.borderWidth.HAIRLINE,
-    borderTopColor: Constants.styles.border.SOFT,
     shadowColor: Constants.styles.shadowColor.DEFAULT,
-  },
-  containerDark: {
-    backgroundColor: Constants.styles.theme.dark.background.surface,
-    borderTopColor: Constants.styles.theme.dark.border.default,
   },
   tab: {
     flex: 1,
@@ -220,7 +214,6 @@ const styles = StyleSheet.create({
     width: BUBBLE_WIDTH,
     height: BUBBLE_HEIGHT,
     borderRadius: BUBBLE_HEIGHT / 2,
-    backgroundColor: Constants.styles.surface.ACCENT,
     zIndex: 0,
   },
   iconContainer: {

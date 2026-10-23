@@ -2,6 +2,8 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
+import { ThemeColors } from "../../theme/tokens"
 
 export type TagVariant =
   | "primary-outline"
@@ -18,27 +20,26 @@ type TagProps = {
   fontScale?: number
 }
 
-const variantStyles: Record<
-  TagVariant,
-  { backgroundColor: string; color: string }
-> = {
+const variantStyles = (
+  theme: ThemeColors,
+): Record<TagVariant, { backgroundColor: string; color: string }> => ({
   "primary-outline": {
-    backgroundColor: Constants.styles.surface.ACCENT,
-    color: Constants.styles.brand.DARK,
+    backgroundColor: theme.surfaceAccent,
+    color: theme.accent,
   },
   "success-outline": {
-    backgroundColor: Constants.styles.surface.ACCENT,
-    color: Constants.styles.brand.DARK,
+    backgroundColor: theme.surfaceAccent,
+    color: theme.accent,
   },
   "danger-outline": {
-    backgroundColor: Constants.styles.feedback.DANGER_SURFACE,
-    color: Constants.styles.text.DANGER,
+    backgroundColor: theme.surfaceDanger,
+    color: theme.danger,
   },
   "warning-outline": {
     backgroundColor: Constants.styles.feedback.WARNING_SURFACE,
     color: Constants.styles.feedback.WARNING_TEXT,
   },
-}
+})
 
 export const Tag: React.FC<TagProps> = ({
   text,
@@ -46,7 +47,8 @@ export const Tag: React.FC<TagProps> = ({
   size = "default",
   fontScale = 1,
 }) => {
-  const colors = variantStyles[variant]
+  const { colors: theme } = useLavexTheme()
+  const colors = variantStyles(theme)[variant]
   const isSm = size === "sm"
   const fontSize =
     (isSm
