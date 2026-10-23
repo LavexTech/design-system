@@ -3,7 +3,7 @@ import Eye from 'lucide-react-native/icons/eye'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconEye: React.FC<IconEyeProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Eye
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

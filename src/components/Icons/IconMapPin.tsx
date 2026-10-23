@@ -3,7 +3,7 @@ import MapPin from 'lucide-react-native/icons/map-pin'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconMapPin: React.FC<IconMapPinProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <MapPin
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

@@ -3,7 +3,7 @@ import LoaderCircle from 'lucide-react-native/icons/loader-circle'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconLoader: React.FC<IconLoaderProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <LoaderCircle
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

@@ -3,7 +3,7 @@ import ArrowDown from 'lucide-react-native/icons/arrow-down'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconArrowDown: React.FC<IconArrowDownProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ArrowDown
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

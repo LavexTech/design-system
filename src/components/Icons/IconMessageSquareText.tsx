@@ -3,7 +3,7 @@ import MessageSquareText from 'lucide-react-native/icons/message-square-text'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconMessageSquareText: React.FC<IconMessageSquareTextProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <MessageSquareText
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

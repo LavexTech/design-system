@@ -1,3 +1,5 @@
+import { useLavexTheme } from '../../theme/LavexThemeProvider'
+
 export type IconProps = {
   /** Stroke color (preferred). */
   color?: string
@@ -16,6 +18,12 @@ export const DEFAULT_STROKE_WIDTH = 2
 
 export function resolveIconColor(color?: string, fill?: string): string {
   return color ?? fill ?? DEFAULT_ICON_COLOR
+}
+
+/** Igual a `resolveIconColor`, mas sem `color`/`fill` usa `colors.text` do tema. */
+export function useIconColor(color?: string, fill?: string): string {
+  const { colors } = useLavexTheme()
+  return color ?? fill ?? colors.text
 }
 
 export function resolveIconSize(

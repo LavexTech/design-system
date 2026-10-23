@@ -3,7 +3,7 @@ import Waves from 'lucide-react-native/icons/waves-horizontal'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconWaves: React.FC<IconWavesProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Waves
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

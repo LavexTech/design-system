@@ -5,7 +5,7 @@ import { IconWaves } from './IconWaves'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -22,7 +22,7 @@ export const IconCircleWaves: React.FC<IconCircleWavesProps> = ({
   size,
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => {
-  const resolvedColor = resolveIconColor(color, fill)
+  const resolvedColor = useIconColor(color, fill)
   const resolvedSize = resolveIconSize(size, width, height)
   return (
     <View style={{ width: resolvedSize, height: resolvedSize }}>

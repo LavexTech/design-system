@@ -3,7 +3,7 @@ import Pencil from 'lucide-react-native/icons/pencil'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconPencil: React.FC<IconPencilProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Pencil
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

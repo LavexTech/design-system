@@ -3,7 +3,7 @@ import MessageCircle from 'lucide-react-native/icons/message-circle'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconMessage: React.FC<IconMessageProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <MessageCircle
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

@@ -3,7 +3,7 @@ import CircleCheckBig from 'lucide-react-native/icons/circle-check-big'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconCircleCheck: React.FC<IconCircleCheckProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <CircleCheckBig
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

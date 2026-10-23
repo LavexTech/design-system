@@ -3,7 +3,7 @@ import UserRound from 'lucide-react-native/icons/user-round'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconUserRound: React.FC<IconUserRoundProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <UserRound
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

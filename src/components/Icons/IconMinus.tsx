@@ -3,7 +3,7 @@ import Minus from 'lucide-react-native/icons/minus'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconMinus: React.FC<IconMinusProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <Minus
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

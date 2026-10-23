@@ -3,7 +3,7 @@ import CircleAlert from 'lucide-react-native/icons/circle-alert'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconExclamation: React.FC<IconExclamationProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <CircleAlert
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

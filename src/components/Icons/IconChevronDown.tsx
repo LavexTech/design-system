@@ -3,7 +3,7 @@ import ChevronDown from 'lucide-react-native/icons/chevron-down'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconChevronDown: React.FC<IconChevronDownProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ChevronDown
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

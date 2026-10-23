@@ -3,7 +3,7 @@ import House from 'lucide-react-native/icons/house'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconHome: React.FC<IconHomeProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <House
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />

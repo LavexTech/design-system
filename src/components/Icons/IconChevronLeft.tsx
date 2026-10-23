@@ -3,7 +3,7 @@ import ChevronLeft from 'lucide-react-native/icons/chevron-left'
 import {
   IconProps,
   DEFAULT_STROKE_WIDTH,
-  resolveIconColor,
+  useIconColor,
   resolveIconSize,
 } from './iconProps'
 
@@ -18,7 +18,7 @@ export const IconChevronLeft: React.FC<IconChevronLeftProps> = ({
   strokeWidth = DEFAULT_STROKE_WIDTH,
 }) => (
   <ChevronLeft
-    color={resolveIconColor(color, fill)}
+    color={useIconColor(color, fill)}
     size={resolveIconSize(size, width, height)}
     strokeWidth={strokeWidth}
   />
