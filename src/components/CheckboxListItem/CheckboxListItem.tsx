@@ -1,6 +1,7 @@
 import React from "react"
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { IconCheck } from "../Icons/IconCheck"
 
@@ -34,6 +35,7 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
   boxRadius = 6,
   verticalPadding,
 }) => {
+  const { colors } = useLavexTheme()
   const labelFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   return (
   <Pressable
@@ -45,20 +47,20 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
     style={({ pressed }) => [
       styles.row,
       verticalPadding != null ? { minHeight: 0, paddingVertical: verticalPadding } : null,
-      divider ? styles.divider : null,
+      divider ? [styles.divider, { borderBottomColor: colors.border }] : null,
       { opacity: pressed && !disabled ? 0.85 : 1 },
     ]}
   >
     <View
       style={[
         styles.box,
-        { width: boxSize, height: boxSize, borderRadius: boxRadius },
-        checked ? styles.boxOn : null,
+        { width: boxSize, height: boxSize, borderRadius: boxRadius, borderColor: colors.borderInteractive },
+        checked ? { backgroundColor: colors.accent, borderColor: colors.accent } : null,
       ]}
     >
-      {checked ? <IconCheck size={14 * (boxSize / 22)} color={C.color.WHITE} /> : null}
+      {checked ? <IconCheck size={14 * (boxSize / 22)} color={colors.background} /> : null}
     </View>
-    <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale, color: disabled ? C.text.MUTED : C.text.DEFAULT }]}>
+    <Text style={[styles.label, { fontFamily: labelFont, fontWeight: "normal", fontSize: C.fontSize.BODY * fontScale, color: disabled ? colors.textMuted : colors.text }]}>
       {label}
     </Text>
     {trailing}
@@ -68,16 +70,14 @@ export const CheckboxListItem: React.FC<CheckboxListItemProps> = ({
 
 const styles = StyleSheet.create({
   row: { alignSelf: "stretch", minHeight: 52, flexDirection: "row", alignItems: "center", gap: 14 },
-  divider: { borderBottomWidth: C.borderWidth.HAIRLINE, borderBottomColor: C.border.SOFT },
+  divider: { borderBottomWidth: C.borderWidth.HAIRLINE },
   box: {
     width: 22,
     height: 22,
     borderRadius: 6,
     borderWidth: C.borderWidth.INTERACTIVE,
-    borderColor: C.border.INTERACTIVE,
     alignItems: "center",
     justifyContent: "center",
   },
-  boxOn: { backgroundColor: C.brand.DARK, borderColor: C.brand.DARK },
   label: { flex: 1 },
 })

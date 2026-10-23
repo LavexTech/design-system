@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { TextBox as Text } from "../Text/Text"
 import { Button } from "../Button/Button"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 type ButtonVariant =
     | 'primary'
@@ -69,7 +70,7 @@ export const Modal: React.FC<ModalProps> = ({
 }: ModalProps) => {
     const { height: windowHeight } = useWindowDimensions()
     const insets = useSafeAreaInsets()
-    const theme = darkMode ? Constants.styles.theme.dark : Constants.styles.theme.light
+    const { colors } = useLavexTheme()
     const maxHeight =
         windowHeight -
         Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT -
@@ -103,8 +104,8 @@ export const Modal: React.FC<ModalProps> = ({
                         styles.card,
                         {
                             maxHeight,
-                            backgroundColor: theme.background.surface,
-                            borderColor: theme.border.default,
+                            backgroundColor: colors.surface,
+                            borderColor: colors.border,
                             ...(contentMinHeight ? { minHeight: contentMinHeight } : {}),
                         },
                     ]}

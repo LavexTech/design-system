@@ -9,6 +9,7 @@ import {
   type PanResponderGestureState,
 } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { IconTrash } from "../Icons/IconTrash"
 
 const DEFAULT_DELETE_WIDTH = 72
@@ -36,6 +37,7 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
   deleteWidth = DEFAULT_DELETE_WIDTH,
   swipeEnabled = true,
 }) => {
+  const { colors } = useLavexTheme()
   const translateX = useRef(new Animated.Value(0)).current
   const openRef = useRef(false)
   const dragStartX = useRef(0)
@@ -180,7 +182,7 @@ export const SwipeableListItem: React.FC<SwipeableListItemProps> = ({
       <Animated.View
         style={[
           styles.content,
-          { transform: [{ translateX }] },
+          { backgroundColor: colors.surface, borderColor: colors.border, transform: [{ translateX }] },
         ]}
         {...panResponder.panHandlers}
       >
@@ -216,10 +218,8 @@ const styles = StyleSheet.create({
   },
   content: {
     width: "100%",
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: Constants.styles.borderColor.LIGHT,
   },
   contentPressable: {
     width: "100%",

@@ -1,6 +1,7 @@
 import React from "react"
 import { Pressable, StyleSheet, View } from "react-native"
 import Constants from "../../constants/constants"
+import { useLavexTheme } from "../../theme/LavexThemeProvider"
 
 type RadioCardProps = {
   selected: boolean
@@ -20,7 +21,10 @@ export const RadioCard: React.FC<RadioCardProps> = ({
   showRadio = true,
   disabled = false,
   accessibilityLabel,
-}) => (
+}) => {
+  const { colors } = useLavexTheme()
+
+  return (
   <Pressable
     accessibilityRole="radio"
     accessibilityState={{ selected, disabled }}
@@ -30,20 +34,21 @@ export const RadioCard: React.FC<RadioCardProps> = ({
     style={({ pressed }) => [
       styles.card,
       {
-        borderColor: selected ? C.brand.DARK : C.border.INTERACTIVE,
-        backgroundColor: disabled ? C.surface.MUTED : C.surface.DEFAULT,
+        borderColor: selected ? colors.accent : colors.borderInteractive,
+        backgroundColor: disabled ? colors.surfaceMuted : colors.surface,
         opacity: pressed && !disabled ? 0.85 : 1,
       },
     ]}
   >
     {showRadio ? (
-      <View style={[styles.radio, { borderColor: selected ? C.brand.DARK : C.border.INTERACTIVE }]}>
-        {selected ? <View style={styles.dot} /> : null}
+      <View style={[styles.radio, { borderColor: selected ? colors.accent : colors.borderInteractive }]}>
+        {selected ? <View style={[styles.dot, { backgroundColor: colors.accent }]} /> : null}
       </View>
     ) : null}
     <View style={styles.body}>{children}</View>
   </Pressable>
-)
+  )
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -65,6 +70,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  dot: { width: 11, height: 11, borderRadius: 6, backgroundColor: C.brand.DARK },
+  dot: { width: 11, height: 11, borderRadius: 6 },
   body: { flex: 1 },
 })

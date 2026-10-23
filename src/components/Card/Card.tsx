@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Constants from "../../constants/constants";
+import { useLavexTheme } from "../../theme/LavexThemeProvider";
 
 export interface CardProps {
   title?: string;
@@ -10,13 +11,14 @@ export interface CardProps {
   fontScale?: number;
 }
 
-export const Card: React.FC<CardProps> = ({ title, children, onClick, darkMode = false, fontScale = 1 }) => {
+export const Card: React.FC<CardProps> = ({ title, children, onClick, fontScale = 1 }) => {
+  const { colors } = useLavexTheme();
   const dynamicCardStyle = {
-    backgroundColor: darkMode ? Constants.styles.theme.dark.background.surface : Constants.styles.theme.light.background.surface,
-    borderColor: darkMode ? Constants.styles.theme.dark.border.default : Constants.styles.theme.light.border.default,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
   };
   const dynamicTitleStyle = {
-    color: darkMode ? Constants.styles.theme.dark.text.default : Constants.styles.theme.light.text.default,
+    color: colors.text,
     fontSize: Constants.styles.fontSize.SMALL * fontScale,
   };
 
@@ -41,10 +43,8 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     alignSelf: "stretch",
-    backgroundColor: Constants.styles.backgroundColor.WHITE,
     borderRadius: Constants.styles.borderRadius.MEDIUM,
     borderWidth: Constants.styles.borderWidth.THIN,
-    borderColor: Constants.styles.borderColor.LIGHT,
     padding: Constants.styles.spacing.MEDIUM,
     marginBottom: Constants.styles.spacing.SMALL,
   },
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     fontSize: Constants.styles.fontSize.SMALL,
     fontWeight: Constants.styles.fontWeight.BOLD,
     fontFamily: Constants.styles.fontFamily.REGULAR,
-    color: Constants.styles.textColor.DEFAULT,
     marginBottom: Constants.styles.spacing.SMALL,
     textAlign: "left",
   },
