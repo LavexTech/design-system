@@ -1578,3 +1578,4 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `IconButtonLarge`: `icon` aceita `message-square-text`, `qr-code` e `truck`.
 - Ícones: sem `color`/`fill`, a cor é `colors.text` (`useIconColor`).
 - `demo/`: toggle "Tema escuro" no topo envolve a vitrine em `LavexThemeProvider`. Seção "Tema" com os componentes da regra 4 que faltavam.
+- `tailwind.config.js`: as cores da escala estavam com aspas duplicadas (`''#E6F7F6''`), sintaxe inválida que impedia o Metro do `demo/` de carregar a config. Agora é uma string simples; os valores não mudaram.
