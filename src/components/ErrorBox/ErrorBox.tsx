@@ -13,7 +13,7 @@ export interface ErrorBoxProps {
 const C = Constants.styles
 
 export const ErrorBox: React.FC<ErrorBoxProps> = ({ title, details }) => {
-  const { colors } = useLavexTheme()
+  const { mode, colors } = useLavexTheme()
   const regular = useResolvedFontFamily(C.fontFamily.REGULAR)
   const bold = useResolvedFontFamily(C.fontFamily.BOLD)
 
@@ -22,7 +22,7 @@ export const ErrorBox: React.FC<ErrorBoxProps> = ({ title, details }) => {
       <View style={[styles.badge, { backgroundColor: colors.danger }]}>
         <IconClose size={32} color={colors.surfaceDanger} strokeWidth={3} />
       </View>
-      <Text style={[styles.title, { fontFamily: bold, fontWeight: bold ? "normal" : "700" }]}>{title}</Text>
+      <Text style={[styles.title, { color: mode === "dark" ? colors.text : C.color.BLACK, fontFamily: bold, fontWeight: bold ? "normal" : "700" }]}>{title}</Text>
       <Text style={[styles.details, { color: colors.text, fontFamily: regular, fontWeight: regular ? "normal" : "400" }]}>{details}</Text>
     </View>
   )
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    color: C.color.BLACK,
     textAlign: "center",
     fontSize: C.fontSize.TITLE,
     lineHeight: C.lineHeight.TITLE,

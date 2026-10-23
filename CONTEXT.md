@@ -225,7 +225,7 @@ Check e número sobre `accent` (`CheckboxListItem`, `Timeline`, `PaymentButton`,
 | `Button` | texto branco em `danger` e na confirmação |
 | `Tag` | `warning-outline`: `#FFF4E5` / `#8A5A00` |
 | `StatusBanner` | `info`: fundo `#EEFBF8`, ícone `#0B7566`, texto `#2D3B42`. `dark`: ícone `#3CDBC0` |
-| `ErrorBox` | título `#000000` |
+| `ErrorBox` | título `#000000` no claro. No escuro o título usa `text`, para não ficar preto sobre `surfaceDanger` |
 | `EmptyState` | círculo `#E6F7F6` |
 | `SwipeableListItem` | trilho de excluir `#DC2626`, lixeira branca |
 | `IconButtonLarge` | caixa do ícone `#F4F4F5`, ícone `#2D3B42` |
@@ -1574,7 +1574,7 @@ Se a mudança atravessa repositórios (ex.: componente novo consumido pelo `app-
 - `LavexThemeProvider` (`mode: "light" | "dark"`, padrão `"light"`) e `useLavexTheme()`. Tokens em `src/theme/tokens.ts`. Ver "Tema" em §5.
 - Sem provider, as cores são as de antes. Com `mode="dark"`, leem o tema: textos (`Heading`, `Text`, `Info`, `Title`, `Subtitle`, `MainTitle`), campos (`Input` e derivados, `TextArea`, `Select`, `SearchInput`, `Toggle`), `Button`, `NavigationBar`, `TopHeader`, `CountBadge`, `Tag`, `Modal`, `Divider`, `Card`, `List`, `SimpleTable`, `EmptyState`, `StatusBanner`, `ErrorBox`, `RadioCard`, `CheckboxListItem`, `QuantityStepper`, `SwipeableListItem`, `IconButtonLarge`, `ProfileAvatar`, `ShortStarRating`, `DarkInformationBox`, `DarkInformationBoxLarge`, `Timeline`, `ImageUploader`, `PhotoSkeleton`, `PaymentButton`, `Message`, `InputChat` e os ícones. `Grid`, `UserCardBio` e `UserInfo` herdam pelos filhos.
 - `darkMode` fica na assinatura e é ignorada. `Text`, `Info`, `Title`, `Card`, `Modal`, `Divider`, `NavigationBar`, `Select`, `Toggle` e `ProfileAvatar` deixaram de ler `Constants.styles.theme.dark`.
-- `Input`, `TextArea`, `SearchInput` e `InputChat` pedem `keyboardAppearance="dark"` no tema escuro.
+- `Input`, `TextArea`, `SearchInput` e `InputChat` pedem `keyboardAppearance="dark"` no tema escuro. No claro, `Input` segue com `"light"` e os outros três seguem sem a prop (o teclado acompanha o sistema), como antes.
 - `IconTruck`: wrapper de `lucide-react-native/icons/truck`, exportado no `index.ts`.
 - `IconButtonLarge`: `icon` aceita `message-square-text`, `qr-code` e `truck`.
 - Ícones: sem `color`/`fill`, a cor é `colors.text` (`useIconColor`).

@@ -51,7 +51,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
         onChangeText={onChange}
         placeholder={placeholder}
         placeholderTextColor={C.text.PLACEHOLDER}
-        keyboardAppearance={mode === "dark" ? "dark" : "light"}
+        keyboardAppearance={mode === "dark" ? "dark" : undefined}
         autoFocus={autoFocus}
         returnKeyType="search"
         onSubmitEditing={onSubmit}

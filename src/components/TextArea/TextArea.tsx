@@ -57,7 +57,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
         value={value}
         placeholder={placeholder}
         placeholderTextColor={C.text.PLACEHOLDER}
-        keyboardAppearance={mode === "dark" ? "dark" : "light"}
+        keyboardAppearance={mode === "dark" ? "dark" : undefined}
         onChangeText={(text) => {
           if (maxLength && text.length > maxLength) return
           onChange(text)

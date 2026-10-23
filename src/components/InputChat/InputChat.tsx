@@ -35,7 +35,7 @@ export function InputChat({
         onChangeText={onChange}
         placeholder={placeholder}
         placeholderTextColor={C.text.PLACEHOLDER}
-        keyboardAppearance={mode === "dark" ? "dark" : "light"}
+        keyboardAppearance={mode === "dark" ? "dark" : undefined}
         returnKeyType="send"
         onSubmitEditing={handleSend}
         style={[
