@@ -102,7 +102,7 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 
 ### 3.5 `Tag` deixa de ser contorno
 
-**O que muda:** a tag passa a ser preenchida (fundo claro, texto escuro), raio 12, texto 13 px peso 700. Os nomes de variante continuam com o sufixo `-outline` por compatibilidade, apesar de não haver mais contorno — é uma inconsistência assumida e registrada como dívida no `CONTEXT.md`.
+**O que muda:** a tag passa a ser preenchida (fundo claro, texto escuro), raio 12, texto 13 px peso 700. Os nomes de variante continuam com o sufixo `-outline` por compatibilidade, apesar de não haver mais contorno — é uma inconsistência assumida e registrada como dívida em `context/dividas-tecnicas.md`.
 
 **Quebra compilação?** Não.
 
@@ -110,7 +110,7 @@ Esse valor **precisa** virar 76, junto com todo cálculo derivado (padding de `S
 
 ### 3.6 `darkMode` passa a ser aceita e ignorada
 
-**O que muda:** os protótipos 2.0 definem apenas o tema claro. Componentes reescritos continuam **aceitando** a prop `darkMode` e passam a não fazer nada com ela. Isso já acontece hoje com `FAB`, `Image`, `Tag` e vários outros (dívida nº 5 do `CONTEXT.md`); a migração só generaliza.
+**O que muda:** os protótipos 2.0 definem apenas o tema claro. Componentes reescritos continuam **aceitando** a prop `darkMode` e passam a não fazer nada com ela. Isso já acontece hoje com `FAB`, `Image`, `Tag` e vários outros (ver `context/dividas-tecnicas.md`); a migração só generaliza.
 
 **Por que não remover a prop:** o `app-client-lavex` passa `darkMode` em dezenas de chamadas. Remover quebraria o TypeScript de tudo isso de uma vez, sem ganho real.
 

@@ -1,3 +1,5 @@
+> **Desatualizado.** Este arquivo descreve uma versão antiga (gluestack, props antigas). A referência atual é o [`CONTEXT.md`](./CONTEXT.md) e a pasta [`context/`](./context/).
+
 # Lavex Design System Documentation
 
 This documentation describes the Lavex Design System components and capabilities for AI usage.

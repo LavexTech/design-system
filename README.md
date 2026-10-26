@@ -1,5 +1,7 @@
 # Lavex Design System
 
+> A referência atual de componentes, props, tokens e padrões é o [`CONTEXT.md`](./CONTEXT.md) e a pasta [`context/`](./context/). Os exemplos abaixo podem estar desatualizados (ex.: `Title1` não existe; use `Heading` ou `Title`).
+
 Um sistema de design reutilizável para aplicações React Native.
 
 ## Instalação
