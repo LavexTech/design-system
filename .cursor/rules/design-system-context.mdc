@@ -1,45 +1,52 @@
 ---
-description: Alterações em componentes do design system exigem atualizar o CONTEXT.md
+description: Alterações no design system exigem atualizar o CONTEXT.md e a pasta context/
 alwaysApply: true
 ---
 
-# Design system — `CONTEXT.md` sempre atualizado
+# Design system — contexto sempre atualizado
 
-`CONTEXT.md` na raiz deste repositório é o **resumo completo** do design system: tokens, padrões, bibliotecas, catálogo de componentes, contrato de props, descrição visual, comportamento, variantes e dívidas técnicas. Ele precisa ser suficiente, sozinho, para alguém (ou uma IA) entender **para que serve**, **como se parece renderizado**, **como se comporta** e **quais variantes tem** cada componente — sem abrir o código.
+O contexto do design system começa em `CONTEXT.md` (produto, personas, estrutura, padrões, fluxo de trabalho) e continua em `context/`:
 
-## Obrigatório no mesmo conjunto de mudanças
+- `context/tokens-e-tema.md` — `Constants.styles`, tema claro/escuro, fontes, `tailwind.config.js`
+- `context/componentes-base.md` — textos, campos, ações, navegação
+- `context/componentes-estrutura-e-dominio.md` — contêineres, feedback, mídia, usuário, pedido, oferta, chat
+- `context/icones-e-utils.md` — ícones e utilitários
+- `context/consumidores.md` — quais telas dos apps usam cada componente; protótipos
+- `context/dividas-tecnicas.md` — o que está torto de propósito
 
-Atualize o `CONTEXT.md` na **mesma branch e no mesmo commit** (ou no commit de fechamento da issue) sempre que:
+Leia o arquivo do assunto antes de mudar o código. Juntos, eles precisam bastar para alguém (ou uma IA) entender **para que serve**, **como se parece**, **como se comporta** e **quais variantes tem** cada componente sem abrir o código.
 
-- criar, renomear ou remover um componente ou ícone;
-- adicionar, remover ou alterar prop, tipo de prop ou valor default;
-- mudar aparência: cor, background, borda, arredondamento, espaçamento, alinhamento, tipografia, tamanho, sombra;
-- mudar comportamento: estados, interação, gesto, animação, foco, validação, loading, disabled;
-- criar, remover ou renomear variante;
-- alterar `src/constants/constants.ts`, `tailwind.config.js` ou `src/ui/gluestack-ui-provider/config.ts`;
-- alterar `index.ts` (export público), `src/ui/*` ou `src/utils/*`;
+## Obrigatório no mesmo PR
+
+Atualize o arquivo de contexto certo sempre que:
+
+- criar, renomear ou remover componente, ícone ou export do `index.ts`;
+- adicionar, remover ou alterar prop, tipo de prop, valor default ou variante;
+- mudar aparência (cor, fundo, borda, raio, espaçamento, alinhamento, tipografia, tamanho, sombra) ou comportamento (estado, interação, gesto, animação, foco, validação, disabled);
+- alterar `src/constants/constants.ts`, `src/theme/*`, `tailwind.config.js` ou `src/utils/*`;
 - adicionar ou remover dependência;
-- criar ou quitar dívida técnica.
+- criar ou quitar dívida técnica;
+- mudar quais componentes um app usa (atualize `context/consumidores.md`).
 
-## O que cada componente precisa ter no documento
+Toda alteração também exige bump de `version` no `package.json`.
+
+## O que cada componente precisa ter no catálogo
 
 1. **Para que serve** — uma linha.
 2. **Contrato** — tabela de props com nome, tipo, default e obrigatoriedade.
-3. **Aparência** — descrição concreta do que se vê, com valores reais (ex.: "pílula de raio 999, fundo `#059669`, texto branco Roboto-Regular 18 centralizado, padding 16/12, sombra 2 px").
-4. **Comportamento e variantes** — estados, interação e o que muda visualmente em cada variante.
-5. **Esqueleto de layout em ASCII** — obrigatório em componente composto (mais de um elemento visual). Prosa descreve valores bem, arranjo mal: o diagrama mostra a posição relativa dos elementos, alinhamentos, quem estica e quem mede pelo conteúdo. Mantenha curto (3–8 linhas) e em ASCII puro.
-
-Se o componente usa um primitivo de `src/ui/*`, verifique antes de descrever: fonte (os primitivos não definem `fontFamily` e caem na fonte do sistema), estados `data-[hover]`/`data-[active]`, e se algum `style` inline do componente sobrescreve o `className`.
+3. **Aparência** — valores reais resolvidos (hex do tema claro ou token do tema, px, fonte).
+4. **Comportamento e variantes** — estados, interação, o que muda em cada variante.
+5. **Esqueleto ASCII** — obrigatório em componente composto; curto (3–8 linhas).
 
 ## Cuidados
 
-- Documentar o **código atual**, não a intenção. Comportamento divergente do desejado entra como está e é registrado na seção de dívidas técnicas.
-- Valores devem bater com o código: resolva os tokens (`Constants.styles.*`, CSS vars do gluestack) para o valor final ao descrever a aparência.
-- Texto em pt-BR; identificadores de código em inglês.
-- Componente novo também precisa de export em `index.ts` — documentar sem exportar deixa o componente inacessível para os apps.
-- Mudança consumida por outro repositório (`app-client-lavex`, `app-provider-lavex`) exige atualizar o `CONTEXT.md` **daquele** repositório também.
-- Toda alteração exige bump de `version` no `package.json` (regra `version-bump`).
+- Documente o **código atual**, não a intenção. Divergência vai para `context/dividas-tecnicas.md`.
+- Edite a entrada do componente; não acrescente "adendos" no fim dos arquivos.
+- Cada arquivo de contexto deve ficar abaixo de 100 kB; divida por assunto se crescer.
+- Texto em pt-BR; identificadores em inglês.
+- Componente novo precisa de export em `index.ts`.
+- Mudança consumida por `app-client-lavex` ou `app-provider-lavex` exige atualizar o `CONTEXT.md` daquele repositório também.
 
 ## Review de PR
 
-`CONTEXT.md` desatualizado em PR que toca componente, token, ícone ou export é achado **bloqueante**.
+Contexto desatualizado em PR que toca componente, token, ícone ou export é achado **bloqueante**.
