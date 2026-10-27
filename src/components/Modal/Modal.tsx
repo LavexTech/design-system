@@ -1,5 +1,6 @@
 import React from "react"
 import {
+    KeyboardAvoidingView,
     Modal as RNModal,
     Pressable,
     ScrollView,
@@ -92,7 +93,9 @@ export const Modal: React.FC<ModalProps> = ({
             onRequestClose={onClose}
             statusBarTranslucent
         >
-            <View style={styles.overlay}>
+            {/* Com teclado aberto a área encolhe e o cartão sobe: campos e botões nunca ficam atrás dele.
+                Dentro do RN Modal a KAV começa no topo da tela, então não precisa de offset. */}
+            <KeyboardAvoidingView style={styles.overlay} behavior="padding">
                 <Pressable
                     accessibilityRole="button"
                     accessibilityLabel="Fechar"
@@ -115,7 +118,11 @@ export const Modal: React.FC<ModalProps> = ({
                             <Text text={title} position="center" darkMode={darkMode} fontScale={fontScale} />
                         </View>
                     ) : null}
-                    <ScrollView style={{ maxHeight: maxHeight * 0.7 }} contentContainerStyle={styles.body}>
+                    <ScrollView
+                        style={[styles.scroll, { maxHeight: maxHeight * 0.7 }]}
+                        contentContainerStyle={styles.body}
+                        keyboardShouldPersistTaps="handled"
+                    >
                         {children}
                     </ScrollView>
                     <View style={[styles.footer, hasConfirm ? (stackedButtons ? styles.footerStacked : styles.footerConfirm) : styles.footerSingle]}>
@@ -148,7 +155,7 @@ export const Modal: React.FC<ModalProps> = ({
                         ) : null}
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </RNModal>
     )
 }
@@ -171,6 +178,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 24,
         overflow: "hidden",
+        // Encolhe junto com a área visível quando o teclado abre
+        flexShrink: 1,
+    },
+    scroll: {
+        flexShrink: 1,
     },
     header: {
         alignItems: "center",
