@@ -118,6 +118,7 @@ Não é tocável. Tipos `TagVariant` e `TagSize` não são exportados no `index.
 ```
 
 - `RN Modal` transparente com `animationType="fade"` e `statusBarTranslucent`; cobre a stack de navegação. `onRequestClose` (voltar do Android) chama `onClose`.
+- Teclado: o overlay é uma `KeyboardAvoidingView` (`behavior="padding"` nas duas plataformas). Com o teclado aberto o cartão sobe e encolhe junto com a área visível; o corpo rola e mantém toques (`keyboardShouldPersistTaps="handled"`). Campos dentro do `Modal` nunca ficam atrás do teclado.
 - Altura máxima do cartão = altura da janela − 76 (`NAVIGATION_BAR_HEIGHT`) − safe area inferior. O corpo é um `ScrollView` limitado a 70% disso.
 - Título: `Text` medium (16) centralizado.
 - Modo confirmação: se `buttonText` ainda for `'OK'` vira `"Cancelar"`; `buttonVariant` `'default'` vira `'default-outline'`. Confirmar chama `onConfirm` e, com `closeOnConfirm`, `onClose`.
