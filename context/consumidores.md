@@ -58,8 +58,9 @@ O pacote é distribuído como **código-fonte TS/TSX**; o Metro do app compila `
 | `components/CancelledOrderContent.tsx`, `CompletedOrderContent.tsx` | `Button`, `DarkInformationBoxLarge`, `Heading` |
 | `components/PendingRatingContent.tsx` | `Button`, `IconCheck`, `ProfileAvatar`, `TextArea` |
 | `components/OfferCard.tsx`, `ProviderUserCard.tsx` | `IconStar`, `Info`, `ProfileAvatar`, `ShortStarRating` |
-| `components/ProviderRatingsScreen.tsx` | `Button`, `Heading`, `IconChevronLeft`, `ProfileAvatar`, `ShortStarRating`, `Text` |
-| `components/OfferAcceptModal.tsx` | `Button`, `Divider`, `Toggle` |
+| `components/ProviderRatingsDrawer.tsx` | `Button`, `Drawer`, `Heading`, `ProfileAvatar`, `ShortStarRating`, `Text`, `useDrawerScroll` |
+| `components/PickUpChoiceDrawer.tsx` | `Button`, `Drawer`, `RadioCard`, `Text` |
+| `components/OrderNegotiationActions.tsx` | `Button` |
 | `components/PaymentCardsModal.tsx` | `Button`, `Heading`, `PaymentButton` |
 | `components/CreditCardItem.tsx` | `Button`, `IconTrash`, `Tag` |
 | `components/OrderSummary.tsx` | `IconChevronDown`, `IconPlus`, `ImageUploader`, `Tag` |

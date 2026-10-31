@@ -49,6 +49,8 @@ export { FAB } from "./src/components/FAB/FAB";
 export { Tag } from "./src/components/Tag/Tag";
 export { Grid, GridItem } from "./src/components/Grid/Grid";
 export { Modal } from "./src/components/Modal/Modal";
+export { Drawer, useDrawerScroll } from "./src/components/Drawer/Drawer";
+export type { DrawerProps } from "./src/components/Drawer/Drawer";
 export { UserInfo } from "./src/components/UserInfo/UserInfo";
 export { Accordion, AccordionItem } from "./src/components/Accordion/Accordion";
 export { Message } from "./src/components/Message/Message";
