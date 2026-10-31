@@ -28,6 +28,8 @@ const CLOSE_ICON_SIZE = 24
 type DrawerScroll = {
     onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
     scrollEventThrottle: number
+    /** Sem o rubber-band do iOS: no topo, puxar para baixo move só a drawer. */
+    bounces: boolean
 }
 
 const DrawerScrollContext = createContext<DrawerScroll | null>(null)
@@ -35,10 +37,11 @@ const DrawerScrollContext = createContext<DrawerScroll | null>(null)
 /**
  * Para listas roláveis dentro da `Drawer`: espalhe o retorno na `ScrollView`/`FlatList`
  * (`<FlatList {...useDrawerScroll()} />`). Assim o swipe para baixo só fecha a drawer com a lista no topo.
+ * Não sobrescreva `onScroll` depois do spread: chame o `onScroll` devolvido dentro do seu.
  * Fora de uma `Drawer`, devolve um handler vazio.
  */
 export function useDrawerScroll(): DrawerScroll {
-    return useContext(DrawerScrollContext) ?? { onScroll: () => undefined, scrollEventThrottle: 16 }
+    return useContext(DrawerScrollContext) ?? { onScroll: () => undefined, scrollEventThrottle: 16, bounces: true }
 }
 
 export type DrawerProps = {
@@ -68,11 +71,20 @@ export const Drawer: React.FC<DrawerProps> = ({
     const { height: windowHeight } = useWindowDimensions()
     const insets = useSafeAreaInsets()
     const { colors } = useLavexTheme()
-    const sheetHeight = Math.round(windowHeight * Math.min(Math.max(heightRatio, 0.1), 1))
+    // Nunca passa da área segura do topo: o X fica fora do notch e da status bar
+    const sheetHeight = Math.min(
+        Math.round(windowHeight * Math.min(Math.max(heightRatio, 0.1), 1)),
+        windowHeight - insets.top
+    )
+    const sheetHeightRef = useRef(sheetHeight)
+    sheetHeightRef.current = sheetHeight
 
     const [mounted, setMounted] = useState(visible)
     const translateY = useSharedValue(sheetHeight)
+    /** Saída em andamento (interna ou por fora): novos pedidos de fechar são ignorados. */
     const closingRef = useRef(false)
+    /** A saída interna terminou e o app foi avisado: ao receber `visible=false`, desmonta sem animar de novo. */
+    const closedRef = useRef(false)
     const atTopRef = useRef(true)
     const onCloseRef = useRef(onClose)
     useEffect(() => {
@@ -80,30 +92,41 @@ export const Drawer: React.FC<DrawerProps> = ({
     }, [onClose])
 
     const notifyClosed = useCallback(() => {
-        closingRef.current = false
+        closedRef.current = true
         onCloseRef.current()
     }, [])
 
+    // Só `visible` dispara a animação: mudar a altura da janela (giro, resize na web) não reabre a drawer
     useEffect(() => {
+        const height = sheetHeightRef.current
         if (visible) {
             closingRef.current = false
+            closedRef.current = false
             atTopRef.current = true
             setMounted(true)
-            translateY.value = sheetHeight
+            translateY.value = height
             translateY.value = withTiming(0, { duration: ANIMATION_MS, easing: Easing.out(Easing.cubic) })
             return
         }
+        if (closedRef.current) {
+            setMounted(false)
+            return
+        }
         // Fechada por fora (ex.: o app navegou): sai com a mesma animação e desmonta
+        closingRef.current = true
         translateY.value = withTiming(
-            sheetHeight,
+            height,
             { duration: ANIMATION_MS, easing: Easing.in(Easing.cubic) },
             (finished) => {
                 if (finished) runOnJS(setMounted)(false)
             }
         )
-    }, [visible, sheetHeight, translateY])
+    }, [visible, translateY])
 
-    /** Todas as formas de fechar passam por aqui: anima a saída e só então avisa o app. */
+    /**
+     * Todas as formas de fechar passam por aqui: anima a saída e só então avisa o app, que deve pôr
+     * `visible=false` no `onClose`.
+     */
     const dismiss = useCallback(() => {
         if (closingRef.current) return
         closingRef.current = true
@@ -144,6 +167,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                 atTopRef.current = event.nativeEvent.contentOffset.y <= 0
             },
             scrollEventThrottle: 16,
+            bounces: false,
         }),
         []
     )
@@ -181,7 +205,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                         <IconClose size={CLOSE_ICON_SIZE} color={colors.text} />
                     </Pressable>
                     <DrawerScrollContext.Provider value={scroll}>
-                        <View style={styles.body}>{children}</View>
+                        <View style={[styles.body, footer ? null : { paddingBottom: insets.bottom }]}>{children}</View>
                     </DrawerScrollContext.Provider>
                     {footer ? (
                         <View
@@ -235,7 +259,7 @@ const styles = StyleSheet.create({
         minHeight: 0,
     },
     footer: {
-        paddingHorizontal: 20,
+        paddingHorizontal: Constants.styles.spacing.LARGE,
         paddingTop: Constants.styles.spacing.MEDIUM,
         borderTopWidth: 1,
     },

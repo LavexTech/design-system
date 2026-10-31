@@ -40,7 +40,7 @@ O mesmo usuário pode ser cliente e Lavexer; o tema escuro existe para deixar cl
                            └── "Não consigo" / "Escolher outra oferta" ──────────────┘   (cliente cancela até ACCEPTED ──▶ CANCELLED)
 ```
 
-- O cliente tem **um pedido ativo por vez** (`PENDING`, `ACCEPTED`, `STARTED` ou `READY`). Sem pedido ativo, a aba Pedido abre o assistente de novo pedido; com pedido `COMPLETED` sem nota, exige a avaliação antes de outro pedido.
+- O cliente tem **um pedido ativo por vez** (`PENDING`, `OFFER_CHOSEN`, `PROVIDER_ACCEPTED`, `ACCEPTED`, `STARTED` ou `READY`). Sem pedido ativo, a aba Pedido abre o assistente de novo pedido; com pedido `COMPLETED` sem nota, exige a avaliação antes de outro pedido.
 - **Novo pedido**: o cliente escolhe peças de um catálogo (Roupa, Cama, Mesa, Banho), define quantidade e serviço por peça (Lavar e/ou Passar), anexa fotos opcionais e escolhe a entrega: `CLIENT` (leva e busca), `FLEX` (avalia pagar coleta) ou `PROVIDER` (a Lavexer busca e entrega).
 - **Ofertas**: Lavexers enviam ofertas (valor + taxa de coleta, distância, nota). O cliente ordena (menor/maior valor, distância, melhor avaliação), vê as avaliações da Lavexer numa `Drawer`, escolhe uma e conversa com ela no chat. Depois que a Lavexer topa, o cliente confirma e paga com **Pix** ou **cartão** salvo. A oferta só vale quando o pagamento é aprovado.
 - **Acompanhamento**: linha do tempo do pedido, chat com a Lavexer e com o suporte, aviso quando está pronto para retirada/entrega.
