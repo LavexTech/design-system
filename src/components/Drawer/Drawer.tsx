@@ -93,6 +93,8 @@ export const Drawer: React.FC<DrawerProps> = ({
 
     const notifyClosed = useCallback(() => {
         closedRef.current = true
+        // Desmonta já: se o app não puser `visible=false`, o Modal transparente não fica por cima bloqueando a tela
+        setMounted(false)
         onCloseRef.current()
     }, [])
 
@@ -142,12 +144,19 @@ export const Drawer: React.FC<DrawerProps> = ({
     const panResponder = useMemo(
         () =>
             PanResponder.create({
+                // Durante a saída o gesto é ignorado: arrastar cancelaria a animação e a drawer ficaria presa
+                // aberta com `closingRef` ligado, sem nenhuma forma de fechar
                 onMoveShouldSetPanResponderCapture: (_event, gesture) =>
-                    atTopRef.current && gesture.dy > DRAG_SLOP && Math.abs(gesture.dy) > Math.abs(gesture.dx),
+                    !closingRef.current &&
+                    atTopRef.current &&
+                    gesture.dy > DRAG_SLOP &&
+                    Math.abs(gesture.dy) > Math.abs(gesture.dx),
                 onPanResponderMove: (_event, gesture) => {
+                    if (closingRef.current) return
                     translateY.value = Math.max(0, gesture.dy)
                 },
                 onPanResponderRelease: (_event, gesture) => {
+                    if (closingRef.current) return
                     if (gesture.dy > sheetHeight * DISMISS_DRAG_RATIO || gesture.vy > DISMISS_VELOCITY) {
                         dismiss()
                         return
@@ -155,6 +164,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                     translateY.value = withTiming(0, { duration: 200, easing: Easing.out(Easing.cubic) })
                 },
                 onPanResponderTerminate: () => {
+                    if (closingRef.current) return
                     translateY.value = withTiming(0, { duration: 200, easing: Easing.out(Easing.cubic) })
                 },
             }),
