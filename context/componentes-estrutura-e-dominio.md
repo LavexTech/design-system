@@ -124,6 +124,36 @@ Não é tocável. Tipos `TagVariant` e `TagSize` não são exportados no `index.
 - Modo confirmação: se `buttonText` ainda for `'OK'` vira `"Cancelar"`; `buttonVariant` `'default'` vira `'default-outline'`. Confirmar chama `onConfirm` e, com `closeOnConfirm`, `onClose`.
 - Precisa de `SafeAreaProvider` (`react-native-safe-area-context`) na árvore do app.
 
+### `Drawer` (+ `useDrawerScroll`)
+
+Painel que sobe de baixo, sem barra de título nem chevron de voltar. Usado no app do cliente para as avaliações da Lavexer e para a escolha de entrega do pedido FLEX.
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `visible` | `boolean` | obrigatória |
+| `onClose` | `() => void` | obrigatória (chamada **depois** da animação de saída) |
+| `children` | `ReactNode` | obrigatória (ocupa o espaço entre o topo e o rodapé, `flex: 1`) |
+| `heightRatio` | `number` | `0.75` (fração da altura da janela; limitada a `[0,1; 1]`) |
+| `footer` | `ReactNode` | — (rodapé fixo com borda superior, padding 16 + safe area inferior) |
+| `closeAccessibilityLabel` | `string` | `'Fechar'` |
+
+```
+▒▒▒▒▒▒▒▒ fundo rgba(0,0,0,.5) (1/4 da tela) — toque fecha ▒▒▒▒▒▒▒▒
+┌──────────────────── ▔▔▔▔ ───────────────────── ✕ ┐  raio 16 no topo, fundo surface
+│ children (rola com useDrawerScroll)                 │  altura = janela × heightRatio
+│                                                     │  cobre a tab bar (RN Modal)
+├─────────────────────────────────────────────────────┤
+│ footer                                              │
+└─────────────────────────────────────────────────────┘
+```
+
+- `RN Modal` transparente, `animationType="none"`: a entrada é um slide-up de 300 ms (`Easing.out(cubic)`) com o fundo em fade; a saída é o slide-down inverso. O fundo acompanha o arraste.
+- Fecha por **X** (canto superior direito), **toque no fundo escuro**, **swipe para baixo** (arrastar mais de 25% da altura ou soltar com velocidade > 1) e **voltar do Android**. Todos passam pela mesma animação de saída e só então chamam `onClose`. Arraste curto volta para o lugar.
+- `visible` indo a `false` por fora (o app navegou) também anima a saída antes de desmontar.
+- Gesto: `PanResponder` na fase de captura, só para arraste vertical para baixo. Para não brigar com listas, o conteúdo rolável deve espalhar `useDrawerScroll()` (`<FlatList {...useDrawerScroll()} />`): com a lista fora do topo, o arraste rola a lista; no topo, desce a drawer. Sem isso, o arraste para baixo sempre desce a drawer.
+- Uma barrinha (grabber) no topo indica o arraste; não é barra de título.
+- Precisa de `SafeAreaProvider` na árvore do app.
+
 ### `Accordion` / `AccordionItem`
 
 Seções expansíveis, uma aberta por vez.
