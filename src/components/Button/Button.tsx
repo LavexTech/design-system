@@ -40,6 +40,8 @@ type ButtonBaseProps = {
   textStyle?: TextStyle
   icon?: React.ReactNode
   iconPosition?: "left" | "right" | "inline"
+  /** Só em `link`/`link-gray`: ocupa a largura e a altura de um botão padrão do `size`, com o texto centralizado (ex.: "Voltar" abaixo do botão principal). */
+  block?: boolean
 }
 
 type ButtonProps =
@@ -193,6 +195,7 @@ function ButtonComponent(props: ButtonProps) {
     textStyle,
     icon,
     iconPosition = "left",
+    block = false,
     needsConfirmation,
     confirmationText,
   } = props
@@ -205,6 +208,7 @@ function ButtonComponent(props: ButtonProps) {
   const metrics = SIZES[size]
   const isWeb = Platform.OS === "web"
   const isLink = variant === "link" || variant === "link-gray"
+  const isBlockLink = isLink && block
 
   useEffect(() => {
     if (!confirming) return
@@ -234,7 +238,7 @@ function ButtonComponent(props: ButtonProps) {
         const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming }, theme)
         return [
           styles.button,
-          isLink
+          isLink && !isBlockLink
             ? styles.link
             : {
                 height: metrics.height,

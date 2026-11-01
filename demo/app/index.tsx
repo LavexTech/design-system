@@ -72,6 +72,7 @@ import { Stepper } from "@src/components/Stepper/Stepper"
 import { Alert } from "@src/components/Alert/Alert"
 import { Stars } from "@src/components/Stars/Stars"
 import { Modal } from "@src/components/Modal/Modal"
+import { Toast } from "@src/components/Toast/Toast"
 import { Drawer, useDrawerScroll } from "@src/components/Drawer/Drawer"
 import { Button } from "@src/components/Button/Button"
 import { Order } from "@src/components/Order/Order";
@@ -125,6 +126,8 @@ function Showcase() {
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [toast, setToast] = useState<{ message: string; dark: boolean } | null>(null);
   const [activePage, setActivePage] = useState("Pedido");
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
@@ -447,6 +450,10 @@ function Showcase() {
           <Button text="Mostrar Modal Customizado" onClick={() => setShowCustomModal(true)} />
           <Button text="Mostrar Modal Comparação" onClick={() => setShowCompareModal(true)} />
           <Button text="Mostrar Drawer" onClick={() => setShowDrawer(true)} />
+          <Button text="Mostrar Modal de Confirmação" onClick={() => setShowConfirmModal(true)} />
+          <Button text="Toast escuro" onClick={() => setToast({ message: "Pedido cancelado com sucesso", dark: true })} />
+          <Button text="Toast claro" onClick={() => setToast({ message: "Oferta enviada", dark: false })} />
+          <Button text="Link em bloco" variant="link" block onClick={() => console.log("Link em bloco")} />
         </Grid>
       </Card>
 
@@ -912,6 +919,22 @@ function Showcase() {
     >
       <DrawerDemoList />
     </Drawer>
+    <Modal
+      title="Iniciar o serviço?"
+      visible={showConfirmModal}
+      onClose={() => setShowConfirmModal(false)}
+      confirmText="Iniciar serviço"
+      buttonText="Voltar"
+      onConfirm={() => console.log("Confirmado")}
+    >
+      <Text size="small" text="Confirmar em cima, voltar embaixo como link." level="default" position="center" />
+    </Modal>
+    <Toast
+      visible={toast !== null}
+      message={toast?.message ?? ""}
+      darkMode={toast?.dark ?? false}
+      onHide={() => setToast(null)}
+    />
     {showModal && (
       <View style={{
         position: 'absolute',

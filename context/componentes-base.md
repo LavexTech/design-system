@@ -264,6 +264,7 @@ Campo `flex: 1`, borda 1,5 `borderInteractive`, padding horizontal 18, Regular 1
 | `disabled` | `boolean` | `false` |
 | `icon` | `ReactNode` | — |
 | `iconPosition` | `'left' \| 'right' \| 'inline'` | `'left'` |
+| `block` | `boolean` (só `link` e `link-gray`) | `false` |
 | `style` / `textStyle` | `ViewStyle` / `TextStyle` | — (aplicados por último) |
 | `needsConfirmation` | `boolean` | `false` |
 | `confirmationText` | `string` | obrigatória quando `needsConfirmation` é `true` (união discriminada) |
@@ -299,7 +300,7 @@ iconPosition="left":            "right":                 "inline" / link:
  ícone absoluto a 16 px          ícone 6 px após o texto
 ```
 
-**Aparência:** `Pressable` com `alignSelf: stretch` (largura total). Rótulo Bold, `lineHeight` = fonte × 1,2, centralizado. `link` e `link-gray` não têm altura, raio nem padding: medem pelo conteúdo (`alignSelf: flex-start`, `minHeight` 24). Desabilitado: fundo `surfaceMuted` `#E5E1E6`, texto `text` `#2D3B42`, sem borda.
+**Aparência:** `Pressable` com `alignSelf: stretch` (largura total). Rótulo Bold, `lineHeight` = fonte × 1,2, centralizado. `link` e `link-gray` não têm altura, raio nem padding: medem pelo conteúdo (`alignSelf: flex-start`, `minHeight` 24). Com `block`, o link ganha a altura, o raio e o padding do `size` e estica na largura (`alignSelf: stretch`), com o texto centralizado: ocupa o mesmo espaço de um botão padrão. É o botão de "Voltar"/"Cancelar" abaixo do botão principal. Desabilitado: fundo `surfaceMuted` `#E5E1E6`, texto `text` `#2D3B42`, sem borda.
 
 **Comportamento:**
 

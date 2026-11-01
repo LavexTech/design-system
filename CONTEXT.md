@@ -1,6 +1,6 @@
 # CONTEXT — design-system (`lavex-design-system`)
 
-Contexto técnico e de negócio do design system da Lavex, escrito para quem desenvolve aqui, humano ou agente de código. Descreve **o código atual** do repositório `LavexTech/design-system` (versão `1.16.x`, outubro de 2026), não a intenção.
+Contexto técnico e de negócio do design system da Lavex, escrito para quem desenvolve aqui, humano ou agente de código. Descreve **o código atual** do repositório `LavexTech/design-system` (versão `1.17.x`, outubro de 2026), não a intenção.
 
 Este arquivo é o ponto de entrada. O detalhe está em `context/`, dividido para que cada arquivo fique abaixo de 100 kB:
 

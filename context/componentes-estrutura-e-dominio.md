@@ -101,7 +101,7 @@ Não é tocável. Tipos `TagVariant` e `TagSize` não são exportados no `index.
 | `confirmVariant` | variante de `Button` | `'success'` |
 | `confirmDisabled` | `boolean` | `false` |
 | `closeOnConfirm` | `boolean` | `true` |
-| `stackedButtons` | `boolean` | `false` |
+| `stackedButtons` | `boolean` | `true` |
 | `contentMinHeight` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
@@ -113,16 +113,37 @@ Não é tocável. Tipos `TagVariant` e `TagSize` não são exportados no `index.
    │ altura útil)                    │
    │ [Cancelar]        [Confirmar]   │  com onConfirm: dois botões dividindo a largura
    └─────────────────────────────────┘  sem onConfirm: um botão alinhado à direita
-   stackedButtons:   [   Confirmar   ]
-                          Voltar         (link fica centralizado; outras variantes esticam)
+   com onConfirm (padrão):  [   Confirmar   ]
+                                Voltar         (link button em bloco: mesma altura e largura de um botão padrão)
+   stackedButtons={false}:  [Cancelar]  [Confirmar]   (lado a lado)
 ```
 
 - `RN Modal` transparente com `animationType="fade"` e `statusBarTranslucent`; cobre a stack de navegação. `onRequestClose` (voltar do Android) chama `onClose`.
 - Teclado: o overlay é uma `KeyboardAvoidingView` (`behavior="padding"` nas duas plataformas). Com o teclado aberto o cartão sobe e encolhe junto com a área visível; o corpo rola e mantém toques (`keyboardShouldPersistTaps="handled"`). Campos dentro do `Modal` nunca ficam atrás do teclado.
 - Altura máxima do cartão = altura da janela − 76 (`NAVIGATION_BAR_HEIGHT`) − safe area inferior. O corpo é um `ScrollView` limitado a 70% disso.
 - Título: `Text` medium (16) centralizado.
-- Modo confirmação: se `buttonText` ainda for `'OK'` vira `"Cancelar"`; `buttonVariant` `'default'` vira `'default-outline'`. Confirmar chama `onConfirm` e, com `closeOnConfirm`, `onClose`.
+- Modo confirmação: se `buttonText` ainda for `'OK'` vira `"Cancelar"`. Padrão da marca: o botão de confirmar fica em cima e o de dispensar (voltar/cancelar) embaixo como `link` com `block`. Com `stackedButtons={false}` os dois dividem a linha e `buttonVariant` `'default'` vira `'default-outline'`. Confirmar chama `onConfirm` e, com `closeOnConfirm`, `onClose`.
 - Precisa de `SafeAreaProvider` (`react-native-safe-area-context`) na árvore do app.
+
+### `Toast`
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `message` | `string` | obrigatória |
+| `visible` | `boolean` | obrigatória |
+| `onHide` | `() => void` | obrigatória |
+| `duration` | `number` (ms) | `5000` |
+| `darkMode` | `boolean` | `false` |
+
+```
+        ┌──────────────────────────────┐   desce do topo (abaixo da safe area + 12),
+        │ ✓  Pedido cancelado com …    │   centralizado, largura máx. 420
+        └──────────────────────────────┘
+```
+
+- Aviso rápido sobre a tela, sem `RN Modal`: um `View` absoluto (`pointerEvents="box-none"`, `zIndex` 1000) que não bloqueia toques fora do aviso. Monte uma vez no layout raiz, dentro do `SafeAreaProvider`.
+- Entrada e saída de 220 ms (opacidade + deslocamento de 16 px). Fica `duration` em tela e chama `onHide`; um toque no aviso também chama `onHide`. Quem controla o estado põe `visible` em `false`. Mudar `message` com o toast aberto reinicia o tempo.
+- `darkMode` escolhe o contraste e **não depende do `LavexThemeProvider`**: `true` = fundo `#2D3B42`, texto branco, check `#3CDBC0`; `false` = fundo branco, borda `#E5E1E6`, texto `#2D3B42`, check `#0B7566`. Padrão da marca: o app do cliente usa `darkMode` (mais destaque sobre o fundo claro) e o app do Lavexer usa o toast claro (o fundo dele é escuro).
 
 ### `Drawer` (+ `useDrawerScroll`)
 

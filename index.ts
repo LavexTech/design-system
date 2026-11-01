@@ -49,6 +49,8 @@ export { FAB } from "./src/components/FAB/FAB";
 export { Tag } from "./src/components/Tag/Tag";
 export { Grid, GridItem } from "./src/components/Grid/Grid";
 export { Modal } from "./src/components/Modal/Modal";
+export { Toast } from "./src/components/Toast/Toast";
+export type { ToastProps } from "./src/components/Toast/Toast";
 export { Drawer, useDrawerScroll } from "./src/components/Drawer/Drawer";
 export type { DrawerProps } from "./src/components/Drawer/Drawer";
 export { UserInfo } from "./src/components/UserInfo/UserInfo";
