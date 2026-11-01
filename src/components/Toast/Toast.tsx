@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Animated, Easing, Platform, StyleSheet, Text, View } from "react-native"
+import { Animated, Easing, Platform, Pressable, StyleSheet, Text, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
@@ -95,8 +95,9 @@ export const Toast: React.FC<ToastProps> = ({
                     ],
                 }}
             >
-                <View
-                    onTouchEnd={() => onHideRef.current()}
+                <Pressable
+                    accessibilityRole="button"
+                    onPress={() => onHideRef.current()}
                     style={[styles.toast, { backgroundColor: palette.background, borderColor: palette.border }]}
                 >
                     <IconCheck size={ICON_SIZE} color={palette.icon} />
@@ -112,7 +113,7 @@ export const Toast: React.FC<ToastProps> = ({
                     >
                         {shownMessage}
                     </Text>
-                </View>
+                </Pressable>
             </Animated.View>
         </View>
     )
