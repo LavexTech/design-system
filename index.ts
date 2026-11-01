@@ -51,6 +51,8 @@ export { Grid, GridItem } from "./src/components/Grid/Grid";
 export { Modal } from "./src/components/Modal/Modal";
 export { Drawer, useDrawerScroll } from "./src/components/Drawer/Drawer";
 export type { DrawerProps } from "./src/components/Drawer/Drawer";
+export { ToastHost, showToast, TOAST_DURATION_MS } from "./src/components/Toast/Toast";
+export type { ToastAppearance, ToastHostProps, ToastOptions, ToastVariant } from "./src/components/Toast/Toast";
 export { UserInfo } from "./src/components/UserInfo/UserInfo";
 export { Accordion, AccordionItem } from "./src/components/Accordion/Accordion";
 export { Message } from "./src/components/Message/Message";

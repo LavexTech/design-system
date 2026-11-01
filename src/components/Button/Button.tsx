@@ -40,6 +40,11 @@ type ButtonBaseProps = {
   textStyle?: TextStyle
   icon?: React.ReactNode
   iconPosition?: "left" | "right" | "inline"
+  /**
+   * Só para `link`/`link-gray`: ocupa a largura toda e a mesma altura de um botão do tamanho `size`, com o texto
+   * centralizado. Usado no botão de baixo de um par empilhado (ex.: "Voltar" abaixo de "Confirmar").
+   */
+  block?: boolean
 }
 
 type ButtonProps =
@@ -85,10 +90,11 @@ function getButtonColors(
   const transparent =
     colors.backgroundColor === "transparent" || colors.backgroundColor === theme.surface
   const isLink = variant === "link" || variant === "link-gray"
-  const backgroundColor = interaction.disabled
-    ? theme.surfaceMuted
-    : isLink
-      ? "transparent"
+  // Link nunca ganha fundo, nem desabilitado: com `block` viraria uma caixa cinza do tamanho de um botão
+  const backgroundColor = isLink
+    ? "transparent"
+    : interaction.disabled
+      ? theme.surfaceMuted
       : interaction.pressed
       ? transparent
         ? theme.surfaceMuted
@@ -102,7 +108,7 @@ function getButtonColors(
     borderColor: interaction.disabled ? "transparent" : colors.borderColor,
     borderWidth: interaction.disabled ? 0 : colors.borderWidth,
     opacity: interaction.pressed && !interaction.disabled && (!transparent || isLink) ? 0.85 : 1,
-    labelColor: interaction.disabled ? theme.text : colors.color,
+    labelColor: interaction.disabled ? (isLink ? theme.textMuted : theme.text) : colors.color,
   }
 }
 
@@ -193,6 +199,7 @@ function ButtonComponent(props: ButtonProps) {
     textStyle,
     icon,
     iconPosition = "left",
+    block = false,
     needsConfirmation,
     confirmationText,
   } = props
@@ -234,7 +241,7 @@ function ButtonComponent(props: ButtonProps) {
         const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming }, theme)
         return [
           styles.button,
-          isLink
+          isLink && !block
             ? styles.link
             : {
                 height: metrics.height,

@@ -14,8 +14,10 @@ grep -rnE "from ['\"]lavex-design-system['\"]" app components --include=*.tsx --
 
 | App | Pin no `package.json` | Efeito |
 |---|---|---|
-| `app-client-lavex` (cliente) | `github:LavexTech/design-system#42b3b38…` (commit da 1.14.2, antes do tema escuro) | Só recebe mudanças quando o pin é trocado |
-| `app-provider-lavex` (Lavexer) | `github:LavexTech/design-system#main` | Qualquer merge na `main` chega no próximo `npm install` |
+| `app-client-lavex` (cliente) | `github:LavexTech/design-system#<sha do merge na main>` | Só recebe mudanças quando o pin é trocado |
+| `app-provider-lavex` (Lavexer) | `github:LavexTech/design-system#<sha do merge na main>` | Idem |
+
+Regra do time (novembro de 2026): quando uma tarefa muda o DS, o PR do DS é mergeado e, na mesma tarefa, os dois apps passam a apontar para o commit do merge na `main` (`package.json`, `package-lock.json` e a doc de contexto de cada app).
 
 O pacote é distribuído como **código-fonte TS/TSX**; o Metro do app compila `src/`. Para testar uma branch no app: `npm install github:LavexTech/design-system#<branch-ou-sha>` com o Metro parado e `npm run dev -- --clear`.
 
@@ -67,6 +69,7 @@ O pacote é distribuído como **código-fonte TS/TSX**; o Metro do app compila `
 | `components/OrderDetailsAccordion.tsx` | `Card`, `IconChevronLeft`, `Info`, `List`, `Modal`, `Subtitle`, `Tag`, `Text`, `Title` |
 | `components/OrderPhotosSection.tsx`, `OrderPhotoViewer.tsx` | `Modal`, `PhotoSkeleton`, `Text` |
 | `components/DialogHost.tsx`, `AccountExcludedScreen.tsx` | `Button`, `Modal`, `Text` |
+| `app/_layout.tsx` (toast) | `ToastHost` (`appearance="dark"`); `showToast` em `orderPending` (pedido cancelado) |
 | `components/Chat/*` | `Heading`, `IconChevronLeft`, `IconMessageSquareText`, `IconSend`, `Info`, `ProfileAvatar`, `Text`, `Title` |
 | outros (`PaymentSuccess`, `LightBox`, `EmphasizedList`, `DisplayStars`, `OrderStarRating`, `RadioButtonGroup`, `CardGraphic`, `CardBrandImage`, `BackTitle`, `ChatComposer`, `MapPinNotice`, `LoadingOverlay`, `EditScreenLayout`, `ForcedUpdateGate`, `OrderReadOnlyChatButton`) | ícones soltos, `Heading`, `Info`, `Text`, `Button` |
 
@@ -90,6 +93,8 @@ Observações:
 | `app/home/Account/configuracoes.tsx` | `Button`, `Grid`, `GridItem`, `Info`, `Input`, `Title`, `Toggle` |
 | `app/home/Account/pix-key.tsx`, `support.tsx` | `Button`, `Card`, `Grid`, `GridItem`, `Input`, `Title` |
 | `app/home/Account/welcome-message.tsx` | `Button`, `TextArea`, `Title` |
+| `app/_layout.tsx` (toast) | `ToastHost` (`appearance="light"`); `showToast` em `components/order/OfferCollapsible.tsx` (oferta enviada) |
+| `components/DialogHost.tsx` | `Modal` (confirmar em cima, voltar como `link` `block`) |
 
 O app do Lavexer ainda **não** usa `LavexThemeProvider`; o tema escuro (#280) foi criado para a migração dele (issue `app-provider-lavex#18`). Ele usa o `DarkTheme` do React Navigation só para a navegação.
 

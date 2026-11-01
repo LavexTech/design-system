@@ -265,6 +265,7 @@ Campo `flex: 1`, borda 1,5 `borderInteractive`, padding horizontal 18, Regular 1
 | `icon` | `ReactNode` | — |
 | `iconPosition` | `'left' \| 'right' \| 'inline'` | `'left'` |
 | `style` / `textStyle` | `ViewStyle` / `TextStyle` | — (aplicados por último) |
+| `block` | `boolean` | `false`. Só para `link`/`link-gray`: largura toda, altura e raio do `size`, texto centralizado (botão de baixo de um par empilhado) |
 | `needsConfirmation` | `boolean` | `false` |
 | `confirmationText` | `string` | obrigatória quando `needsConfirmation` é `true` (união discriminada) |
 | `darkMode` / `fontScale` | — | `false` / `1` |

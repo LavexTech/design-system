@@ -101,7 +101,7 @@ Não é tocável. Tipos `TagVariant` e `TagSize` não são exportados no `index.
 | `confirmVariant` | variante de `Button` | `'success'` |
 | `confirmDisabled` | `boolean` | `false` |
 | `closeOnConfirm` | `boolean` | `true` |
-| `stackedButtons` | `boolean` | `false` |
+| `stackedButtons` | `boolean` | `true` (a partir da 1.17.0) |
 | `contentMinHeight` | `number` | — |
 | `darkMode` / `fontScale` | — | `false` / `1` |
 
@@ -111,17 +111,17 @@ Não é tocável. Tipos `TagVariant` e `TagSize` não são exportados no `index.
    │             Título              │  borda 1 border, padding 24, fundo surface
    │ children (rola; máx. 70% da     │
    │ altura útil)                    │
-   │ [Cancelar]        [Confirmar]   │  com onConfirm: dois botões dividindo a largura
+   │ [          Confirmar          ] │  com onConfirm (padrão): confirmar em cima e o fechar
+   │            Cancelar             │  embaixo, como `link` `block` do mesmo tamanho
    └─────────────────────────────────┘  sem onConfirm: um botão alinhado à direita
-   stackedButtons:   [   Confirmar   ]
-                          Voltar         (link fica centralizado; outras variantes esticam)
+   stackedButtons={false}: [Cancelar] [Confirmar] dividindo a largura
 ```
 
 - `RN Modal` transparente com `animationType="fade"` e `statusBarTranslucent`; cobre a stack de navegação. `onRequestClose` (voltar do Android) chama `onClose`.
 - Teclado: o overlay é uma `KeyboardAvoidingView` (`behavior="padding"` nas duas plataformas). Com o teclado aberto o cartão sobe e encolhe junto com a área visível; o corpo rola e mantém toques (`keyboardShouldPersistTaps="handled"`). Campos dentro do `Modal` nunca ficam atrás do teclado.
 - Altura máxima do cartão = altura da janela − 76 (`NAVIGATION_BAR_HEIGHT`) − safe area inferior. O corpo é um `ScrollView` limitado a 70% disso.
 - Título: `Text` medium (16) centralizado.
-- Modo confirmação: se `buttonText` ainda for `'OK'` vira `"Cancelar"`; `buttonVariant` `'default'` vira `'default-outline'`. Confirmar chama `onConfirm` e, com `closeOnConfirm`, `onClose`.
+- Modo confirmação: se `buttonText` ainda for `'OK'` vira `"Cancelar"`. Empilhado (padrão), o botão de fechar é sempre `link` com `block` (largura toda, altura de um botão `size`, texto centralizado), qualquer que seja `buttonVariant`: é o padrão dos dois apps para modais com confirmar + voltar/cancelar. Lado a lado (`stackedButtons={false}`), `buttonVariant` `'default'` vira `'default-outline'`. Confirmar chama `onConfirm` e, com `closeOnConfirm`, `onClose`.
 - Precisa de `SafeAreaProvider` (`react-native-safe-area-context`) na árvore do app.
 
 ### `Drawer` (+ `useDrawerScroll`)
@@ -282,6 +282,16 @@ Não selecionado: borda 1,5 `borderInteractive`, fundo `surface`. Selecionado: b
 ---
 
 ## 2. Feedback e status
+
+### `Toast` (`ToastHost` + `showToast`)
+
+Aviso curto de sucesso ou erro no topo da tela (substitui o modal de "Oferta enviada", "Pedido cancelado com sucesso" etc.).
+
+- `ToastHost` é montado **uma vez** no layout raiz. Props: `appearance` (`'light' | 'dark'`, padrão `'dark'`) e `topOffset` (padrão 8, somado à safe area do topo).
+- `showToast(message, { variant?: 'success' | 'error', duration?: number })`. Por padrão fica **5 s** (`TOAST_DURATION_MS`). Um toast novo substitui o que estiver na tela. Tocar no toast fecha.
+- A paleta **não segue o tema do app**: o app escolhe o contraste. O app da Lavexer (tema escuro) usa `appearance="light"` (fundo branco `#FFFFFF`, texto `#2D3B42`, borda `#E5E1E6`); o app do cliente (tema claro) usa `appearance="dark"` (fundo `#2D3B42`, texto branco).
+- Visual: cartão com raio 16, sombra, largura toda até 480, círculo de 24 com `IconCheck` sobre o verde `#3CDBC0` (sucesso) ou `IconExclamation` sobre o vermelho (erro), texto Plus Jakarta SemiBold 15/21.
+- Entra e sai com fade + deslize de 24 px em 220 ms (Reanimated). `pointerEvents="box-none"`: não bloqueia a tela. Fica abaixo de um `RN Modal` aberto.
 
 ### `StatusBanner` (2.0)
 

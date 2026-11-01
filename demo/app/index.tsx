@@ -73,6 +73,7 @@ import { Alert } from "@src/components/Alert/Alert"
 import { Stars } from "@src/components/Stars/Stars"
 import { Modal } from "@src/components/Modal/Modal"
 import { Drawer, useDrawerScroll } from "@src/components/Drawer/Drawer"
+import { ToastHost, showToast } from "@src/components/Toast/Toast"
 import { Button } from "@src/components/Button/Button"
 import { Order } from "@src/components/Order/Order";
 import { Offer } from "@src/components/Offer/Offer"
@@ -447,6 +448,9 @@ function Showcase() {
           <Button text="Mostrar Modal Customizado" onClick={() => setShowCustomModal(true)} />
           <Button text="Mostrar Modal Comparação" onClick={() => setShowCompareModal(true)} />
           <Button text="Mostrar Drawer" onClick={() => setShowDrawer(true)} />
+          <Button text="Mostrar Toast" onClick={() => showToast("Oferta enviada")} />
+          <Button text="Toast de erro" onClick={() => showToast("Não foi possível enviar", { variant: "error" })} />
+          <Button text="Voltar (link do tamanho de um botão)" variant="link" block onClick={() => console.log("Voltar")} />
         </Grid>
       </Card>
 
@@ -1038,6 +1042,8 @@ function ThemedRoot({ darkTheme, onToggle }: { darkTheme: boolean; onToggle: (va
         <Toggle label="Tema escuro" value={darkTheme} onChange={onToggle} />
       </View>
       <Showcase />
+      {/* Claro no tema escuro e escuro no claro, como nos apps */}
+      <ToastHost appearance={darkTheme ? "light" : "dark"} />
     </View>
   );
 }

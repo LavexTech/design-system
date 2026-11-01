@@ -43,7 +43,10 @@ type ModalProps = {
     confirmDisabled?: boolean,
     /** When true (default), calling confirm also invokes onClose. */
     closeOnConfirm?: boolean,
-    /** When true and there is a confirm action, stack confirm above the close button. */
+    /**
+     * Com ação de confirmar: `true` (padrão) empilha confirmar em cima e o fechar embaixo, como link do mesmo
+     * tamanho de um botão. `false` põe os dois lado a lado.
+     */
     stackedButtons?: boolean,
     darkMode?: boolean,
     fontScale?: number,
@@ -64,7 +67,7 @@ export const Modal: React.FC<ModalProps> = ({
     confirmVariant = 'success',
     confirmDisabled = false,
     closeOnConfirm = true,
-    stackedButtons = false,
+    stackedButtons = true,
     darkMode = false,
     fontScale = 1,
     contentMinHeight,
@@ -77,6 +80,8 @@ export const Modal: React.FC<ModalProps> = ({
         Constants.styles.componentSize.NAVIGATION_BAR_HEIGHT -
         insets.bottom
     const hasConfirm = typeof onConfirm === 'function'
+    // Par confirmar + fechar: confirmar em cima, fechar embaixo como link do tamanho de um botão (padrão dos apps)
+    const stacked = hasConfirm && stackedButtons
 
     function handleConfirm() {
         onConfirm?.()
@@ -125,21 +130,22 @@ export const Modal: React.FC<ModalProps> = ({
                     >
                         {children}
                     </ScrollView>
-                    <View style={[styles.footer, hasConfirm ? (stackedButtons ? styles.footerStacked : styles.footerConfirm) : styles.footerSingle]}>
+                    <View style={[styles.footer, hasConfirm ? (stacked ? styles.footerStacked : styles.footerConfirm) : styles.footerSingle]}>
                         <Button
                             text={hasConfirm ? (buttonText === 'OK' ? 'Cancelar' : buttonText) : buttonText}
                             onClick={onClose}
-                            variant={hasConfirm ? (buttonVariant === 'default' ? 'default-outline' : buttonVariant) : buttonVariant}
+                            variant={
+                                stacked
+                                    ? 'link'
+                                    : hasConfirm
+                                      ? (buttonVariant === 'default' ? 'default-outline' : buttonVariant)
+                                      : buttonVariant
+                            }
+                            block={stacked}
                             size={buttonSize}
                             darkMode={darkMode}
                             fontScale={fontScale}
-                            style={
-                                hasConfirm && !stackedButtons
-                                    ? styles.footerButton
-                                    : stackedButtons && buttonVariant === 'link'
-                                      ? styles.footerLink
-                                      : undefined
-                            }
+                            style={hasConfirm && !stacked ? styles.footerButton : undefined}
                         />
                         {hasConfirm ? (
                             <Button
@@ -150,7 +156,7 @@ export const Modal: React.FC<ModalProps> = ({
                                 disabled={confirmDisabled}
                                 darkMode={darkMode}
                                 fontScale={fontScale}
-                                style={stackedButtons ? undefined : styles.footerButton}
+                                style={stacked ? undefined : styles.footerButton}
                             />
                         ) : null}
                     </View>
@@ -204,9 +210,6 @@ const styles = StyleSheet.create({
     footerStacked: {
         flexDirection: "column-reverse",
         alignItems: "stretch",
-    },
-    footerLink: {
-        alignSelf: "center",
     },
     footerSingle: {
         justifyContent: "flex-end",
