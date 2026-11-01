@@ -1,6 +1,6 @@
 # CONTEXT — design-system (`lavex-design-system`)
 
-Contexto técnico e de negócio do design system da Lavex, escrito para quem desenvolve aqui, humano ou agente de código. Descreve **o código atual** do repositório `LavexTech/design-system` (versão `1.15.x`, outubro de 2026), não a intenção.
+Contexto técnico e de negócio do design system da Lavex, escrito para quem desenvolve aqui, humano ou agente de código. Descreve **o código atual** do repositório `LavexTech/design-system` (versão `1.16.x`, outubro de 2026), não a intenção.
 
 Este arquivo é o ponto de entrada. O detalhe está em `context/`, dividido para que cada arquivo fique abaixo de 100 kB:
 
@@ -35,14 +35,14 @@ O mesmo usuário pode ser cliente e Lavexer; o tema escuro existe para deixar cl
 ### 1.2 Ciclo de vida do pedido (regras de negócio que a UI representa)
 
 ```
-(novo) ──POST /orders──▶ PENDING ──cliente aceita oferta + paga──▶ ACCEPTED ──Lavexer inicia──▶ STARTED ──▶ READY ──cliente confirma retirada──▶ COMPLETED ──▶ avaliação obrigatória
-                           │                                         │
-                           └────────── cliente cancela ──────────────┴──▶ CANCELLED
+(novo) ──POST /orders──▶ PENDING ──cliente escolhe──▶ OFFER_CHOSEN ──Lavexer topa──▶ PROVIDER_ACCEPTED ──cliente paga──▶ ACCEPTED ──Lavexer inicia──▶ STARTED ──▶ READY ──cliente confirma retirada──▶ COMPLETED ──▶ avaliação obrigatória
+                           ▲                        │                                │
+                           └── "Não consigo" / "Escolher outra oferta" ──────────────┘   (cliente cancela até ACCEPTED ──▶ CANCELLED)
 ```
 
-- O cliente tem **um pedido ativo por vez** (`PENDING`, `ACCEPTED`, `STARTED` ou `READY`). Sem pedido ativo, a aba Pedido abre o assistente de novo pedido; com pedido `COMPLETED` sem nota, exige a avaliação antes de outro pedido.
+- O cliente tem **um pedido ativo por vez** (`PENDING`, `OFFER_CHOSEN`, `PROVIDER_ACCEPTED`, `ACCEPTED`, `STARTED` ou `READY`). Sem pedido ativo, a aba Pedido abre o assistente de novo pedido; com pedido `COMPLETED` sem nota, exige a avaliação antes de outro pedido.
 - **Novo pedido**: o cliente escolhe peças de um catálogo (Roupa, Cama, Mesa, Banho), define quantidade e serviço por peça (Lavar e/ou Passar), anexa fotos opcionais e escolhe a entrega: `CLIENT` (leva e busca), `FLEX` (avalia pagar coleta) ou `PROVIDER` (a Lavexer busca e entrega).
-- **Ofertas**: Lavexers enviam ofertas (valor + taxa de coleta, distância, nota). O cliente ordena (menor/maior valor, distância, melhor avaliação), escolhe uma e paga com **Pix** ou **cartão** salvo. A oferta só vale quando o pagamento é aprovado.
+- **Ofertas**: Lavexers enviam ofertas (valor + taxa de coleta, distância, nota). O cliente ordena (menor/maior valor, distância, melhor avaliação), vê as avaliações da Lavexer numa `Drawer`, escolhe uma e conversa com ela no chat. Depois que a Lavexer topa, o cliente confirma e paga com **Pix** ou **cartão** salvo. A oferta só vale quando o pagamento é aprovado.
 - **Acompanhamento**: linha do tempo do pedido, chat com a Lavexer e com o suporte, aviso quando está pronto para retirada/entrega.
 - **Avaliação**: nota de 1 a 5 e comentário. A nota média aparece no perfil (`ShortStarRating`, "Nota média dada pelos Lavexers").
 - **Conta**: perfil com foto e bio, contato, endereço, carteira de cartões, mensagem de boas-vindas (Lavexer), chave Pix (Lavexer), excluir conta.

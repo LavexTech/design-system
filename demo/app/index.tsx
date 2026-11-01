@@ -72,6 +72,7 @@ import { Stepper } from "@src/components/Stepper/Stepper"
 import { Alert } from "@src/components/Alert/Alert"
 import { Stars } from "@src/components/Stars/Stars"
 import { Modal } from "@src/components/Modal/Modal"
+import { Drawer, useDrawerScroll } from "@src/components/Drawer/Drawer"
 import { Button } from "@src/components/Button/Button"
 import { Order } from "@src/components/Order/Order";
 import { Offer } from "@src/components/Offer/Offer"
@@ -105,12 +106,25 @@ import { PhotoSkeleton } from "@src/components/PhotoSkeleton/PhotoSkeleton"
 import { LavexThemeProvider, useLavexTheme } from "@src/theme/LavexThemeProvider"
 
 
+/** Lista longa dentro da Drawer: com a lista no topo, arrastar para baixo fecha. */
+function DrawerDemoList() {
+  const scroll = useDrawerScroll();
+  return (
+    <ScrollView {...scroll} contentContainerStyle={{ padding: 24, gap: 12 }}>
+      {Array.from({ length: 20 }, (_, index) => (
+        <Text key={index} size="small" text={`Avaliação ${index + 1}`} />
+      ))}
+    </ScrollView>
+  );
+}
+
 function Showcase() {
   const { colors } = useLavexTheme();
   const [showModal, setShowModal] = useState(false);
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
   const [activePage, setActivePage] = useState("Pedido");
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
@@ -432,6 +446,7 @@ function Showcase() {
           <Button text="Mostrar Modal" onClick={() => setShowModal(true)} />
           <Button text="Mostrar Modal Customizado" onClick={() => setShowCustomModal(true)} />
           <Button text="Mostrar Modal Comparação" onClick={() => setShowCompareModal(true)} />
+          <Button text="Mostrar Drawer" onClick={() => setShowDrawer(true)} />
         </Grid>
       </Card>
 
@@ -890,6 +905,13 @@ function Showcase() {
         console.log('Página navegada:', page);
       }}
     />
+    <Drawer
+      visible={showDrawer}
+      onClose={() => setShowDrawer(false)}
+      footer={<Button text="Conversar com a Ana" variant="default" onClick={() => setShowDrawer(false)} />}
+    >
+      <DrawerDemoList />
+    </Drawer>
     {showModal && (
       <View style={{
         position: 'absolute',
