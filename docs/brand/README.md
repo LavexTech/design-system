@@ -20,4 +20,4 @@ Arquivos da logo da Lavex e das animações feitas a partir dela. Todos os SVGs 
 
 ## No código
 
-O loading de uso geral é o componente `Loading` (overlay em tela cheia) ou `LoadingIcon` (só o ícone), em `src/components/Loading/`. Ele mostra só o símbolo, sem a escrita e sem o ®, e reproduz a animação "giro" com Reanimated. A geometria fica em `lavexIconGeometry.ts`, gerada a partir de `logo-lavex.svg`.
+O loading de uso geral é o componente `Loading` (overlay em tela cheia) ou `LoadingIcon` (só o ícone), em `src/components/Loading/`. Ele mostra só o símbolo, sem a escrita e sem o ®, e reproduz a animação "giro" com Reanimated. A geometria fica em `lavexIconGeometry.ts`, gerada a partir de `logo-lavex.svg` já com a casa e o tambor recortados em dois paths preenchidos, sem máscara.
