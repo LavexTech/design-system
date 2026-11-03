@@ -396,6 +396,30 @@ Círculo 50 `primary` com ícone 20 `onPrimary`; com `animated`, `AnimatedStatus
 
 Contêiner de `2,4 × size`. Núcleo circular com o ícone e dois anéis (borda 2 `#3CDBC0`) que crescem até 2,2× e somem em 2 s, o segundo com 1 s de atraso, em loop (Reanimated, thread de UI). Parados com `active={false}` ou com "reduzir movimento" do sistema (`useReduceMotion`). `accessibilityRole="progressbar"`.
 
+### `Loading` e `LoadingIcon`
+
+O loading de uso geral da Lavex: o símbolo da logo (sem a escrita e sem o ®) com o tambor da máquina girando.
+
+`LoadingIcon`
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `size` | `number` | `120` (largura; altura na proporção 832 × 950) |
+| `color` | `string` | `#0A7370` no tema claro, `#2FB5AF` no escuro |
+| `accessibilityLabel` | `string` | — |
+
+`Loading` aceita as mesmas props e mais:
+
+| Prop | Tipo | Default |
+|---|---|---|
+| `visible` | `boolean` | obrigatória |
+| `overlayColor` | `string` | `rgba(255, 255, 255, 0.85)` no claro, `rgba(27, 37, 42, 0.85)` no escuro |
+| `accessibilityLabel` | `string` | `"Carregando"` |
+
+A casa é um `Svg` parado; o tambor é outro `Svg` dentro de um `Animated.View` posicionado sobre o centro do tambor, que gira 360° em 1,3 s, pausa 0,2 s, volta a 0° em 1,3 s e pausa 0,2 s, em loop (Reanimated, thread de UI). Os recortes usam `Mask` do `react-native-svg` (não `ClipPath`, que não atualiza no aparelho). Parado com "reduzir movimento" (`useReduceMotion`). `accessibilityRole="progressbar"`.
+
+`Loading` é um `Modal` transparente (`fade`, `statusBarTranslucent`) com o overlay em tela cheia e o ícone centralizado nos dois eixos; bloqueia toques enquanto visível e o botão voltar do Android não o fecha. A geometria está em `lavexIconGeometry.ts`, gerada a partir de [`docs/brand/logo-lavex.svg`](../docs/brand/logo-lavex.svg); a animação de referência é `docs/brand/animacoes/lavex-giro-*.svg`.
+
 ### `Timeline` (2.0)
 
 | Prop | Tipo | Default |
