@@ -86,6 +86,6 @@ Nenhum é exportado no `index.ts`; são de uso interno.
 | `getOrdersCountLabel` | `ordersCountLabel.ts` | `(ordersCount: number, userType: 'client' \| 'provider') => string` | `"{n} pedidos executados"` (provider) ou `"{n} pedidos feitos"` (client) |
 | `hasProfileImage` | `profileImage.ts` | `(profileImage?: string \| null) => boolean` | `true` só com string não vazia após `trim` |
 | `getProfileImageUrl` | `profileImage.ts` | `(profileImage?: string \| null, _userType?) => string` | URL com `trim()` ou `""`. Não gera placeholder remoto |
-| `useReduceMotion` | `reduceMotion.ts` | `() => boolean` | Store de módulo com `useSyncExternalStore`: uma leitura de `AccessibilityInfo.isReduceMotionEnabled()` e um único listener `reduceMotionChanged` para todas as instâncias; o listener sai quando o último assinante desmonta. Valor inicial (e no servidor) `false`. Usado por `PhotoSkeleton` e `AnimatedStatusIndicator` |
+| `useReduceMotion` | `reduceMotion.ts` | `() => boolean` | Store de módulo com `useSyncExternalStore`: uma leitura de `AccessibilityInfo.isReduceMotionEnabled()` e um único listener `reduceMotionChanged` para todas as instâncias; o listener sai quando o último assinante desmonta. Valor inicial (e no servidor) `false`. Usado por `PhotoSkeleton`, `AnimatedStatusIndicator` e `LoadingIcon` |
 
 Outros helpers exportados de dentro de componentes (não do `index.ts`): `formatShortRating(rating)` em `ShortStarRating.tsx` (`4.8` → `"4,8"`).

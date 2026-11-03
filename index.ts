@@ -72,6 +72,8 @@ export type { TimelineStep, TimelineStepStatus } from "./src/components/Timeline
 export { ImageUploader } from "./src/components/ImageUploader/ImageUploader";
 export { PhotoSkeleton } from "./src/components/PhotoSkeleton/PhotoSkeleton";
 export { AnimatedStatusIndicator } from "./src/components/AnimatedStatusIndicator/AnimatedStatusIndicator";
+export { Loading, LoadingIcon } from "./src/components/Loading/Loading";
+export type { LoadingProps, LoadingIconProps } from "./src/components/Loading/Loading";
 export { CountBadge } from "./src/components/CountBadge/CountBadge";
 export { DarkInformationBoxLarge } from "./src/components/DarkInformationBoxLarge/DarkInformationBoxLarge";
 export { DarkInformationBox } from "./src/components/DarkInformationBox/DarkInformationBox";

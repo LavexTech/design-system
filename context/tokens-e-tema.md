@@ -85,6 +85,7 @@ Quando o fundo é fixo, o texto e o ícone sobre ele também ficam fixos, para n
 | `PhotoSkeleton` | faixa `#FFFFFF` |
 | `Message` | horário e ícone do avatar de suporte `#8F98AD` |
 | `AnimatedStatusIndicator` | anéis e núcleo padrão `#3CDBC0` |
+| `Loading`, `LoadingIcon` | logo `#0A7370` (claro) / `#2FB5AF` (escuro); overlay `rgba(255, 255, 255, 0.85)` / `rgba(27, 37, 42, 0.85)` |
 | `Modal`, `ImageUploader` | overlay `rgba(0, 0, 0, 0.5)` |
 
 ### 2.4 Componentes que ainda não leem o tema

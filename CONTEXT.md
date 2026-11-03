@@ -14,7 +14,7 @@ Este arquivo é o ponto de entrada. O detalhe está em `context/`, dividido para
 | [`context/consumidores.md`](./context/consumidores.md) | medir o impacto de uma mudança nos apps; protótipos 2.0 |
 | [`context/dividas-tecnicas.md`](./context/dividas-tecnicas.md) | saber o que está torto de propósito antes de "consertar" |
 
-Outros documentos: `docs/migracao-2.0.md` (impacto da linguagem 2.0 nos apps), `docs/prototipos/` (especificação visual 2.0 em HTML), `docs/tema-escuro/refinamento.md` (planejamento da issue #280). `README.md` e `DesignSystemUsage.md` estão desatualizados (ver dívida 4).
+Outros documentos: `docs/brand/` (logo e animações da marca, ver `docs/brand/README.md`), `docs/migracao-2.0.md` (impacto da linguagem 2.0 nos apps), `docs/prototipos/` (especificação visual 2.0 em HTML), `docs/tema-escuro/refinamento.md` (planejamento da issue #280). `README.md` e `DesignSystemUsage.md` estão desatualizados (ver dívida 4).
 
 ---
 
@@ -80,7 +80,7 @@ Biblioteca de componentes **React Native** (os apps também rodam na web via rea
 - **Entrypoint único:** `index.ts` na raiz (`main` e `react-native` apontam para ele). Componente fora do `index.ts` não existe para os apps.
 - **Distribuído como código-fonte TS/TSX.** O Metro do app compila `src/`. `npm run build` (`tsc`) gera `dist/` com `.d.ts`, mas os apps não usam.
 - **Arquivos publicados** (`files`): `src/`, `docs/`, `context/`, `CONTEXT.md`, `README.md`, `index.ts`, `babel.config.js`, `tailwind.config.js`, `nativewind-env.d.ts`, `react-native.config.js`, `metro.config.js`.
-- **O que o `index.ts` exporta:** 67 componentes (contando `GridItem` e `AccordionItem`), 45 ícones, o tema (`LavexThemeProvider`, `useLavexTheme`, `lightColors`, `darkColors` + tipos) e `useFonts`. `Constants` e `src/utils/*` **não** são exportados.
+- **O que o `index.ts` exporta:** 69 componentes (contando `GridItem` e `AccordionItem`), 45 ícones, o tema (`LavexThemeProvider`, `useLavexTheme`, `lightColors`, `darkColors` + tipos) e `useFonts`. `Constants` e `src/utils/*` **não** são exportados.
 
 ### 2.1 Stack
 
@@ -90,7 +90,7 @@ Biblioteca de componentes **React Native** (os apps também rodam na web via rea
 | Expo | `expo ^54`, `expo-font >=14` (peer) |
 | Estilo | `StyleSheet` nativo + `Constants` + `useLavexTheme()`. NativeWind 4 / Tailwind 3 só na toolchain (`babel.config.js`, `demo/`) |
 | Ícones | `lucide-react-native ^1.31.0` (import por subpath) + `react-native-svg ^15` (peer) |
-| Animação | `Animated` da RN; `react-native-reanimated ~4.1` (peer) + `react-native-worklets` (`ImageUploader`, `AnimatedStatusIndicator`) |
+| Animação | `Animated` da RN; `react-native-reanimated ~4.1` (peer) + `react-native-worklets` (`ImageUploader`, `AnimatedStatusIndicator`, `Loading`) |
 | Gestos | `PanResponder` da RN (não usa `react-native-gesture-handler`) |
 | Safe area | `react-native-safe-area-context` (só o `Modal`) |
 | Linguagem | TypeScript `~5.9`, `strict`, `jsx: react-native`, `moduleResolution: bundler` |
@@ -125,6 +125,7 @@ design-system/
     assets/fonts/PlusJakartaSans/static/  # TTF Regular, Medium, SemiBold, Bold
     global.css                      # 3 diretivas @tailwind
   docs/
+    brand/                          # logo original e animações SVG (giro, abertura, ondas)
     migracao-2.0.md                 # impacto da 2.0 nos apps
     prototipos/                     # 21 telas HTML do app do cliente (especificação visual)
     tema-escuro/                    # refinamento da #280 e prints do demo

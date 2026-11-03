@@ -89,6 +89,7 @@ import { EmptyState } from "@src/components/EmptyState/EmptyState"
 import { Timeline } from "@src/components/Timeline/Timeline"
 import { ImageUploader } from "@src/components/ImageUploader/ImageUploader"
 import { AnimatedStatusIndicator } from "@src/components/AnimatedStatusIndicator/AnimatedStatusIndicator"
+import { Loading, LoadingIcon } from "@src/components/Loading/Loading"
 import { CountBadge } from "@src/components/CountBadge/CountBadge"
 import { DarkInformationBox } from "@src/components/DarkInformationBox/DarkInformationBox"
 import { DarkInformationBoxLarge } from "@src/components/DarkInformationBoxLarge/DarkInformationBoxLarge"
@@ -126,6 +127,7 @@ function Showcase() {
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const [activePage, setActivePage] = useState("Pedido");
   const [value, setValue] = useState("");
   const [userName, setUserName] = useState("");
@@ -887,6 +889,9 @@ function Showcase() {
         ]} />
         <ImageUploader images={photos} onAdd={() => setPhotos((current) => [...current, "https://picsum.photos/id/20/200/200"])} onRemove={(_, index) => setPhotos((current) => current.filter((__, i) => i !== index))} />
         <AnimatedStatusIndicator accessibilityLabel="Aguardando ofertas" />
+        <LoadingIcon size={96} accessibilityLabel="Carregando" />
+        <Button text="Mostrar loading (3 s)" onClick={() => { setShowLoading(true); setTimeout(() => setShowLoading(false), 3000) }} variant="primary" size="xl" />
+        <Loading visible={showLoading} />
         <CountBadge count={4} />
         <CountBadge count={25} />
         <DarkInformationBoxLarge animated icon="hourglass" title="Aguardando ofertas" text="As Lavexers estão analisando seu pedido." />
