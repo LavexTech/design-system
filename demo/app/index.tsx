@@ -452,6 +452,10 @@ function Showcase() {
           <Button text="Mostrar Drawer" onClick={() => setShowDrawer(true)} />
           <Button text="Mostrar Toast" onClick={() => showToast("Oferta enviada")} />
           <Button text="Toast de erro" onClick={() => showToast("Não foi possível enviar", { variant: "error" })} />
+          <Button text="Enviando oferta" isLoading onClick={() => undefined} />
+          <Button text="Enviando (secondary)" variant="secondary" isLoading onClick={() => undefined} />
+          <Button text="Enviando (outline)" variant="default-outline" size="xs" isLoading onClick={() => undefined} />
+          <Button text="Cancelar" variant="danger" needsConfirmation confirmationText="Toque para confirmar" isLoading onClick={() => undefined} />
           <Button text="Voltar (link do tamanho de um botão)" variant="link" block onClick={() => console.log("Voltar")} />
         </Grid>
       </Card>

@@ -12,6 +12,7 @@ import Constants from "../../constants/constants"
 import { useResolvedFontFamily } from "../../fontSetup"
 import { useLavexTheme } from "../../theme/LavexThemeProvider"
 import { ThemeColors } from "../../theme/tokens"
+import { LoadingIcon } from "../Loading/Loading"
 
 type ButtonVariant =
   | "default"
@@ -34,6 +35,11 @@ type ButtonBaseProps = {
   size?: "xs" | "sm" | "md" | "lg" | "xl"
   onClick: () => void
   disabled?: boolean
+  /**
+   * Em andamento: o botão fica desabilitado (inclusive `needsConfirmation`, que não pede confirmação) e o `LoadingIcon`
+   * ocupa o lugar do `icon` (ou o lado esquerdo, se não houver), com texto e tamanho inalterados.
+   */
+  isLoading?: boolean
   darkMode?: boolean
   fontScale?: number
   style?: ViewStyle
@@ -193,7 +199,8 @@ function ButtonComponent(props: ButtonProps) {
     onClick,
     variant = "default",
     size = "md",
-    disabled = false,
+    disabled: disabledProp = false,
+    isLoading = false,
     fontScale = 1,
     style,
     textStyle,
@@ -204,6 +211,7 @@ function ButtonComponent(props: ButtonProps) {
     confirmationText,
   } = props
   void props.darkMode
+  const disabled = disabledProp || isLoading
   const { colors: theme } = useLavexTheme()
 
   const [confirming, setConfirming] = useState(false)
@@ -219,15 +227,28 @@ function ButtonComponent(props: ButtonProps) {
     return () => clearTimeout(timer)
   }, [confirming])
 
+  const labelColor = getButtonColors(variant, {
+    pressed: false,
+    hovered,
+    disabled,
+    confirming: confirming && !isLoading,
+  }, theme).labelColor
+  const spinnerSize = Math.round(metrics.font * 1.2 * fontScale)
+  const spinner = (
+    <LoadingIcon size={spinnerSize} color={labelColor} accessibilityLabel="Carregando" />
+  )
+  const spinnerPosition = icon ? iconPosition : isLink ? "inline" : "left"
+  const slotIcon = isLoading ? spinner : icon
   const label = confirming && confirmationText ? confirmationText : text
 
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
-      accessibilityState={{ disabled }}
+      accessibilityState={{ disabled, busy: isLoading }}
       disabled={disabled}
       onPress={() => {
+        if (isLoading) return
         if (needsConfirmation && !confirming) {
           setConfirming(true)
           return
@@ -238,7 +259,7 @@ function ButtonComponent(props: ButtonProps) {
       onHoverIn={isWeb ? () => setHovered(true) : undefined}
       onHoverOut={isWeb ? () => setHovered(false) : undefined}
       style={({ pressed }) => {
-        const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming }, theme)
+        const colors = getButtonColors(variant, { pressed, hovered, disabled, confirming: confirming && !isLoading }, theme)
         return [
           styles.button,
           isLink && !block
@@ -257,25 +278,20 @@ function ButtonComponent(props: ButtonProps) {
           isWeb
             ? ({ outlineColor: theme.text, outlineWidth: 0 } as ViewStyle)
             : null,
-          (iconPosition === "right" || iconPosition === "inline") && icon
+          (spinnerPosition === "right" || spinnerPosition === "inline") && slotIcon
             ? styles.withTrailingIcon
             : null,
           style,
         ]
       }}
     >
-      {icon && iconPosition === "inline" ? <View>{icon}</View> : null}
-      {icon && iconPosition === "left" ? <View style={[styles.icon, styles.iconLeft]}>{icon}</View> : null}
+      {slotIcon && spinnerPosition === "inline" ? <View>{slotIcon}</View> : null}
+      {slotIcon && spinnerPosition === "left" ? <View style={[styles.icon, styles.iconLeft]}>{slotIcon}</View> : null}
       <Text
         style={[
           styles.label,
           {
-            color: getButtonColors(variant, {
-              pressed: false,
-              hovered,
-              disabled,
-              confirming,
-            }, theme).labelColor,
+            color: labelColor,
             fontSize: metrics.font * fontScale,
             lineHeight: metrics.font * 1.2 * fontScale,
             fontFamily: labelFont,
@@ -286,7 +302,7 @@ function ButtonComponent(props: ButtonProps) {
       >
         {label}
       </Text>
-      {icon && iconPosition === "right" ? <View>{icon}</View> : null}
+      {slotIcon && spinnerPosition === "right" ? <View>{slotIcon}</View> : null}
     </Pressable>
   )
 }
