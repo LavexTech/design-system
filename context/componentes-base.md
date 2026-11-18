@@ -262,6 +262,7 @@ Campo `flex: 1`, borda 1,5 `borderInteractive`, padding horizontal 18, Regular 1
 | `variant` | ver tabela | `'default'` |
 | `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
 | `disabled` | `boolean` | `false` |
+| `isLoading` | `boolean` | `false`. Desabilita o botão e troca o `icon` por `LoadingIcon` (ver Comportamento) |
 | `icon` | `ReactNode` | — |
 | `iconPosition` | `'left' \| 'right' \| 'inline'` | `'left'` |
 | `style` / `textStyle` | `ViewStyle` / `TextStyle` | — (aplicados por último) |
@@ -306,6 +307,7 @@ iconPosition="left":            "right":                 "inline" / link:
 
 - Pressionado: fundo opaco ganha opacidade 0,85; fundo transparente ou `surface` vira `surfaceMuted`. Hover só na web, com o mesmo efeito dos transparentes. O estado visual sai de `getButtonColors` no callback `style` do `Pressable`; não há `useState` de pressionado.
 - `needsConfirmation`: 1º toque troca o rótulo por `confirmationText` e pinta fundo `danger` com texto branco; 2º toque chama `onClick`. Sem o 2º toque, volta após 8 s.
+- `isLoading` (1.19.0): o botão fica desabilitado (visual de `disabled`, `onClick` não dispara, inclusive com `needsConfirmation`, que não entra em confirmação e descarta uma confirmação pendente), com `accessibilityState={{ disabled: true, busy: true }}`. O `LoadingIcon` (largura = fonte × 1,2 × `fontScale`) ocupa o lugar do `icon`, na mesma `iconPosition`; sem `icon`, vai à esquerda (absoluto, 16 px) e em `link`/`link-gray` fica inline antes do texto. Cor do spinner = cor do texto do estado desabilitado (`text`, ou `textMuted` em link). Texto, altura e largura não mudam; com `icon` à direita/inline a largura pode variar se o ícone tiver tamanho diferente do spinner.
 - O componente é `React.memo`.
 
 ### `CheckButton` (desenho antigo)
