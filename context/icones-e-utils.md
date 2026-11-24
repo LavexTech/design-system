@@ -61,7 +61,7 @@ Wrappers finos sobre `lucide-react-native` `^1.31.0` (SVG via `react-native-svg`
 | `IconSearch` | `search` | `SearchInput`, `EmptyState` |
 | `IconSend` | `send` | `InputChat` |
 | `IconShieldCheck` | `shield-check` | aviso de segurança |
-| `IconStar` / `IconStarHalf` | `star` / `star-half` | `Stars`, `StarRating`, `ShortStarRating` |
+| `IconStar` / `IconStarHalf` | `star` / `star-half` | `Stars`, `StarRating`, `ShortStarRating`, `IconButtonLarge` |
 | `IconTrash` | `trash-2` | `Stepper`, `QuantityStepper`, `SwipeableListItem` |
 | `IconTruck` | `truck` | entrega, `IconButtonLarge` |
 | `IconUserRound` | `user-round` | aba Conta (cliente) |

@@ -8,6 +8,7 @@ import { IconCreditCard } from "../Icons/IconCreditCard"
 import { IconMessageSquare } from "../Icons/IconMessageSquare"
 import { IconMessageSquareText } from "../Icons/IconMessageSquareText"
 import { IconQrCode } from "../Icons/IconQrCode"
+import { IconStar } from "../Icons/IconStar"
 import { IconTruck } from "../Icons/IconTruck"
 import { IconChevronRight } from "../Icons/IconChevronRight"
 
@@ -16,6 +17,7 @@ type IconButtonLargeName =
   | "message-square"
   | "message-square-text"
   | "qr-code"
+  | "star"
   | "truck"
 
 type IconButtonLargeProps = {
@@ -23,8 +25,8 @@ type IconButtonLargeProps = {
   title: string
   description: string
   onClick: () => void
-  /** `first` arredonda os cantos superiores; `last`, os inferiores; `middle` fica reto e cola na borda do anterior. */
-  position?: "first" | "middle" | "last"
+  /** `first` arredonda os cantos superiores; `last`, os inferiores; `middle` fica reto e cola na borda do anterior; `single` arredonda os quatro cantos (card avulso). */
+  position?: "first" | "middle" | "last" | "single"
 }
 
 const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; color?: string }>> = {
@@ -32,6 +34,7 @@ const ICONS: Record<IconButtonLargeName, React.ComponentType<{ size?: number; co
   "message-square": IconMessageSquare,
   "message-square-text": IconMessageSquareText,
   "qr-code": IconQrCode,
+  star: IconStar,
   truck: IconTruck,
 }
 
@@ -51,8 +54,8 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
 }) => {
   const { colors } = useLavexTheme()
   const Icon = ICONS[icon]
-  const isFirst = position === "first"
-  const isLast = position === "last"
+  const isFirst = position === "first" || position === "single"
+  const isLast = position === "last" || position === "single"
 
   return (
     <Pressable
@@ -66,7 +69,7 @@ export const IconButtonLarge: React.FC<IconButtonLargeProps> = ({
           borderTopRightRadius: isFirst ? RADIUS : 0,
           borderBottomLeftRadius: isLast ? RADIUS : 0,
           borderBottomRightRadius: isLast ? RADIUS : 0,
-          marginTop: position === "middle" || isLast ? -BORDER : 0,
+          marginTop: position === "middle" || position === "last" ? -BORDER : 0,
           backgroundColor: pressed ? colors.surfaceSubtle : colors.surface,
           borderColor: colors.border,
         },

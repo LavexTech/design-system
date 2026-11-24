@@ -244,10 +244,10 @@ Rótulo Regular 16/24, valor Bold 16/24 alinhado à direita, ambos `text`, fundo
 
 | Prop | Tipo | Default |
 |---|---|---|
-| `icon` | `'credit-card' \| 'message-square' \| 'message-square-text' \| 'qr-code' \| 'truck'` | obrigatória |
+| `icon` | `'credit-card' \| 'message-square' \| 'message-square-text' \| 'qr-code' \| 'star' \| 'truck'` | obrigatória |
 | `title` / `description` | `string` | obrigatórias |
 | `onClick` | `() => void` | obrigatória |
-| `position` | `'first' \| 'middle' \| 'last'` | — |
+| `position` | `'first' \| 'middle' \| 'last' \| 'single'` | — |
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -256,7 +256,7 @@ Rótulo Regular 16/24, valor Bold 16/24 alinhado à direita, ambos `text`, fundo
 └──────────────────────────────────────────────┘
 ```
 
-Ícone 18 `#2D3B42` numa caixa de 40 px `#F4F4F5` raio 12 (fixos). Título `Text` Bold; descrição `Info`; `IconChevronRight` 20 `textMuted`. Fundo `surface`, pressionado `surfaceSubtle`. `first` arredonda os cantos de cima (16), `last` os de baixo; `middle`/`last` sobem 1 px para colar na borda do anterior. Sem `position`, cantos retos. Usado empilhado como menu na Conta.
+Ícone 18 `#2D3B42` numa caixa de 40 px `#F4F4F5` raio 12 (fixos). Título `Text` Bold; descrição `Info`; `IconChevronRight` 20 `textMuted`. Fundo `surface`, pressionado `surfaceSubtle`. `first` arredonda os cantos de cima (16), `last` os de baixo; `middle`/`last` sobem 1 px para colar na borda do anterior. `single` (1.20.0) arredonda os quatro cantos e não sobe 1 px: card avulso. Sem `position`, cantos retos. `star` (1.20.0) usa `IconStar` em traço. Usado empilhado como menu na Conta.
 
 ### `PaymentButton`
 
