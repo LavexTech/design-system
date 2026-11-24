@@ -257,6 +257,7 @@ function Showcase() {
             <IconButtonLarge icon="credit-card" title="Pagamentos" description="Cartões salvos" onClick={() => undefined} position="middle" />
             <IconButtonLarge icon="message-square" title="Suporte" description="Fale com a Lavex" onClick={() => undefined} position="last" />
           </View>
+          <IconButtonLarge icon="star" title="Minhas avaliações" description="4,8 de média · 23 avaliações" onClick={() => undefined} position="single" />
           <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
             <ProfileAvatar alt="Sem foto" size="sm" />
             <ShortStarRating rating={4.8} />
