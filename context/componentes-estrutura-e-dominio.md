@@ -298,7 +298,7 @@ Aviso curto de sucesso ou erro no topo da tela (substitui o modal de "Oferta env
 | Prop | Tipo | Default |
 |---|---|---|
 | `text` | `string` | obrigatória |
-| `variant` | `'info' \| 'dark'` | `'info'` |
+| `variant` | `'info' \| 'dark' \| 'warning'` | `'info'` |
 | `icon` | `ReactNode` | `IconExclamation` 20 |
 | `align` | `'left' \| 'center'` | `'left'` |
 | `trailing` | `ReactNode` | — |
@@ -309,7 +309,7 @@ Aviso curto de sucesso ou erro no topo da tela (substitui o modal de "Oferta env
 └──────────────────────────────────────────┘
 ```
 
-`info`: fundo `#EEFBF8`, ícone `#0B7566`, texto `#2D3B42` (fixos). `dark`: fundo `inverseSurface`, ícone `primary`, texto `onInverse`. `accessibilityRole="alert"`.
+`info`: fundo `#EEFBF8`, ícone `#0B7566`, texto `#2D3B42` (fixos). `dark`: fundo `inverseSurface`, ícone `primary`, texto `onInverse`. `warning` (1.21.0): fundo `#FFF4E5`, ícone `#F59E0B`, texto `#8A5A00` (fixos), para avisos de ajuste pedido ao usuário. `accessibilityRole="alert"`.
 
 ### `EmptyState` (2.0)
 

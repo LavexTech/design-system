@@ -122,6 +122,7 @@ const Constants = {
       DANGER_SURFACE: "#FDECEC",
       WARNING_SURFACE: "#FFF4E5",
       WARNING_TEXT: "#8A5A00",
+      WARNING_ICON: "#F59E0B",
     },
     color: {
       WHITE: "#FFFFFF",
