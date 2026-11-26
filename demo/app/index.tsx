@@ -886,6 +886,7 @@ function Showcase() {
         <CheckboxListItem label="Camisa social" checked={checkedShirt} onChange={setCheckedShirt} />
         <QuantityStepper value={qty} min={1} max={9} onChange={setQty} label="Camisa" />
         <StatusBanner text="Aguardando a coleta" />
+        <StatusBanner text="Precisamos que você ajuste algumas coisas" variant="warning" />
         <EmptyState title="Nenhum pedido" description="Quando você fizer um pedido, ele aparece aqui." />
         <Timeline steps={[
           { id: "1", title: "Pedido criado", status: "DONE", extra: "14:32" },

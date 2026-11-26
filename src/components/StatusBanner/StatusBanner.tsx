@@ -7,7 +7,7 @@ import { IconExclamation } from "../Icons/IconExclamation"
 
 type StatusBannerProps = {
   text: string
-  variant?: "info" | "dark"
+  variant?: "info" | "dark" | "warning"
   icon?: React.ReactNode
   align?: "left" | "center"
   trailing?: React.ReactNode
@@ -24,11 +24,12 @@ export const StatusBanner: React.FC<StatusBannerProps> = ({
 }) => {
   const { colors } = useLavexTheme()
   const dark = variant === "dark"
+  const warning = variant === "warning"
   const bodyFont = useResolvedFontFamily(C.fontFamily.REGULAR)
   return (
-    <View accessibilityRole="alert" style={[styles.box, { backgroundColor: dark ? colors.inverseSurface : C.surface.INFO }]}>
-      {icon ?? <IconExclamation size={20} color={dark ? colors.primary : C.brand.DARK} />}
-      <Text style={[styles.text, { fontFamily: bodyFont, fontWeight: "normal", color: dark ? colors.onInverse : C.text.DEFAULT, textAlign: align }]}>{text}</Text>
+    <View accessibilityRole="alert" style={[styles.box, { backgroundColor: dark ? colors.inverseSurface : warning ? C.feedback.WARNING_SURFACE : C.surface.INFO }]}>
+      {icon ?? <IconExclamation size={20} color={dark ? colors.primary : warning ? C.feedback.WARNING_ICON : C.brand.DARK} />}
+      <Text style={[styles.text, { fontFamily: bodyFont, fontWeight: "normal", color: dark ? colors.onInverse : warning ? C.feedback.WARNING_TEXT : C.text.DEFAULT, textAlign: align }]}>{text}</Text>
       {trailing}
     </View>
   )
